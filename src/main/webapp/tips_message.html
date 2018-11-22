@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>本人提示消息界面</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">-->
+    <link rel="stylesheet" type="text/css" href="static_resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="static_resources/checkbox/css/build.css">
+
+    <link rel="stylesheet" href="static_resources/dialog/css/dialog.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        #alert {
+            z-index: 2;
+            border: 1px solid rgba(0,0,0,.2);
+            width: 598px;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.5);
+            background: #fff;
+            z-index: 1000;
+            position: absolute;
+            left: 50%;
+            top: 15%;
+            margin-left: -299px;
+            display: none;
+        }
+        .model-head {
+            padding: 15px;
+            color: #73879C;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .close {
+            padding: 0;
+            cursor: pointer;
+            background: 0 0;
+            border: 0;
+            float: right;
+            font-size: 14px !important;
+            font-weight: 700;
+            text-shadow: 0 1px 0 #fff;
+            opacity: 0.4;
+            margin-top: 5px;
+        }
+        #close:hover {
+            cursor: pointer;
+            color: #000;
+        }
+        #mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            opacity: 0.3;
+            display: none;
+            z-index: 1;
+        }
+        .model-content {
+            position: relative;
+            padding: 15px;
+        }
+        .model-foot {
+            padding: 15px;
+            text-align: right;
+        }
+    </style>
+
+</head>
+<body>
+<!--导航栏-->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="main.html"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+        </div>
+        <div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="毒液">
+                </div>
+                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                <!--<input type="submit" value="图片">-->
+            </form>
+            <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
+            <div class="profile navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="login.html"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
+                    <li><a href="login.html" class="a globalLoginBtn"><span
+                            class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
+                    <li><a href="register.html">注册</a></li>
+                    <li>
+                        <a href="tips_message.html">
+                            <span class="badge pull-right">3</span>消息
+                        </a>
+                    </li>
+                    <li>
+                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="button" value="全选" class="btn" id="selectAll">
+                <input type="button" value="全不选" class="btn" id="unSelect">
+                <input type="button" value="反选" class="btn" id="reverse">
+            </div>
+            <div class="col-md-5">
+                <a href="#">
+                    标为已读
+                    <span class="glyphicon glyphicon-envelope">
+            </span>
+                </a>
+                <a onClick="javascript:$('body').dailog({type:'primary'})">
+                    &nbsp;&nbsp;&nbsp;删除<span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </div>
+            <script type="text/javascript" src="static_resources/dialog/js/dialog.js"></script>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <!--注意里面的id，checkbox每个需要不同-->
+        <ul class="list-group" id="owners">
+            <li class="list-group-item">
+                <div class="checkbox checkbox-success">
+                    <input id="checkbox1" class="styled" type="checkbox">
+                    <label for="checkbox1">
+                        xxxxxxx提示信息
+                        <br>
+                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                    </label>
+                </div>
+
+            </li>
+            <li class="list-group-item">
+                <div class="checkbox checkbox-success">
+                    <input id="checkbox2" class="styled" type="checkbox">
+                    <label for="checkbox2">
+                        xxxxxxx提示信息
+                        <br>
+                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                    </label>
+                </div>
+
+            </li>
+            <li class="list-group-item">
+                <div class="checkbox checkbox-success">
+                    <input id="checkbox3" class="styled" type="checkbox">
+                    <label for="checkbox3">
+                        xxxxxxx提示信息
+                        <br>
+                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                    </label>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class="checkbox checkbox-success">
+                    <input id="checkbox4" class="styled" type="checkbox">
+                    <label for="checkbox4">
+                        xxxxxxx提示信息
+                        <br>
+                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="inner clearfix">
+            <section id="main-content">
+
+                <div class="text-center">
+                    <ul class="pagination">
+                        <li><a href="#">&laquo;</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                        <li>
+                            <!--异步传输页数，返回数据得到结果-->
+                            <form class="col-sm-3" role="form">
+                                <div class="input-group">
+                                    <input type="text" class="form-control">
+                                    <span onclick="test()" class="input-group-addon">go</span>
+                                </div>
+                            </form>
+                        </li>
+                        <li><a style="border: none">共6页</a></li>
+                    </ul>
+                </div>
+
+            </section>
+
+        </div>
+    </div>
+</div>
+<!--底部版权信息-->
+<div class="navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
+    <div style="background-color: #0f0f0f">
+        <hr/>
+        Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;
+        xxx小组 ALL RIGHT RESERVED<br/>
+        联系方式：xxxx@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;意见反馈<br/><br/>
+
+    </div>
+</div>
+<!--全选，单选-->
+<script>
+$("#selectAll").click(function () {
+$("#owners input:checkbox").each(function () {
+$(this).prop('checked', true);//
+
+});
+});
+
+$("#unSelect").click(function () {
+$("#owners input:checkbox").removeAttr("checked");
+});
+
+$("#reverse").click(function () {
+$("#owners input:checkbox").each(function () {
+this.checked = !this.checked;
+});
+});
+
+</script>
+
+
+</body>
+</html>

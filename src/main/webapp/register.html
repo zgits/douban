@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>注册页面</title>
+<link rel="stylesheet" href="/static_resources/login-register/css/style.css">
+<body>
+
+<div class="register-container">
+    <h1>欢迎注册</h1>
+
+    <div class="connect">
+        <p>doubansshshow</p>
+    </div>
+
+    <form action="" method="post" id="registerForm">
+        <div>
+            <input type="email" name="email" class="email" placeholder="邮箱地址" oncontextmenu="return false" onpaste="return false" />
+        </div>
+        <div>
+            <input type="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
+        </div>
+        <div>
+            <input type="password" name="confirm_password" class="confirm_password" placeholder="确认密码" oncontextmenu="return false" onpaste="return false" />
+        </div>
+        <div>
+            <input type="text" name="username" class="username" placeholder="设置用户名" autocomplete="off"/>
+        </div>
+        <div>
+            <input type="text" name="code" class="code" placeholder="请输入验证码" autocomplete="off"/>
+            <!--验证码js在/login-register/js/common.js下，可以去掉，如果不行的话-->
+        </div>
+
+        <button id="submit" type="submit">注册</button>
+    </form>
+    <a href="login.html">
+        <button type="button" class="register-tis">已有账号？登录</button>
+    </a>
+
+</div>
+<!--&lt;!&ndash;底部版权信息&ndash;&gt;-->
+<!--<div style="font:12px Tahoma;color: white; margin:0px auto; text-align:center;">-->
+    <!--<div style="background-color: #0f0f0f">-->
+        <!--<hr/>-->
+        <!--Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;-->
+        <!--xxx小组 ALL RIGHT RESERVED<br/>-->
+        <!--联系方式：xxxx@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;意见反馈<br/><br/>-->
+
+    <!--</div>-->
+<!--</div>-->
+</body>
+<script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
+<script src="static_resources/login-register/js/common.js"></script>
+<!--背景轮播-->
+<script src="static_resources/login-register/js/supersized.3.2.7.min.js"></script>
+<script src="static_resources/login-register/js/supersized-init.js"></script>
+<!--数据验证-->
+<script src="static_resources/login-register/js/jquery.validate.min.js?var1.14.0"></script>
+</html>

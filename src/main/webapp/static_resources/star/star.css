@@ -1,0 +1,22 @@
+.star-vote{
+    width:120px;
+    height:20px;
+    position:relative;
+    overflow:hidden;
+}
+.star-vote>span{
+    position:absolute;
+    width:120px;
+    height:20px;
+    background-size:cover;
+    background-repeat:no-repeat;
+    left:0px;
+    top:0px;
+}
+.star-vote>.add-star{
+    background-image:url("/static_resources/star/image/1.png");
+}
+.star-vote>.del-star{
+    background-image:url("/static_resources/star/image/2.png");
+    background-color:white;
+}

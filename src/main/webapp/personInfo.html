@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息展示界面</title>
+
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">-->
+    <link rel="stylesheet" type="text/css" href="static_resources/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static_resources/dist/sidebar-menu.css">
+    <style type="text/css">
+        .main-sidebar {
+            position: absolute;
+            top: 200px;
+            left: 0px;
+            min-height: 100%;
+            width: 230px;
+            z-index: 810;
+            background-color: #222d32;
+        }
+    </style>
+
+
+</head>
+<!--个人信息页面-->
+<body>
+<!---导航栏-->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="main.html"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+        </div>
+        <div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input class="form-control" type="text" placeholder="毒液">
+                </div>
+                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                <!--<input type="submit" value="图片">-->
+            </form>
+            <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
+            <div class="profile navbar-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="login.html"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
+                    <li><a href="login.html" class="a globalLoginBtn"><span
+                            class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
+                    <li><a href="register.html">注册</a></li>
+                    <li>
+                        <a href="tips_message.html">
+                            <span class="badge pull-right">3</span>消息
+                        </a>
+                    </li>
+                    <li>
+                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!--展示个人信息界面-->
+
+<div class="row col-md-12"
+     style="margin-top:-20px;background-image: url('/static_resources/login-register/images/3.jpg');background-size: 100%">
+
+    <img src="/image/test.jpg" class="img-circle img-responsive" style="height: 150px;width: 150px">
+</div>
+<div class="container">
+    <div class="col-md-offset-2">
+
+        <div class="row" id="info">
+            <div>
+                <img src="/image/test.jpg" class="img-circle img-responsive" style="width: 100px;height:100px">
+            </div>
+            <div style="margin-top: -50px;margin-left: 100px;">
+                <button class="btn btn-info">更换头像</button>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <p>
+                    <span style="font-size: 15px;font-family: '等线 Light';font-weight: bold">昵称：</span>xxxxxx<br>
+                    <br>
+                    <br>
+                    <span style="font-size: 15px;font-family: '等线 Light';font-weight: bold">邮箱：</span>xxxxx@xxx.com<br>
+                    <br>
+                    <br>
+                    <span style="font-size: 15px;font-family: '等线 Light';font-weight: bold">个人介绍：</span>这个家伙很懒，什么都没有留下
+                </p>
+            </div>
+        </div>
+
+        <!--历史记录主要是对看过的预告片以及浏览过的电影介绍-->
+        <div class="row" id="history" style="margin-top: 150px;">
+            <ul class="list-group">
+                <li class="list-group-item" style="border: none">
+                    <div class="col-lg-1">
+                        <img src="/image/test.jpg" class="img-rounded"
+                             style="width: 74px;height: 74px;margin-top: -3px">
+                    </div>
+                    <div class="col-md-11">
+                        <span>预告片的描述，或者是电影的名字.//
+                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
+                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透
+                        </span>
+                    </div>
+                    <br>
+                    <div class="col-md-offset-9">
+                        <span>
+                            浏览的时间：2018-11-20 17:45:25
+                        </span>
+                    </div>
+                </li>
+                <hr>
+                <li class="list-group-item" style="border: none">
+                    <div class="col-lg-1">
+                        <img src="/image/test.jpg" class="img-rounded"
+                             style="width: 74px;height: 74px;margin-top: -3px">
+                    </div>
+                    <div class="col-md-11">
+                        <span>预告片的描述，或者是电影的名字.//
+                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
+                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透
+                        </span>
+                    </div>
+                    <br>
+                    <div class="col-md-offset-9">
+                        <span>
+                            浏览的时间：2018-11-20 17:45:25
+                        </span>
+                    </div>
+                </li>
+                <hr>
+                <li class="list-group-item" style="border: none">
+                    <div class="col-lg-1">
+                        <img src="/image/test.jpg" class="img-rounded"
+                             style="width: 74px;height: 74px;margin-top: -3px">
+                    </div>
+                    <div class="col-md-11">
+                        <span>预告片的描述，或者是电影的名字.//
+                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
+                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透
+                        </span>
+                    </div>
+                    <br>
+                    <div class="col-md-offset-9">
+                        <span>
+                            浏览的时间：2018-11-20 17:45:25
+                        </span>
+                    </div>
+                </li>
+                <hr>
+                <li class="list-group-item" style="border: none">
+                    <div class="col-lg-1">
+                        <img src="/image/test.jpg" class="img-rounded"
+                             style="width: 74px;height: 74px;margin-top: -3px">
+                    </div>
+                    <div class="col-md-11">
+                        <span>预告片的描述，或者是电影的名字.//
+                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
+                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透
+                        </span>
+                    </div>
+                    <br>
+                    <div class="col-md-offset-9">
+                        <span>
+                            浏览的时间：2018-11-20 17:45:25
+                        </span>
+                    </div>
+                </li>
+                <hr>
+
+                <li class="list-group-item" style="border: none">
+                    <div class="inner clearfix">
+                        <section id="main-content">
+
+                            <div class="text-center">
+                                <ul class="pagination">
+                                    <li><a href="#">&laquo;</a></li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li><a href="#">&raquo;</a></li>
+                                    <li>
+                                        <!--异步传输页数，返回数据得到结果-->
+                                        <form class="col-sm-3" role="form">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <span onclick="test()" class="input-group-addon">go</span>
+                                            </div>
+                                        </form>
+                                    </li>
+                                    <li><a style="border: none">共6页</a></li>
+                                </ul>
+                            </div>
+
+                        </section>
+
+                    </div>
+                </li>
+            </ul>
+
+
+        </div>
+        <div class="row" id="set_up" style="margin-top: 200px">
+            <form class="bs-example bs-example-form" role="form">
+                <div class="input-group">
+                    <span class="input-group-addon" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">昵称：</span>
+                    <input style="width: 400px" type="text" class="form-control" name="username" value="原来的名字">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">邮箱：</span>
+                    <input style="width: 400px" type="text" class="form-control" name="email" value="xxxxxx@xx.com">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">个人介绍：</span>
+                    <input style="width: 400px" type="text" class="form-control" name="introduction" value="原来的个人介绍">
+                </div>
+
+                <button style="margin-top: 5px;margin-left: 200px" type="submit" class="btn btn-info">修改</button>
+            </form>
+        </div>
+
+        <div class="row" id="update_pwd" style="margin-top: 200px">
+            <form id="update_password" class="bs-example bs-example-form" role="form">
+                <div class="input-group">
+                    <span class="input-group-addon" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">原密码：</span>
+                    <input style="width: 400px" type="password" class="form-control" name="old_pwd">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">新密码：</span>
+                    <input style="width: 400px" type="password" class="form-control" name="pwd">
+                </div>
+                <br>
+                <div class="input-group">
+                    <span class="input-group-addon" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">确认新密码：</span>
+                    <input style="width: 400px" type="password" class="form-control" name="confirm_pwd">
+                </div>
+                <button type="submit" style="margin-top: 5px;margin-left: 200px" class="btn btn btn-info">修改</button>
+            </form>
+        </div>
+    </div>
+    <div class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">操作</li>
+                <li class="treeview">
+                    <a id="info_p">
+                        <i class="fa fa-address-card-o"></i> <span style="font-size: 25px;">个人信息</span>
+                    </a>
+                </li>
+                <!--<li class="treeview">-->
+                    <!--<a id="history_p">-->
+                        <!--<i class="fa fa-files-o"></i>-->
+                        <!--<span style="font-size: 25px;">历史记录</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <li>
+                    <a id="set_up_p">
+                        <i class="fa fa-cogs"></i>
+                        <span style="font-size: 25px;">个人设置</span>
+                    </a>
+                </li>
+                <li>
+                    <a id="update_pwd_p">
+                        <i class="fa fa-th"></i> <span style="font-size: 25px;">修改密码</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </div>
+
+</div>
+
+
+<script src="/static_resources/dist/sidebar-menu.js"></script>
+
+
+<script src="/static_resources/login-register/js/common.js"></script>
+<script src="/static_resources/login-register/js/jquery.validate.min.js?var1.14.0"></script>
+
+<script>
+    $.sidebarMenu($('.sidebar-menu'))
+</script>
+
+<!--隐藏效果-->
+<script>
+    $(document).ready(function () {
+        $("#update_pwd").hide();
+        $("#history").hide();
+        $("#set_up").hide();
+        $("#info").fadeIn();
+        $("#info_p").click(function () {
+            $("#update_pwd").hide();
+            $("#history").hide();
+            $("#set_up").hide();
+            $("#info").fadeIn();
+        });
+        $("#history_p").click(function () {
+            $("#update_pwd").hide();
+            $("#history").fadeIn();
+            $("#set_up").hide();
+            $("#info").hide();
+        });
+        $("#update_pwd_p").click(function () {
+            $("#update_pwd").fadeIn();
+            $("#history").hide();
+            $("#set_up").hide();
+            $("#info").hide();
+        });
+        $("#set_up_p").click(function () {
+            $("#update_pwd").hide();
+            $("#history").hide();
+            $("#set_up").fadeIn();
+            $("#info").hide();
+        });
+    });
+</script>
+
+<!--版权栏-->
+<!--底部版权信息-->
+<div class="navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
+    <div style="background-color: #0f0f0f">
+        <hr/>
+        Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;
+        xxx小组 ALL RIGHT RESERVED<br/>
+        联系方式：xxxx@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;意见反馈<br/><br/>
+
+    </div>
+</div>
+
+</body>
+</html>

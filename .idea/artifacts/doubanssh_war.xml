@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="doubanssh:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="douban-ssh.war">
+      <element id="artifact" artifact-name="doubanssh:war exploded" />
+    </root>
+  </artifact>
+</component>

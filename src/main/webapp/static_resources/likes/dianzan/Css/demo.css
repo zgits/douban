@@ -1,0 +1,509 @@
+
+/*.text-content{*/
+    /*min-width:1180px;*/
+    /*border-bottom: 1px solid #e7e7e7;*/
+    /*border-top: 1px solid #e7e7e7;*/
+    /*background: #f4f4f4;*/
+/*}*/
+/*.text-content h1{*/
+    /*text-align:center;*/
+    /*font-size: 20px;*/
+    /*padding-top: 50px;*/
+    /*color: #EB4F38;*/
+/*}*/
+/*.text-content p{*/
+    /*padding: 10px 100px 40px 100px;*/
+    /*clear: both;*/
+    /*color: #333;*/
+    /*display: block;*/
+    /*font-family: "Microsoft Yahei","Helvetica Neue",Helvetica,Arial,sans-serif;*/
+    /*font-size: 16px;*/
+    /*line-height: 1.6;*/
+    /*margin: 0 auto;*/
+    /*outline: medium none;*/
+    /*position: relative;*/
+    /*width: 900px;*/
+    /*word-wrap: break-word;*/
+/*}*/
+/*动态点赞开始*/
+.praise{
+    width:30px;
+    height:20px;
+    margin-left: 500px;
+    margin-top: -20px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+}
+#praise1{
+    display:block;
+    width:40px;
+    height:40px;
+    margin:0 auto;
+}
+#praise2{
+    display:block;
+    width:40px;
+    height:40px;
+    margin:0 auto;
+}
+#praise3{
+    display:block;
+    width:40px;
+    height:40px;
+    margin:0 auto;
+}
+#praise4{
+    display:block;
+    width:40px;
+    height:40px;
+    margin:0 auto;
+}
+#praise5{
+    display:block;
+    width:40px;
+    height:40px;
+    margin:0 auto;
+}
+#praise-txt1{
+    height:25px;
+    line-height:25px;
+    display: block;
+}
+#praise-txt2{
+    height:25px;
+    line-height:25px;
+    display: block;
+}
+#praise-txt3{
+    height:25px;
+    line-height:25px;
+    display: block;
+}
+#praise-txt4{
+    height:25px;
+    line-height:25px;
+    display: block;
+}
+#praise-txt5{
+    height:25px;
+    line-height:25px;
+    display: block;
+}
+.praise1 img{
+    width:40px;
+    height:40px;
+    display:block;
+    margin: 0 auto;
+}
+.praise1 img.animation{
+    animation: myfirst 0.5s;
+    -moz-animation: myfirst 0.5s;	/* Firefox */
+    -webkit-animation: myfirst 0.5s;	/* Safari 和 Chrome */
+    -o-animation: myfirst 0.5s;	/* Opera */
+}
+.praise2 img{
+    width:40px;
+    height:40px;
+    display:block;
+    margin: 0 auto;
+}
+.praise2 img.animation{
+    animation: myfirst 0.5s;
+    -moz-animation: myfirst 0.5s;	/* Firefox */
+    -webkit-animation: myfirst 0.5s;	/* Safari 和 Chrome */
+    -o-animation: myfirst 0.5s;	/* Opera */
+}
+.praise3 img{
+    width:40px;
+    height:40px;
+    display:block;
+    margin: 0 auto;
+}
+.praise3 img.animation{
+    animation: myfirst 0.5s;
+    -moz-animation: myfirst 0.5s;	/* Firefox */
+    -webkit-animation: myfirst 0.5s;	/* Safari 和 Chrome */
+    -o-animation: myfirst 0.5s;	/* Opera */
+}
+.praise4 img{
+    width:40px;
+    height:40px;
+    display:block;
+    margin: 0 auto;
+}
+.praise4 img.animation{
+    animation: myfirst 0.5s;
+    -moz-animation: myfirst 0.5s;	/* Firefox */
+    -webkit-animation: myfirst 0.5s;	/* Safari 和 Chrome */
+    -o-animation: myfirst 0.5s;	/* Opera */
+}
+.praise5 img{
+    width:40px;
+    height:40px;
+    display:block;
+    margin: 0 auto;
+}
+.praise5 img.animation{
+    animation: myfirst 0.5s;
+    -moz-animation: myfirst 0.5s;	/* Firefox */
+    -webkit-animation: myfirst 0.5s;	/* Safari 和 Chrome */
+    -o-animation: myfirst 0.5s;	/* Opera */
+}
+#add-num1{
+    display:none;
+}
+#add-num1 .add-animation{
+    color: #000;
+    position:absolute;
+    top:-15px;
+    left: 10px;
+    font-size: 15px;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+    -moz-opacity:0;
+    animation: mypraise 0.5s ;
+    -moz-animation: mypraise 0.5s ;	/* Firefox */
+    -webkit-animation: mypraise 0.5s ;	/* Safari 和 Chrome */
+    -o-animation: mypraise 0.5s ;	/* Opera */
+    font-style:normal;
+}
+#add-num2{
+    display:none;
+}
+#add-num2 .add-animation{
+    color: #000;
+    position:absolute;
+    top:-15px;
+    left: 10px;
+    font-size: 15px;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+    -moz-opacity:0;
+    animation: mypraise 0.5s ;
+    -moz-animation: mypraise 0.5s ;	/* Firefox */
+    -webkit-animation: mypraise 0.5s ;	/* Safari 和 Chrome */
+    -o-animation: mypraise 0.5s ;	/* Opera */
+    font-style:normal;
+}
+#add-num3{
+    display:none;
+}
+#add-num3 .add-animation{
+    color: #000;
+    position:absolute;
+    top:-15px;
+    left: 10px;
+    font-size: 15px;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+    -moz-opacity:0;
+    animation: mypraise 0.5s ;
+    -moz-animation: mypraise 0.5s ;	/* Firefox */
+    -webkit-animation: mypraise 0.5s ;	/* Safari 和 Chrome */
+    -o-animation: mypraise 0.5s ;	/* Opera */
+    font-style:normal;
+}
+#add-num4{
+    display:none;
+}
+#add-num4 .add-animation{
+    color: #000;
+    position:absolute;
+    top:-15px;
+    left: 10px;
+    font-size: 15px;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+    -moz-opacity:0;
+    animation: mypraise 0.5s ;
+    -moz-animation: mypraise 0.5s ;	/* Firefox */
+    -webkit-animation: mypraise 0.5s ;	/* Safari 和 Chrome */
+    -o-animation: mypraise 0.5s ;	/* Opera */
+    font-style:normal;
+}
+#add-num5{
+    display:none;
+}
+#add-num5 .add-animation{
+    color: #000;
+    position:absolute;
+    top:-15px;
+    left: 10px;
+    font-size: 15px;
+    opacity: 0;
+    filter: Alpha(opacity=0);
+    -moz-opacity:0;
+    animation: mypraise 0.5s ;
+    -moz-animation: mypraise 0.5s ;	/* Firefox */
+    -webkit-animation: mypraise 0.5s ;	/* Safari 和 Chrome */
+    -o-animation: mypraise 0.5s ;	/* Opera */
+    font-style:normal;
+}
+.praise .hover , #add-num1 .add-animation.hover , #praise-txt1.hover
+, #add-num2 .add-animation.hover , #praise-txt2.hover
+, #add-num3 .add-animation.hover , #praise-txt3.hover
+, #add-num4 .add-animation.hover , #praise-txt4.hover
+, #add-num5 .add-animation.hover , #praise-txt5.hover{
+    color: #EB4F38;
+}
+
+/*点赞图标放大动画开始*/
+@keyframes myfirst
+{
+    0%{
+        width:20px;
+        height:20px;
+    }
+    50%{
+        width:25px;
+        height:25px;
+    }
+    100% {
+        width:20px;
+        height:20px;
+    }
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+    0%{
+        width:20px;
+        height:20px;
+    }
+    50%{
+        width:25px;
+        height:25px;
+    }
+    100% {
+        width:20px;
+        height:20px;
+    }
+}
+
+@-webkit-keyframes myfirst /* Safari 和 Chrome */
+{
+    0%{
+        width:20px;
+        height:20px;
+    }
+    50%{
+        width:25px;
+        height:25px;
+    }
+    100% {
+        width:20px;
+        height:20px;
+    }
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+    0%{
+        width:20px;
+        height:20px;
+    }
+    50%{
+        width:25px;
+        height:25px;
+    }
+    100% {
+        width:20px;
+        height:20px;
+    }
+}
+/*点赞图标放大动画结束*/
+/*点赞数量加减动画开始*/
+@keyframes mypraise
+{
+    0%{
+        top:-15px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        top:-20px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        top:-25px;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        top:-30px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        top:-35px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+
+@-moz-keyframes mypraise /* Firefox */
+{
+    0%{
+        top:-15px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        top:-20px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        top:-25px;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        top:-30px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        top:-35px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+
+@-webkit-keyframes mypraise /* Safari 和 Chrome */
+{
+    0%{
+        top:-15px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        top:-20px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        top:-25px;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        top:-30px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        top:-35px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+
+@-o-keyframes mypraise /* Opera */
+{
+    0%{
+        top:-15px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+    25%{
+        top:-20px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    50%{
+        top:-25px;
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        -moz-opacity:1;
+    }
+    75%{
+        top:-30px;
+        opacity: 0.5;
+        filter: Alpha(opacity=50);
+        -moz-opacity:0.5;
+    }
+    100% {
+        top:-35px;
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        -moz-opacity:0;
+    }
+}
+/*点赞数量加减动画结束*/
+/*动态点赞结束*/
+
+
+/*.praise{*/
+    /*width:40px;*/
+    /*height:40px;*/
+    /*margin: 50px auto;*/
+    /*cursor: pointer;*/
+    /*font-size: 12px;*/
+    /*text-align:center;*/
+    /*position: relative;*/
+/*}*/
+/*#praise{*/
+    /*display:block;*/
+    /*width:40px;*/
+    /*height:40px;*/
+    /*margin:0 auto;*/
+/*}*/
+/*#praise-txt{*/
+    /*height:25px;*/
+    /*line-height:25px;*/
+    /*display: block;*/
+/*}*/
+/*.praise img{*/
+    /*width:40px;*/
+    /*height:40px;*/
+    /*display:block;*/
+    /*margin: 0 auto;*/
+/*}*/
+/*.praise img.animation{*/
+    /*animation: myfirst 0.5s;*/
+    /*-moz-animation: myfirst 0.5s;	!* Firefox *!*/
+    /*-webkit-animation: myfirst 0.5s;	!* Safari 和 Chrome *!*/
+    /*-o-animation: myfirst 0.5s;	!* Opera *!*/
+/*}*/
+/*#add-num{*/
+    /*display:none;*/
+/*}*/
+/*#add-num .add-animation{*/
+    /*color: #000;*/
+    /*position:absolute;*/
+    /*top:-15px;*/
+    /*left: 10px;*/
+    /*font-size: 15px;*/
+    /*opacity: 0;*/
+    /*filter: Alpha(opacity=0);*/
+    /*-moz-opacity:0;*/
+    /*animation: mypraise 0.5s ;*/
+    /*-moz-animation: mypraise 0.5s ;	!* Firefox *!*/
+    /*-webkit-animation: mypraise 0.5s ;	!* Safari 和 Chrome *!*/
+    /*-o-animation: mypraise 0.5s ;	!* Opera *!*/
+    /*font-style:normal;*/
+/*}*/
+/*.praise .hover , #add-num .add-animation.hover , #praise-txt.hover{*/
+    /*color: #EB4F38;*/
+/*}*/
+
