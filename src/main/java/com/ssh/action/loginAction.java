@@ -18,6 +18,8 @@ public class loginAction extends ActionSupport{
     public String login(){
         loginservice.login(1);
         System.out.println("testsss");
+        System.out.println("testsss");
+        System.out.println("testsss");
         return "index";
     }
 
