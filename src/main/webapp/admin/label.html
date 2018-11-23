@@ -13,104 +13,106 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
 
-    <script src="/static_resources/font-awesome/css/font-awesome.min.css"></script>
+    <link href="/static_resources/Admin/label/bootstrap-table.css" rel="stylesheet" media="screen">
+    <script src="/static_resources/Admin/label/bootstrap-table.js" type="text/javascript"></script>
+    <script src="/static_resources/Admin/label/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
 
-    <style type="text/css">
 
-        ul li {
-            list-style-type: none;
-        }
-
-        .box {
-            width: 200px;
-            /*border: 1px solid red;*/
-        }
-
-        ul {
-            margin-left: 20px;
-            /*border: 1px solid blue;*/
-        }
-
-        .menuUl li {
-            margin: 10px 0;
-        }
-
-        .menuUl li span:hover {
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .menuUl li i { margin-right: 10px; top: 0px; cursor: pointer; color: #161616; 			}
-    </style>
 </head>
 <body>
-<div class="innerUl"></div>
+<table id="table"></table>
+<script>
+    $(function () {
+        //先销毁表格，在初始化
+        $('#table').bootstrapTable('destroy').bootstrapTable({
+            columns: [{checkbox: true}, {
+                title: '标签名',
+                field: 'id',
+                align: 'center',
+            }, {
+                title: '列名二',
+                field: 'name',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    //处理格式化数据
+                }
+            },
+                {
+                    title: '添加时间',
+                    field: 'createDate',
+                    align: 'center',
+                }],
+            url: "user/list/", //请求数据的地址URL
+            method: 'post',//请求方式(*)
+            striped: true, //是否显示行间隔色
+            cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性(*)
+            pagination: true, //是否显示分页(*)
+            sortable: true, //是否启用排序
+            sortOrder: "desc", //排序方式
+            sidePagination: "server", //分页方式：client客户端分页，server服务端分页(*)
+            pageNumber: 1, //初始化加载第一页，默认第一页
+            pageSize: 10, //每页的记录行数(*)
+            pageList: [20, 50, 100], //可供选择的每页的行数(*)
+            showColumns: false, //是否显示所有的列
+            showRefresh: false, //是否显示刷新按钮
+            minimumCountColumns: 2, //最少允许的列数
+            clickToSelect: true, //是否启用点击选中行
+            height: 800,
+            detailView: true, //是否显示父子表    *关键位置*
+            queryParamsType: "limit",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            checkboxHeader: true,
+            search: false,
+            singleSelect: true,
+            striped: true,
+            showColumns: true, // 开启自定义列显示功能
+            responseHandler: function responseHandler(sourceData) {
+                //这里要做分页，所以对返回的数据进行了处理
+                return {
+                    "total": sourceData.total, // 总条数
+                    "rows": sourceData.rows // 返回的数据列表（后台返回一个list集合）
+                };
+            },
+            queryParams: function queryParams(params) {
+                //设置查询参数,就是把页面需要查询的字段通过jquery取值后传到后台
+                var param = {
+                    id: $("input[name='id']").val(),
+                    name: $("input[name='name']").val(),
+                    pageSize: params.limit, // 页面大小
+                    pageNumber: (params.offset) / 10 + 1 // 页码
+                };
+                return param;
+            },
+            //注册加载子表的事件。你可以理解为点击父表中+号时触发的事件
+            onExpandRow: function (index, row, $detail) {
+                //这一步就是相当于在当前点击列下新创建一个table
+                var cur_table = $detail.html('<table></table>').find('table');
+                var html = "";
+                html += "<table class='table'>";
+                html += "<thead>";
+                html += "<tr style='height: 40px;'>";
+                html += "<th>用户id</th>";
+                html += "<th>用户姓名</th>";
+                html += "</tr>";
+                html += "</thead>";
+                $.ajax({
+                    type: "post",
+                    url: "user/list", //子表请求的地址
+                    data: {id: row.id, name: row.name},//我这里是点击父表后，传递父表列id和nama到后台查询子表数据
+                    async: false, //很重要，这里要使用同步请求
+                    success: function (data) {
+                        html += '<ul class="list-group" >'; //遍历子表数据
+                        $.each(data.rows, function (n, value) {
+                            html += "<tr  align='center'>" + "<td>" + value.id + "</td>" + "<td>" + value.name + "</td>" + "</tr>";
+                        });
+                        html += '</table>';
+                        $detail.html(html); // 关键地方
+                    }
+                });
+            },
+        });
+    });
 
-<script type="text/javascript" src="/static_resources/Admin/js/proTree.js" ></script>
-<script type="text/javascript">
-    //后台传入的 标题列表
-    var arr = [{
-        id: 1,
-        name: "一级标题",
-        pid: 0
-    }, {
-        id: 2,
-        name: "二级标题",
-        pid: 0
-    }, {
-        id: 3,
-        name: "2.1级标题",
-        pid: 2
-    }, {
-        id: 4,
-        name: "2.2级标题",
-        pid: 2
-    }, {
-        id: 5,
-        name: "1.1级标题",
-        pid: 1
-    }, {
-        id: 6,
-        name: "1.2级标题",
-        pid: 1
-    }, {
-        id: 7,
-        name: "1.21级标题",
-        pid: 6
-    }, {
-        id: 8,
-        name: "三级标题",
-        pid: 0
-    }, {
-        id: 9,
-        name: "1.22级标题",
-        pid: 6
-    }, {
-        id: 10,
-        name: "1.221级标题",
-        pid: 9
-    }, {
-        id: 11,
-        name: "1.2211级标题",
-        pid: 10
-    }, {
-        id: 12,
-        name: "1.2212级标题",
-        pid: 10
-    }
-
-    ];
-    //标题的图标是集成bootstrap 的图标  更改 请参考bootstrap的字体图标替换自己想要的图标
-    $(".innerUl").ProTree({
-        arr: arr,
-        simIcon: "fa fa-file-o",//单个标题字体图标 不传默认glyphicon-file
-        mouIconOpen: "fa fa-folder-open-o",//含多个标题的打开字体图标  不传默认glyphicon-folder-open
-        mouIconClose:"fa fa-folder-o",//含多个标题的关闭的字体图标  不传默认glyphicon-folder-close
-        callback: function(id,name) {
-            alert("你选择的id是" + id + "，名字是" + name);
-        }
-
-    })
 </script>
 </body>
 </html>

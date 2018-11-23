@@ -179,7 +179,7 @@
         <div class="navMenu-top">
             <div id="mini" style=""><i class="fa fa-bars fa-2x"></i></div>
         </div>
-        <ul class="navMenu">
+        <ul class="navMenu" id="Menu">
             <li><a href="javascript:;" class="afinve"> <i class="icon_1"></i> <span class="">电影管理</span> <span
                     class="arrow"></span> </a>
                 <ul class="sub-menu">
@@ -189,12 +189,12 @@
 
                 </ul>
             </li>
-            <li><a href="javascript:;" class="afinve"> <i class="icon_2"></i> <span class="nav-text">用户管理</span> <span
+            <li id="usertest"><a href="javascript:;" class="afinve"> <i class="icon_2"></i> <span class="nav-text">用户管理</span> <span
                     class="arrow"></span> </a>
-                <ul class="sub-menu">
-                    <li><a href="javascript:;"><span>用户权限</span></a></li>
-                    <li><a href="javascript:;"><span>删除用户</span></a></li>
-                </ul>
+                <!--<ul class="sub-menu">-->
+                    <!--<li><a href="javascript:;"><span>用户权限</span></a></li>-->
+                    <!--<li><a href="javascript:;"><span>删除用户</span></a></li>-->
+                <!--</ul>-->
             </li>
             <li><a href="javascript:;" class="afinve"> <i class="icon_3"></i> <span class="nav-text">个人信息</span> <span
                     class="arrow"></span> </a>
@@ -239,11 +239,11 @@
 <!--上传开始-->
 
 <!--上传end-->
-
+<div id="content"></div>
 <!--通过点击不同的导航栏显示不同的内容-->
 <script>
     $(function() {
-        $(".userMenu").on("click", "li", function() {
+        $(".Menu").on("click", "li", function() {
             var sId = $(this).data("id"); //获取data-id的值
             window.location.hash = sId; //设置锚点
             loadInner(sId);
@@ -253,8 +253,8 @@
             var sId = window.location.hash;
             var pathn, i;
             switch(sId) {
-                case "#center":
-                    pathn = "user_center.html";
+                case "#usertest":
+                    pathn = "user.html";
                     i = 0;
                     break;
                 case "#account":
@@ -275,7 +275,7 @@
                     break;
             }
             $("#content").load(pathn); //加载相对应的内容
-            $(".userMenu li").eq(i).addClass("current").siblings().removeClass("current"); //当前列表高亮
+            $(".Menu li").eq(i).addClass("current").siblings().removeClass("current"); //当前列表高亮
         }
         var sId = window.location.hash;
         loadInner(sId);
