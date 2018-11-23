@@ -20,6 +20,9 @@ public class loginAction extends ActionSupport{
         System.out.println("testsss");
         System.out.println("testsss");
         System.out.println("testsss");
+        System.out.println("testsss");
+        System.out.println("testsss");
+        System.out.println("testsss");
         return "index";
     }
 
