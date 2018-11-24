@@ -1,23 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>显示用户界面</title>
-
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
-
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
-
-</head>
-<body>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!--删除用户的时候注意异步传输的id的获取-->
-<div class="container">
+<div>
     <table class="table table-bordered" id="table_user">
         <caption class="text-center" style="color: #2f904d;font-size: 25px">用户信息表</caption>
         <thead>
@@ -107,7 +91,7 @@
         </tbody>
     </table>
 
-    <div class="container">
+    <div>
         <div class="inner clearfix">
             <section id="main-content">
 
@@ -179,5 +163,3 @@
         });
     </script>
 </div>
-</body>
-</html>

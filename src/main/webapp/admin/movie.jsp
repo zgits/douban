@@ -1,26 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>有关电影的</title>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-    <script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
-
-    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-    <script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
 
 
     <link href="/static_resources/Admin/label/bootstrap-table.css" rel="stylesheet" media="screen">
     <script src="/static_resources/Admin/label/bootstrap-table.js" type="text/javascript"></script>
     <script src="/static_resources/Admin/label/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>
 
-</head>
-<div class="container">
-    <table class="table table-bordered" id="table_user">
+
+<div >
+    <table style="width: 100%" class="table table-bordered" id="table_user">
         <caption class="text-center" style="color: #2f904d;font-size: 25px">电影信息表</caption>
         <thead>
         <tr>
@@ -78,7 +67,7 @@
         </tbody>
     </table>
 
-    <div class="container">
+    <div class="">
         <div class="inner clearfix">
             <section id="main-content">
 
@@ -151,6 +140,3 @@
     </script>
 </div>
 <!--增加电影之后，查看上传的电影信息，修改，删除，查找-->
-
-</body>
-</html>
