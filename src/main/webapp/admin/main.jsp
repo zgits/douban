@@ -27,7 +27,7 @@
 <body>
 
 <!--侧边导航栏开始-->
-<div class="nav col-lg-3">
+<div  class="nav col-lg-3" style="min-height: 100%;">
     <div class="nav-top">
         <div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="/static_resources/Admin/nav/images/mini.png" ></div>
     </div>
@@ -36,7 +36,8 @@
             <a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>管理电影</span><i class="my-icon nav-more"></i></a>
             <ul>
                 <li id="li_one"><a href="javascript:;"><span >查看电影</span></a></li>
-                <li id="li_two"><a href="javascript:;"><span >上传信息</span></a></li>
+                <li id="li_two"><a href="javascript:;"><span >添加电影</span></a></li>
+                <li id="li_five"><a href="javascript:;"><span >上传电影媒体信息</span></a></li>
             </ul>
         </li>
         <li class="nav-item" id="li_three">
@@ -59,18 +60,21 @@
 </div>
 <!--侧边导航栏结束-->
 <!--右侧展示内容-->
-<div class="container col-lg-10" style="background-color: white">
+<div class="container col-lg-10" style="background-color: white;">
     <div id="matter1">
         <jsp:include page="movie.jsp"></jsp:include>
     </div>
     <div id="matter2" style="display: none">
-        <jsp:include page="upload.jsp"></jsp:include>
+        <jsp:include page="addmovie.jsp"></jsp:include>
     </div>
     <div id="matter3" style="display: none">
         <jsp:include page="user.jsp"></jsp:include>
     </div>
     <div id="matter4" style="display: none">
         <jsp:include page="label.jsp"></jsp:include>
+    </div>
+    <div id="matter5" style="display: none">
+        <jsp:include page="upload.jsp"></jsp:include>
     </div>
 </div>
 <!--右侧展示内容end-->
@@ -91,8 +95,11 @@
         $("#li_four").click(function () {
             openMatter(4);
         });
+        $("#li_five").click(function () {
+            openMatter(5);
+        });
         function openMatter(obj) {
-            for (var i = 1; i < 5; i++) {
+            for (var i = 1; i < 6; i++) {
                 if (i == obj) {
                     temp = "block";
                 } else {

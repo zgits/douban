@@ -10,16 +10,15 @@ public class image {
 
     private int movieId;//对应的电影id，可以为空
 
-    private int trailerId;//对应的预告片id，可以为空，两个id分别对应电影和预告片，可以不是同一个id。
+    //取消了上传预告片图片的功能，改为了从后台截取视频的图片传到前端。
 
-    String path;//保存图片的地址
+    private String path;//保存图片的地址
 
     @Override
     public String toString() {
         return "image{" +
                 "id=" + id +
                 ", movieId=" + movieId +
-                ", trailerId=" + trailerId +
                 ", path='" + path + '\'' +
                 '}';
     }
@@ -40,13 +39,6 @@ public class image {
         this.movieId = movieId;
     }
 
-    public int getTrailerId() {
-        return trailerId;
-    }
-
-    public void setTrailerId(int trailerId) {
-        this.trailerId = trailerId;
-    }
 
     public String getPath() {
         return path;
