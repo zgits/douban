@@ -30,6 +30,7 @@ public class UserStatusDaoImpl implements UserStatusDao{
     @Override
     public int insertForbiddenWords(UserStatus userStatus) {
         try{
+
             sessionFactory.getCurrentSession().save(userStatus);//调用sessionFactory的方法
             return 1;
         }catch (Exception e){

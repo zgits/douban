@@ -18,13 +18,30 @@
     <!--显示星数-->
     <link href="static_resources/star/star.css" rel="stylesheet">
 
+    <style>
+        #wapper{
+            position: relative;   /*重要！保证footer是相对于wapper位置绝对*/
+            height: auto;          /* 保证页面能撑开浏览器高度时显示正常*/
+            min-height: 100%  /* IE6不支持，IE6要单独配置*/
+        }
+        #footer{
+            position: absolute;  bottombottom: 0; /* 关键 */
+            left:0; /* IE下一定要记得 */
+            height: 60px;         /* footer的高度一定要是固定值*/
+        }
+        #main-content{
+            padding-bottom: 60px; /*重要！给footer预留的空间*/
+        }
+    </style>
+
 </head>
 <body>
 <!--logo,导航栏，搜索栏，个人信息栏，---慕课---->
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.html"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="main.html"><img class="img-circle" src="image/logo.PNG"
+                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
             <ul class="nav navbar-nav">
@@ -51,7 +68,9 @@
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
+                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg"
+                                                                                        class="img-circle img-responsive"
+                                                                                        style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
                 </ul>
             </div>
@@ -126,9 +145,9 @@
                         <h6>毒液：致命守护.</h6>
                         <div class="text-center">
                             <div id="star_con_movieid4" class="star-vote">
-                            <span id="add_star_movieid4" class="add-star"></span>
-                            <span id="del_star_movieid4" class="del-star"></span>
-                        </div>
+                                <span id="add_star_movieid4" class="add-star"></span>
+                                <span id="del_star_movieid4" class="del-star"></span>
+                            </div>
                             <script>
                                 window.onload = showStar_movieid4(7.8);
 
@@ -144,7 +163,8 @@
                                     del_star.style.backgroundPosition = -del_move + "px 0px";
                                     del_star.style.left = del_move + "px";
                                 }
-                            </script>&nbsp;7.6</div>
+                            </script>&nbsp;7.6
+                        </div>
                         <p>
                             <a href="moviedetails.html" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
@@ -156,10 +176,11 @@
                     <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
                     <div class="caption">
                         <h6>毒液：致命守护.</h6>
-                        <div class="text-center"> <div id="star_con_movieid5" class="star-vote">
-                            <span id="add_star_movieid5" class="add-star"></span>
-                            <span id="del_star_movieid5" class="del-star"></span>
-                        </div>
+                        <div class="text-center">
+                            <div id="star_con_movieid5" class="star-vote">
+                                <span id="add_star_movieid5" class="add-star"></span>
+                                <span id="del_star_movieid5" class="del-star"></span>
+                            </div>
                             <script>
                                 window.onload = showStar_movieid5(7.8);
 
@@ -175,7 +196,8 @@
                                     del_star.style.backgroundPosition = -del_move + "px 0px";
                                     del_star.style.left = del_move + "px";
                                 }
-                            </script>&nbsp;7.6</div>
+                            </script>&nbsp;7.6
+                        </div>
                         <p>
                             <a href="moviedetails.html" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
@@ -187,10 +209,11 @@
                     <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
                     <div class="caption">
                         <h6>毒液：致命守护.</h6>
-                        <div class="text-center"> <div id="star_con_movieid6" class="star-vote">
-                            <span id="add_star_movieid6" class="add-star"></span>
-                            <span id="del_star_movieid6" class="del-star"></span>
-                        </div>
+                        <div class="text-center">
+                            <div id="star_con_movieid6" class="star-vote">
+                                <span id="add_star_movieid6" class="add-star"></span>
+                                <span id="del_star_movieid6" class="del-star"></span>
+                            </div>
                             <script>
                                 window.onload = showStar_movieid6(7.8);
 
@@ -206,7 +229,8 @@
                                     del_star.style.backgroundPosition = -del_move + "px 0px";
                                     del_star.style.left = del_move + "px";
                                 }
-                            </script>&nbsp;7.6</div>
+                            </script>&nbsp;7.6
+                        </div>
                         <p>
                             <a href="moviedetails.html" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
@@ -218,10 +242,11 @@
                     <img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">
                     <div class="caption">
                         <h6>柯南：零的执行者</h6>
-                        <div class="text-center"> <div id="star_con_movieid8" class="star-vote">
-                            <span id="add_star_movieid8" class="add-star"></span>
-                            <span id="del_star_movieid8" class="del-star"></span>
-                        </div>
+                        <div class="text-center">
+                            <div id="star_con_movieid8" class="star-vote">
+                                <span id="add_star_movieid8" class="add-star"></span>
+                                <span id="del_star_movieid8" class="del-star"></span>
+                            </div>
                             <script>
                                 window.onload = showStar_movieid8(7.8);
 
@@ -237,7 +262,8 @@
                                     del_star.style.backgroundPosition = -del_move + "px 0px";
                                     del_star.style.left = del_move + "px";
                                 }
-                            </script>&nbsp;7.6</div>
+                            </script>&nbsp;7.6
+                        </div>
                         <p>
                             <a href="moviedetails.html" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
@@ -249,10 +275,11 @@
                     <img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">
                     <div class="caption">
                         <h6>柯南：零的执行者</h6>
-                        <div class="text-center"> <div id="star_con_movieid3" class="star-vote">
-                            <span id="add_star_movieid3" class="add-star"></span>
-                            <span id="del_star_movieid3" class="del-star"></span>
-                        </div>
+                        <div class="text-center">
+                            <div id="star_con_movieid3" class="star-vote">
+                                <span id="add_star_movieid3" class="add-star"></span>
+                                <span id="del_star_movieid3" class="del-star"></span>
+                            </div>
                             <script>
                                 window.onload = showStar_movieid3(7.8);
 
@@ -268,7 +295,8 @@
                                     del_star.style.backgroundPosition = -del_move + "px 0px";
                                     del_star.style.left = del_move + "px";
                                 }
-                            </script>&nbsp;7.6</div>
+                            </script>&nbsp;7.6
+                        </div>
                         <p>
                             <a href="moviedetails.html" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
@@ -282,9 +310,9 @@
                         <h6>柯南：零的执行者</h6>
                         <h6 class="text-center">
                             <div id="star_con_movieid1" class="star-vote">
-                            <span id="add_star_movieid1" class="add-star"></span>
-                            <span id="del_star_movieid1" class="del-star"></span>
-                        </div>
+                                <span id="add_star_movieid1" class="add-star"></span>
+                                <span id="del_star_movieid1" class="del-star"></span>
+                            </div>
                             <script>
                                 window.onload = showStar_movieid1(7.8);
 
@@ -300,7 +328,8 @@
                                     del_star.style.backgroundPosition = -del_move + "px 0px";
                                     del_star.style.left = del_move + "px";
                                 }
-                            </script>&nbsp;7.6</h6>
+                            </script>&nbsp;7.6
+                        </h6>
                         <p>
                             <a href="moviedetails.html" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
@@ -312,10 +341,11 @@
                     <img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">
                     <div class="caption">
                         <h6>柯南：零的执行者</h6>
-                        <div class="text-center"> <div id="star_con_movieid2" class="star-vote">
-                            <span id="add_star_movieid2" class="add-star"></span>
-                            <span id="del_star_movieid2" class="del-star"></span>
-                        </div>
+                        <div class="text-center">
+                            <div id="star_con_movieid2" class="star-vote">
+                                <span id="add_star_movieid2" class="add-star"></span>
+                                <span id="del_star_movieid2" class="del-star"></span>
+                            </div>
                             <script>
                                 window.onload = showStar_movieid2(7.8);
 
@@ -331,7 +361,8 @@
                                     del_star.style.backgroundPosition = -del_move + "px 0px";
                                     del_star.style.left = del_move + "px";
                                 }
-                            </script>&nbsp;7.6</div>
+                            </script>&nbsp;7.6
+                        </div>
                         <p>
                             <a href="moviedetails.html" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
@@ -393,9 +424,12 @@
             </div>
         </div>
     </div>
+    <!--底部版权信息-->
 </div>
 
-<!--底部版权信息-->
+<div style="height: 120px">
+
+</div>
 <div style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
@@ -405,6 +439,5 @@
 
     </div>
 </div>
-
 </body>
 </html>

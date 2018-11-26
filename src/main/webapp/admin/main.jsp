@@ -29,7 +29,7 @@
 <!--侧边导航栏开始-->
 <div  class="nav col-lg-3" style="min-height: 100%;">
     <div class="nav-top">
-        <div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="/static_resources/Admin/nav/Images/mini.png" ></div>
+        <div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="/static_resources/Admin/nav/images/mini.png" ></div>
     </div>
     <ul>
         <li class="nav-item">

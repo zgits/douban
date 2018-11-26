@@ -6,6 +6,8 @@
 <%--<script src="/static_resources/Admin/Label/bootstrap-table-zh-CN.js" charset="UTF-8" type="text/javascript"></script>--%>
 
 
+<%--上传--%>
+
 <%--参考https://www.cnblogs.com/wuhuacong/p/7284420.html--%>
 <%--数据--%>
 <div>
@@ -26,9 +28,10 @@
             <th>1</th>
             <th>无</th>
             <th>
-                <button class="btn btn-success">增加</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加</button>
                 <button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"
-                        data-target="#edit_label">修改</button>
+                        data-target="#edit_label">修改
+                </button>
                 <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
                 <button class="btn btn-danger" onClick="delcfm()">删除</button>
             </th>
@@ -38,9 +41,10 @@
             <th>1</th>
             <th>无</th>
             <th>
-                <button class="btn btn-success">增加</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加</button>
                 <button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"
-                        data-target="#edit_label">修改</button>
+                        data-target="#edit_label">修改
+                </button>
                 <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
                 <button class="btn btn-danger" onClick="delcfm()">删除</button>
             </th>
@@ -50,9 +54,10 @@
             <th>1</th>
             <th>无</th>
             <th>
-                <button class="btn btn-success">增加</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加</button>
                 <button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info(1)"
-                        data-target="#edit_label">修改</button>
+                        data-target="#edit_label">修改
+                </button>
                 <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
                 <button class="btn btn-danger" onClick="delcfm()">删除</button>
             </th>
@@ -62,9 +67,11 @@
             <th>1</th>
             <th>无</th>
             <th>
-                <button class="btn btn-success">增加</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加
+                </button>
                 <button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"
-                        data-target="#edit_label">修改</button>
+                        data-target="#edit_label">修改
+                </button>
 
                 <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
                 <button class="btn btn-danger" onClick="delcfm()">删除</button>
@@ -76,7 +83,8 @@
             <th>全部地区</th>
             <th>
                 <button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"
-                        data-target="#edit_label">修改</button>
+                        data-target="#edit_label">修改
+                </button>
                 <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
                 <button class="btn btn-danger" onClick="delcfm()">删除</button>
             </th>
@@ -84,7 +92,7 @@
         </tbody>
     </table>
     <%--展示数据end--%>
-        <%--分页--%>
+    <%--分页--%>
     <div>
         <div class="inner clearfix">
             <section id="main-content">
@@ -115,7 +123,7 @@
 
         </div>
     </div>
-        <%--分页end--%>
+    <%--分页end--%>
     <!--修改弹出框样式-->
     <form method="post" action="" class="form-horizontal" role="form" id="form_data" onsubmit="return check_form()"
           style="margin: 20px;">
@@ -271,203 +279,60 @@
     </div><!-- /.modal -->
     <%--删除弹出框end--%>
 
-    <!--弹出框-->
-    <!--样例地址-->
-    <!--https://www.cnblogs.com/shenzikun1314/p/6852928.html-->
-    <%--<script src="/static_resources/Admin/dialog/js/showBo.js"></script>--%>
-    <%--<script>--%>
-    <%--//注册删除按钮的事件--%>
+    <%--增加模糊框--%>
 
-    <%--$("#btn_delete1").click(function () {--%>
-    <%--//取表格的选中行数据--%>
-    <%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
-    <%--//    if (arrselections.length <= 0) {--%>
-    <%--//    toastr.warning('请选择有效数据');--%>
-    <%--//    return;--%>
-    <%--//    }--%>
-
-    <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
-    <%--alert(a);--%>
-    <%--if (!e) {--%>
-    <%--return;--%>
-    <%--}--%>
-    <%--$.ajax({--%>
-    <%--type: "post",--%>
-    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
-    <%--data: {"id": "1"},//要提交的数据--%>
-    <%--success: function (data, status) {--%>
-    <%--if (status == "success") {--%>
-    <%--toastr.success('提交数据成功');--%>
-    <%--$("#table_user").bootstrapTable('refresh');--%>
-    <%--}--%>
-    <%--},--%>
-    <%--error: function () {--%>
-    <%--toastr.error('Error');--%>
-    <%--},--%>
-    <%--complete: function () {--%>
-
-    <%--}--%>
-
-    <%--});--%>
-    <%--});--%>
-    <%--});--%>
+    <form method="post" action="" class="form-horizontal" role="form" id="form_data" onsubmit="return check_form()"
+          style="margin: 20px;">
+        <div class="modal fade" id="addLabel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="addMessage">
+                            增加分类
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="addLabelName" class="col-sm-3 control-label">分类名字</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="addLabelName" name="addLabel"
+                                           placeholder="电影名字">
+                                </div>
+                            </div>
 
 
-    <%--</script>--%>
-    <%--<script>--%>
-    <%--//注册删除按钮的事件--%>
+                            <!--复选框end-->
+                            <div class="form-group">
+                                <label for="edit_country" class="col-sm-3 control-label">选择分类</label>
+                                <div class="col-sm-9">
+                                    <select id="edit_country" class="form-control">
+                                        <option>全部地区</option>
+                                        <option>全部年代</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
 
-    <%--$("#btn_delete2").click(function () {--%>
-    <%--//取表格的选中行数据--%>
-    <%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
-    <%--//    if (arrselections.length <= 0) {--%>
-    <%--//    toastr.warning('请选择有效数据');--%>
-    <%--//    return;--%>
-    <%--//    }--%>
+                            </div>
 
-    <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
-    <%--alert(a);--%>
-    <%--if (!e) {--%>
-    <%--return;--%>
-    <%--}--%>
-    <%--$.ajax({--%>
-    <%--type: "post",--%>
-    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
-    <%--data: {"id": "1"},//要提交的数据--%>
-    <%--success: function (data, status) {--%>
-    <%--if (status == "success") {--%>
-    <%--toastr.success('提交数据成功');--%>
-    <%--$("#table_user").bootstrapTable('refresh');--%>
-    <%--}--%>
-    <%--},--%>
-    <%--error: function () {--%>
-    <%--toastr.error('Error');--%>
-    <%--},--%>
-    <%--complete: function () {--%>
-
-    <%--}--%>
-
-    <%--});--%>
-    <%--});--%>
-    <%--});--%>
-
-
-    <%--</script>--%>
-    <%--<script>--%>
-    <%--//注册删除按钮的事件--%>
-
-    <%--$("#btn_delete3").click(function () {--%>
-    <%--//取表格的选中行数据--%>
-    <%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
-    <%--//    if (arrselections.length <= 0) {--%>
-    <%--//    toastr.warning('请选择有效数据');--%>
-    <%--//    return;--%>
-    <%--//    }--%>
-
-    <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
-    <%--alert(a);--%>
-    <%--if (!e) {--%>
-    <%--return;--%>
-    <%--}--%>
-    <%--$.ajax({--%>
-    <%--type: "post",--%>
-    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
-    <%--data: {"id": "1"},//要提交的数据--%>
-    <%--success: function (data, status) {--%>
-    <%--if (status == "success") {--%>
-    <%--toastr.success('提交数据成功');--%>
-    <%--$("#table_user").bootstrapTable('refresh');--%>
-    <%--}--%>
-    <%--},--%>
-    <%--error: function () {--%>
-    <%--toastr.error('Error');--%>
-    <%--},--%>
-    <%--complete: function () {--%>
-
-    <%--}--%>
-
-    <%--});--%>
-    <%--});--%>
-    <%--});--%>
-
-
-    <%--</script>--%>
-    <%--<script>--%>
-    <%--//注册删除按钮的事件--%>
-
-    <%--$("#btn_delete4").click(function () {--%>
-    <%--//取表格的选中行数据--%>
-    <%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
-    <%--//    if (arrselections.length <= 0) {--%>
-    <%--//    toastr.warning('请选择有效数据');--%>
-    <%--//    return;--%>
-    <%--//    }--%>
-
-    <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
-    <%--alert(a);--%>
-    <%--if (!e) {--%>
-    <%--return;--%>
-    <%--}--%>
-    <%--$.ajax({--%>
-    <%--type: "post",--%>
-    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
-    <%--data: {"id": "1"},//要提交的数据--%>
-    <%--success: function (data, status) {--%>
-    <%--if (status == "success") {--%>
-    <%--toastr.success('提交数据成功');--%>
-    <%--$("#table_user").bootstrapTable('refresh');--%>
-    <%--}--%>
-    <%--},--%>
-    <%--error: function () {--%>
-    <%--toastr.error('Error');--%>
-    <%--},--%>
-    <%--complete: function () {--%>
-
-    <%--}--%>
-
-    <%--});--%>
-    <%--});--%>
-    <%--});--%>
-
-
-    <%--</script>--%>
-    <%--<script>--%>
-    <%--//注册删除按钮的事件--%>
-
-    <%--$("#btn_delete5").click(function () {--%>
-    <%--//取表格的选中行数据--%>
-    <%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
-    <%--//    if (arrselections.length <= 0) {--%>
-    <%--//    toastr.warning('请选择有效数据');--%>
-    <%--//    return;--%>
-    <%--//    }--%>
-
-    <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
-    <%--alert(a);--%>
-    <%--if (!e) {--%>
-    <%--return;--%>
-    <%--}--%>
-    <%--$.ajax({--%>
-    <%--type: "post",--%>
-    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
-    <%--data: {"id": "1"},//要提交的数据--%>
-    <%--success: function (data, status) {--%>
-    <%--if (status == "success") {--%>
-    <%--toastr.success('提交数据成功');--%>
-    <%--$("#table_user").bootstrapTable('refresh');--%>
-    <%--}--%>
-    <%--},--%>
-    <%--error: function () {--%>
-    <%--toastr.error('Error');--%>
-    <%--},--%>
-    <%--complete: function () {--%>
-
-    <%--}--%>
-
-    <%--});--%>
-    <%--});--%>
-    <%--});--%>
-
-
-    <%--</script>--%>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            提交
+                        </button>
+                        <%--<span id="tip"> </span>--%>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+    </form>
 </div>
