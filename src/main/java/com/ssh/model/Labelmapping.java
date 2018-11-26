@@ -3,7 +3,7 @@ package com.ssh.model;
 /**
  * Created by 幻夜~星辰 on 2018/11/19.
  */
-public class labelmapping {
+public class Labelmapping {
 
     private int id;//自增id
 
@@ -13,7 +13,7 @@ public class labelmapping {
 
     @Override
     public String toString() {
-        return "labelmapping{" +
+        return "Labelmapping{" +
                 "id=" + id +
                 ", movieId=" + movieId +
                 ", labelId=" + labelId +

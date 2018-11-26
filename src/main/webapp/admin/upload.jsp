@@ -55,7 +55,7 @@
         maxFilesNum: 5,
         showUpload: false, //是否显示上传按钮
         showRemove:false,
-        //allowedFileTypes: ['image', 'video', 'flash'],
+        //allowedFileTypes: ['Image', 'video', 'flash'],
         slugCallback: function(filename) {
             return filename.replace('(', '_').replace(']', '_');
         },

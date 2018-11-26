@@ -4,7 +4,7 @@ package com.ssh.model;
  * Created by 幻夜~星辰 on 2018/11/19.
  * 分类，电影的分类
  */
-public class label {
+public class Label {
 
     private int id;//自增id
 
@@ -16,7 +16,7 @@ public class label {
 
     @Override
     public String toString() {
-        return "label{" +
+        return "Label{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", parentId=" + parentId +

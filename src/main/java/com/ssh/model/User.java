@@ -7,7 +7,7 @@ import java.util.List;
  * Created by 幻夜~星辰 on 2018/11/19.
  * 用户bean
  */
-public class user {
+public class User {
 
     private int id;//自增id
 
@@ -23,11 +23,11 @@ public class user {
 
     private Date last_login;//登录时间，每次登录更新一次
 
-    private List<tips_message> tips_messages;//提醒消息集合
+    private List<Tips_message> Tips_messages;//提醒消息集合
 
     @Override
     public String toString() {
-        return "user{" +
+        return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
@@ -35,7 +35,7 @@ public class user {
                 ", head_image='" + head_image + '\'' +
                 ", person_profile='" + person_profile + '\'' +
                 ", last_login=" + last_login +
-                ", tips_messages=" + tips_messages +
+                ", Tips_messages=" + Tips_messages +
                 '}';
     }
 
@@ -48,12 +48,12 @@ public class user {
     }
 
 
-    public List<tips_message> getTips_messages() {
-        return tips_messages;
+    public List<Tips_message> getTips_messages() {
+        return Tips_messages;
     }
 
-    public void setTips_messages(List<tips_message> tips_messages) {
-        this.tips_messages = tips_messages;
+    public void setTips_messages(List<Tips_message> Tips_messages) {
+        this.Tips_messages = Tips_messages;
     }
 
 

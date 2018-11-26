@@ -7,7 +7,7 @@ import java.util.Date;
  * <p>
  * 评论的回复
  */
-public class replycomment {
+public class Replycomment {
 
     private int id;//自增id
 
@@ -21,13 +21,13 @@ public class replycomment {
 
     private int comment_id;//要回复评论的id
 
-    private int reply_type;//回复的类型，因为回复可以是针对评论的回复(comment),1来表示，也可以是针对回复的回复(reply)，2来表示， 通过这个字段来区分两种情景。
+    private int reply_type;//回复的类型，因为回复可以是针对评论的回复(Comment),1来表示，也可以是针对回复的回复(reply)，2来表示， 通过这个字段来区分两种情景。
 
     private int reply_id;//回复目标的id，如果reply_type是comment的话，那么reply_id＝comment_id，如果reply_type是reply的话，这表示这条回复的父回复。
 
     @Override
     public String toString() {
-        return "replycomment{" +
+        return "Replycomment{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", time=" + time +

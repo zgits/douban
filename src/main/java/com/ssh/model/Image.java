@@ -4,7 +4,7 @@ package com.ssh.model;
  * Created by 幻夜~星辰 on 2018/11/19.
  * 电影和预告片的图片
  */
-public class image {
+public class Image {
 
     private int id;//自增id
 
@@ -16,7 +16,7 @@ public class image {
 
     @Override
     public String toString() {
-        return "image{" +
+        return "Image{" +
                 "id=" + id +
                 ", movieId=" + movieId +
                 ", path='" + path + '\'' +

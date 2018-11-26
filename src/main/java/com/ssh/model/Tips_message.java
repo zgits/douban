@@ -7,7 +7,7 @@ import java.util.Date;
  * <p>
  * 提示消息
  */
-public class tips_message {
+public class Tips_message {
 
     private int id;//自增id
 
@@ -23,7 +23,7 @@ public class tips_message {
 
     @Override
     public String toString() {
-        return "tips_message{" +
+        return "Tips_message{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", message='" + message + '\'' +

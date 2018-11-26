@@ -7,24 +7,36 @@ import java.util.Date;
  *
  * 用户的状态
  */
-public class userStatus {
+public class UserStatus {
 
     private int id;//自增id
 
     private int userId;//对应用户表中的user的id
 
+    private int days;//禁言天数
+
     private Date startTime;//禁言开始时间
 
     private Date endTime;//禁言结束时间
 
+
     @Override
     public String toString() {
-        return "userStatus{" +
+        return "UserStatus{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", days=" + days +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 '}';
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
     }
 
     public int getId() {

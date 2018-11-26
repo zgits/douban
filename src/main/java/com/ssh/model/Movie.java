@@ -7,7 +7,7 @@ import java.util.List;
  * Created by 幻夜~星辰 on 2018/11/19.
  * 电影
  */
-public class movie {
+public class Movie {
 
     private int id;//自增id
 
@@ -31,17 +31,17 @@ public class movie {
 
     private String release_region;//上映地区
 
-    private List<comment> comments;//评论内容
+    private List<Comment> Comments;//评论内容
 
-    private List<image> images;//电影的海报，图片之类的
+    private List<Image> Images;//电影的海报，图片之类的
 
-    private List<trailer> trailers;//电影对应的预告片
+    private List<Trailer> Trailers;//电影对应的预告片
 
-    private List<label> labels;//对应的标签集合
+    private List<Label> Labels;//对应的标签集合
 
     @Override
     public String toString() {
-        return "movie{" +
+        return "Movie{" +
                 "id=" + id +
                 ", moviename='" + moviename + '\'' +
                 ", filmscore=" + filmscore +
@@ -53,19 +53,19 @@ public class movie {
                 ", region='" + region + '\'' +
                 ", release_time=" + release_time +
                 ", release_region='" + release_region + '\'' +
-                ", comments=" + comments +
-                ", images=" + images +
-                ", trailers=" + trailers +
-                ", labels=" + labels +
+                ", Comments=" + Comments +
+                ", Images=" + Images +
+                ", Trailers=" + Trailers +
+                ", Labels=" + Labels +
                 '}';
     }
 
-    public List<label> getLabels() {
-        return labels;
+    public List<Label> getLabels() {
+        return Labels;
     }
 
-    public void setLabels(List<label> labels) {
-        this.labels = labels;
+    public void setLabels(List<Label> Labels) {
+        this.Labels = Labels;
     }
 
     public int getId() {
@@ -156,27 +156,27 @@ public class movie {
         this.release_region = release_region;
     }
 
-    public List<comment> getComments() {
-        return comments;
+    public List<Comment> getComments() {
+        return Comments;
     }
 
-    public void setComments(List<comment> comments) {
-        this.comments = comments;
+    public void setComments(List<Comment> Comments) {
+        this.Comments = Comments;
     }
 
-    public List<image> getImages() {
-        return images;
+    public List<Image> getImages() {
+        return Images;
     }
 
-    public void setImages(List<image> images) {
-        this.images = images;
+    public void setImages(List<Image> Images) {
+        this.Images = Images;
     }
 
-    public List<trailer> getTrailers() {
-        return trailers;
+    public List<Trailer> getTrailers() {
+        return Trailers;
     }
 
-    public void setTrailers(List<trailer> trailers) {
-        this.trailers = trailers;
+    public void setTrailers(List<Trailer> Trailers) {
+        this.Trailers = Trailers;
     }
 }

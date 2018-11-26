@@ -7,7 +7,7 @@ import java.util.List;
  * Created by 幻夜~星辰 on 2018/11/19.
  * 评论电影的bean
  */
-public class comment {
+public class Comment {
 
 
     private int id;//自增id
@@ -29,11 +29,11 @@ public class comment {
 
     private Date time;//评论的时间
 
-    private List<replycomment> replycomments;//评论的回复的集合
+    private List<Replycomment> Replycomments;//评论的回复的集合
 
     @Override
     public String toString() {
-        return "comment{" +
+        return "Comment{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", score=" + score +
@@ -42,7 +42,7 @@ public class comment {
                 ", content='" + content + '\'' +
                 ", trailerId=" + trailerId +
                 ", time=" + time +
-                ", replycomments=" + replycomments +
+                ", Replycomments=" + Replycomments +
                 '}';
     }
 
@@ -54,12 +54,12 @@ public class comment {
         this.trailerId = trailerId;
     }
 
-    public List<replycomment> getReplycomments() {
-        return replycomments;
+    public List<Replycomment> getReplycomments() {
+        return Replycomments;
     }
 
-    public void setReplycomments(List<replycomment> replycomments) {
-        this.replycomments = replycomments;
+    public void setReplycomments(List<Replycomment> Replycomments) {
+        this.Replycomments = Replycomments;
     }
 
     public Date getTime() {
