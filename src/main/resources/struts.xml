@@ -4,13 +4,13 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 
-    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.devMode" value="true"/>
     <constant name="struts.objectFactory" value="spring" />
 
-    <package name="user" namespace="/" extends="struts-default">
+    <package name="com.ssh.action" namespace="/" extends="struts-default">
 
-        <action name="test_*" class="login" method="{1}">
-            <result name="index">/success.jsp</result>
+        <action name="forbidden" class="userStatus" method="insertForbiddenWords">
+            <result name="forbidden">/success.jsp</result>
         </action>
 
     </package>

@@ -1,5 +1,6 @@
 package com.ssh.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -7,6 +8,8 @@ import java.util.Date;
  *
  * 用户的状态
  */
+@Entity
+@Table(name="userstatus")
 public class UserStatus {
 
     private int id;//自增id
@@ -31,6 +34,8 @@ public class UserStatus {
                 '}';
     }
 
+    @Basic
+    @Column(name="days")
     public int getDays() {
         return days;
     }
@@ -39,6 +44,8 @@ public class UserStatus {
         this.days = days;
     }
 
+    @Id
+    @Column(name="id")
     public int getId() {
         return id;
     }
@@ -47,6 +54,8 @@ public class UserStatus {
         this.id = id;
     }
 
+    @Basic
+    @Column(name="userId")
     public int getUserId() {
         return userId;
     }
@@ -55,6 +64,8 @@ public class UserStatus {
         this.userId = userId;
     }
 
+    @Basic
+    @Column(name="startTime")
     public Date getStartTime() {
         return startTime;
     }
@@ -63,6 +74,8 @@ public class UserStatus {
         this.startTime = startTime;
     }
 
+    @Basic
+    @Column(name="endTime")
     public Date getEndTime() {
         return endTime;
     }

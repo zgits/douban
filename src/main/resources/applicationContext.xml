@@ -14,7 +14,7 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <!-- classpath 是指什么呢 -->
+    <!-- classpath  -->
     <context:property-placeholder location="classpath:db.properties" />
 
     <!-- 使用annotation -->
@@ -67,21 +67,33 @@
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.format_sql">true</prop>
-            </props>
-        </property>
-        <!--配置Hibernate的映射文件-->
-        <property name="mappingResources">
-            <list>
-                <value>mapper/login.xml</value>
 
-            </list>
+                <!-- 解决session关闭问题 -->
+                <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+                <prop key="current_session_context_class">thread</prop>
+
+                <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>-->
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://47.107.248.31:3306/ssh</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+            </props>
+
         </property>
+
+
         <property name="packagesToScan">
             <list>
                 <value>com.ssh.model</value>
             </list>
         </property>
     </bean>
+
+    <!--<bean id="UserStatusDao" class="com.ssh.dao.impl.UserStatusDaoImpl">-->
+        <!--<property name="sessionFactory">-->
+            <!--<ref bean="sessionFactory" />-->
+        <!--</property>-->
+    <!--</bean>-->
+
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

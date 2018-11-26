@@ -3,17 +3,20 @@ package com.ssh.service.impl;
 import com.ssh.dao.UserStatusDao;
 import com.ssh.model.UserStatus;
 import com.ssh.service.UserStatusService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/26.
  */
+@Service("userStatusService")
 public class UserStatusServiceImpl implements UserStatusService{
 
-    @Autowired
+    @Resource
     private UserStatusDao userStatusDao;
 
     /**
@@ -30,11 +33,16 @@ public class UserStatusServiceImpl implements UserStatusService{
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         userStatus.setStartTime(new Date());// new Date()为获取当前系统时间
 
-//        userStatus.setEndTime(new Date()+days);
+        Calendar ca = Calendar.getInstance();
+        ca.add(Calendar.DATE, days);// num为增加的天数，可以改变的
 
-        if (userStatusDao.insertForbiddenWords(userStatus)!=0){
-            return true;
-        }
+
+        userStatus.setEndTime(ca.getTime());
+
+        System.out.println(userStatus);
+        userStatusDao.insertForbiddenWords(userStatus);
+//            return true;
+//        }
 
         return false;
     }
