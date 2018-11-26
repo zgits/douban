@@ -12,25 +12,25 @@ import javax.annotation.Resource;
 /**
  * Created by 幻夜~星辰 on 2018/11/26.
  */
-@Transactional
-@Repository("userStatusDao")
+@Transactional//事务管理
+@Repository("userStatusDao")//spring的管理，这个类就交给spring进行管理了，可以通过注解的方式来，，，应该叫自己new吧
 public class UserStatusDaoImpl implements UserStatusDao{
+
+    /**
+     * 得到spring配置文件中的session工厂对象
+     */
+    @Resource(name="sessionFactory")
+    private SessionFactory sessionFactory;
 
     /**
      * 数据库插入禁言信息实现接口
      * @param userStatus
      * @return
      */
-    @Resource(name="sessionFactory")
-    private SessionFactory sessionFactory;
-
     @Override
     public int insertForbiddenWords(UserStatus userStatus) {
-        //调用hibernate的接口，实现插入数据库的过程
-        System.out.println(userStatus.getDays());
         try{
-            sessionFactory.getCurrentSession().save(userStatus);
-            System.out.println(userStatus);
+            sessionFactory.getCurrentSession().save(userStatus);//调用sessionFactory的方法
             return 1;
         }catch (Exception e){
             System.out.println(e.getMessage());

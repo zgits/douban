@@ -10,12 +10,18 @@ import javax.annotation.Resource;
 /**
  * Created by 幻夜~星辰 on 2018/11/26.
  */
-@Controller("userStatus")
+@Controller("userStatus")//方便在struts中，action中的class直接定义为userStatus，
 public class UserStatusAction extends ActionSupport{
 
+    /**
+     * 通过spring获得service接口，即服务接口
+     */
     @Resource(name="userStatusService")
     private UserStatusService userStatusService;
 
+    /**
+     * 需要的参数，改方法
+     */
     private int userId;
     private int days;
 
@@ -35,6 +41,10 @@ public class UserStatusAction extends ActionSupport{
         this.days = days;
     }
 
+    /**
+     * action的方法
+     * @return
+     */
     public String insertForbiddenWords(){
         userStatusService.insertForbiddenWords(userId,days);
         return "forbidden";

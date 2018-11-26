@@ -13,14 +13,21 @@ import java.util.Date;
 /**
  * Created by 幻夜~星辰 on 2018/11/26.
  */
-@Service("userStatusService")
+
+/**
+ * 实现业务逻辑处理接口
+ */
+@Service("userStatusService")//通过注解的方式，同样交给spring进行管理，
 public class UserStatusServiceImpl implements UserStatusService{
 
+    /**
+     * 通过spring注解方式获得一个对象，Resource表示通过名字
+     */
     @Resource
     private UserStatusDao userStatusDao;
 
     /**
-     * 插入禁言信息的业务处理接口
+     * 插入禁言信息的业务处理接口的实现方法
      * @param userId,days
      * @return
      */

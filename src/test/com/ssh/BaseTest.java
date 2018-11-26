@@ -1,4 +1,4 @@
-package com.ssh.action;
+package com.ssh;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

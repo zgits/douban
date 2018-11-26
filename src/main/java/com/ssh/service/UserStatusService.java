@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 /**
  * Created by 幻夜~星辰 on 2018/11/26.
  */
+
+/**
+ * 定义业务逻辑处理接口
+ */
 public interface UserStatusService {
 
     /**
