@@ -27,8 +27,8 @@
             <th>
                 <button class="btn btn-success">增加</button>
                 <button class="btn btn-info">修改</button>
-                <button class="btn btn-danger" onclick="Showbo.Msg.confirm('您确定删除该用户吗？')">删除</button>
-            </th>
+                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <button class="btn btn-danger" onClick="delcfm()">删除 </button>            </th>
         </tr>
         <tr>
             <th>全部地区</th>
@@ -37,8 +37,8 @@
             <th>
                 <button class="btn btn-success">增加</button>
                 <button class="btn btn-info">修改</button>
-                <button class="btn btn-danger" onclick="Showbo.Msg.confirm('您确定删除该用户吗？')">删除</button>
-            </th>
+                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <button class="btn btn-danger" onClick="delcfm()">删除     </button>       </th>
         </tr>
         <tr>
             <th>全部地区</th>
@@ -47,8 +47,8 @@
             <th>
                 <button class="btn btn-success">增加</button>
                 <button class="btn btn-info">修改</button>
-                <button class="btn btn-danger" onclick="Showbo.Msg.confirm('您确定删除该用户吗？')">删除</button>
-            </th>
+                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <button class="btn btn-danger" onClick="delcfm()">删除     </button>       </th>
         </tr>
         <tr>
             <th>全部地区</th>
@@ -57,7 +57,9 @@
             <th>
                 <button class="btn btn-success">增加</button>
                 <button class="btn btn-info">修改</button>
-                <button class="btn btn-danger" onclick="Showbo.Msg.confirm('您确定删除该用户吗？')">删除</button>
+
+                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <button class="btn btn-danger" onClick="delcfm()">删除 </button>
             </th>
         </tr>
         <tr>
@@ -66,7 +68,8 @@
             <th>全部地区</th>
             <th>
                 <button class="btn btn-info">修改</button>
-                <button id="btn_delete1" class="btn btn-danger" onclick="Showbo.Msg.confirm('您确定删除该用户吗？'),c(this)">删除</button>
+                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <button class="btn btn-danger" onClick="delcfm()">删除</button>
             </th>
         </tr>
         </tbody>
@@ -103,49 +106,233 @@
         </div>
     </div>
 
+    <%--<jsp:include page="dialog.jsp"></jsp:include>--%>
+<script>
+    function delcfm(url) {
+        $('#url').val(url);//给会话中的隐藏属性URL赋值
+        $('#delcfmModel').modal();
+    }
+    function urlSubmit(){
+        var url=$.trim($("#url").val());//获取会话中的隐藏属性URL
+        window.location.href=url;
+    }
+</script>
+    <div class="modal fade" id="delcfmModel">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="url"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a  onclick="urlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
     <!--弹出框-->
     <!--样例地址-->
     <!--https://www.cnblogs.com/shenzikun1314/p/6852928.html-->
-    <script src="/static_resources/Admin/dialog/js/showBo.js"></script>
-    <script>
-        //注册删除按钮的事件
+    <%--<script src="/static_resources/Admin/dialog/js/showBo.js"></script>--%>
+    <%--<script>--%>
+        <%--//注册删除按钮的事件--%>
 
-        function c(self) {
-        }
-            $("#btn_delete1").click(function () {
-                //取表格的选中行数据
-//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');
-//    if (arrselections.length <= 0) {
-//    toastr.warning('请选择有效数据');
-//    return;
-//    }
+        <%--$("#btn_delete1").click(function () {--%>
+            <%--//取表格的选中行数据--%>
+<%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
+<%--//    if (arrselections.length <= 0) {--%>
+<%--//    toastr.warning('请选择有效数据');--%>
+<%--//    return;--%>
+<%--//    }--%>
 
-                Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {
-                    alert(a);
-                    if (!e) {
-                        return;
-                    }
-                    $.ajax({
-                        type: "post",
-                        url: "/api/DepartmentApi/Delete",//提交的接口地址
-                        data: {"id": "1"},//要提交的数据
-                        success: function (data, status) {
-                            if (status == "success") {
-                                toastr.success('提交数据成功');
-                                $("#table_user").bootstrapTable('refresh');
-                            }
-                        },
-                        error: function () {
-                            toastr.error('Error');
-                        },
-                        complete: function () {
+            <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
+                <%--alert(a);--%>
+                <%--if (!e) {--%>
+                    <%--return;--%>
+                <%--}--%>
+                <%--$.ajax({--%>
+                    <%--type: "post",--%>
+                    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
+                    <%--data: {"id": "1"},//要提交的数据--%>
+                    <%--success: function (data, status) {--%>
+                        <%--if (status == "success") {--%>
+                            <%--toastr.success('提交数据成功');--%>
+                            <%--$("#table_user").bootstrapTable('refresh');--%>
+                        <%--}--%>
+                    <%--},--%>
+                    <%--error: function () {--%>
+                        <%--toastr.error('Error');--%>
+                    <%--},--%>
+                    <%--complete: function () {--%>
 
-                        }
+                    <%--}--%>
 
-                    });
-                });
-            });
+                <%--});--%>
+            <%--});--%>
+        <%--});--%>
 
 
-    </script>
+    <%--</script>--%>
+    <%--<script>--%>
+        <%--//注册删除按钮的事件--%>
+
+        <%--$("#btn_delete2").click(function () {--%>
+            <%--//取表格的选中行数据--%>
+<%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
+<%--//    if (arrselections.length <= 0) {--%>
+<%--//    toastr.warning('请选择有效数据');--%>
+<%--//    return;--%>
+<%--//    }--%>
+
+            <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
+                <%--alert(a);--%>
+                <%--if (!e) {--%>
+                    <%--return;--%>
+                <%--}--%>
+                <%--$.ajax({--%>
+                    <%--type: "post",--%>
+                    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
+                    <%--data: {"id": "1"},//要提交的数据--%>
+                    <%--success: function (data, status) {--%>
+                        <%--if (status == "success") {--%>
+                            <%--toastr.success('提交数据成功');--%>
+                            <%--$("#table_user").bootstrapTable('refresh');--%>
+                        <%--}--%>
+                    <%--},--%>
+                    <%--error: function () {--%>
+                        <%--toastr.error('Error');--%>
+                    <%--},--%>
+                    <%--complete: function () {--%>
+
+                    <%--}--%>
+
+                <%--});--%>
+            <%--});--%>
+        <%--});--%>
+
+
+    <%--</script>--%>
+    <%--<script>--%>
+        <%--//注册删除按钮的事件--%>
+
+        <%--$("#btn_delete3").click(function () {--%>
+            <%--//取表格的选中行数据--%>
+<%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
+<%--//    if (arrselections.length <= 0) {--%>
+<%--//    toastr.warning('请选择有效数据');--%>
+<%--//    return;--%>
+<%--//    }--%>
+
+            <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
+                <%--alert(a);--%>
+                <%--if (!e) {--%>
+                    <%--return;--%>
+                <%--}--%>
+                <%--$.ajax({--%>
+                    <%--type: "post",--%>
+                    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
+                    <%--data: {"id": "1"},//要提交的数据--%>
+                    <%--success: function (data, status) {--%>
+                        <%--if (status == "success") {--%>
+                            <%--toastr.success('提交数据成功');--%>
+                            <%--$("#table_user").bootstrapTable('refresh');--%>
+                        <%--}--%>
+                    <%--},--%>
+                    <%--error: function () {--%>
+                        <%--toastr.error('Error');--%>
+                    <%--},--%>
+                    <%--complete: function () {--%>
+
+                    <%--}--%>
+
+                <%--});--%>
+            <%--});--%>
+        <%--});--%>
+
+
+    <%--</script>--%>
+    <%--<script>--%>
+        <%--//注册删除按钮的事件--%>
+
+        <%--$("#btn_delete4").click(function () {--%>
+            <%--//取表格的选中行数据--%>
+<%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
+<%--//    if (arrselections.length <= 0) {--%>
+<%--//    toastr.warning('请选择有效数据');--%>
+<%--//    return;--%>
+<%--//    }--%>
+
+            <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
+                <%--alert(a);--%>
+                <%--if (!e) {--%>
+                    <%--return;--%>
+                <%--}--%>
+                <%--$.ajax({--%>
+                    <%--type: "post",--%>
+                    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
+                    <%--data: {"id": "1"},//要提交的数据--%>
+                    <%--success: function (data, status) {--%>
+                        <%--if (status == "success") {--%>
+                            <%--toastr.success('提交数据成功');--%>
+                            <%--$("#table_user").bootstrapTable('refresh');--%>
+                        <%--}--%>
+                    <%--},--%>
+                    <%--error: function () {--%>
+                        <%--toastr.error('Error');--%>
+                    <%--},--%>
+                    <%--complete: function () {--%>
+
+                    <%--}--%>
+
+                <%--});--%>
+            <%--});--%>
+        <%--});--%>
+
+
+    <%--</script>--%>
+    <%--<script>--%>
+        <%--//注册删除按钮的事件--%>
+
+        <%--$("#btn_delete5").click(function () {--%>
+            <%--//取表格的选中行数据--%>
+<%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
+<%--//    if (arrselections.length <= 0) {--%>
+<%--//    toastr.warning('请选择有效数据');--%>
+<%--//    return;--%>
+<%--//    }--%>
+
+            <%--Ewin.confirm({message: "您确定删除该标签吗？"}).on(function (e) {--%>
+                <%--alert(a);--%>
+                <%--if (!e) {--%>
+                    <%--return;--%>
+                <%--}--%>
+                <%--$.ajax({--%>
+                    <%--type: "post",--%>
+                    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
+                    <%--data: {"id": "1"},//要提交的数据--%>
+                    <%--success: function (data, status) {--%>
+                        <%--if (status == "success") {--%>
+                            <%--toastr.success('提交数据成功');--%>
+                            <%--$("#table_user").bootstrapTable('refresh');--%>
+                        <%--}--%>
+                    <%--},--%>
+                    <%--error: function () {--%>
+                        <%--toastr.error('Error');--%>
+                    <%--},--%>
+                    <%--complete: function () {--%>
+
+                    <%--}--%>
+
+                <%--});--%>
+            <%--});--%>
+        <%--});--%>
+
+
+    <%--</script>--%>
 </div>

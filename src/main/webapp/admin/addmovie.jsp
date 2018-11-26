@@ -3,6 +3,7 @@
     <link href="/static_resources/upload/css/iconfont.css" rel="stylesheet" type="text/css"/>
 
 
+<br>
 
 <form enctype="multipart/form-data" class="form-horizontal" role="form">
     <div class="form-group">
@@ -36,9 +37,9 @@
     <!--这里有个类型的复选框-->
     <!--复选框end-->
     <div class="form-group">
-        <label for="name" class="col-sm-2 control-label">选择制片地区/国家</label>
+        <label for="country" class="col-sm-2 control-label">选择制片地区/国家</label>
         <div class="col-sm-5">
-            <select id="name" class="form-control">
+            <select id="country" class="form-control">
                 <option>中国</option>
                 <option>美国</option>
                 <option>3</option>
@@ -69,7 +70,7 @@
     <div class="form-group">
         <label for="time" class="col-sm-2 control-label">上映时间</label>
         <div class="col-sm-5">
-            <input type="time" class="form-control" id="time">
+            <input type="date" class="form-control" id="time">
         </div>
     </div>
     <!--上映时间end-->

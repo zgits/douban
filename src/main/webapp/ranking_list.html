@@ -13,6 +13,9 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
 
+    <!--显示星数-->
+    <link href="static_resources/star/star.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -80,7 +83,27 @@
                         </div>
                         <br>
                         <div class="row">
-                            xxxxxx评分（2555人评价）
+                            <div id="star_con" class="star-vote">
+                                <span id="add_star" class="add-star"></span>
+                                <span id="del_star" class="del-star"></span>
+                            </div>
+                            <script>
+                                window.onload = showStar(7.8);
+
+                                //n表示后台获取的星数
+                                function showStar(n) {
+                                    var con_wid = document.getElementById("star_con").offsetWidth;
+                                    var del_star = document.getElementById("del_star");
+                                    console.log(con_wid);
+
+                                    //透明星星移动的像素
+                                    var del_move = (n * con_wid) / 10;
+
+                                    del_star.style.backgroundPosition = -del_move + "px 0px";
+                                    del_star.style.left = del_move + "px";
+                                }
+                            </script>
+                            &nbsp;7.6（2555人评价）
                         </div>
                     </div>
                 </li>
@@ -100,7 +123,27 @@
                         </div>
                         <br>
                         <div class="row">
-                            xxxxxx评分（2555人评价）
+                            <div id="star_con2" class="star-vote">
+                                <span id="add_star2" class="add-star"></span>
+                                <span id="del_star2" class="del-star"></span>
+                            </div>
+                            <script>
+                                window.onload = showStar(7.8);
+
+                                //n表示后台获取的星数
+                                function showStar(n) {
+                                    var con_wid = document.getElementById("star_con2").offsetWidth;
+                                    var del_star = document.getElementById("del_star2");
+                                    console.log(con_wid);
+
+                                    //透明星星移动的像素
+                                    var del_move = (n * con_wid) / 10;
+
+                                    del_star.style.backgroundPosition = -del_move + "px 0px";
+                                    del_star.style.left = del_move + "px";
+                                }
+                            </script>
+                            &nbsp;7.6（2555人评价）
                         </div>
                     </div>
                 </li>
@@ -120,7 +163,27 @@
                         </div>
                         <br>
                         <div class="row">
-                            xxxxxx评分（2555人评价）
+                            <div id="star_con3" class="star-vote">
+                                <span id="add_star3" class="add-star"></span>
+                                <span id="del_star3" class="del-star"></span>
+                            </div>
+                            <script>
+                                window.onload = showStar(7.8);
+
+                                //n表示后台获取的星数
+                                function showStar(n) {
+                                    var con_wid = document.getElementById("star_con3").offsetWidth;
+                                    var del_star = document.getElementById("del_star3");
+                                    console.log(con_wid);
+
+                                    //透明星星移动的像素
+                                    var del_move = (n * con_wid) / 10;
+
+                                    del_star.style.backgroundPosition = -del_move + "px 0px";
+                                    del_star.style.left = del_move + "px";
+                                }
+                            </script>
+                            &nbsp;7.6（2555人评价）
                         </div>
                     </div>
                 </li>
@@ -140,7 +203,27 @@
                         </div>
                         <br>
                         <div class="row">
-                            xxxxxx评分（2555人评价）
+                            <div id="star_con4" class="star-vote">
+                                <span id="add_star4" class="add-star"></span>
+                                <span id="del_star4" class="del-star"></span>
+                            </div>
+                            <script>
+                                window.onload = showStar(7.8);
+
+                                //n表示后台获取的星数
+                                function showStar(n) {
+                                    var con_wid = document.getElementById("star_con4").offsetWidth;
+                                    var del_star = document.getElementById("del_star4");
+                                    console.log(con_wid);
+
+                                    //透明星星移动的像素
+                                    var del_move = (n * con_wid) / 10;
+
+                                    del_star.style.backgroundPosition = -del_move + "px 0px";
+                                    del_star.style.left = del_move + "px";
+                                }
+                            </script>
+                            &nbsp;7.6（2555人评价）
                         </div>
                     </div>
                 </li>
@@ -160,7 +243,27 @@
                         </div>
                         <br>
                         <div class="row">
-                            xxxxxx评分（2555人评价）
+                            <div id="star_con5" class="star-vote">
+                                <span id="add_star5" class="add-star"></span>
+                                <span id="del_star5" class="del-star"></span>
+                            </div>
+                            <script>
+                                window.onload = showStar(7.8);
+
+                                //n表示后台获取的星数
+                                function showStar(n) {
+                                    var con_wid = document.getElementById("star_con5").offsetWidth;
+                                    var del_star = document.getElementById("del_star5");
+                                    console.log(con_wid);
+
+                                    //透明星星移动的像素
+                                    var del_move = (n * con_wid) / 10;
+
+                                    del_star.style.backgroundPosition = -del_move + "px 0px";
+                                    del_star.style.left = del_move + "px";
+                                }
+                            </script>
+                            &nbsp;7.6（2555人评价）
                         </div>
                     </div>
                 </li>
@@ -179,7 +282,27 @@
                     </div>
                     <br>
                     <div class="row">
-                        xxxxxx评分（2555人评价）
+                        <div id="star_con6" class="star-vote">
+                            <span id="add_star6" class="add-star"></span>
+                            <span id="del_star6" class="del-star"></span>
+                        </div>
+                        <script>
+                            window.onload = showStar(7.8);
+
+                            //n表示后台获取的星数
+                            function showStar(n) {
+                                var con_wid = document.getElementById("star_con6").offsetWidth;
+                                var del_star = document.getElementById("del_star6");
+                                console.log(con_wid);
+
+                                //透明星星移动的像素
+                                var del_move = (n * con_wid) / 10;
+
+                                del_star.style.backgroundPosition = -del_move + "px 0px";
+                                del_star.style.left = del_move + "px";
+                            }
+                        </script>
+                        &nbsp;7.6（2555人评价）
                     </div>
                 </div>
             </li>
