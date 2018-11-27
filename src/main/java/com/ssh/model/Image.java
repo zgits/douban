@@ -6,9 +6,9 @@ package com.ssh.model;
  */
 public class Image {
 
-    private int id;//自增id
+    private Integer id;//自增id
 
-    private int movieId;//对应的电影id，可以为空
+    private Integer movieId;//对应的电影id，可以为空
 
     //取消了上传预告片图片的功能，改为了从后台截取视频的图片传到前端。
 
@@ -23,15 +23,15 @@ public class Image {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getMovieId() {
+    public Integer getMovieId() {
         return movieId;
     }
 

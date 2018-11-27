@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class User {
 
-    private int id;//自增id
+    private Integer id;//自增id
 
     private String username;//用户名
 
@@ -57,11 +57,11 @@ public class User {
     }
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

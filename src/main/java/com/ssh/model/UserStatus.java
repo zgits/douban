@@ -12,8 +12,10 @@ import java.util.Date;
 @Table(name="userstatus")
 public class UserStatus {
 
+    @Id
     private int id;//自增id
 
+    @Column(name="userId")
     private int userId;//对应用户表中的user的id
 
     private int days;//禁言天数

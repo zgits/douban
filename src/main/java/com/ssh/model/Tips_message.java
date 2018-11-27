@@ -9,13 +9,13 @@ import java.util.Date;
  */
 public class Tips_message {
 
-    private int id;//自增id
+    private Integer id;//自增id
 
-    private int userId;//对应用户表的id，接收者的id
+    private Integer userId;//对应用户表的id，接收者的id
 
     private String message;//消息内容
 
-    private int message_status;//消息状态，1，未读，2，已读
+    private Integer message_status;//消息状态，1，未读，2，已读
 
     private String sender;//发送人的名字，用户或者系统
 
@@ -33,19 +33,19 @@ public class Tips_message {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -57,11 +57,11 @@ public class Tips_message {
         this.message = message;
     }
 
-    public int getMessage_status() {
+    public Integer getMessage_status() {
         return message_status;
     }
 
-    public void setMessage_status(int message_status) {
+    public void setMessage_status(Integer message_status) {
         this.message_status = message_status;
     }
 

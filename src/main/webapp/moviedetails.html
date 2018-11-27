@@ -196,8 +196,8 @@
                     <li class="list-group-item" style="border: none">
                         主演: 麦肯吉·弗依 / 摩根·弗里曼 / 凯拉·奈特莉 / 马修·麦克费登 / 海伦·米伦
                         <a data-toggle="collapse"
-                           href="#collapseOne">更多</a>
-                        <div id="collapseOne" class="panel-collapse collapse">
+                           href="#collapse">更多</a>
+                        <div id="collapse" class="panel-collapse collapse">
                             / 艾丽·巴姆博 / 米兰达·哈特 / 欧赫尼奥·德尔维斯 / 杰克·怀特霍尔 / 理查德·E·格兰特 / 谢尔盖·波卢宁 / 欧米德·吉亚李利 / 梅拉·沙尔 / 尼克·穆罕默德 /
                             杰茜·维宁 / 汤姆·斯威特 / 马里安·洛伦西克 / 芙洛·费拉科 / 丽塔-麦克唐纳丹帕 / 查尔斯·斯特里特
                         </div>
@@ -438,11 +438,14 @@
             </ul>
         </div>
         <div class="row">
-            <ul class="list-group" style="width: 600px">
+            <ul class="list-group" style="width: 800px">
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间，点赞数-->
                     <div class="row">
-                        xxxx用户名
+                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>xxxx用户名</span>
+                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                        <!--星数展示start-->
                         <div id="userid1" class="star-vote">
                             <span id="add_staruserid1" class="add-star"></span>
                             <span id="del_staruserid1" class="del-star"></span>
@@ -464,13 +467,15 @@
                                 del_star.style.left = del_move + "px";
                             }
                         </script>
-                        2018-11-20
+                        <!--星数展示end-->
+                        <!--点赞start-->
                         <div class="praise">
                             <span id="praise1"><img src="/static_resources/likes/dianzan/Images/zan.png"
                                                     id="praise1-img" style="width: 20px;height:20px"/></span>
                             <span id="praise-txt1" style="margin-top: -40px;margin-left: 30px">1455</span>
                             <span id="add-num1"><em>+1</em></span>
                         </div>
+                        <!--点赞end-->
                     </div>
                     <br>
                     <div class="row">
@@ -478,12 +483,34 @@
                         会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
                         面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
                     </div>
+
+                    <div class="row col-md-offset-10">
+                        <a class="btn btn-sm">举报</a>
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseuserId1" class="btn btn-sm">回复</a>
+                    </div>
+                    <div id="collapseuserId1" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <form class="form-horizontal">
+                                    <div class="form-group col-md-8">
+                                        <input class="form-control" type="text" value="@xxxxx用户名:">
+                                    </div>
+
+                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <hr>
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间，点赞数-->
                     <div class="row">
-                        xxxx用户名 <div id="userid2" class="star-vote">
+                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>xxxx用户名</span>
+                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                        <div id="userid2" class="star-vote">
                         <span id="add_staruserid2" class="add-star"></span>
                         <span id="del_staruserid2" class="del-star"></span>
                     </div>
@@ -517,12 +544,36 @@
                         会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
                         面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
                     </div>
+
+                    <div class="row col-md-offset-10">
+                        <a class="btn btn-sm">举报</a>
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseidx" class="btn btn-sm">回复</a>
+                    </div>
+                    <div id="collapseidx" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <form class="form-horizontal">
+                                    <div class="form-group col-md-8">
+                                        <input class="form-control" type="text" value="@xxxxx用户名:">
+                                    </div>
+
+                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                </form>
+                            </div>
+                        </div>
+
+                        </div>
+
                 </li>
                 <hr>
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间，点赞数-->
                     <div class="row">
-                        xxxx用户名 <div id="userid3" class="star-vote">
+                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>xxxx用户名</span>
+                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                        <div id="userid3" class="star-vote">
                         <span id="add_staruserid3" class="add-star"></span>
                         <span id="del_staruserid3" class="del-star"></span>
                     </div>
@@ -556,12 +607,62 @@
                         会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
                         面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
                     </div>
+
+                    <div class="row col-md-offset-10">
+                        <a class="btn btn-sm">举报</a>
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseOne" class="btn btn-sm">回复</a>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <form class="form-horizontal">
+                                    <div class="form-group col-md-8">
+                                        <input class="form-control" type="text" value="@xxxxx用户名:">
+                                    </div>
+
+                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                </form>
+                            </div>
+                            <div class="row">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>xxxx用户名</span>
+                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                                        <br>
+                                        <div class="row">
+                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
+                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapsereplay1">回复</a>
+                                        </div>
+                                        <div id="collapsereplay1" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group col-md-8">
+                                                    <input class="form-control" type="text" value="@xxx用户名:">
+
+                                                </div>
+                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </li>
                 <hr>
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间，点赞数-->
                     <div class="row">
-                        xxxx用户名 <div id="userid4" class="star-vote">
+                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>xxxx用户名</span>
+                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                        <div id="userid4" class="star-vote">
                         <span id="add_staruserid4" class="add-star"></span>
                         <span id="del_staruserid4" class="del-star"></span>
                     </div>
@@ -595,12 +696,35 @@
                         会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
                         面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
                     </div>
+
+                    <div class="row col-md-offset-10">
+                        <a class="btn btn-sm">举报</a>
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseuserId4" class="btn btn-sm">回复</a>
+                    </div>
+                    <div id="collapseuserId4" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <form class="form-horizontal">
+                                    <div class="form-group col-md-8">
+                                        <input class="form-control" type="text" value="@xxxxx用户名:">
+                                    </div>
+
+                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
                 </li>
                 <hr>
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间，点赞数-->
                     <div class="row">
-                        xxxx用户名 <div id="userid5" class="star-vote">
+                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>xxxx用户名</span>
+                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                        <div id="userid5" class="star-vote">
                         <span id="add_staruserid5" class="add-star"></span>
                         <span id="del_staruserid5" class="del-star"></span>
                     </div>
@@ -633,6 +757,141 @@
                         一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
                         会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
                         面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
+                    </div>
+
+                    <div class="row col-md-offset-10">
+                        <a class="btn btn-sm">举报</a>
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#collapseuserId5" class="btn btn-sm">回复</a>
+                    </div>
+                    <div id="collapseuserId5" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <form class="form-horizontal">
+                                    <div class="form-group col-md-8">
+                                        <input class="form-control" type="text" value="@xxxxx用户名:">
+                                    </div>
+
+                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                </form>
+                            </div>
+                            <div class="row">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>xxxx用户名</span>
+                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                                        <br>
+                                        <div class="row">
+                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
+                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                               href="#collapseid1">回复</a>
+                                        </div>
+                                        <div id="collapseid1" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group col-md-8">
+                                                    <input class="form-control" type="text" value="@xxx用户名:">
+
+                                                </div>
+                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>xxxx用户名</span>
+                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                                        <br>
+                                        <div class="row">
+                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
+                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapseid2">回复</a>
+                                        </div>
+                                        <div id="collapseid2" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group col-md-8">
+                                                    <input class="form-control" type="text" value="@xxx用户名:">
+
+                                                </div>
+                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>xxxx用户名</span>
+                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                                        <br>
+                                        <div class="row">
+                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
+                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapseid3">回复</a>
+                                        </div>
+                                        <div id="collapseid3" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group col-md-8">
+                                                    <input class="form-control" type="text" value="@xxx用户名:">
+
+                                                </div>
+                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>xxxx用户名</span>
+                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                                        <br>
+                                        <div class="row">
+                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
+                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapseid4">回复</a>
+                                        </div>
+                                        <div id="collapseid4" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group col-md-8">
+                                                    <input class="form-control" type="text" value="@xxx用户名:">
+
+                                                </div>
+                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <span>xxxx用户名</span>
+                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
+                                        <br>
+                                        <div class="row">
+                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
+                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                href="#collapseid5">回复</a>
+                                        </div>
+                                        <div id="collapseid5" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="form-group col-md-8">
+                                                    <input class="form-control" type="text" value="@xxx用户名:">
+
+                                                </div>
+                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                            </div>
+
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </li>
                 <hr>

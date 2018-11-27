@@ -13,6 +13,14 @@
             <result name="forbidden">/success.jsp</result>
         </action>
 
+        <action name="insertComment" class="CommentAction" method="insertComment">
+            <result name="insert">/success.jsp</result>
+        </action>
+
+        <action name="deleteComment" class="CommentAction" method="deleteComment">
+            <result name="delete">/success.jsp</result>
+        </action>
+
     </package>
 
 </struts>

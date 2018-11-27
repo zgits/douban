@@ -5,11 +5,11 @@ package com.ssh.model;
  */
 public class Labelmapping {
 
-    private int id;//自增id
+    private Integer id;//自增id
 
-    private int movieId;//对应的电影id
+    private Integer movieId;//对应的电影id
 
-    private int labelId;//对应的标签id
+    private Integer labelId;//对应的标签id
 
     @Override
     public String toString() {
@@ -20,27 +20,27 @@ public class Labelmapping {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getMovieId() {
+    public Integer getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(int movieId) {
+    public void setMovieId(Integer movieId) {
         this.movieId = movieId;
     }
 
-    public int getLabelId() {
+    public Integer getLabelId() {
         return labelId;
     }
 
-    public void setLabelId(int labelId) {
+    public void setLabelId(Integer labelId) {
         this.labelId = labelId;
     }
 }

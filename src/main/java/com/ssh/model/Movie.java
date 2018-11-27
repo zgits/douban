@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class Movie {
 
-    private int id;//自增id
+    private Integer id;//自增id
 
     private String moviename;//电影名字
 
@@ -17,7 +17,7 @@ public class Movie {
 
     private String plot_introduction;//剧情简介，可能长度不够
 
-    private int length;//电影时长
+    private Integer length;//电影时长
 
     private String director;//导演
 
@@ -68,11 +68,11 @@ public class Movie {
         this.Labels = Labels;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -100,11 +100,11 @@ public class Movie {
         this.plot_introduction = plot_introduction;
     }
 
-    public int getLength() {
+    public Integer getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(Integer length) {
         this.length = length;
     }
 

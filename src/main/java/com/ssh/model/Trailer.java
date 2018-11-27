@@ -9,15 +9,15 @@ import java.util.List;
  */
 public class Trailer {
 
-    private int id;//自增id
+    private Integer id;//自增id
 
-    private int movieId;//对应的电影id
+    private Integer movieId;//对应的电影id
 
     private String path;//预告片播放地址
 
     private String name;//预告片的名字
 
-    private int number;//预告片的播放量，用来判断预告片的排名所用
+    private Integer number;//预告片的播放量，用来判断预告片的排名所用
 
     private Date time;//预告片上传时间
 
@@ -55,19 +55,19 @@ public class Trailer {
         this.Images = Images;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getMovieId() {
+    public Integer getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(int movieId) {
+    public void setMovieId(Integer movieId) {
         this.movieId = movieId;
     }
 
@@ -87,11 +87,11 @@ public class Trailer {
         this.name = name;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

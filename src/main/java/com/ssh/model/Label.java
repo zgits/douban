@@ -6,13 +6,13 @@ package com.ssh.model;
  */
 public class Label {
 
-    private int id;//自增id
+    private Integer id;//自增id
 
     private String name;//标签的名字
 
-    private int parentId;//对应的父标签id
+    private Integer parentId;//对应的父标签id
 
-    private int level;//标签的级别
+    private Integer level;//标签的级别
 
     @Override
     public String toString() {
@@ -24,11 +24,11 @@ public class Label {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,19 +40,19 @@ public class Label {
         this.name = name;
     }
 
-    public int getParentId() {
+    public Integer getParentId() {
         return parentId;
     }
 
-    public void setParentId(int parentId) {
+    public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 }
