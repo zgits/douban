@@ -53,4 +53,9 @@ public class UserStatusServiceImpl implements UserStatusService{
 
         return false;
     }
+
+    @Override
+    public boolean deleteForbidden(Integer id) {
+        return userStatusDao.deleteForbidden(id);
+    }
 }

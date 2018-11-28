@@ -1,5 +1,6 @@
 package com.ssh.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -7,23 +8,36 @@ import java.util.List;
  * Created by 幻夜~星辰 on 2018/11/19.
  * 用户bean
  */
+@Entity
+@Table(name="user")
 public class User {
 
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id
+    @Column(name="id")
     private Integer id;//自增id
 
+    @Column(name="username")
     private String username;//用户名
 
+    @Column(name="password")
     private String password;//密码
 
+    @Column(name="email")
     private String emial;//用户邮箱
 
+    @Column(name="head_image")
     private String head_image;//头像地址
 
+    @Column(name="person_profile")
     private String person_profile;//个人简介
 
+    @Column(name="last_login")
     private Date last_login;//登录时间，每次登录更新一次
 
     private List<Tips_message> Tips_messages;//提醒消息集合
+
+    private UserStatus userStatus;//用户的状态
 
     @Override
     public String toString() {
@@ -36,7 +50,16 @@ public class User {
                 ", person_profile='" + person_profile + '\'' +
                 ", last_login=" + last_login +
                 ", Tips_messages=" + Tips_messages +
+                ", userStatus=" + userStatus +
                 '}';
+    }
+
+    public UserStatus getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 
     public Date getLast_login() {

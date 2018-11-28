@@ -4,6 +4,7 @@ import com.ssh.model.UserStatus;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -24,4 +25,18 @@ public interface UserStatusDao {
      * @return
      */
     public int insertForbiddenWords(UserStatus userStatus);
+
+    /**
+     * 数据库删除禁言信息,即解禁
+     * @param id
+     * @return
+     */
+    public boolean deleteForbidden(Integer id);
+
+    /**
+     * 根据userId查询用户信息
+     * @param userId
+     * @return
+     */
+    public UserStatus selectUserStatus(Integer userId);
 }

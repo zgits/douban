@@ -18,4 +18,13 @@ public interface UserStatusService {
      * @return boolean
      */
     public boolean insertForbiddenWords(int userId,int days);
+
+
+    /**
+     * 解禁的实现
+     * @param id
+     * @return
+     */
+    public boolean deleteForbidden(Integer id);
+
 }

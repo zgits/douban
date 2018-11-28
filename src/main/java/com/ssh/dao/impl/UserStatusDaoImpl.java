@@ -40,4 +40,28 @@ public class UserStatusDaoImpl implements UserStatusDao{
 
         return 0;
     }
+
+    /**
+     * 数据库删除禁言信息
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean deleteForbidden(Integer id) {
+        UserStatus userStatus=new UserStatus();
+        userStatus.setId(id);
+        try {
+            sessionFactory.getCurrentSession().delete(userStatus);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getStackTrace());
+            return false;
+        }
+
+    }
+
+    @Override
+    public UserStatus selectUserStatus(Integer userId) {
+        return null;
+    }
 }

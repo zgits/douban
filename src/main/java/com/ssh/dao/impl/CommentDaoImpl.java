@@ -71,11 +71,12 @@ public class CommentDaoImpl implements CommentDao{
         comment.setId(id);
         try {
             session.delete(comment);
+            return true;
         }catch (Exception e){
             System.out.println(e.getMessage());
             System.out.println(e.getStackTrace());
             return false;
         }
-        return true;
+
     }
 }
