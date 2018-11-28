@@ -7,6 +7,8 @@
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.objectFactory" value="spring" />
 
+    <constant name="struts.multipart.maxSize" value="50000000"></constant>
+
     <package name="user" namespace="/" extends="struts-default">
 
         <action name="forbidden" class="userStatus" method="insertForbiddenWords">
@@ -20,6 +22,14 @@
         <action name="deleteComment" class="CommentAction" method="deleteComment">
             <result name="delete">/success.jsp</result>
         </action>
+
+
+        <action name="getUsers" class="ManagerUser" method="findAll">
+            <result name="findAll">/admin/user.jsp</result>
+        </action>
+
+
+        <!--https://blog.csdn.net/yu0_zhang0/article/details/77984890-->
 
     </package>
 

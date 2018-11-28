@@ -1,5 +1,6 @@
 package com.ssh.model;
 
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ public class User {
     private String password;//密码
 
     @Column(name="email")
-    private String emial;//用户邮箱
+    private String email;//用户邮箱
 
     @Column(name="head_image")
     private String head_image;//头像地址
@@ -35,8 +36,10 @@ public class User {
     @Column(name="last_login")
     private Date last_login;//登录时间，每次登录更新一次
 
+    @OneToMany
     private List<Tips_message> Tips_messages;//提醒消息集合
 
+    @OneToOne
     private UserStatus userStatus;//用户的状态
 
     @Override
@@ -45,7 +48,7 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", emial='" + emial + '\'' +
+                ", email='" + email + '\'' +
                 ", head_image='" + head_image + '\'' +
                 ", person_profile='" + person_profile + '\'' +
                 ", last_login=" + last_login +
@@ -104,12 +107,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEmial() {
-        return emial;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmial(String emial) {
-        this.emial = emial;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getHead_image() {

@@ -1,13 +1,14 @@
 package com.ssh.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/19.
- *
+ * <p>
  * 分页实体类，可用于其它Javabean的封装
  */
-public class PageBean<T> {
+public class PageBean<T> implements Serializable {
 
     private int currPage;//当前页数
 
@@ -44,7 +45,9 @@ public class PageBean<T> {
     }
 
     public int getTotalPage() {
+
         return totalPage;
+
     }
 
     public void setTotalPage(int totalPage) {

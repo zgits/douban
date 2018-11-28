@@ -13,15 +13,19 @@ import java.util.Date;
 public class UserStatus {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;//自增id
 
     @Column(name="userId")
     private int userId;//对应用户表中的user的id
 
+    @Column(name="days")
     private int days;//禁言天数
 
+    @Column(name="startTime")
     private Date startTime;//禁言开始时间
 
+    @Column(name="endTime")
     private Date endTime;//禁言结束时间
 
 
@@ -36,8 +40,8 @@ public class UserStatus {
                 '}';
     }
 
-    @Basic
-    @Column(name="days")
+
+
     public int getDays() {
         return days;
     }
@@ -46,8 +50,7 @@ public class UserStatus {
         this.days = days;
     }
 
-    @Id
-    @Column(name="id")
+
     public int getId() {
         return id;
     }
@@ -56,8 +59,8 @@ public class UserStatus {
         this.id = id;
     }
 
-    @Basic
-    @Column(name="userId")
+
+
     public int getUserId() {
         return userId;
     }
@@ -66,8 +69,7 @@ public class UserStatus {
         this.userId = userId;
     }
 
-    @Basic
-    @Column(name="startTime")
+
     public Date getStartTime() {
         return startTime;
     }
@@ -76,8 +78,7 @@ public class UserStatus {
         this.startTime = startTime;
     }
 
-    @Basic
-    @Column(name="endTime")
+
     public Date getEndTime() {
         return endTime;
     }

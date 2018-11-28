@@ -1,17 +1,27 @@
 package com.ssh.model;
 
+import javax.persistence.*;
+
 /**
  * Created by 幻夜~星辰 on 2018/11/19.
  * 分类，电影的分类
  */
+@Entity
+@Table(name="label")
 public class Label {
 
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id
+    @Column(name="id")
     private Integer id;//自增id
 
+    @Column(name="name")
     private String name;//标签的名字
 
+    @Column(name="parentId")
     private Integer parentId;//对应的父标签id
 
+    @Column(name="level")
     private Integer level;//标签的级别
 
     @Override

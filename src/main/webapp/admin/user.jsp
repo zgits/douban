@@ -1,6 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!--删除用户的时候注意异步传输的id的获取-->
+<script>location.href="getUsers";</script>
 <div>
     <table class="table table-bordered" id="table_user">
         <caption class="text-center" style="color: #2f904d;font-size: 25px">用户信息表</caption>
@@ -16,6 +19,21 @@
         </tr>
         </thead>
         <tbody>
+        <c:forEach items="${pageBean.lists}" var="users">
+            <tr>
+                <th id="">${users.username}</th>
+                <th>${users.email}</th>
+                <th>${users.password}</th>
+                <th>${users.person_profile}</th>
+                <th>正常</th>
+                <th>${users.last_login}</th>
+                <th>
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
+                    <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
+                    <button class="btn btn-danger" onClick="delcfm1()">删除</button>
+                </th>
+            </tr>
+        </c:forEach>
         <tr>
             <th id="">xxxx</th>
             <th>xxxx@xxx.com</th>
@@ -25,7 +43,7 @@
             <th>2018-5-9 17:32:45</th>
             <th>
                 <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
                 <button class="btn btn-danger" onClick="delcfm1()">删除</button>
             </th>
         </tr>
@@ -38,7 +56,7 @@
             <th>2018-5-9 17:32:45</th>
             <th>
                 <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
                 <button class="btn btn-danger" onClick="delcfm1()">删除</button>
             </th>
         </tr>
@@ -51,7 +69,7 @@
             <th>2018-5-9 17:32:45</th>
             <th>
                 <button class="btn btn-info">解禁</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
                 <button class="btn btn-danger" onClick="delcfm1()">删除</button>
             </th>
         </tr>
@@ -64,7 +82,7 @@
             <th>2018-5-9 17:32:45</th>
             <th>
                 <button class="btn btn-info">解禁</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
                 <button class="btn btn-danger" onClick="delcfm1()">删除</button>
             </th>
         </tr>
@@ -77,7 +95,7 @@
             <th>2018-5-9 17:32:45</th>
             <th>
                 <button class="btn btn-info">解禁</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
                 <button class="btn btn-danger" onClick="delcfm1()">删除</button>
             </th>
         </tr>
@@ -90,7 +108,7 @@
             <th>2018-5-9 17:32:45</th>
             <th>
                 <button class="btn btn-info">解禁</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
                 <button class="btn btn-danger" onClick="delcfm1()">删除</button>
             </th>
         </tr>

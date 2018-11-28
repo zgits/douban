@@ -1,5 +1,6 @@
 package com.ssh.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -7,36 +8,55 @@ import java.util.List;
  * Created by 幻夜~星辰 on 2018/11/19.
  * 电影
  */
+@Entity
+@Table(name="movie")
 public class Movie {
 
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id
+    @Column(name="id")
     private Integer id;//自增id
 
+    @Column(name="moviename")
     private String moviename;//电影名字
 
+    @Column(name="filmscore")
     private float filmscore;//电影评分
 
-    private String plot_introduction;//剧情简介，可能长度不够
+    @Column(name="plot_introduction")
+    private String plot_introduction;//剧情简介
 
+    @Column(name="length")
     private Integer length;//电影时长
 
+    @Column(name="director")
     private String director;//导演
 
-    private String actor;//演员，有多个演员，因为演员这个字符串没什么用，就放在一起，可能长度不够
+    @Column(name="actor")
+    private String actor;//演员，有多个演员
 
+    @Column(name="language")
     private String language;//语言种类
 
+    @Column(name="region")
     private String region;//制片地区
 
+    @Column(name="release_time")
     private Date release_time;//上映时间
 
+    @Column(name="release_region")
     private String release_region;//上映地区
 
+    @OneToMany
     private List<Comment> Comments;//评论内容
 
+    @OneToMany
     private List<Image> Images;//电影的海报，图片之类的
 
+    @OneToMany
     private List<Trailer> Trailers;//电影对应的预告片
 
+    @OneToMany
     private List<Label> Labels;//对应的标签集合
 
     @Override

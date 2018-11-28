@@ -1,5 +1,6 @@
 package com.ssh.model;
 
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -7,23 +8,33 @@ import java.util.Date;
  * <p>
  * 提示消息
  */
+@Entity
+@Table(name="tips_message")
 public class Tips_message {
 
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Id
+    @Column(name="id")
     private Integer id;//自增id
 
+    @Column(name="userId")
     private Integer userId;//对应用户表的id，接收者的id
 
+    @Column(name="message")
     private String message;//消息内容
 
+    @Column(name="message_status")
     private Integer message_status;//消息状态，1，未读，2，已读
 
+    @Column(name="sender")
     private String sender;//发送人的名字，用户或者系统
 
+    @Column(name="time")
     private Date time;//消息的时间
 
     @Override
     public String toString() {
-        return "Tips_message{" +
+        return "Tips_messageDao{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", message='" + message + '\'' +
