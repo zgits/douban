@@ -5,6 +5,7 @@ import com.ssh.model.Trailer_Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +15,8 @@ import java.util.List;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/29.
+ *
+ * 预告片评论
  */
 @Transactional
 @Repository("Trailer_CommentDao")
@@ -52,6 +55,7 @@ public class Trailer_CommentDaoImpl extends HibernateDaoSupport implements Trail
     @Override
     public List<Trailer_Comment> findComment(Integer trailerId, int begin, int pageSize) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Trailer_Comment.class);
+        criteria.add(Restrictions.eq("trailerId",trailerId));
         // 查询分页数据
         List<Trailer_Comment> list = (List<Trailer_Comment>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
         return list;

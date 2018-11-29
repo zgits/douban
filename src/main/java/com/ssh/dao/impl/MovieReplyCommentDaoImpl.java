@@ -2,6 +2,7 @@ package com.ssh.dao.impl;
 
 import com.ssh.dao.Movie_ReplyCommentDao;
 import com.ssh.model.Movie_Replycomment;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,8 +35,10 @@ public class MovieReplyCommentDaoImpl implements Movie_ReplyCommentDao {
 
     @Override
     public List<Movie_Replycomment> selectReplyComment(Integer comment_id) {
-        //sessionFactory.getCurrentSession()
-        return null;
+        String hql="from Movie_Replycomment  where comment_id= ?";
+        Query query=sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameter(0,comment_id);
+        return query.list();
     }
 
     @Override

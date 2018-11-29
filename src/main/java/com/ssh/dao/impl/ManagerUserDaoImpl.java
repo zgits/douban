@@ -5,6 +5,7 @@ import com.ssh.model.User;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,17 +84,19 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
     @Override
     public boolean insertForbiddenWords(User user) {
         try{
-            String hql="update User u set u.days=?,u.startTime=?,u.endTime=? where u.id=?";
+            String hql="update User u set u.days=:days,u.startTime=:startTime,u.endTime=:endTime,u.reason=:reason where u.id=:id";
 
             Query query  = this.getSessionFactory().getCurrentSession().createQuery(hql);
 
-            query.setInteger(0,user.getDays());
+            query.setParameter("days",user.getDays());
 
-            query.setDate(1,user.getStartTime());
+            query.setParameter("startTime",user.getStartTime());
 
-            query.setDate(2,user.getEndTime());
+            query.setParameter("endTime",user.getEndTime());
 
-            query.setInteger(3,user.getId());
+            query.setParameter("reason",user.getReason());
+
+            query.setParameter("id",user.getId());
 
             query.executeUpdate();
             return true;
@@ -106,7 +109,7 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
     @Override
     public boolean deleteForbidden(Integer id) {
         try{
-            String hql="update User u set u.days=null,u.startTime=null,u.endTime=null where u.id=?";
+            String hql="update User u set u.days=null,u.startTime=null,u.endTime=null,u.reson=null where u.id=?";
 
             Query query  = this.getSessionFactory().getCurrentSession().createQuery(hql);
 
@@ -127,6 +130,8 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
     @Override
     public List<User> selectUserByName(String username,int begin,int pageSize) {
         DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+        criteria.add(Restrictions.like("username",username));
+
         // 查询分页数据
         List<User> list = (List<User>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
         return list;

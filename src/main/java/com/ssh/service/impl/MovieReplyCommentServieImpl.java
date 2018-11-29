@@ -5,7 +5,7 @@ import com.ssh.dao.Movie_ReplyCommentDao;
 import com.ssh.dao.Tips_messageDao;
 import com.ssh.model.Movie_Replycomment;
 import com.ssh.model.Tips_message;
-import com.ssh.service.ReplyCommentService;
+import com.ssh.service.Movie_ReplyCommentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +16,8 @@ import java.util.List;
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
  */
-@Service("ReplyCommentService")
-public class ReplyCommentServieImpl implements ReplyCommentService{
+@Service("Movie_ReplyCommentService")
+public class MovieReplyCommentServieImpl implements Movie_ReplyCommentService {
 
     @Resource
     private Movie_ReplyCommentDao movieReplyCommentDao;
@@ -60,7 +60,7 @@ public class ReplyCommentServieImpl implements ReplyCommentService{
 
     @Override
     public List<Movie_Replycomment> selectReplyComment(Integer comment_id) {
-        return null;
+        return movieReplyCommentDao.selectReplyComment(comment_id);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.ssh.service.impl;
 
 import com.ssh.BaseTest;
 import com.ssh.model.Movie_Replycomment;
-import com.ssh.service.ReplyCommentService;
+import com.ssh.service.Movie_ReplyCommentService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ReplyMovieCommentServieImplTest extends BaseTest{
 
     @Autowired
-    private ReplyCommentService replyCommentService;
+    private Movie_ReplyCommentService movieReplyCommentService;
 
     @Test
     public void insertReplyComment() throws Exception {
@@ -22,7 +22,7 @@ public class ReplyMovieCommentServieImplTest extends BaseTest{
         movieReplycomment.setComment_id(1);//目标评论的id
         movieReplycomment.setReply_type(1);
         movieReplycomment.setTo_userId(1);
-        replyCommentService.insertReplyComment(movieReplycomment);
+        movieReplyCommentService.insertReplyComment(movieReplycomment);
 
     }
 

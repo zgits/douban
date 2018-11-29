@@ -1,7 +1,9 @@
 package com.ssh.service.impl;
 
 import com.ssh.dao.ManagerUserDao;
+import com.ssh.dao.Tips_messageDao;
 import com.ssh.model.PageBean;
+import com.ssh.model.Tips_message;
 import com.ssh.model.User;
 import com.ssh.service.ManagerUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class ManagerUserServiceImpl implements ManagerUserService{
     @Autowired
     private ManagerUserDao managerUserDao;
 
+    @Autowired
+    private Tips_messageDao tips_messageDao;
 
 
     @Override
@@ -56,15 +60,32 @@ public class ManagerUserServiceImpl implements ManagerUserService{
     }
 
     @Override
-    public boolean insertForbiddenWords(int userId, int days) {
+    public boolean insertForbiddenWords(int userId, int days,String reason) {
         User user=new User();
         user.setId(userId);
         user.setDays(days);
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        user.setReason(reason);
         user.setStartTime(new Date());
+        System.out.println(user.getStartTime());
         Calendar ca = Calendar.getInstance();
         ca.add(Calendar.DATE, days);//
         user.setEndTime(ca.getTime());
+
+        /**
+         * 设置消息提醒
+         */
+        /**
+         * 以下是设置消息提醒的
+         */
+        String username="系统";
+        Tips_message tips_message=new Tips_message();
+        tips_message.setSender(username);
+        tips_message.setMessage_status(1);//默认未读
+        tips_message.setUserId(userId);//设置接收者的id
+        tips_message.setTime(new Date());
+        tips_message.setMessage("系统消息：您由于"+reason+"原因已被系统禁言"+days+"天" );//设置为回复内容
+        tips_messageDao.insertMessage(tips_message);
+
         return managerUserDao.insertForbiddenWords(user);
     }
 

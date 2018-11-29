@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
  */
-public interface ReplyCommentService {
+public interface Movie_ReplyCommentService {
 
     /**
-     * 添加回复回复内容
+     * 添加评论的或者回复的回复内容
      * @param movieReplycomment
      * @return
      */

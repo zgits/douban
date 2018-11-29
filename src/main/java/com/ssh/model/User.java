@@ -45,8 +45,12 @@ public class User {
     @Column(name="endTime",columnDefinition="datetime COMMENT '禁言结束时间'")
     private Date endTime;//禁言结束时间
 
+    @Column(name="reson",columnDefinition="varchar(255) COMMENT '禁言原因'")
+    private String reason;
+
     @OneToMany(targetEntity = Tips_message.class,mappedBy = "userId")
     private List<Tips_message> Tips_messages;//提醒消息集合
+
 
     @Override
     public String toString() {
@@ -61,15 +65,24 @@ public class User {
                 ", days=" + days +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", reason='" + reason + '\'' +
                 ", Tips_messages=" + Tips_messages +
                 '}';
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public Integer getDays() {
         return days;
     }
 
-    public void setDays(int days) {
+    public void setDays(Integer days) {
         this.days = days;
     }
 

@@ -2,7 +2,7 @@ package com.ssh.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Movie_Comment;
-import com.ssh.service.CommentService;
+import com.ssh.service.Movie_CommentService;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
@@ -13,8 +13,8 @@ import javax.annotation.Resource;
 @Controller("CommentAction")
 public class CommentAction extends ActionSupport{
 
-    @Resource(name="CommentService")
-    private CommentService commentService;
+    @Resource(name="Movie_CommentService")
+    private Movie_CommentService movieCommentService;
 
     private Movie_Comment movieComment;
 
@@ -27,7 +27,7 @@ public class CommentAction extends ActionSupport{
     }
 
     public String insertComment(){
-        commentService.insertComment(movieComment);
+        movieCommentService.insertComment(movieComment);
         return "insert";
     }
 
@@ -42,7 +42,7 @@ public class CommentAction extends ActionSupport{
     }
 
     public String deleteComment(){
-        commentService.deleteComment(id);
+        movieCommentService.deleteComment(id);
         return "delete";
     }
 

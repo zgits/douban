@@ -4,6 +4,7 @@ import com.ssh.dao.MovieDao;
 import com.ssh.model.Movie;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +84,8 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     @Override
     public List<Movie> selectMovieByName(String moviename, int begin, int pageSize) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Movie.class);
+        criteria.add(Restrictions.like("moviename",moviename));
+
         // 查询分页数据
         List<Movie> list = (List<Movie>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
         return list;

@@ -28,10 +28,10 @@ public interface ManagerUserService {
 
     /**
      * 管理员禁言功能的接口,参数，从前端得到的数据
-     * @param userId,days
+     * @param userId,days,reson
      * @return boolean
      */
-    public boolean insertForbiddenWords(int userId,int days);
+    public boolean insertForbiddenWords(int userId,int days,String reason);
 
 
     /**

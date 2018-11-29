@@ -5,6 +5,7 @@ import com.ssh.model.Movie_Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +50,7 @@ public class MovieCommentDaoImpl extends HibernateDaoSupport implements Movie_Co
     @Override
     public List<Movie_Comment> findComment(Integer movieId, int begin, int pageSize) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Movie_Comment.class);
+        criteria.add(Restrictions.eq("movieId",movieId));
         // 查询分页数据
         List<Movie_Comment> list = (List<Movie_Comment>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
         return list;
