@@ -10,17 +10,17 @@ import javax.persistence.*;
 @Table(name="image")
 public class Image {
 
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Id
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
-    @Column(name="movieId")
-    private Integer movieId;//对应的电影id，可以为空
+    @Column(name="movieId",columnDefinition="integer(5) COMMENT '对应的电影id'")
+    private Integer movieId;//对应的电影id
 
     //取消了上传预告片图片的功能，改为了从后台截取视频的图片传到前端。
 
-    @Column(name="path")
+    @Column(name="path",columnDefinition="varchar(255) COMMENT '保存图片的地址'")
     private String path;//保存图片的地址
 
     @Override

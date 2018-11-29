@@ -12,24 +12,24 @@ import java.util.Date;
 @Table(name="tips_message")
 public class Tips_message {
 
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Id
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
-    @Column(name="userId")
+    @Column(name="userId",columnDefinition="integer(5) COMMENT '对应用户表的id，接收者的id'")
     private Integer userId;//对应用户表的id，接收者的id
 
-    @Column(name="message")
+    @Column(name="message",columnDefinition="varchar(255) COMMENT '消息内容'")
     private String message;//消息内容
 
-    @Column(name="message_status")
+    @Column(name="message_status",columnDefinition="integer(1) COMMENT '消息状态，1，未读，2，已读'")
     private Integer message_status;//消息状态，1，未读，2，已读
 
-    @Column(name="sender")
+    @Column(name="sender",columnDefinition="varchar(255) COMMENT '发送人的名字，用户或者系统'")
     private String sender;//发送人的名字，用户或者系统
 
-    @Column(name="time")
+    @Column(name="time",columnDefinition="datetime COMMENT '消息的时间'")
     private Date time;//消息的时间
 
     @Override

@@ -9,15 +9,15 @@ import javax.persistence.*;
 @Table(name="labelmapping")
 public class Labelmapping {
 
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Id
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
-    @Column(name="movieId")
+    @Column(name="movieId",columnDefinition="integer(5) COMMENT '对应的电影id'")
     private Integer movieId;//对应的电影id
 
-    @Column(name="labelId")
+    @Column(name="labelId",columnDefinition="integer(5) COMMENT '对应的标签id'")
     private Integer labelId;//对应的标签id
 
     @Override

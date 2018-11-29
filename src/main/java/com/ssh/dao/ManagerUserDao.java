@@ -43,4 +43,19 @@ public interface ManagerUserDao {
      * @return
      */
     public boolean deleteUser(Integer id);
+
+
+    /**
+     * 禁言信息
+     * @param user
+     * @return
+     */
+    public boolean insertForbiddenWords(User user);
+
+    /**
+     * 删除禁言信息,即解禁
+     * @param id
+     * @return
+     */
+    public boolean deleteForbidden(Integer id);
 }

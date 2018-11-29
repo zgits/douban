@@ -3,7 +3,7 @@ package com.ssh.service.impl;
 import com.ssh.dao.ManagerUserDao;
 import com.ssh.dao.ReplyCommentDao;
 import com.ssh.dao.Tips_messageDao;
-import com.ssh.model.Replycomment;
+import com.ssh.model.Movie_Replycomment;
 import com.ssh.model.Tips_message;
 import com.ssh.service.ReplyCommentService;
 import org.springframework.stereotype.Service;
@@ -33,33 +33,33 @@ public class ReplyCommentServieImpl implements ReplyCommentService{
 
     @Override
     @Transactional
-    public boolean insertReplyComment(Replycomment replycomment) {
-        replycomment.setTime(new Date());
-        if (replycomment.getReply_type()==1){//代表是回复评论的
-            replycomment.setReply_id(replycomment.getComment_id());
-        }else if (replycomment.getReply_type()==2){//代表是回复的回复
+    public boolean insertReplyComment(Movie_Replycomment movieReplycomment) {
+        movieReplycomment.setTime(new Date());
+        if (movieReplycomment.getReply_type()==1){//代表是回复评论的
+            movieReplycomment.setReply_id(movieReplycomment.getComment_id());
+        }else if (movieReplycomment.getReply_type()==2){//代表是回复的回复
             //设置该回复的id为目标回复的id,目标回复id通过前端发送，
-            replycomment.setReply_id(replycomment.getId());
+            movieReplycomment.setReply_id(movieReplycomment.getId());
         }
         /**
          * 以下是设置消息提醒的
          */
-        String username= managerUserDao.getUserName(replycomment.getUserId());
+        String username= managerUserDao.getUserName(movieReplycomment.getUserId());
         Tips_message tips_message=new Tips_message();
         tips_message.setSender(username);
         tips_message.setMessage_status(1);//默认未读
-        tips_message.setUserId(replycomment.getTo_userId());//设置接收者的id
+        tips_message.setUserId(movieReplycomment.getTo_userId());//设置接收者的id
         tips_message.setTime(new Date());
-        tips_message.setMessage("有人回复你："+replycomment.getContent());//设置为回复内容
+        tips_message.setMessage("有人回复你："+ movieReplycomment.getContent());//设置为回复内容
         tips_messageDao.insertMessage(tips_message);
         /**
          * 设置消息提醒end
          */
-        return replyCommentDao.insertReplyComment(replycomment);
+        return replyCommentDao.insertReplyComment(movieReplycomment);
     }
 
     @Override
-    public List<Replycomment> selectReplyComment(Integer comment_id) {
+    public List<Movie_Replycomment> selectReplyComment(Integer comment_id) {
         return null;
     }
 

@@ -9,70 +9,57 @@ import java.util.List;
  * 评论电影的bean
  */
 @Entity
-@Table(name="comment")
-public class Comment {
+@Table(name="movie_comment")
+public class Movie_Comment {
 
-    @GeneratedValue(strategy=GenerationType.AUTO)
     @Id
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
-    @Column(name="userId")
+    @Column(name="userId",columnDefinition="integer(5) COMMENT '对应用户表的id'")
     private Integer userId;//对应用户表的id
 
-     /**从这里开始是针对电影的评论**/
-    @Column(name="score")
-    private float score;//用户评论的分数
+    @Column(name="score",columnDefinition="integer(2) COMMENT '用户评论的分数'")
+    private Integer score;//用户评论的分数
 
-    @Column(name="number")
+    @Column(name="number",columnDefinition="integer(5) COMMENT '该条评论的赞数'")
     private Integer number;//该条评论的赞数
 
-    @Column(name="movieId")
+    @Column(name="movieId",columnDefinition="integer(5) COMMENT '对应的电影id'")
     private Integer movieId;//对应的电影id
 
-     /**针对电影的到这里结束,后面的评论内容是有共性的**/
-    @Column(name="content")
+    @Column(name="content",columnDefinition="varchar(255) COMMENT '用户评论的内容'")
     private String content;//用户评论的内容
 
-    @Column(name="trailerId")
-    private Integer trailerId;//对应的预告片id，
-
-    @Column(name="time")
+    @Column(name="time",columnDefinition="datetime COMMENT '评论的时间'")
     private Date time;//评论的时间
 
-//    @OneToMany(targetEntity = Replycomment.class)
-//    private List<Replycomment> Replycomments;//评论的回复的集合
+    @OneToMany(targetEntity = Movie_Replycomment.class,mappedBy = "comment_id")
+    private List<Movie_Replycomment> movieReplycomments;//评论的回复的集合
 
     @Override
     public String toString() {
-        return "Comment{" +
+        return "Movie_Comment{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", score=" + score +
                 ", number=" + number +
                 ", movieId=" + movieId +
                 ", content='" + content + '\'' +
-                ", trailerId=" + trailerId +
                 ", time=" + time +
-//                ", Replycomments=" + Replycomments +
+                ", movieReplycomments=" + movieReplycomments +
                 '}';
     }
 
-    public Integer getTrailerId() {
-        return trailerId;
+
+    public List<Movie_Replycomment> getReplycomments() {
+        return movieReplycomments;
     }
 
-    public void setTrailerId(Integer trailerId) {
-        this.trailerId = trailerId;
+    public void setReplycomments(List<Movie_Replycomment> movieReplycomments) {
+        this.movieReplycomments = movieReplycomments;
     }
-
-//    public List<Replycomment> getReplycomments() {
-//        return Replycomments;
-//    }
-
-//    public void setReplycomments(List<Replycomment> Replycomments) {
-//        this.Replycomments = Replycomments;
-//    }
 
     public Date getTime() {
         return time;
@@ -98,11 +85,11 @@ public class Comment {
         this.userId = userId;
     }
 
-    public float getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 

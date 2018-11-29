@@ -1,7 +1,7 @@
 package com.ssh.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.ssh.model.Comment;
+import com.ssh.model.Movie_Comment;
 import com.ssh.service.CommentService;
 import org.springframework.stereotype.Controller;
 
@@ -16,18 +16,18 @@ public class CommentAction extends ActionSupport{
     @Resource(name="CommentService")
     private CommentService commentService;
 
-    private Comment comment;
+    private Movie_Comment movieComment;
 
-    public Comment getComment() {
-        return comment;
+    public Movie_Comment getMovieComment() {
+        return movieComment;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setMovieComment(Movie_Comment movieComment) {
+        this.movieComment = movieComment;
     }
 
     public String insertComment(){
-        commentService.insertComment(comment);
+        commentService.insertComment(movieComment);
         return "insert";
     }
 

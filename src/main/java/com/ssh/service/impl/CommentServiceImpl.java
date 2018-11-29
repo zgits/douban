@@ -1,7 +1,7 @@
 package com.ssh.service.impl;
 
 import com.ssh.dao.CommentDao;
-import com.ssh.model.Comment;
+import com.ssh.model.Movie_Comment;
 import com.ssh.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +19,13 @@ public class CommentServiceImpl implements CommentService{
     CommentDao commentDao;
 
     @Override
-    public boolean insertComment(Comment comment) {
-        comment.setTime(new Date());
-        return commentDao.insertComment(comment);
+    public boolean insertComment(Movie_Comment movieComment) {
+        movieComment.setTime(new Date());
+        return commentDao.insertComment(movieComment);
     }
 
     @Override
-    public List<Comment> findComment(int movieId, int trailerId) {
+    public List<Movie_Comment> findComment(int movieId, int trailerId) {
         return null;
     }
 

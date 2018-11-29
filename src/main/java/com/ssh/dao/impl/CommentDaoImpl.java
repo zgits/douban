@@ -1,8 +1,7 @@
 package com.ssh.dao.impl;
 
 import com.ssh.dao.CommentDao;
-import com.ssh.model.Comment;
-import org.hibernate.Query;
+import com.ssh.model.Movie_Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -26,13 +25,13 @@ public class CommentDaoImpl implements CommentDao{
 
     /**
      * 插入评论信息到数据库接口实现
-     * @param comment
+     * @param movieComment
      * @return
      */
     @Override
-    public boolean insertComment(Comment comment) {
+    public boolean insertComment(Movie_Comment movieComment) {
         try{
-            sessionFactory.getCurrentSession().save(comment);
+            sessionFactory.getCurrentSession().save(movieComment);
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -50,7 +49,7 @@ public class CommentDaoImpl implements CommentDao{
      * @return
      */
     @Override
-    public List<Comment> findComment(int movieId, int trailerId) {
+    public List<Movie_Comment> findComment(int movieId, int trailerId) {
 
 
 
@@ -67,10 +66,10 @@ public class CommentDaoImpl implements CommentDao{
     @Override
     public boolean deleteComment(int id) {
         Session session=sessionFactory.getCurrentSession();
-        Comment comment=new Comment();
-        comment.setId(id);
+        Movie_Comment movieComment =new Movie_Comment();
+        movieComment.setId(id);
         try {
-            session.delete(comment);
+            session.delete(movieComment);
             return true;
         }catch (Exception e){
             System.out.println(e.getMessage());

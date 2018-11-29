@@ -12,52 +12,52 @@ import java.util.List;
 @Table(name="movie")
 public class Movie {
 
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Id
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
-    @Column(name="moviename")
+    @Column(name="moviename",columnDefinition="varchar(255) COMMENT '电影名字'")
     private String moviename;//电影名字
 
-    @Column(name="filmscore")
-    private float filmscore;//电影评分
+    @Column(name="filmscore",columnDefinition=" float(3, 1) COMMENT '电影评分'")
+    private Float filmscore;//电影评分
 
-    @Column(name="plot_introduction")
+    @Column(name="plot_introduction",columnDefinition="varchar(255) COMMENT '剧情简介'")
     private String plot_introduction;//剧情简介
 
-    @Column(name="length")
+    @Column(name="length",columnDefinition="integer(5) COMMENT '电影时长'")
     private Integer length;//电影时长
 
-    @Column(name="director")
+    @Column(name="director",columnDefinition="varchar(255) COMMENT '导演'")
     private String director;//导演
 
-    @Column(name="actor")
+    @Column(name="actor",columnDefinition="varchar(255) COMMENT '演员，有多个演员'")
     private String actor;//演员，有多个演员
 
-    @Column(name="language")
+    @Column(name="language",columnDefinition="varchar(255) COMMENT '语言种类'")
     private String language;//语言种类
 
-    @Column(name="region")
+    @Column(name="region",columnDefinition="varchar(255) COMMENT '制片地区'")
     private String region;//制片地区
 
-    @Column(name="release_time")
+    @Column(name="release_time",columnDefinition="datetime COMMENT '上映时间'")
     private Date release_time;//上映时间
 
-    @Column(name="release_region")
+    @Column(name="release_region",columnDefinition="varchar(255) COMMENT '上映地区'")
     private String release_region;//上映地区
 
-    @OneToMany
-    private List<Comment> Comments;//评论内容
+    @OneToMany(targetEntity = Movie_Comment.class,mappedBy = "movieId")
+    private List<Movie_Comment> movieComments;//评论内容
 
-    @OneToMany
+    @OneToMany(targetEntity = Image.class,mappedBy = "movieId")
     private List<Image> Images;//电影的海报，图片之类的
 
-    @OneToMany
+    @OneToMany(targetEntity = Trailer.class,mappedBy = "movieId")
     private List<Trailer> Trailers;//电影对应的预告片
 
-    @OneToMany
-    private List<Label> Labels;//对应的标签集合
+    @OneToMany(targetEntity = Labelmapping.class,mappedBy = "movieId")
+    private List<Labelmapping> labelmappings;//对应的标签集合
 
     @Override
     public String toString() {
@@ -73,19 +73,19 @@ public class Movie {
                 ", region='" + region + '\'' +
                 ", release_time=" + release_time +
                 ", release_region='" + release_region + '\'' +
-                ", Comments=" + Comments +
+                ", movieComments=" + movieComments +
                 ", Images=" + Images +
                 ", Trailers=" + Trailers +
-                ", Labels=" + Labels +
+                ", labelmappings=" + labelmappings +
                 '}';
     }
 
-    public List<Label> getLabels() {
-        return Labels;
+    public List<Labelmapping> getLabelmappings() {
+        return labelmappings;
     }
 
-    public void setLabels(List<Label> Labels) {
-        this.Labels = Labels;
+    public void setLabelmappings(List<Labelmapping> labelmappings) {
+        this.labelmappings = labelmappings;
     }
 
     public Integer getId() {
@@ -104,11 +104,11 @@ public class Movie {
         this.moviename = moviename;
     }
 
-    public float getFilmscore() {
+    public Float getFilmscore() {
         return filmscore;
     }
 
-    public void setFilmscore(float filmscore) {
+    public void setFilmscore(Float filmscore) {
         this.filmscore = filmscore;
     }
 
@@ -176,12 +176,12 @@ public class Movie {
         this.release_region = release_region;
     }
 
-    public List<Comment> getComments() {
-        return Comments;
+    public List<Movie_Comment> getMovieComments() {
+        return movieComments;
     }
 
-    public void setComments(List<Comment> Comments) {
-        this.Comments = Comments;
+    public void setMovieComments(List<Movie_Comment> movieComments) {
+        this.movieComments = movieComments;
     }
 
     public List<Image> getImages() {

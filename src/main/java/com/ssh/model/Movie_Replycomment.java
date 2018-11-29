@@ -10,38 +10,38 @@ import java.util.Date;
  * 评论的回复
  */
 @Entity
-@Table(name="replycomment")
-public class Replycomment {
+@Table(name="movie_replycomment")
+public class Movie_Replycomment {
 
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Id
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
-    @Column(name="content")
+    @Column(name="content",columnDefinition="varchar(255) COMMENT '回复的内容'")
     private String content;//回复的内容
 
-    @Column(name="time")
+    @Column(name="time",columnDefinition="datetime COMMENT '回复的时间'")
     private Date time;//回复的时间
 
-    @Column(name="userId")
+    @Column(name="userId",columnDefinition="integer(5) COMMENT '回复人的id，可以通过这个id查询到用户的其它信息'")
     private Integer userId;//回复人的id，可以通过这个id查询到用户的其它信息
 
-    @Column(name="to_userId")
+    @Column(name="to_userId",columnDefinition="integer(5) COMMENT '回复的目标用户的id'")
     private Integer to_userId;//回复的目标用户的id
 
-    @Column(name="comment_id")
+    @Column(name="comment_id",columnDefinition="integer(5) COMMENT '要回复评论的id'")
     private Integer comment_id;//要回复评论的id
 
-    @Column(name="reply_type")
-    private Integer reply_type;//回复的类型，因为回复可以是针对评论的回复(Comment),1来表示，也可以是针对回复的回复(reply)，2来表示， 通过这个字段来区分两种情景。
+    @Column(name="reply_type",columnDefinition="integer(5) COMMENT '回复的类型，因为回复可以是针对评论的回复(Movie_Comment),1来表示，也可以是针对回复的回复(reply)，2来表示， 通过这个字段来区分两种情景。'")
+    private Integer reply_type;//回复的类型，因为回复可以是针对评论的回复(Movie_Comment),1来表示，也可以是针对回复的回复(reply)，2来表示， 通过这个字段来区分两种情景。
 
-    @Column(name="reply_id")
+    @Column(name="reply_id",columnDefinition="integer(5) COMMENT '回复目标的id，如果reply_type是comment的话，那么reply_id＝comment_id，如果reply_type是reply的话，这表示这条回复的父回复。'")
     private Integer reply_id;//回复目标的id，如果reply_type是comment的话，那么reply_id＝comment_id，如果reply_type是reply的话，这表示这条回复的父回复。
 
     @Override
     public String toString() {
-        return "Replycomment{" +
+        return "Movie_Replycomment{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 ", time=" + time +

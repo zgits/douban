@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Created by 幻夜~星辰 on 2018/11/27.
  */
-public class CommentDaoImplTest extends BaseTest{
+public class MovieCommentDaoImplTest extends BaseTest{
 
     @Autowired
     private CommentDao commentDao;

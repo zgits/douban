@@ -11,9 +11,6 @@
 
     <package name="user" namespace="/" extends="struts-default">
 
-        <action name="forbidden" class="userStatus" method="insertForbiddenWords">
-            <result name="forbidden">/success.jsp</result>
-        </action>
 
         <action name="insertComment" class="CommentAction" method="insertComment">
             <result name="insert">/success.jsp</result>

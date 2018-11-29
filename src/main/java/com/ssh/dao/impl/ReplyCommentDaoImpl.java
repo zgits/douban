@@ -1,7 +1,7 @@
 package com.ssh.dao.impl;
 
 import com.ssh.dao.ReplyCommentDao;
-import com.ssh.model.Replycomment;
+import com.ssh.model.Movie_Replycomment;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +21,9 @@ public class ReplyCommentDaoImpl implements ReplyCommentDao{
 
 
     @Override
-    public boolean insertReplyComment(Replycomment replycomment) {
+    public boolean insertReplyComment(Movie_Replycomment movieReplycomment) {
         try{
-            sessionFactory.getCurrentSession().save(replycomment);
+            sessionFactory.getCurrentSession().save(movieReplycomment);
             return true;
         }catch (Exception e){
             return false;
@@ -33,17 +33,17 @@ public class ReplyCommentDaoImpl implements ReplyCommentDao{
     }
 
     @Override
-    public List<Replycomment> selectReplyComment(Integer comment_id) {
+    public List<Movie_Replycomment> selectReplyComment(Integer comment_id) {
         //sessionFactory.getCurrentSession().get
         return null;
     }
 
     @Override
     public boolean deleteReplyComment(Integer id) {
-        Replycomment replycomment=new Replycomment();
-        replycomment.setId(id);
+        Movie_Replycomment movieReplycomment =new Movie_Replycomment();
+        movieReplycomment.setId(id);
         try {
-            sessionFactory.getCurrentSession().delete(replycomment);
+            sessionFactory.getCurrentSession().delete(movieReplycomment);
             return true;
         }catch (Exception e){
             System.out.println(e.getMessage());

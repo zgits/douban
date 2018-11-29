@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!--删除用户的时候注意异步传输的id的获取-->
-<script>location.href="getUsers";</script>
 <div>
     <table class="table table-bordered" id="table_user">
         <caption class="text-center" style="color: #2f904d;font-size: 25px">用户信息表</caption>
@@ -25,10 +24,26 @@
                 <th>${users.email}</th>
                 <th>${users.password}</th>
                 <th>${users.person_profile}</th>
-                <th>正常</th>
+                <th>
+                    <c:choose>
+                        <c:when test="${!empty users.userStatus}">
+                            禁言${users.userStatus.days}天
+                        </c:when>
+                        <c:otherwise>
+                            正常
+                        </c:otherwise>
+                    </c:choose>
+                </th>
                 <th>${users.last_login}</th>
                 <th>
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
+                    <c:choose>
+                        <c:when test="${!empty users.userStatus}">
+                            <button class="btn btn-info">解禁</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
+                        </c:otherwise>
+                    </c:choose>
                     <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
                     <button class="btn btn-danger" onClick="delcfm1()">删除</button>
                 </th>

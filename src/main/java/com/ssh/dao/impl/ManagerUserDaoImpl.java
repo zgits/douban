@@ -2,6 +2,7 @@ package com.ssh.dao.impl;
 
 import com.ssh.dao.ManagerUserDao;
 import com.ssh.model.User;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
@@ -27,9 +28,7 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
 
     @Override
     public User getUserById(Integer id) {
-
-        return null;
-//        return (User)sessionFactory.getCurrentSession().createQuery("from User where id=?").setParameter(0,id).uniqueResult();
+        return (User)this.getSessionFactory().getCurrentSession().createQuery("from User where id=?").setParameter(0,id).uniqueResult();
     }
 
     @Override
@@ -54,8 +53,8 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
 
     @Override
     public String getUserName(Integer userId) {
-        return null;
-//        return (String)sessionFactory.getCurrentSession().createQuery("select username from User where id=?").setParameter(0,userId).uniqueResult();
+
+        return (String)this.getSessionFactory().getCurrentSession().createQuery("select username from User where id=?").setParameter(0,userId).uniqueResult();
 
     }
 
@@ -63,16 +62,48 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
     @Override
     public boolean deleteUser(Integer id) {
 
-//        User user=new User();
-//        user.setId(id);
-//        try {
-//            sessionFactory.getCurrentSession().delete(user);
-//            return true;
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//            System.out.println(e.getStackTrace());
-//            return false;
-//        }
+        User user=new User();
+        user.setId(id);
+        try {
+            this.getSessionFactory().getCurrentSession().delete(user);
+            return true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
+            return false;
+        }
+    }
+
+    /**
+     * 禁言信息的处理
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean insertForbiddenWords(User user) {
+        try{
+            String hql="update User u set u.days=?,u.startTime=?,u.endTime=? where u.id=?";
+
+            Query query  = this.getSessionFactory().getCurrentSession().createQuery(hql);
+
+            query.setInteger(0,user.getDays());
+
+            query.setDate(1,user.getStartTime());
+
+            query.setDate(2,user.getEndTime());
+
+            query.setInteger(3,user.getId());
+
+            query.executeUpdate();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean deleteForbidden(Integer id) {
         return false;
     }
 

@@ -10,18 +10,18 @@ import javax.persistence.*;
 @Table(name="label")
 public class Label {
 
-    @GeneratedValue(strategy= GenerationType.AUTO)
     @Id
-    @Column(name="id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
-    @Column(name="name")
+    @Column(name="name",columnDefinition="varchar(255) COMMENT '标签的名字'")
     private String name;//标签的名字
 
-    @Column(name="parentId")
+    @Column(name="parentId",columnDefinition="integer(5) COMMENT '对应的父标签id'")
     private Integer parentId;//对应的父标签id
 
-    @Column(name="level")
+    @Column(name="level",columnDefinition="integer(5) COMMENT '标签的级别'")
     private Integer level;//标签的级别
 
     @Override

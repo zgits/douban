@@ -1,6 +1,6 @@
 package com.ssh.dao;
 
-import com.ssh.model.Replycomment;
+import com.ssh.model.Movie_Replycomment;
 
 import java.util.List;
 
@@ -11,17 +11,17 @@ public interface ReplyCommentDao {
 
     /**
      * 插入数据库回复内容
-     * @param replycomment
+     * @param movieReplycomment
      * @return
      */
-    public boolean insertReplyComment(Replycomment replycomment);
+    public boolean insertReplyComment(Movie_Replycomment movieReplycomment);
 
     /**
      * 查询某条评论下的所有回复
      * @param comment_id
      * @return
      */
-    public List<Replycomment> selectReplyComment(Integer comment_id);
+    public List<Movie_Replycomment> selectReplyComment(Integer comment_id);
 
     /**
      * 删除某条评论下的回复

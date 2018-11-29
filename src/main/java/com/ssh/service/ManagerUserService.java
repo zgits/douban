@@ -23,5 +23,20 @@ public interface ManagerUserService {
      */
     public PageBean<User> getUsers(Integer currPage);
 
+    /**
+     * 管理员禁言功能的接口,参数，从前端得到的数据
+     * @param userId,days
+     * @return boolean
+     */
+    public boolean insertForbiddenWords(int userId,int days);
+
+
+    /**
+     * 解禁的实现
+     * @param id
+     * @return
+     */
+    public boolean deleteForbidden(Integer id);
+
 
 }
