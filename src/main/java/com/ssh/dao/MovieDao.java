@@ -67,4 +67,11 @@ public interface MovieDao {
      * @return
      */
     public Integer getMovieCountByName(String moviename);
+
+
+    /**
+     * 得到所有电影信息，用于在上传的时候展示名字
+     * @return
+     */
+    public List<Movie> selectAllMovie();
 }

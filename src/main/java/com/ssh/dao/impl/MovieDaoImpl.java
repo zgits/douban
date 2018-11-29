@@ -2,6 +2,7 @@ package com.ssh.dao.impl;
 
 import com.ssh.dao.MovieDao;
 import com.ssh.model.Movie;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -99,5 +100,11 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
             return list.get(0).intValue();
         }
         return 0;
+    }
+
+    @Override
+    public List<Movie> selectAllMovie() {
+        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Movie");
+        return query.list();
     }
 }

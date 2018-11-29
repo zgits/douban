@@ -25,6 +25,23 @@
             <result name="findAll">/admin/user.jsp</result>
         </action>
 
+        <!--文件上传-->
+        <action name="upload" class="MovieAction" method="saveFile">
+            <interceptor-ref name="defaultStack">
+            <!--
+                修改允许上传文件的大小(默认值是2M),
+                将调用FileUploadInterceptor中的setMaximumSize(223434555)
+            -->
+            <param name="fileUpload.maximumSize">223434555</param>
+            <!-- 配置允许上传文件的类型,如果有多个类型用","隔开 -->
+            <!--<param name="fileUpload.allowedTypes">application/vnd.ms-excel,text/plain</param>-->
+            <!--&lt;!&ndash;配置允许上传文件的扩展名,如果有多个用","隔开  &ndash;&gt;-->
+            <!--<param name="fileUpload.allowedExtensions">txt,excel,ppt</param>-->
+        </interceptor-ref>
+        <result name="success">/success.jsp</result>
+        <result name="input">/upload/error.jsp</result>
+        </action>
+
 
         <!--https://blog.csdn.net/yu0_zhang0/article/details/77984890-->
 

@@ -91,4 +91,9 @@ public class MovieServieImpl implements MovieServie{
         pageBean.setLists(list);
         return pageBean;
     }
+
+    @Override
+    public List<Movie> selectAllMovies() {
+        return movieDao.selectAllMovie();
+    }
 }

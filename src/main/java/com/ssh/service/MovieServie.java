@@ -56,5 +56,11 @@ public interface MovieServie {
      */
     public PageBean<Movie> selectMovieByName(String moviename,Integer currPage);
 
+    /**
+     * 得到全部的电影信息，用于上传用
+     * @return
+     */
+    public List<Movie> selectAllMovies();
+
 
 }
