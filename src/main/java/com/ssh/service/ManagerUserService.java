@@ -3,6 +3,9 @@ package com.ssh.service;
 import com.ssh.model.PageBean;
 import com.ssh.model.User;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
  */
@@ -37,6 +40,21 @@ public interface ManagerUserService {
      * @return
      */
     public boolean deleteForbidden(Integer id);
+
+    /**
+     * 获得禁言结束时间
+     * @param id
+     * @return
+     */
+    public Date selectEndTime(Integer id);
+
+    /**
+     * 通过用户名获取用户信息，主要用于查找用户
+     * @param username
+     * @param currPage
+     * @return
+     */
+    public PageBean<User> selectUserByName(String username,Integer currPage);
 
 
 }

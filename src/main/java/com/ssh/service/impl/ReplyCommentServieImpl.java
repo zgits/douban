@@ -1,7 +1,7 @@
 package com.ssh.service.impl;
 
 import com.ssh.dao.ManagerUserDao;
-import com.ssh.dao.ReplyCommentDao;
+import com.ssh.dao.Movie_ReplyCommentDao;
 import com.ssh.dao.Tips_messageDao;
 import com.ssh.model.Movie_Replycomment;
 import com.ssh.model.Tips_message;
@@ -20,7 +20,7 @@ import java.util.List;
 public class ReplyCommentServieImpl implements ReplyCommentService{
 
     @Resource
-    private ReplyCommentDao replyCommentDao;
+    private Movie_ReplyCommentDao movieReplyCommentDao;
 
     //当有用户回复的时候需要调用数据库的接口
     @Resource
@@ -55,7 +55,7 @@ public class ReplyCommentServieImpl implements ReplyCommentService{
         /**
          * 设置消息提醒end
          */
-        return replyCommentDao.insertReplyComment(movieReplycomment);
+        return movieReplyCommentDao.insertReplyComment(movieReplycomment);
     }
 
     @Override
@@ -66,6 +66,6 @@ public class ReplyCommentServieImpl implements ReplyCommentService{
     @Override
     public boolean deleteReplyComment(Integer id) {
 
-        return replyCommentDao.deleteReplyComment(id);
+        return movieReplyCommentDao.deleteReplyComment(id);
     }
 }

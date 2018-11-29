@@ -1,6 +1,6 @@
 package com.ssh.service.impl;
 
-import com.ssh.dao.CommentDao;
+import com.ssh.dao.Movie_CommentDao;
 import com.ssh.model.Movie_Comment;
 import com.ssh.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,12 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService{
 
     @Autowired
-    CommentDao commentDao;
+    Movie_CommentDao movieCommentDao;
 
     @Override
     public boolean insertComment(Movie_Comment movieComment) {
         movieComment.setTime(new Date());
-        return commentDao.insertComment(movieComment);
+        return movieCommentDao.insertComment(movieComment);
     }
 
     @Override
@@ -31,6 +31,6 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public boolean deleteComment(int id) {
-        return commentDao.deleteComment(id);
+        return movieCommentDao.deleteComment(id);
     }
 }

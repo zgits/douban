@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 评论功能的数据库接口
  */
-public interface CommentDao {
+public interface Movie_CommentDao {
 
     /**
      * 插入评论的信息
@@ -23,10 +23,16 @@ public interface CommentDao {
     /**
      * 查询到电影或者评论的相关评论
      * @param movieId
-     * @param trailerId
      * @return
      */
-    public List<Movie_Comment> findComment(int movieId, int trailerId);
+    public List<Movie_Comment> findComment(Integer movieId,int begin,int pageSize);
+
+    /**
+     * 得到某条电影评论的数量
+     * @param movieId
+     * @return
+     */
+    public Integer getCountComment(Integer movieId);
 
     /**
      * 根据id删除某个用户的评论

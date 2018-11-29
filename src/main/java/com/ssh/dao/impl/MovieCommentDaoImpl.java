@@ -1,9 +1,11 @@
 package com.ssh.dao.impl;
 
-import com.ssh.dao.CommentDao;
+import com.ssh.dao.Movie_CommentDao;
 import com.ssh.model.Movie_Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,14 +16,16 @@ import java.util.List;
  * Created by 幻夜~星辰 on 2018/11/27.
  */
 @Transactional
-@Repository("CommentDao")
-public class CommentDaoImpl implements CommentDao{
+@Repository("Movie_CommentDao")
+public class MovieCommentDaoImpl extends HibernateDaoSupport implements Movie_CommentDao {
 
     /**
      * 得到spring配置文件中的session工厂对象
      */
-    @Resource(name="sessionFactory")
-    private SessionFactory sessionFactory;
+    @Resource
+    public void setSessionFactory0(SessionFactory sessionFactory){
+        super.setSessionFactory(sessionFactory);
+    }
 
     /**
      * 插入评论信息到数据库接口实现
@@ -31,7 +35,7 @@ public class CommentDaoImpl implements CommentDao{
     @Override
     public boolean insertComment(Movie_Comment movieComment) {
         try{
-            sessionFactory.getCurrentSession().save(movieComment);
+            this.getSessionFactory().getCurrentSession().save(movieComment);
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -42,20 +46,24 @@ public class CommentDaoImpl implements CommentDao{
 
     }
 
-    /**
-     * 查找评论实现
-     * @param movieId
-     * @param trailerId
-     * @return
-     */
     @Override
-    public List<Movie_Comment> findComment(int movieId, int trailerId) {
-
-
-
-
-        return null;
+    public List<Movie_Comment> findComment(Integer movieId, int begin, int pageSize) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Movie_Comment.class);
+        // 查询分页数据
+        List<Movie_Comment> list = (List<Movie_Comment>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
+        return list;
     }
+
+    @Override
+    public Integer getCountComment(Integer movieId) {
+        String hql="select count(*) from Movie_Comment where movieId ="+movieId;
+        List<Long> list= (List<Long>) this.getHibernateTemplate().find(hql);
+        if (list.size()>0){
+            return list.get(0).intValue();
+        }
+        return 0;
+    }
+
 
     /**
      * https://blog.csdn.net/eson_15/article/details/51360804
@@ -65,7 +73,7 @@ public class CommentDaoImpl implements CommentDao{
      */
     @Override
     public boolean deleteComment(int id) {
-        Session session=sessionFactory.getCurrentSession();
+        Session session=this.getSessionFactory().getCurrentSession();
         Movie_Comment movieComment =new Movie_Comment();
         movieComment.setId(id);
         try {

@@ -57,45 +57,54 @@ public class ManagerUserServiceImpl implements ManagerUserService{
 
     @Override
     public boolean insertForbiddenWords(int userId, int days) {
-        return false;
+        User user=new User();
+        user.setId(userId);
+        user.setDays(days);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        user.setStartTime(new Date());
+        Calendar ca = Calendar.getInstance();
+        ca.add(Calendar.DATE, days);//
+        user.setEndTime(ca.getTime());
+        return managerUserDao.insertForbiddenWords(user);
     }
 
     @Override
     public boolean deleteForbidden(Integer id) {
-        return false;
+        return managerUserDao.deleteForbidden(id);
     }
 
-//    /**
-//     * 插入禁言信息的业务处理接口的实现方法
-//     * @param userId,days
-//     * @return
-//     */
-//    @Override
-//    public boolean insertForbiddenWords(int userId,int days) {
-//
-//        UserStatus userStatus=new UserStatus();
-//        userStatus.setUserId(userId);
-//        userStatus.setDays(days);
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-//        userStatus.setStartTime(new Date());// new Date()为获取当前系统时间
-//
-//        Calendar ca = Calendar.getInstance();
-//        ca.add(Calendar.DATE, days);// num为增加的天数，可以改变的
-//
-//
-//        userStatus.setEndTime(ca.getTime());
-//
-//        System.out.println(userStatus);
-//        userStatusDao.insertForbiddenWords(userStatus);
-////            return true;
-////        }
-//
-//        return false;
-//    }
-//
-//    @Override
-//    public boolean deleteForbidden(Integer id) {
-//        return userStatusDao.deleteForbidden(id);
-//    }
+    @Override
+    public Date selectEndTime(Integer id) {
+        return managerUserDao.selectEndTime(id);
+    }
+
+    @Override
+    public PageBean<User> selectUserByName(String username, Integer currPage) {
+        PageBean<User> pageBean = new PageBean<User>();
+        // 封装当前页数
+        pageBean.setCurrPage(currPage);
+        // 封装每页记录数
+        int pageSize = 5;
+        pageBean.setPageSize(pageSize);
+        // 封装总记录数
+        int totalCount = managerUserDao.getUserCountByName(username);
+        pageBean.setTotalCount(totalCount);
+        // 封装页数
+        int totalPage;
+        if(totalCount%pageSize == 0){
+            totalPage = totalCount/pageSize;
+        }else{
+            totalPage = totalCount/pageSize+1;
+        }
+        pageBean.setTotalPage(totalPage);
+        // 封装当前页记录
+        int begin= (currPage - 1)*pageSize;
+        List<User> list = managerUserDao.selectUserByName(username,begin, pageSize);
+
+        pageBean.setLists(list);
+        return pageBean;
+    }
+
+
 
 }

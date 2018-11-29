@@ -1,6 +1,6 @@
 package com.ssh.dao.impl;
 
-import com.ssh.dao.ReplyCommentDao;
+import com.ssh.dao.Movie_ReplyCommentDao;
 import com.ssh.model.Movie_Replycomment;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -13,8 +13,8 @@ import java.util.List;
  * Created by 幻夜~星辰 on 2018/11/28.
  */
 @Transactional
-@Repository("ReplyCommentDao")
-public class ReplyCommentDaoImpl implements ReplyCommentDao{
+@Repository("Movie_ReplyCommentDao")
+public class MovieReplyCommentDaoImpl implements Movie_ReplyCommentDao {
 
     @Resource(name="sessionFactory")
     private SessionFactory sessionFactory;
@@ -34,7 +34,7 @@ public class ReplyCommentDaoImpl implements ReplyCommentDao{
 
     @Override
     public List<Movie_Replycomment> selectReplyComment(Integer comment_id) {
-        //sessionFactory.getCurrentSession().get
+        //sessionFactory.getCurrentSession()
         return null;
     }
 

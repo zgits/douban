@@ -15,9 +15,16 @@ import static org.junit.Assert.*;
  */
 public class ManagerUserDaoImplTest extends BaseTest{
 
-
     @Autowired
     private ManagerUserDao managerUserDao;
+    @Test
+    public void deleteForbidden() throws Exception {
+
+        managerUserDao.deleteForbidden(1);
+    }
+
+
+
     @Test
     public void getUserById() throws Exception {
         System.out.println(managerUserDao.getUserById(1));
@@ -27,7 +34,7 @@ public class ManagerUserDaoImplTest extends BaseTest{
     public void insertForbiddenWords() throws Exception {
         User user=new User();
         user.setId(1);
-        user.setDays(20);
+        user.setDays(40);
         user.setStartTime(new Date());
         user.setEndTime(new Date());
         managerUserDao.insertForbiddenWords(user);

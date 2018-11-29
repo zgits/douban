@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -104,7 +105,41 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
 
     @Override
     public boolean deleteForbidden(Integer id) {
-        return false;
+        try{
+            String hql="update User u set u.days=null,u.startTime=null,u.endTime=null where u.id=?";
+
+            Query query  = this.getSessionFactory().getCurrentSession().createQuery(hql);
+
+            query.setInteger(0,id);
+
+            query.executeUpdate();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public Date selectEndTime(Integer id) {
+        return (Date)this.getSessionFactory().getCurrentSession().createQuery("select endTime from User where id=?").setParameter(0,id).uniqueResult();
+    }
+
+    @Override
+    public List<User> selectUserByName(String username,int begin,int pageSize) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+        // 查询分页数据
+        List<User> list = (List<User>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
+        return list;
+    }
+
+    @Override
+    public Integer getUserCountByName(String username) {
+        String hql="select count(*) from User where username like %"+username+"%";
+        List<Long> list= (List<Long>) this.getHibernateTemplate().find(hql);
+        if (list.size()>0){
+            return list.get(0).intValue();
+        }
+        return 0;
     }
 
 

@@ -2,6 +2,7 @@ package com.ssh.dao;
 
 import com.ssh.model.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,4 +59,25 @@ public interface ManagerUserDao {
      * @return
      */
     public boolean deleteForbidden(Integer id);
+
+    /**
+     * 获得禁言结束时间
+     * @param id
+     * @return
+     */
+    public Date selectEndTime(Integer id);
+
+    /**
+     * 通过模糊查询用户名得到用户信息
+     * @param username
+     * @return
+     */
+    public List<User> selectUserByName(String username,int begin,int pagesize);
+
+    /**
+     * 根据输入的用户名，得到指定用户名的数量
+     * @param username
+     * @return
+     */
+    public Integer getUserCountByName(String username);
 }

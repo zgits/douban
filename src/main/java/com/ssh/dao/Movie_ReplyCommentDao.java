@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
  */
-public interface ReplyCommentDao {
+public interface Movie_ReplyCommentDao {
 
     /**
      * 插入数据库回复内容
