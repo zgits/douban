@@ -15,6 +15,10 @@
 
     <!--<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">-->
     <link rel="stylesheet" type="text/css" href="static_resources/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="static_resources/checkbox/css/build.css">
+
+
     <link rel="stylesheet" href="/static_resources/dist/sidebar-menu.css">
     <style type="text/css">
         .main-sidebar {
@@ -135,120 +139,102 @@
             </div>
         </div>
 
-        <!--历史记录主要是对看过的预告片以及浏览过的电影介绍，暂时取消历史记录，2018-11-26-->
-        <!--<div class="row" id="history" style="margin-top: 150px;">-->
-        <!--<ul class="list-group">-->
-        <!--<li class="list-group-item" style="border: none">-->
-        <!--<div class="col-lg-1">-->
-        <!--<img srImagemage/test.jpg" class="img-rounded"-->
-        <!--style="width: 74px;height: 74px;margin-top: -3px">-->
-        <!--</div>-->
-        <!--<div class="col-md-11">-->
-        <!--<span>预告片的描述，或者是电影的名字.//-->
-        <!--一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，-->
-        <!--会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<br>-->
-        <!--<div class="col-md-offset-9">-->
-        <!--<span>-->
-        <!--浏览的时间：2018-11-20 17:45:25-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<hr>-->
-        <!--<li class="list-group-item" style="border: none">-->
-        <!--<div class="col-lg-1">-->
-        <!--<img srImagemage/test.jpg" class="img-rounded"-->
-        <!--style="width: 74px;height: 74px;margin-top: -3px">-->
-        <!--</div>-->
-        <!--<div class="col-md-11">-->
-        <!--<span>预告片的描述，或者是电影的名字.//-->
-        <!--一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，-->
-        <!--会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<br>-->
-        <!--<div class="col-md-offset-9">-->
-        <!--<span>-->
-        <!--浏览的时间：2018-11-20 17:45:25-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<hr>-->
-        <!--<li class="list-group-item" style="border: none">-->
-        <!--<div class="col-lg-1">-->
-        <!--<img srImagemage/test.jpg" class="img-rounded"-->
-        <!--style="width: 74px;height: 74px;margin-top: -3px">-->
-        <!--</div>-->
-        <!--<div class="col-md-11">-->
-        <!--<span>预告片的描述，或者是电影的名字.//-->
-        <!--一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，-->
-        <!--会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<br>-->
-        <!--<div class="col-md-offset-9">-->
-        <!--<span>-->
-        <!--浏览的时间：2018-11-20 17:45:25-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<hr>-->
-        <!--<li class="list-group-item" style="border: none">-->
-        <!--<div class="col-lg-1">-->
-        <!--<img srImagemage/test.jpg" class="img-rounded"-->
-        <!--style="width: 74px;height: 74px;margin-top: -3px">-->
-        <!--</div>-->
-        <!--<div class="col-md-11">-->
-        <!--<span>预告片的描述，或者是电影的名字.//-->
-        <!--一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，-->
-        <!--会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--<br>-->
-        <!--<div class="col-md-offset-9">-->
-        <!--<span>-->
-        <!--浏览的时间：2018-11-20 17:45:25-->
-        <!--</span>-->
-        <!--</div>-->
-        <!--</li>-->
-        <!--<hr>-->
 
-        <!--<li class="list-group-item" style="border: none">-->
-        <!--<div class="inner clearfix">-->
-        <!--<section id="main-content">-->
+        <div class="row" id="history">
+            <div class="row">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="button" value="全选" class="btn" id="selectAll">
+                        <input type="button" value="反选" class="btn" id="reverse">
+                    </div>
+                    <div class="col-md-5">
+                        <a>
+                            &nbsp;&nbsp;&nbsp;删除<span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <!--注意里面的id，checkbox每个需要不同-->
+                <ul class="list-group" id="owners">
+                    <li class="list-group-item">
+                        <div class="checkbox checkbox-success">
+                            <input id="checkbox1" class="styled" type="checkbox">
+                            <label for="checkbox1">
+                                xxxxxxx提示信息
+                                <br>
+                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                            </label>
+                        </div>
 
-        <!--<div class="text-center">-->
-        <!--<ul class="pagination">-->
-        <!--<li><a href="#">&laquo;</a></li>-->
-        <!--<li class="active"><a href="#">1</a></li>-->
-        <!--<li><a href="#">2</a></li>-->
-        <!--<li><a href="#">3</a></li>-->
-        <!--<li><a href="#">4</a></li>-->
-        <!--<li><a href="#">5</a></li>-->
-        <!--<li><a href="#">&raquo;</a></li>-->
-        <!--<li>-->
-        <!--&lt;!&ndash;异步传输页数，返回数据得到结果&ndash;&gt;-->
-        <!--<form class="col-sm-3" role="form">-->
-        <!--<div class="input-group">-->
-        <!--<input type="text" class="form-control">-->
-        <!--<span onclick="test()" class="input-group-addon">go</span>-->
-        <!--</div>-->
-        <!--</form>-->
-        <!--</li>-->
-        <!--<li><a style="border: none">共6页</a></li>-->
-        <!--</ul>-->
-        <!--</div>-->
+                    </li>
+                    <li class="list-group-item">
+                        <div class="checkbox checkbox-success">
+                            <input id="checkbox2" class="styled" type="checkbox">
+                            <label for="checkbox2">
+                                xxxxxxx提示信息
+                                <br>
+                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                            </label>
+                        </div>
 
-        <!--</section>-->
+                    </li>
+                    <li class="list-group-item">
+                        <div class="checkbox checkbox-success">
+                            <input id="checkbox3" class="styled" type="checkbox">
+                            <label for="checkbox3">
+                                xxxxxxx提示信息
+                                <br>
+                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="checkbox checkbox-success">
+                            <input id="checkbox4" class="styled" type="checkbox">
+                            <label for="checkbox4">
+                                xxxxxxx提示信息
+                                <br>
+                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-        <!--</div>-->
-        <!--</li>-->
-        <!--</ul>-->
+            <div class="row">
+                <div class="inner clearfix">
+                    <section id="main-content">
 
+                        <div class="text-center">
+                            <ul class="pagination">
+                                <li><a href="#">&laquo;</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&raquo;</a></li>
+                                <li>
+                                    <!--异步传输页数，返回数据得到结果-->
+                                    <form class="col-sm-3" role="form">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control">
+                                            <span onclick="test()" class="input-group-addon">go</span>
+                                        </div>
+                                    </form>
+                                </li>
+                                <li><a style="border: none">共6页</a></li>
+                            </ul>
+                        </div>
 
-        <!--</div>-->
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
 
         <div class="row" id="set_up" style="margin-top: 50px">
             <form class="form-horizontal" role="form">
@@ -332,6 +318,11 @@
                         <i class="fa fa-th"></i> <span style="font-size: 15px;">修改密码</span>
                     </a>
                 </li>
+                <li>
+                    <a id="history_p">
+                        <i class="fa fa-history"></i> <span style="font-size: 15px;">历史消息</span>
+                    </a>
+                </li>
             </ul>
         </section>
     </div>
@@ -349,6 +340,27 @@
     $.sidebarMenu($('.sidebar-menu'))
 </script>
 
+
+<!--全选，单选-->
+<script>
+    $("#selectAll").click(function () {
+        $("#owners input:checkbox").each(function () {
+            $(this).prop('checked', true);//
+
+        });
+    });
+
+    $("#unSelect").click(function () {
+        $("#owners input:checkbox").removeAttr("checked");
+    });
+
+    $("#reverse").click(function () {
+        $("#owners input:checkbox").each(function () {
+            this.checked = !this.checked;
+        });
+    });
+
+</script>
 <!--隐藏效果-->
 <script>
     $(document).ready(function () {

@@ -16,6 +16,7 @@ $(document).ready(function(){
 				required:true,
 				minlength:3, 
 				maxlength:32,
+
 			},
 		},
 		//错误信息提示
