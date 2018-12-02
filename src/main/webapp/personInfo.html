@@ -255,6 +255,37 @@
                 </div>
                 <br>
                 <div class="form-group">
+                    <label for="confirm_code" class="col-sm-2 control-label">验证码</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="confirm_code">
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-success" id="moBtn" href="javascript:;" onclick="sendMsgCode()">获取验证码</a>
+                        <a class="btn" disabled="disabled" id="secondShow" href="javascript:;"></a>
+                    </div>
+                </div>
+                <script>
+                    var countdown=30;  // 时长 s
+                    // 获取验证码按钮点击事件
+                    function sendMsgCode() {
+                        $("#secondShow").css('display','block');
+                        $("#moBtn").css('display','none');
+                        $("#secondShow").html('重新发送('+countdown+'s)');
+                        var timer = setInterval(function () {
+                            if (countdown == 0) {
+                                clearInterval(timer);
+                                $("#secondShow").css('display','none');
+                                $("#moBtn").css('display','block');
+                                countdown = 30;
+                                console.log(countdown);
+                            }
+                            $("#secondShow").html('重新发送('+(countdown-1)+'s)');
+                            countdown--;
+                        }, 1000);
+                    };
+                </script>
+                <br>
+                <div class="form-group">
                     <label for="person_profile" class="col-sm-2 control-label">个人介绍</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="person_profile"
@@ -271,7 +302,7 @@
                 <div class="form-group">
                     <label for="password" class="col-sm-2 control-label">原密码</label>
                     <div class="col-sm-5">
-                        <input type="password" class="form-control" id="password">
+                        <input type="password" class="form-control" id="password" value="">
                     </div>
                 </div>
                 <br>
