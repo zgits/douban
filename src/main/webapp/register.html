@@ -61,7 +61,7 @@
                         async:false, // 关闭异步
 
                         success:function (data){ 用回调函数检查服务器返回的结果
-                            if (data=="0"){  未通过
+                            if (data=="0"){  未通过//返回的结果自己更改，以及判断条件
                                 document.getElementById("test").innerHTML += s;
                                 return false;
                             }else{ //通过

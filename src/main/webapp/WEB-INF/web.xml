@@ -3,24 +3,24 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <!--<context-param>-->
-    <!--<param-name>contextConfigLocation</param-name>-->
-    <!--<param-value>classpath:applicationContext.xml</param-value>-->
-  <!--</context-param>-->
-  <!--&lt;!&ndash; 配置struts2过滤器 &ndash;&gt;-->
-  <!--<filter>-->
-    <!--<filter-name>struts2</filter-name>-->
-    <!--<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>-->
-  <!--</filter>-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  <!-- 配置struts2过滤器 -->
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
 
-  <!--<filter-mapping>-->
-    <!--<filter-name>struts2</filter-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-  <!--</filter-mapping>-->
-  <!--&lt;!&ndash; 配置监听器 &ndash;&gt;-->
-  <!--<listener>-->
-    <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-  <!--</listener>-->
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <!-- 配置监听器 -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
 
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

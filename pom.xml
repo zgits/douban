@@ -86,6 +86,7 @@
           <scope>test</scope>
       </dependency>
 
+    <!--文件上传-->
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -96,6 +97,14 @@
       <artifactId>commons-fileupload</artifactId>
       <version>1.3.1</version>
     </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+
+    <!--jstl标签-->
     <dependency>
       <groupId>jstl</groupId>
       <artifactId>jstl</artifactId>
@@ -106,11 +115,7 @@
       <artifactId>standard</artifactId>
       <version>1.1.2</version>
     </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
-    </dependency>
+
 
 
   </dependencies>

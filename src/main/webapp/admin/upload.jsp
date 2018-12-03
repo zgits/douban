@@ -56,8 +56,8 @@
         showUpload: false, //是否显示上传按钮
         showRemove:false,
         //allowedFileTypes: ['Image', 'video', 'flash'],
-        slugCallback: function(filename) {
-            return filename.replace('(', '_').replace(']', '_');
+        slugCallback: function(uploadFileName) {
+            return uploadFileName.replace('(', '_').replace(']', '_');
         },
         layoutTemplates:{
             actionUpload:'' // 预览区域的上传按钮

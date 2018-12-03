@@ -74,4 +74,5 @@ public interface MovieDao {
      * @return
      */
     public List<Movie> selectAllMovie();
+
 }

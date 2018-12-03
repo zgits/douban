@@ -4,10 +4,12 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 
-    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.devMode" value="false"/>
     <constant name="struts.objectFactory" value="spring" />
 
     <constant name="struts.multipart.maxSize" value="50000000"></constant>
+
+    <constant name="struts.multipart.saveDir" value="d:/datetemp"/>
 
     <package name="user" namespace="/" extends="struts-default">
 
@@ -27,19 +29,33 @@
 
         <!--文件上传-->
         <action name="upload" class="MovieAction" method="saveFile">
-            <interceptor-ref name="defaultStack">
-            <!--
-                修改允许上传文件的大小(默认值是2M),
-                将调用FileUploadInterceptor中的setMaximumSize(223434555)
-            -->
-            <param name="fileUpload.maximumSize">223434555</param>
-            <!-- 配置允许上传文件的类型,如果有多个类型用","隔开 -->
-            <!--<param name="fileUpload.allowedTypes">application/vnd.ms-excel,text/plain</param>-->
-            <!--&lt;!&ndash;配置允许上传文件的扩展名,如果有多个用","隔开  &ndash;&gt;-->
-            <!--<param name="fileUpload.allowedExtensions">txt,excel,ppt</param>-->
-        </interceptor-ref>
-        <result name="success">/success.jsp</result>
-        <result name="input">/upload/error.jsp</result>
+            <!--<interceptor-ref name="defaultStack">-->
+            <!--&lt;!&ndash;-->
+                <!--修改允许上传文件的大小(默认值是2M),-->
+                <!--将调用FileUploadInterceptor中的setMaximumSize(223434555)-->
+            <!--&ndash;&gt;-->
+            <!--<param name="fileUpload.maximumSize">223434555</param>-->
+            <!--&lt;!&ndash; 配置允许上传文件的类型,如果有多个类型用","隔开 &ndash;&gt;-->
+            <!--&lt;!&ndash;<param name="fileUpload.allowedTypes">application/vnd.ms-excel,text/plain</param>&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;配置允许上传文件的扩展名,如果有多个用","隔开  &ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;<param name="fileUpload.allowedExtensions">txt,excel,ppt</param>&ndash;&gt;-->
+        <!--</interceptor-ref>-->
+            <!-- 限制允许上传的文件的类型 -->
+            <!--<interceptor-ref name="defaultStack">-->
+
+                <!--&lt;!&ndash; 限制允许的文件的扩展名【推荐使用】 &ndash;&gt;-->
+                <!--<param name="fileUpload.allowedExtensions">txt,jpg,jar</param>-->
+                <!--&lt;!&ndash; 限制允许的类型【一般不与上面的同时是使用。如果同时使用，取交集！！】-->
+                <!--<param name="fileUpload.allowedTypes">text/plain</param>-->
+                 <!--&ndash;&gt;-->
+
+            <!--</interceptor-ref>-->
+
+            <result name="success">/success.jsp</result>
+
+            <!-- 配置错误视图 -->
+            <result name="input">/main.html</result>
+
         </action>
 
 
