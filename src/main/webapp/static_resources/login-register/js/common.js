@@ -67,12 +67,6 @@ $(document).ready(function(){
 			},
 			code:{
 				required:true,
-                minlength:4, //四个字符
-                maxlength:4,
-                remote:{
-                    url:"127.0.0.1:",//验证验证码是否正确,如果相同，应该是返回的false，待确定，不同返回true
-                    type:"post",
-                },
 			}
 			// phone_number:{
 			// 	required:true,
@@ -104,9 +98,6 @@ $(document).ready(function(){
 			},
 			code:{
                 required:"必须填写验证码",
-                minlength:"验证码位数错误",
-                maxlength:"验证码位数错误",
-                remote: "验证码错误",
 			},
 			// phone_number:{
 			// 	required:"请输入手机号码",
