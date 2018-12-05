@@ -17,7 +17,7 @@ public class TrailerAction extends ActionSupport{
     @Autowired
     private TrailerService trailerService;
 
-    /**根据id获取预告片信息，包括评论，我的主要是评论********/
+    /**根据id获取预告片信息，包括评论，我（zjf）的主要是评论********/
 
     private Integer id;
 
