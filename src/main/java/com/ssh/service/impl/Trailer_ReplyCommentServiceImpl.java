@@ -32,28 +32,34 @@ public class Trailer_ReplyCommentServiceImpl implements Trailer_ReplyCommentServ
 
     @Override
     public boolean insertReplyComment(Trailer_Replycomment trailer_replycomment) {
+        Date date=managerUserDao.selectEndTime(trailer_replycomment.getUserId());
         trailer_replycomment.setTime(new Date());
-        if (trailer_replycomment.getReply_type()==1){//代表是回复评论的
-            trailer_replycomment.setReply_id(trailer_replycomment.getComment_id());
-        }else if (trailer_replycomment.getReply_type()==2){//代表是回复的回复
-            //设置该回复的id为目标回复的id,目标回复id通过前端发送，
-            trailer_replycomment.setReply_id(trailer_replycomment.getId());
+        if (trailer_replycomment.getTime().after(date)){
+            if (trailer_replycomment.getReply_type()==1){//代表是回复评论的
+                trailer_replycomment.setReply_id(trailer_replycomment.getComment_id());
+            }else if (trailer_replycomment.getReply_type()==2){//代表是回复的回复
+                //设置该回复的id为目标回复的id,目标回复id通过前端发送，
+                trailer_replycomment.setReply_id(trailer_replycomment.getId());
+            }
+            /**
+             * 以下是设置消息提醒的
+             */
+            String username= managerUserDao.getUserName(trailer_replycomment.getUserId());
+            Tips_message tips_message=new Tips_message();
+            tips_message.setSender(username);
+            tips_message.setMessage_status(1);//默认未读
+            tips_message.setUserId(trailer_replycomment.getTo_userId());//设置接收者的id
+            tips_message.setTime(new Date());
+            tips_message.setMessage("有人回复你："+ trailer_replycomment.getContent());//设置为回复内容
+            tips_messageDao.insertMessage(tips_message);
+            /**
+             * 设置消息提醒end
+             */
+            return trailer_replyCommentDao.insertReplyComment(trailer_replycomment);
+        }else{
+            return false;
         }
-        /**
-         * 以下是设置消息提醒的
-         */
-        String username= managerUserDao.getUserName(trailer_replycomment.getUserId());
-        Tips_message tips_message=new Tips_message();
-        tips_message.setSender(username);
-        tips_message.setMessage_status(1);//默认未读
-        tips_message.setUserId(trailer_replycomment.getTo_userId());//设置接收者的id
-        tips_message.setTime(new Date());
-        tips_message.setMessage("有人回复你："+ trailer_replycomment.getContent());//设置为回复内容
-        tips_messageDao.insertMessage(tips_message);
-        /**
-         * 设置消息提醒end
-         */
-        return trailer_replyCommentDao.insertReplyComment(trailer_replycomment);
+
     }
 
     @Override

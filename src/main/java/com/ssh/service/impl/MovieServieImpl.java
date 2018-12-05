@@ -1,9 +1,14 @@
 package com.ssh.service.impl;
 
+import com.ssh.dao.ImageDao;
 import com.ssh.dao.MovieDao;
+import com.ssh.dao.TrailerDao;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
+import com.ssh.service.ImageService;
 import com.ssh.service.MovieServie;
+import com.ssh.service.Movie_CommentService;
+import com.ssh.service.TrailerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +22,18 @@ public class MovieServieImpl implements MovieServie{
 
     @Autowired
     private MovieDao movieDao;
+
+    /**
+     * 用来得到电影下的预告片用
+     */
+    @Autowired
+    private ImageService imageService;
+
+    @Autowired
+    private TrailerService trailerService;
+
+    @Autowired
+    private Movie_CommentService movie_commentService;
 
     @Override
     public boolean insertMovie(Movie movie) {
@@ -55,6 +72,11 @@ public class MovieServieImpl implements MovieServie{
         // 封装当前页记录
         int begin= (currPage - 1)*pageSize;
         List<Movie> list = movieDao.selectMovie(begin, pageSize);
+        for (Movie movie:list){
+            movie.setImages(imageService.getMovieImages(movie.getId()));
+            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
+            movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+        }
 
         pageBean.setLists(list);
         return pageBean;
@@ -62,7 +84,11 @@ public class MovieServieImpl implements MovieServie{
 
     @Override
     public Movie selctMovieById(Integer id) {
-        return movieDao.selectMovieById(id);
+        Movie movie=movieDao.selectMovieById(id);
+        movie.setImages(imageService.getMovieImages(movie.getId()));
+        movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
+        movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+        return movie;
     }
 
     @Override
@@ -88,10 +114,20 @@ public class MovieServieImpl implements MovieServie{
         int begin= (currPage - 1)*pageSize;
         List<Movie> list = movieDao.selectMovieByName(moviename,begin, pageSize);
 
+        for (Movie movie:list){
+            movie.setImages(imageService.getMovieImages(movie.getId()));
+            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
+            movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+
+        }
         pageBean.setLists(list);
         return pageBean;
     }
 
+    /**
+     * 得到全部电影信息，用于上传用,就不加其他信息了，主要是用于获取电影名和id
+     * @return
+     */
     @Override
     public List<Movie> selectAllMovies() {
         return movieDao.selectAllMovie();

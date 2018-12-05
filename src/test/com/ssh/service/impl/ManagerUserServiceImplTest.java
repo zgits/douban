@@ -5,6 +5,8 @@ import com.ssh.service.ManagerUserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -34,6 +36,12 @@ public class ManagerUserServiceImplTest extends BaseTest{
     public void getUsers() throws Exception {
 
         managerUserService.getUsers(1);
+    }
+
+    @Test
+    public void compareDate() throws Exception{
+
+        System.out.println(new Date().after(managerUserService.selectEndTime(1)));
     }
 
 }

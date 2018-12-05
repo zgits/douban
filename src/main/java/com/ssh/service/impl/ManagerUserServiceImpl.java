@@ -72,9 +72,6 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         user.setEndTime(ca.getTime());
 
         /**
-         * 设置消息提醒
-         */
-        /**
          * 以下是设置消息提醒的
          */
         String username="系统";
@@ -83,7 +80,7 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         tips_message.setMessage_status(1);//默认未读
         tips_message.setUserId(userId);//设置接收者的id
         tips_message.setTime(new Date());
-        tips_message.setMessage("系统消息：您由于"+reason+"原因已被系统禁言"+days+"天" );//设置为回复内容
+        tips_message.setMessage("系统消息：您由于"+reason+"原因已被系统禁言"+days+"天,于"+user.getEndTime()+"解禁" );//设置为回复内容
         tips_messageDao.insertMessage(tips_message);
 
         return managerUserDao.insertForbiddenWords(user);

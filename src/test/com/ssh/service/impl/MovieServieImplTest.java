@@ -40,4 +40,9 @@ public class MovieServieImplTest extends BaseTest{
         System.out.println(movieServie.selctMovieById(1));
     }
 
+    @Test
+    public void compareDate() throws Exception{
+
+    }
+
 }

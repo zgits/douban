@@ -11,17 +11,15 @@ import org.springframework.stereotype.Controller;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
+ *
+ * 后台对用户的管理的action
  */
 @Controller("ManagerUser")
 public class ManagerUserAction extends ActionSupport {
 
 
-    private User user=new User();
-
     @Autowired
     private ManagerUserService managerUserService;
-
-
 
     //当前页数
     private Integer currPage=1;
@@ -31,7 +29,7 @@ public class ManagerUserAction extends ActionSupport {
     }
 
     /**
-     * 分页查询部门
+     * 分页查询用户
      * @return
      */
     public String findAll(){

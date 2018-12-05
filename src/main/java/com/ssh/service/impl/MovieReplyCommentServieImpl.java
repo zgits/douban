@@ -16,6 +16,7 @@ import java.util.List;
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
  */
+
 @Service("Movie_ReplyCommentService")
 public class MovieReplyCommentServieImpl implements Movie_ReplyCommentService {
 
@@ -31,31 +32,37 @@ public class MovieReplyCommentServieImpl implements Movie_ReplyCommentService {
     private ManagerUserDao managerUserDao;
 
 
-    @Override
     @Transactional
+    @Override
     public boolean insertReplyComment(Movie_Replycomment movieReplycomment) {
+        Date date=managerUserDao.selectEndTime(movieReplycomment.getUserId());
         movieReplycomment.setTime(new Date());
-        if (movieReplycomment.getReply_type()==1){//代表是回复评论的
-            movieReplycomment.setReply_id(movieReplycomment.getComment_id());
-        }else if (movieReplycomment.getReply_type()==2){//代表是回复的回复
-            //设置该回复的id为目标回复的id,目标回复id通过前端发送，
-            movieReplycomment.setReply_id(movieReplycomment.getId());
+        if (movieReplycomment.getTime().after(date)){
+            if (movieReplycomment.getReply_type()==1){//代表是回复评论的
+                movieReplycomment.setReply_id(movieReplycomment.getComment_id());
+            }else if (movieReplycomment.getReply_type()==2){//代表是回复的回复
+                //设置该回复的id为目标回复的id,目标回复id通过前端发送，
+                movieReplycomment.setReply_id(movieReplycomment.getId());
+            }
+            /**
+             * 以下是设置消息提醒的
+             */
+            String username= managerUserDao.getUserName(movieReplycomment.getUserId());
+            Tips_message tips_message=new Tips_message();
+            tips_message.setSender(username);
+            tips_message.setMessage_status(1);//默认未读
+            tips_message.setUserId(movieReplycomment.getTo_userId());//设置接收者的id
+            tips_message.setTime(new Date());
+            tips_message.setMessage("有人回复你："+ movieReplycomment.getContent());//设置为回复内容
+            tips_messageDao.insertMessage(tips_message);
+            /**
+             * 设置消息提醒end
+             */
+            return movieReplyCommentDao.insertReplyComment(movieReplycomment);
+        }else{
+            return false;
         }
-        /**
-         * 以下是设置消息提醒的
-         */
-        String username= managerUserDao.getUserName(movieReplycomment.getUserId());
-        Tips_message tips_message=new Tips_message();
-        tips_message.setSender(username);
-        tips_message.setMessage_status(1);//默认未读
-        tips_message.setUserId(movieReplycomment.getTo_userId());//设置接收者的id
-        tips_message.setTime(new Date());
-        tips_message.setMessage("有人回复你："+ movieReplycomment.getContent());//设置为回复内容
-        tips_messageDao.insertMessage(tips_message);
-        /**
-         * 设置消息提醒end
-         */
-        return movieReplyCommentDao.insertReplyComment(movieReplycomment);
+
     }
 
     @Override

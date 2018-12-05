@@ -1,9 +1,13 @@
 package com.ssh.service.impl;
 
+import com.ssh.dao.ManagerUserDao;
 import com.ssh.dao.Movie_CommentDao;
+import com.ssh.dao.Movie_ReplyCommentDao;
 import com.ssh.model.Movie_Comment;
 import com.ssh.model.PageBean;
+import com.ssh.service.ManagerUserService;
 import com.ssh.service.Movie_CommentService;
+import com.ssh.service.Movie_ReplyCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +23,24 @@ public class MovieCommentServiceImpl implements Movie_CommentService {
     @Autowired
     private Movie_CommentDao movieCommentDao;
 
+    @Autowired
+    private Movie_ReplyCommentService movie_replyCommentService;
+
+    @Autowired
+    private ManagerUserService managerUserService;
+
     @Override
     public boolean insertComment(Movie_Comment movieComment) {
+
+        Date date=managerUserService.selectEndTime(movieComment.getUserId());
         movieComment.setTime(new Date());
-        return movieCommentDao.insertComment(movieComment);
+        //判断禁言是否结束
+        if (movieComment.getTime().after(date)){
+            return movieCommentDao.insertComment(movieComment);
+        }else{
+            return false;
+        }
+
     }
 
     @Override
@@ -48,6 +66,9 @@ public class MovieCommentServiceImpl implements Movie_CommentService {
         int begin= (currPage - 1)*pageSize;
         List<Movie_Comment> list = movieCommentDao.findComment(movieId,begin, pageSize);
 
+        for (Movie_Comment movie_comment:list){
+            movie_comment.setReplycomments(movie_replyCommentService.selectReplyComment(movie_comment.getId()));
+        }
         pageBean.setLists(list);
         return pageBean;
     }

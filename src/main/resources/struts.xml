@@ -13,16 +13,6 @@
 
     <package name="user" namespace="/" extends="struts-default">
 
-
-        <action name="insertComment" class="CommentAction" method="insertComment">
-            <result name="insert">/success.jsp</result>
-        </action>
-
-        <action name="deleteComment" class="CommentAction" method="deleteComment">
-            <result name="delete">/success.jsp</result>
-        </action>
-
-
         <action name="getUsers" class="ManagerUser" method="findAll">
             <result name="findAll">/admin/user.jsp</result>
         </action>
@@ -57,9 +47,7 @@
             <result name="input">/main.html</result>
 
         </action>
-
-
-        <!--https://blog.csdn.net/yu0_zhang0/article/details/77984890-->
+        <!--文件上传end-->
 
     </package>
 

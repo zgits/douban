@@ -33,7 +33,7 @@ public interface ManagerUserDao {
     public String getUserName(Integer userId);
 
     /**
-     * 统计数量
+     * 统计数量，用于分页
      * @return
      */
     public int getUserCount();
@@ -75,7 +75,7 @@ public interface ManagerUserDao {
     public List<User> selectUserByName(String username,int begin,int pagesize);
 
     /**
-     * 根据输入的用户名，得到指定用户名的数量
+     * 根据输入的用户名，得到指定用户名的数量,用于分页查询
      * @param username
      * @return
      */

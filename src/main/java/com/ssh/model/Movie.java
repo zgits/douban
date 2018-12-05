@@ -48,7 +48,7 @@ public class Movie {
     private String release_region;//上映地区
 
     @OneToMany(targetEntity = Movie_Comment.class,mappedBy = "movieId")
-    private List<Movie_Comment> movieComments;//评论内容
+    private PageBean<Movie_Comment> movieComments;//评论内容
 
     @OneToMany(targetEntity = Image.class,mappedBy = "movieId")
     private List<Image> Images;//电影的海报，图片之类的
@@ -176,11 +176,11 @@ public class Movie {
         this.release_region = release_region;
     }
 
-    public List<Movie_Comment> getMovieComments() {
+    public PageBean<Movie_Comment> getMovieComments() {
         return movieComments;
     }
 
-    public void setMovieComments(List<Movie_Comment> movieComments) {
+    public void setMovieComments(PageBean<Movie_Comment> movieComments) {
         this.movieComments = movieComments;
     }
 

@@ -22,6 +22,13 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
     public void setSessionFactory0(SessionFactory sessionFactory){
         super.setSessionFactory(sessionFactory);
     }
+
+
+    /**
+     * 从这开始是针对后台管理电影时对预告片的方法
+     */
+
+
     @Override
     public boolean insertTrailer(List<Trailer> trailers) {
        try{
@@ -60,8 +67,17 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
     }
 
     @Override
-    public List<Trailer> getMovieTrailer(Integer movieId) {
+    public List<Trailer> getMovieTrailers(Integer movieId) {
         Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer");
         return query.list();
     }
+
+    @Override
+    public Trailer getMovieTrailer(Integer id) {
+        return (Trailer) this.getSessionFactory().getCurrentSession().createQuery("from Trailer where id=?").setParameter(0,id).uniqueResult();
+    }
+
+    /**
+     * 结束针对后台管理电影时对预告片的方法
+     */
 }

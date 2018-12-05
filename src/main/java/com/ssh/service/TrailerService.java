@@ -1,26 +1,33 @@
-package com.ssh.dao;
+package com.ssh.service;
 
 import com.ssh.model.Trailer;
 
 import java.util.List;
 
 /**
- * Created by 幻夜~星辰 on 2018/12/3.
+ * Created by 幻夜~星辰 on 2018/12/4.
  */
-public interface TrailerDao {
+public interface TrailerService {
 
 
     /**
      * 从这开始是针对后台管理电影时对预告片的方法
      */
 
+
     /**
-     * 插入多条预告片信息
+     * 增加多条预告片信息
      * @param trailers
      * @return
      */
     public boolean insertTrailer(List<Trailer> trailers);
 
+    /**
+     * 通过id删除预告片信息
+     * @param id
+     * @return
+     */
+    public boolean deleteTrailer(Integer id);
 
     /**
      * 更新预告片信息
@@ -30,14 +37,7 @@ public interface TrailerDao {
     public boolean updateTrailer(Trailer trailer);
 
     /**
-     * 删除预告片信息，当某条预告片有误时，可以删除该预告片
-     * @param id
-     * @return
-     */
-    public boolean deleteTrailer(Integer id);
-
-    /**
-     * 根据电影id获取电影下的所有预告片信息，不分页，数量不多
+     * 查询某个电影下的所有预告片
      * @param movieId
      * @return
      */
@@ -46,7 +46,6 @@ public interface TrailerDao {
     /**
      * 结束针对后台管理电影时对预告片的方法
      */
-
 
     /**
      * 说明一下，这个方法是为了展示评论和回复准备的，因=因为在展示评论和回复的同时，为了方便，就直接把预告片展示了
