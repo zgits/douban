@@ -20,7 +20,7 @@ public class ManagerUserDaoImplTest extends BaseTest{
     @Test
     public void deleteForbidden() throws Exception {
 
-        managerUserDao.deleteForbidden(1);
+        managerUserDao.deleteForbidden(2);
     }
 
 

@@ -3,6 +3,25 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!--删除用户的时候注意异步传输的id的获取-->
+
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
+
+<%--<link href="/static_resources/font-awesome/css/font-awesome.css" rel="stylesheet">--%>
+
+<link href="/static_resources/Admin/nav/css/nav.css" rel="stylesheet">
+
+<link href="/static_resources/Admin/nav/fonts/iconfont.css" rel="stylesheet">
+
+<script src="/static_resources/Admin/nav/js/nav.js"></script>
+
+
 <div>
     <table class="table table-bordered" id="table_user">
         <caption class="text-center" style="color: #2f904d;font-size: 25px">用户信息表</caption>
@@ -26,8 +45,8 @@
                 <th>${users.person_profile}</th>
                 <th>
                     <c:choose>
-                        <c:when test="${!empty users.userStatus}">
-                            禁言${users.userStatus.days}天
+                        <c:when test="${!empty users.endTime}">
+                            禁言结束日期${users.endTime}
                         </c:when>
                         <c:otherwise>
                             正常
@@ -37,11 +56,11 @@
                 <th>${users.last_login}</th>
                 <th>
                     <c:choose>
-                        <c:when test="${!empty users.userStatus}">
+                        <c:when test="${!empty users.endTime}">
                             <button class="btn btn-info">解禁</button>
                         </c:when>
                         <c:otherwise>
-                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal" onclick="Values('${users.id}')">禁言</button>
                         </c:otherwise>
                     </c:choose>
                     <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
@@ -176,7 +195,8 @@
                 <form id="form_data">
                     <div class="modal-body">
                         禁言天数: <input class="form-control" type="text" id="days" name="days"/>
-                        <input type="hidden" id="id" value="id" name="id"/><!---禁言用户的id-->
+                        <input type="hidden" id="id" value="" name="id"/><!---禁言用户的id-->
+                        禁言原因: <input class="form-control" type="text" id="reason" name="reason"/>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -190,6 +210,14 @@
         </div><!-- /.modal -->
     </div>
 
+    <script>
+        //绑定模态框展示的方法 
+        $("#myModal").modal("hide");
+        function Values(id) {
+            alert(id);
+            $("#id").val(id);
+        }
+    </script>  
     <%--模糊框--%>
     <div class="modal fade" id="delcfmModel1">
         <div class="modal-dialog modal-sm">
@@ -288,6 +316,14 @@
         function add_info() {
             var form_data = $("#form_data").serialize();
             alert(form_data);
+            $.ajax({
+                type:"get",
+                url:"127.0.0.1:8090/insertForbidden",
+                data:form_data,
+                success:function () {
+                    alert("成功");
+                }
+            })
 
         }
     </script>

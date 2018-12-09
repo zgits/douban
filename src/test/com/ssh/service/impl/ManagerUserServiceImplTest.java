@@ -25,7 +25,7 @@ public class ManagerUserServiceImplTest extends BaseTest{
 
     @Test
     public void insertForbiddenWords() throws Exception {
-        managerUserService.insertForbiddenWords(1,20,"违反了xxxx");
+        managerUserService.insertForbiddenWords(3,20,"违反了xxxx");
     }
 
     @Test

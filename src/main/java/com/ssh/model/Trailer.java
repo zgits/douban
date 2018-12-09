@@ -37,7 +37,7 @@ public class Trailer {
      * 原来是List<Trailer_Comment>
      */
     @OneToMany(targetEntity = Trailer_Comment.class,mappedBy = "trailerId")
-    private PageBean<Trailer_Comment> trailerComments;//预告片下的评论集合
+    private List<Trailer_Comment> trailerComments;//预告片下的评论集合
 
 //    @OneToMany(targetEntity = Image.class,)
 //    private List<Image> Images;//预告片对应的图片
@@ -65,11 +65,11 @@ public class Trailer {
 //        this.Images = Images;
 //    }
 
-    public PageBean<Trailer_Comment> getTrailerComments() {
+    public List<Trailer_Comment> getTrailerComments() {
         return trailerComments;
     }
 
-    public void setTrailerComments(PageBean<Trailer_Comment> trailerComments) {
+    public void setTrailerComments(List<Trailer_Comment> trailerComments) {
         this.trailerComments = trailerComments;
     }
 

@@ -16,6 +16,9 @@
         <action name="getUsers" class="ManagerUser" method="findAll">
             <result name="findAll">/admin/user.jsp</result>
         </action>
+        <action name="insertForbidden" class="ManagerUser" method="insertForbidden">
+            <result name="success">/main.html</result>
+        </action>
 
         <!--文件上传-->
         <action name="upload" class="MovieAction" method="saveFile">

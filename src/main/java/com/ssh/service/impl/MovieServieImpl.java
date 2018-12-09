@@ -75,7 +75,7 @@ public class MovieServieImpl implements MovieServie{
         for (Movie movie:list){
             movie.setImages(imageService.getMovieImages(movie.getId()));
             movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-            movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+           // movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
         }
 
         pageBean.setLists(list);
@@ -87,7 +87,7 @@ public class MovieServieImpl implements MovieServie{
         Movie movie=movieDao.selectMovieById(id);
         movie.setImages(imageService.getMovieImages(movie.getId()));
         movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-        movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+        //movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
         return movie;
     }
 
@@ -117,7 +117,7 @@ public class MovieServieImpl implements MovieServie{
         for (Movie movie:list){
             movie.setImages(imageService.getMovieImages(movie.getId()));
             movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-            movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+           // movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
 
         }
         pageBean.setLists(list);
