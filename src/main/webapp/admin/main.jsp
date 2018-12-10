@@ -24,7 +24,7 @@
 
 
 </head>
-<body>
+<body style="">
 
 <!--侧边导航栏开始-->
 <div  class="nav col-lg-3" style="min-height: 100%;">
@@ -60,24 +60,51 @@
 </div>
 <!--侧边导航栏结束-->
 <!--右侧展示内容-->
-<div class="container col-lg-10" style="background-color: white;">
-    <div id="matter1">
-        <jsp:include page="movie.jsp"></jsp:include>
-    </div>
-    <div id="matter2" style="display: none">
-        <jsp:include page="addmovie.jsp"></jsp:include>
-    </div>
-    <div id="matter3" style="display: none">
-        <jsp:include page="user.jsp"></jsp:include>
-    </div>
-    <div id="matter4" style="display: none">
-        <jsp:include page="label.jsp"></jsp:include>
-    </div>
-    <div id="matter5" style="display: none">
-        <jsp:include page="upload.jsp"></jsp:include>
-    </div>
+<div class="container col-lg-10" style="background-color: white;height: 650px;">
+    <%--<div id="matter1">--%>
+        <%--<jsp:include page="movie.jsp"></jsp:include>--%>
+    <%--</div>--%>
+    <%--<div id="matter2" style="display: none">--%>
+        <%--<jsp:include page="addmovie.jsp"></jsp:include>--%>
+    <%--</div>--%>
+    <%--<div id="matter3" style="display: none">--%>
+        <%--<jsp:include page="user.jsp"></jsp:include>--%>
+    <%--</div>--%>
+    <%--<div id="matter4" style="display: none">--%>
+        <%--<jsp:include page="label.jsp"></jsp:include>--%>
+    <%--</div>--%>
+    <%--<div id="matter5" style="display: none">--%>
+        <%--<jsp:include page="upload.jsp"></jsp:include>--%>
+    <%--</div>--%>
+        <iframe src="127.0.0.1:8090/findAll" frameborder='0' scrolling="no" class="container col-lg-12 " style="height:100%;margin:0px;float:left;">    //右栏原始页面
+        </iframe>
 </div>
 <!--右侧展示内容end-->
+
+<script type="text/javascript">
+    $(function () {
+        $("#li_one").click(function(){
+            $("iframe").attr("src", "movie.jsp");
+        });
+        $("#li_two").click(function(){
+
+            $("iframe").attr("src", "addmovie.jsp");
+        });
+        $("#li_three").click(function(){
+
+            $("iframe").attr("src", "127.0.0.1:8090/findAll");
+        });
+        $("#li_four").click(function(){
+
+            $("iframe").attr("src", "label.jsp");
+        });
+        $("#li_five").click(function(){
+
+            $("iframe").attr("src", "upload.jsp");
+        });
+    });
+</script>
+
 
 <script>
     $(document).ready(function() {

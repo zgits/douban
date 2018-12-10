@@ -115,7 +115,11 @@
       <artifactId>standard</artifactId>
       <version>1.1.2</version>
     </dependency>
-
+      <dependency>
+          <groupId>com.alibaba</groupId>
+          <artifactId>fastjson</artifactId>
+          <version>1.2.29</version>
+      </dependency>
 
 
   </dependencies>

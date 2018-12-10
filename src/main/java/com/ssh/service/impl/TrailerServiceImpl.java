@@ -69,7 +69,7 @@ public class TrailerServiceImpl implements TrailerService{
         /**
          * 最开始初始化的时候，默认第一页显示，之后要进行下一页刷新的时候，调用评论服务的接口进行刷新
          */
-        //trailer.setTrailerComments(trailer_commentService.findComment(id,1));
+        trailer.setTrailerComments(trailer_commentService.findComment(id,1).getLists());
         return trailer;
     }
 }

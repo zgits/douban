@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!--删除用户的时候注意异步传输的id的获取-->
 
@@ -20,6 +20,11 @@
 <link href="/static_resources/Admin/nav/fonts/iconfont.css" rel="stylesheet">
 
 <script src="/static_resources/Admin/nav/js/nav.js"></script>
+
+<link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
+<script src="/static_resources/toastr/toastr.min.js"></script>
+
+<body >
 
 
 <div>
@@ -57,97 +62,23 @@
                 <th>
                     <c:choose>
                         <c:when test="${!empty users.endTime}">
-                            <button class="btn btn-info">解禁</button>
+                            <button class="btn btn-info" onclick="deleteForbidden('${users.id}')">解禁</button>
                         </c:when>
                         <c:otherwise>
-                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal" onclick="Values('${users.id}')">禁言</button>
+                            <button class="btn btn-warning" data-toggle="modal" data-target="#myModal"
+                                    onclick="Values('${users.id}')">禁言
+                            </button>
                         </c:otherwise>
                     </c:choose>
-                    <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-                    <button class="btn btn-danger" onClick="delcfm1()">删除</button>
+                        <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
+                    <button class="btn btn-danger" onClick="delcfm1('${users.id}')">删除</button>
                 </th>
             </tr>
         </c:forEach>
-        <tr>
-            <th id="">xxxx</th>
-            <th>xxxx@xxx.com</th>
-            <th>xxxx</th>
-            <th>sdfsdf</th>
-            <th>正常</th>
-            <th>2018-5-9 17:32:45</th>
-            <th>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
-                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-                <button class="btn btn-danger" onClick="delcfm1()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>xxxx@xxx.com</th>
-            <th>xxxx</th>
-            <th>sdfsdf</th>
-            <th>正常</th>
-            <th>2018-5-9 17:32:45</th>
-            <th>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">禁言</button>
-                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-                <button class="btn btn-danger" onClick="delcfm1()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>xxxx@xxx.com</th>
-            <th>xxxx</th>
-            <th>sdfsdf</th>
-            <th>禁言30天</th>
-            <th>2018-5-9 17:32:45</th>
-            <th>
-                <button class="btn btn-info">解禁</button>
-                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-                <button class="btn btn-danger" onClick="delcfm1()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>xxxx@xxx.com</th>
-            <th>xxxx</th>
-            <th>sdfsdf</th>
-            <th>禁言30天</th>
-            <th>2018-5-9 17:32:45</th>
-            <th>
-                <button class="btn btn-info">解禁</button>
-                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-                <button class="btn btn-danger" onClick="delcfm1()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>xxxx@xxx.com</th>
-            <th>xxxx</th>
-            <th>sdfsdf</th>
-            <th>禁言30天</th>
-            <th>2018-5-9 17:32:45</th>
-            <th>
-                <button class="btn btn-info">解禁</button>
-                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-                <button class="btn btn-danger" onClick="delcfm1()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>xxxx@xxx.com</th>
-            <th>xxxx</th>
-            <th>sdfsdf</th>
-            <th>禁言30天</th>
-            <th>2018-5-9 17:32:45</th>
-            <th>
-                <button class="btn btn-info">解禁</button>
-                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-                <button class="btn btn-danger" onClick="delcfm1()">删除</button>
-            </th>
-        </tr>
         </tbody>
     </table>
+
+    <div id="loading" class="col-md-offset-5" style="position: absolute; z-index: 100;"></div>
 
     <div>
         <div class="inner clearfix">
@@ -201,7 +132,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                         </button>
-                        <button type="button" onclick="add_info()" class="btn btn-primary">
+                        <button type="button" onclick="add_info()" data-dismiss="modal" class="btn btn-primary">
                             禁言
                         </button>
                     </div>
@@ -214,10 +145,10 @@
         //绑定模态框展示的方法 
         $("#myModal").modal("hide");
         function Values(id) {
-            alert(id);
             $("#id").val(id);
         }
-    </script>  
+    </script>
+      
     <%--模糊框--%>
     <div class="modal fade" id="delcfmModel1">
         <div class="modal-dialog modal-sm">
@@ -233,7 +164,28 @@
                 <div class="modal-footer">
                     <input type="hidden" id="url"/>
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <a onclick="urlSubmit1()" class="btn btn-success" data-dismiss="modal">确定</a>
+                    <a onclick="urlSubmit1()" class="btn btn-danger" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <%--解禁模态框--%>
+    <div class="modal fade" id="deleteForbidden">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确认要解禁吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="id1"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a onclick="submitDelForbidden()" class="btn btn-success" data-dismiss="modal">确定</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -244,50 +196,95 @@
             $('#delcfmModel1').modal();
         }
         function urlSubmit1() {
-            var url = $.trim($("#url").val());//获取会话中的隐藏属性URL
-            window.location.href = url;
+            var id = $.trim($("#url").val());//获取会话中的隐藏属性URL
+            var messageOpts = {
+                "closeButton": true,//是否显示关闭按钮
+                "debug": false,//是否使用debug模式
+                "positionClass": "toast-top-right",//弹出窗的位置
+                "onclick": null,
+                "showDuration": "3000",//显示的动画时间
+                "hideDuration": "1000",//消失的动画时间
+                "timeOut": "3000",//展现时间
+                "extendedTimeOut": "1000",//加长展示时间
+                "showEasing": "swing",//显示时的动画缓冲方式
+                "hideEasing": "linear",//消失时的动画缓冲方式
+                "showMethod": "fadeIn",//显示时的动画方式
+                "hideMethod": "fadeOut" //消失时的动画方式
+            };
+            toastr.options = messageOpts;
+
+            $.ajax({
+                type: "get",
+                url: "127.0.0.1:8090/deleteUser",
+                async: true,
+                data: {
+                    id:id
+                },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                },
+                success: function (flag) {
+                    $("#loading").empty();
+                    if (flag == 1) {
+                        toastr.success('删除成功');
+                    } else {
+
+                        toastr.error('删除失败');
+                    }
+                    setTimeout("window.location.reload()",3000);
+
+                }
+            })
         }
     </script>
-    <!--弹出框-->
-    <!--样例地址-->
-    <!--https://www.cnblogs.com/shenzikun1314/p/6852928.html-->
-    <%--<script src="/static_resources/Admin/dialog/js/showBo.js"></script>--%>
-    <%--<script>--%>
-    <%--//注册删除按钮的事件--%>
-    <%--$("#btn_delete").click(function () {--%>
-    <%--//取表格的选中行数据--%>
-    <%--//    var arrselections = $("#tb_departments").bootstrapTable('getSelections');--%>
-    <%--//    if (arrselections.length <= 0) {--%>
-    <%--//    toastr.warning('请选择有效数据');--%>
-    <%--//    return;--%>
-    <%--//    }--%>
 
-    <%--Ewin.confirm({message: "您确定删除该用户吗？"}).on(function (e) {--%>
-    <%--alert(a);--%>
-    <%--if (!e) {--%>
-    <%--return;--%>
-    <%--}--%>
-    <%--$.ajax({--%>
-    <%--type: "post",--%>
-    <%--url: "/api/DepartmentApi/Delete",//提交的接口地址--%>
-    <%--data: {"id": "1"},//要提交的数据--%>
-    <%--success: function (data, status) {--%>
-    <%--if (status == "success") {--%>
-    <%--toastr.success('提交数据成功');--%>
-    <%--$("#table_user").bootstrapTable('refresh');--%>
-    <%--}--%>
-    <%--},--%>
-    <%--error: function () {--%>
-    <%--toastr.error('Error');--%>
-    <%--},--%>
-    <%--complete: function () {--%>
+    <script>
+        function deleteForbidden(id) {
+            $('#id1').val(id);//给会话中的隐藏属性URL赋值
+            $('#deleteForbidden').modal();
+        }
+        function submitDelForbidden() {
+            var id = $.trim($("#id1").val());//获取会话中的隐藏属性URL
+            var messageOpts = {
+                "closeButton": true,//是否显示关闭按钮
+                "debug": false,//是否使用debug模式
+                "positionClass": "toast-top-right",//弹出窗的位置
+                "onclick": null,
+                "showDuration": "3000",//显示的动画时间
+                "hideDuration": "1000",//消失的动画时间
+                "timeOut": "3000",//展现时间
+                "extendedTimeOut": "1000",//加长展示时间
+                "showEasing": "swing",//显示时的动画缓冲方式
+                "hideEasing": "linear",//消失时的动画缓冲方式
+                "showMethod": "fadeIn",//显示时的动画方式
+                "hideMethod": "fadeOut" //消失时的动画方式
+            };
+            toastr.options = messageOpts;
 
-    <%--}--%>
+            $.ajax({
+                type: "get",
+                url: "127.0.0.1:8090/deleteForbidden",
+                async: true,
+                data: {
+                    id:id
+                },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                },
+                success: function (flag) {
+                    $("#loading").empty();
+                    if (flag == 1) {
+                        toastr.success('解禁成功');
+                    } else {
 
-    <%--});--%>
-    <%--});--%>
-    <%--});--%>
-    <%--</script>--%>
+                        toastr.error('解禁失败');
+                    }
+                    setTimeout("window.location.reload()",3000);
+
+                }
+            })
+        }
+    </script>
     <script>
 
         // update表单
@@ -314,17 +311,48 @@
 
         // 添加入库操作
         function add_info() {
+
+            var messageOpts = {
+                "closeButton": true,//是否显示关闭按钮
+                "debug": false,//是否使用debug模式
+                "positionClass": "toast-top-right",//弹出窗的位置
+                "onclick": null,
+                "showDuration": "3000",//显示的动画时间
+                "hideDuration": "1000",//消失的动画时间
+                "timeOut": "3000",//展现时间
+                "extendedTimeOut": "1000",//加长展示时间
+                "showEasing": "swing",//显示时的动画缓冲方式
+                "hideEasing": "linear",//消失时的动画缓冲方式
+                "showMethod": "fadeIn",//显示时的动画方式
+                "hideMethod": "fadeOut" //消失时的动画方式
+            };
+            toastr.options = messageOpts;
             var form_data = $("#form_data").serialize();
-            alert(form_data);
+
             $.ajax({
-                type:"get",
-                url:"127.0.0.1:8090/insertForbidden",
-                data:form_data,
-                success:function () {
-                    alert("成功");
+                type: "get",
+                url: "127.0.0.1:8090/insertForbidden",
+                async: true,
+                data: form_data,
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                },
+                success: function (flag) {
+                    $("#loading").empty();
+                    if (flag == 1) {
+                        toastr.success('禁言成功');
+                    } else {
+
+                        toastr.error('禁言失败');
+                    }
+                    setTimeout("window.location.reload()",3000);
+
                 }
             })
 
         }
+
+
     </script>
 </div>
+</body>

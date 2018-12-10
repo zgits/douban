@@ -109,7 +109,7 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
     @Override
     public boolean deleteForbidden(Integer id) {
         try{
-            String hql="update User u set u.days=null,u.startTime=null,u.endTime=null,u.reson=null where u.id=?";
+            String hql="update User u set u.days=null,u.startTime=null,u.endTime=null,u.reason=null where u.id=?";
 
             Query query  = this.getSessionFactory().getCurrentSession().createQuery(hql);
 
@@ -118,6 +118,7 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
             query.executeUpdate();
             return true;
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
     }

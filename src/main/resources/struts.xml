@@ -13,11 +13,21 @@
 
     <package name="user" namespace="/" extends="struts-default">
 
-        <action name="getUsers" class="ManagerUser" method="findAll">
+        <action name="manageruser*" class="ManagerUser" method="{1}">
             <result name="findAll">/admin/user.jsp</result>
         </action>
-        <action name="insertForbidden" class="ManagerUser" method="insertForbidden">
-            <result name="success">/main.html</result>
+
+        <action name="trailercomment*" class="TrailerComment" method="{1}">
+
+        </action>
+
+        <action name="trailer*" class="Trailer" method="{1}">
+
+            <result name="success">/trailermovie.jsp</result>
+        </action>
+
+        <action name="trailerreplycomment*" class="TrailerReplyComment" method="{1}">
+
         </action>
 
         <!--文件上传-->

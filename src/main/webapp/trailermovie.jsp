@@ -1,8 +1,17 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>播放预告片页面</title>
+
+
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -76,7 +85,7 @@
     <div class="row">
 
         <div class="m" style="margin-top: -20px;">
-            <h1>xxxxxxxxxxxx预告片</h1>
+            <h1>${OneTrailer.name}</h1>
             <video poster="vs.png" controls>
                 <source src="https://video.pc6.com/v/1809/dyjxxz3.mp4" type="video/mp4">
                 <!-- <source src="path/to/video.webm" type="video/webm">-->
@@ -92,155 +101,69 @@
 
     <div class="row">
         <ul class="list-group" style="width: 800px">
-            <li class="list-group-item" style="border: none">
-                <!--显示个人信息以及评论时间-->
-                <div class="row">
-                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>xxxx用户名</span>
-                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                </div>
-                <br>
-                <div class="row">
-                    &nbsp;&nbsp;一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                    会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                    面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                </div>
-                <div class="row col-md-offset-10">
-                    <a class="btn btn-sm">举报</a>
-                    <a data-toggle="collapse" data-parent="#accordion"
-                       href="#collapseOne" class="btn btn-sm">回复</a>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="row">
-                            <form class="form-horizontal">
-                                <div class="form-group col-md-8">
-                                    <input class="form-control" type="text" value="@xxxxx用户名:">
-                                </div>
-
-                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                            </form>
-                        </div>
-                        <div class="row">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseid1">回复</a>
+            <c:forEach items="${OneTrailer.trailerComments}" var="trailercomment" varStatus="status">
+                <li class="list-group-item" style="border: none">
+                    <!--显示个人信息以及评论时间-->
+                    <div class="row">
+                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span>${trailercomment.userId}</span>
+                        &nbsp;&nbsp;${trailercomment.time}
+                    </div>
+                    <br>
+                    <div class="row">
+                        &nbsp;&nbsp;
+                        ${trailercomment.content}
+                    </div>
+                    <div class="row col-md-offset-10">
+                        <a class="btn btn-sm">举报</a>
+                        <a data-toggle="collapse" data-parent="#accordion"
+                           href="#${trailercomment.userId}${status.count}" class="btn btn-sm">回复</a>
+                    </div>
+                    <div id="${trailercomment.userId}${status.count}" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div class="row">
+                                <form class="form-horizontal" action="127.0.0.1:">
+                                    <div class="form-group col-md-8">
+                                        <input class="form-control" type="text" value="@xxxxx用户名:">
                                     </div>
-                                    <div id="collapseid1" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
+
+                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                </form>
+                            </div>
+                            <div class="row">
+                                <ul class="list-group">
+                                    <c:forEach items="${trailercomment.trailerReplycomments}" var="reply">
+                                        <li class="list-group-item">
+                                            <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span>xxxx用户名</span>
+                                            &nbsp;&nbsp;${reply.time}
+                                            <br>
+                                            <div class="row">
+                                                <span class="col-md-offset-1">回复@xxxx用户名:${reply.content}</span>
+                                                <a class="btn btn-sm col-md-offset-10">举报</a>
+                                                <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                   href="#collapseid1">回复</a>
+                                            </div>
+                                            <div id="collapseid1" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <div class="form-group col-md-8">
+                                                        <input class="form-control" type="text" value="@xxx用户名:">
+
+                                                    </div>
+                                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                </div>
 
                                             </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
+                                        </li>
+                                    </c:forEach>
 
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseid2">回复</a>
-                                    </div>
-                                    <div id="collapseid2" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
-
-                                            </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseid3">回复</a>
-                                    </div>
-                                    <div id="collapseid3" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
-
-                                            </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseid4">回复</a>
-                                    </div>
-                                    <div id="collapseid4" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
-
-                                            </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseid5">回复</a>
-                                    </div>
-                                    <div id="collapseid5" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
-
-                                            </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
-
-                                    </div>
-                                </li>
-
-
-                            </ul>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-            <hr>
+                </li>
+                <hr>
+            </c:forEach>
             <li class="list-group-item" style="border: none">
                 <!--显示个人信息以及评论时间-->
                 <div class="row">
@@ -458,9 +381,13 @@
 
     <!--自己评论界面-->
     <div class="row ">
-        <form role="form col-md-8">
+        <form role="form col-md-8" action="/trailercomment_insertComment">
+            <%--id未登录时无法获取，登录后可以获取--%>
+            <input type="hidden" name="trailer_comment.userId" value="1">
+            <input type="hidden" name="trailer_comment.trailerId" value="${OneTrailer.id}">
+
             <div class="form-group" style="width: 800px;">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" rows="3" name="trailer_comment.content"></textarea>
             </div>
             <div class="col-md-offset-8">
                 <button type="submit" class="btn btn-primary">发布</button>

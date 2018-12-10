@@ -1,8 +1,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-    <link href="/static_resources/upload/css/iconfont.css" rel="stylesheet" type="text/css"/>
 
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+<link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
+
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="/static_resources/bootstrap/js/bootstrap.min.js"></script>
+
+<%--<link href="/static_resources/font-awesome/css/font-awesome.css" rel="stylesheet">--%>
+
+<link href="/static_resources/Admin/nav/css/nav.css" rel="stylesheet">
+
+<link href="/static_resources/Admin/nav/fonts/iconfont.css" rel="stylesheet">
+
+<script src="/static_resources/Admin/nav/js/nav.js"></script>
 <br>
 
 <form enctype="multipart/form-data" class="form-horizontal" role="form">

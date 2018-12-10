@@ -1,13 +1,18 @@
 package com.ssh.action;
 
+import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.ssh.model.PageBean;
 import com.ssh.model.User;
 import com.ssh.service.ManagerUserService;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
@@ -28,6 +33,10 @@ public class ManagerUserAction extends ActionSupport {
         this.currPage = currPage;
     }
 
+    public Integer getCurrPage() {
+        return currPage;
+    }
+
     /**
      * 分页查询用户
      * @return
@@ -39,11 +48,23 @@ public class ManagerUserAction extends ActionSupport {
     }
 
     /*********禁言用户start***********/
-    private Integer id=4;
+    private Integer id;
 
-    private Integer days=20;
+    private Integer days;
 
-    private String reason="5454";
+    private String reason;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public String getReason() {
+        return reason;
+    }
 
     public void setReason(String reason) {
         this.reason = reason;
@@ -57,23 +78,76 @@ public class ManagerUserAction extends ActionSupport {
         this.days = days;
     }
 
-    public String insertForbidden(){
-        managerUserService.insertForbiddenWords(id,days,reason);
-        return "success";
+    public void insertForbidden() throws IOException {
+        String flag ="";
+        try{
+            managerUserService.insertForbiddenWords(id,days,reason);
+            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+
+        }catch (Exception e){
+
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
+
+
     }
 
     /**********禁言用户end************/
 
     /*******解禁用户start*********/
-    public void deleteForbidden(){
-        managerUserService.deleteForbidden(id);
+    public void deleteForbidden() throws IOException {
+       String flag="";
+        try{
+
+            managerUserService.deleteForbidden(id);
+            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
     }
 
     /*******解禁用户end*********/
 
     /*********删除用户start***********/
-    public void deleteUser(){
-        managerUserService.deleteUser(id);
+    public void deleteUser() throws IOException {
+        String flag ="";
+        try{
+            managerUserService.deleteUser(id);
+            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
+
     }
     /*********删除用户end*************/
 
@@ -82,6 +156,10 @@ public class ManagerUserAction extends ActionSupport {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void getUsers(){
