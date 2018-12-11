@@ -32,7 +32,7 @@ public class Trailer_ReplyCommentDaoImpl implements Trailer_ReplyCommentDao{
 
     @Override
     public List<Trailer_Replycomment> selectReplyComment(Integer comment_id) {
-        String hql="from Trailer_ReplyComment  where comment_id= ?";
+        String hql="from Trailer_Replycomment  where comment_id= ?";
         Query query=sessionFactory.getCurrentSession().createQuery(hql);
         query.setParameter(0,comment_id);
         return query.list();

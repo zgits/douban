@@ -56,5 +56,12 @@ public interface ManagerUserService {
      */
     public PageBean<User> selectUserByName(String username,Integer currPage);
 
+    /**
+     * 根据id获取用户名
+     * @param id
+     * @return
+     */
+    public String getUsername(Integer id);
+
 
 }

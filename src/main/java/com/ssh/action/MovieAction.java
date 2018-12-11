@@ -89,7 +89,7 @@ public class MovieAction extends ActionSupport{
     public String getMovie(){
         Movie movie=movieServie.selctMovieById(id);
         ActionContext.getContext().put("oneMovie",movie);
-        return "success";
+        return "moviededetail";
     }
 
     /*********end************/

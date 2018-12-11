@@ -16,8 +16,12 @@ public class Trailer_Comment {
     @Column(name="id",columnDefinition="integer(5) COMMENT '自增id'")
     private Integer id;//自增id
 
+
     @Column(name="userId",columnDefinition="integer(5) COMMENT '对应用户表的id'")
     private Integer userId;//对应用户表的id
+
+    @Column(name="username",columnDefinition="varchar(255) COMMENT '对应用户表名字'")
+    private String username;//用户表中的用户名字
 
     @Column(name="trailerId",columnDefinition="integer(5) COMMENT '对应的预告片id'")
     private Integer trailerId;//对应的预告片id
@@ -36,6 +40,7 @@ public class Trailer_Comment {
         return "Trailer_Comment{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", username='" + username + '\'' +
                 ", trailerId=" + trailerId +
                 ", content='" + content + '\'' +
                 ", time=" + time +
@@ -59,6 +64,13 @@ public class Trailer_Comment {
         this.userId = userId;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public Integer getTrailerId() {
         return trailerId;

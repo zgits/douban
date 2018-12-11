@@ -168,4 +168,5 @@ public class ManagerUserAction extends ActionSupport {
     /*******通过用户名查找用户end*********/
 
 
+
 }

@@ -125,6 +125,10 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         return pageBean;
     }
 
+    @Override
+    public String getUsername(Integer id) {
+        return managerUserDao.getUserName(id);
+    }
 
 
 }

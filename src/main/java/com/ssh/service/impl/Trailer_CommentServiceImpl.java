@@ -35,8 +35,17 @@ public class Trailer_CommentServiceImpl implements Trailer_CommentService{
     public boolean insertComment(Trailer_Comment trailer_comment) {
         Date date=managerUserDao.selectEndTime(trailer_comment.getUserId());
         trailer_comment.setTime(new Date());
+        trailer_comment.setUsername(managerUserDao.getUserName(trailer_comment.getUserId()));
         //判断禁言是否结束
-        if (trailer_comment.getTime().after(date)){
+        boolean flag=false;
+        if(date==null){
+            flag=true;
+        }else if(trailer_comment.getTime().after(date)){
+            flag=true;
+        }else{
+            flag=false;
+        }
+        if (flag){
             return trailer_commentDao.insertComment(trailer_comment);
         }else{
             return false;

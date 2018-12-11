@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -87,7 +88,7 @@
         <div class="m" style="margin-top: -20px;">
             <h1>${OneTrailer.name}</h1>
             <video poster="vs.png" controls>
-                <source src="https://video.pc6.com/v/1809/dyjxxz3.mp4" type="video/mp4">
+                <%--<source src="https://video.pc6.com/v/1809/dyjxxz3.mp4" type="video/mp4">--%>
                 <!-- <source src="path/to/video.webm" type="video/webm">-->
                 <!-- Captions are optional -->
             </video>
@@ -106,8 +107,9 @@
                     <!--显示个人信息以及评论时间-->
                     <div class="row">
                         <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>${trailercomment.userId}</span>
-                        &nbsp;&nbsp;${trailercomment.time}
+                        <span>${trailercomment.username}</span>
+                        &nbsp;&nbsp;
+                        <fmt:formatDate value="${trailercomment.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
                     </div>
                     <br>
                     <div class="row">
@@ -122,35 +124,37 @@
                     <div id="${trailercomment.userId}${status.count}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row">
-                                <form class="form-horizontal" action="127.0.0.1:">
+                                <div class="form-horizontal">
                                     <div class="form-group col-md-8">
-                                        <input class="form-control" type="text" value="@xxxxx用户名:">
+                                        <input id="${status.count}" class="form-control" type="text" placeholder="@${trailercomment.username}:">
+
                                     </div>
 
-                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                </form>
+                                    <input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment('${status.count}','${trailercomment.id}','${trailercomment.userId}','1',1)" value="回复">
+                                </div>
                             </div>
                             <div class="row">
                                 <ul class="list-group">
-                                    <c:forEach items="${trailercomment.trailerReplycomments}" var="reply">
+                                    <c:forEach items="${trailercomment.trailerReplycomments}" var="reply" varStatus="status">
                                         <li class="list-group-item">
                                             <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span>xxxx用户名</span>
-                                            &nbsp;&nbsp;${reply.time}
+                                            <span>${reply.username}</span>
+                                            &nbsp;&nbsp;<fmt:formatDate value="${reply.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
+
                                             <br>
                                             <div class="row">
-                                                <span class="col-md-offset-1">回复@xxxx用户名:${reply.content}</span>
+                                                <span class="col-md-offset-1">回复@${reply.to_userIdusername}:${reply.content}</span>
                                                 <a class="btn btn-sm col-md-offset-10">举报</a>
                                                 <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                   href="#collapseid1">回复</a>
+                                                   href="#s${trailercomment.id}${status.count}">回复</a>
                                             </div>
-                                            <div id="collapseid1" class="panel-collapse collapse">
+                                            <div id="s${trailercomment.id}${status.count}" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="form-group col-md-8">
-                                                        <input class="form-control" type="text" value="@xxx用户名:">
+                                                        <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
 
                                                     </div>
-                                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                    <input onclick="replyComment('s${reply.id}',${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                                 </div>
 
                                             </div>
@@ -164,236 +168,70 @@
                 </li>
                 <hr>
             </c:forEach>
-            <li class="list-group-item" style="border: none">
-                <!--显示个人信息以及评论时间-->
-                <div class="row">
-                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>xxxx用户名</span>
-                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                </div>
-                <br>
-                <div class="row">
-                    一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                    会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                    面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                </div>
-                <div class="row col-md-offset-10">
-                    <a class="btn btn-sm">举报</a>
-                    <a data-toggle="collapse" data-parent="#accordion"
-                       href="#collapseuserId1" class="btn btn-sm">回复</a>
-                </div>
-                <div id="collapseuserId1" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="row">
-                            <form class="form-horizontal">
-                                <div class="form-group col-md-8">
-                                    <input class="form-control" type="text" value="@xxxxx用户名:">
-                                </div>
-
-                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                            </form>
-                        </div>
-                        <div class="row">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseuserId_replay_1">回复</a>
-                                    </div>
-                                    <div id="collapseuserId_replay_1" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
-
-                                            </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseuserId_replay_2">回复</a>
-                                    </div>
-                                    <div id="collapseuserId_replay_2" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
-
-                                            </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
-
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <span>xxxx用户名</span>
-                                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                    <br>
-                                    <div class="row">
-                                        <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                        <a class="btn btn-sm col-md-offset-10">举报</a>
-                                        <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                           href="#collapseuserId_replay_3">回复</a>
-                                    </div>
-                                    <div id="collapseuserId_replay_3" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="form-group col-md-8">
-                                                <input class="form-control" type="text" value="@xxx用户名:">
-
-                                            </div>
-                                            <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                        </div>
-
-                                    </div>
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <hr>
-            <li class="list-group-item" style="border: none">
-                <!--显示个人信息以及评论时间-->
-                <div class="row">
-                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>xxxx用户名</span>
-                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                </div>
-                <br>
-                <div class="row">
-                    一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                    会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                    面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                </div>
-                <div class="row col-md-offset-10">
-                    <a class="btn btn-sm">举报</a>
-                    <a data-toggle="collapse" data-parent="#accordion"
-                       href="#collapseuserId3" class="btn btn-sm">回复</a>
-                </div>
-                <div id="collapseuserId3" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="row">
-                            <form class="form-horizontal">
-                                <div class="form-group col-md-8">
-                                    <input class="form-control" type="text" value="@xxxxx用户名:">
-                                </div>
-
-                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <hr>
-            <li class="list-group-item" style="border: none">
-                <!--显示个人信息以及评论时间-->
-                <div class="row">
-                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>xxxx用户名</span>
-                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                </div>
-
-                <br>
-                <div class="row">
-                    一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                    会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                    面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                </div>
-                <div class="row col-md-offset-10">
-                    <a class="btn btn-sm">举报</a>
-                    <a data-toggle="collapse" data-parent="#accordion"
-                       href="#collapseuserId4" class="btn btn-sm">回复</a>
-                </div>
-                <div id="collapseuserId4" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="row">
-                            <form class="form-horizontal">
-                                <div class="form-group col-md-8">
-                                    <input class="form-control" type="text" value="@xxxxx用户名:">
-                                </div>
-
-                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <hr>
-            <li class="list-group-item" style="border: none">
-                <!--显示个人信息以及评论时间-->
-                <div class="row">
-                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span>xxxx用户名</span>
-                    &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                </div>
-
-                <br>
-                <div class="row">
-                    一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                    会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                    面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                </div>
-                <div class="row col-md-offset-10">
-                    <a class="btn btn-sm">举报</a>
-                    <a data-toggle="collapse" data-parent="#accordion"
-                       href="#collapseuserId5" class="btn btn-sm">回复</a>
-                </div>
-                <div id="collapseuserId5" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="row">
-                            <form class="form-horizontal">
-                                <div class="form-group col-md-8">
-                                    <input class="form-control" type="text" value="@xxxxx用户名:">
-                                </div>
-
-                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <hr>
         </ul>
     </div>
 
     <script>
-        function getIdValue(self) {
-
+        <%--对评论的回复的函数--%>
+        function replyComment(contentId,commentId,to_userId,userId,type) {
+            var content=document.getElementById(contentId).value;
+            var commentId=commentId;
+            var to_userId=to_userId;
+            var userId=userId;
+            $.ajax({
+                type:"post",
+                url:"/rtrailerreplycommentinsertReplyComment",
+                data:{
+                    "trailer_replycomment.content":content,
+                    "trailer_replycomment.comment_id":commentId,
+                    "trailer_replycomment.to_userId":to_userId,
+                    "trailer_replycomment.userId":userId,
+                    "trailer_replycomment.reply_type":type
+                },
+                success:function (data) {
+                    alert(data);
+                    setTimeout("window.location.reload()",3000);
+                }
+            })
         }
+
     </script>
 
     <!--自己评论界面-->
     <div class="row ">
-        <form role="form col-md-8" action="/trailercomment_insertComment">
+        <div role="form col-md-8">
             <%--id未登录时无法获取，登录后可以获取--%>
-            <input type="hidden" name="trailer_comment.userId" value="1">
-            <input type="hidden" name="trailer_comment.trailerId" value="${OneTrailer.id}">
+            <input id="userId" type="hidden" name="trailer_comment.userId" value="1">
+            <input id="trailerId" type="hidden" name="trailer_comment.trailerId" value="${OneTrailer.id}">
 
             <div class="form-group" style="width: 800px;">
-                <textarea class="form-control" rows="3" name="trailer_comment.content"></textarea>
+                <textarea id="content" class="form-control" rows="3" name="trailer_comment.content"></textarea>
             </div>
             <div class="col-md-offset-8">
-                <button type="submit" class="btn btn-primary">发布</button>
+                <button onclick="trailercomment()" class="btn btn-primary">发布</button>
             </div>
-        </form>
+        </div>
     </div>
+    <script>
+        function trailercomment() {
+            var userId=document.getElementById("userId").value;
+            var trailerId=document.getElementById("trailerId").value;
+            var content=document.getElementById("content").value;
+            $.ajax({
+                type:"post",
+                url:"/trailercommentinsertComment",
+                data:{
+                    "trailer_comment.userId":userId,
+                    "trailer_comment.trailerId":trailerId,
+                    "trailer_comment.content":content
+                },
+                success:function () {
+                    alert("chengg");
+                }
+            })
+
+        }
+    </script>
 
     <!--分页界面-->
     <div class="row">

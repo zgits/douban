@@ -37,7 +37,18 @@ public class MovieReplyCommentServieImpl implements Movie_ReplyCommentService {
     public boolean insertReplyComment(Movie_Replycomment movieReplycomment) {
         Date date=managerUserDao.selectEndTime(movieReplycomment.getUserId());
         movieReplycomment.setTime(new Date());
-        if (movieReplycomment.getTime().after(date)){
+        movieReplycomment.setUsername(managerUserDao.getUserName(movieReplycomment.getUserId()));
+        movieReplycomment.setTo_userIdusername(managerUserDao.getUserName(movieReplycomment.getTo_userId()));
+
+        boolean flag=false;
+        if(date==null){
+            flag=true;
+        }else if(movieReplycomment.getTime().after(date)){
+            flag=true;
+        }else{
+            flag=false;
+        }
+        if (flag){
             if (movieReplycomment.getReply_type()==1){//代表是回复评论的
                 movieReplycomment.setReply_id(movieReplycomment.getComment_id());
             }else if (movieReplycomment.getReply_type()==2){//代表是回复的回复

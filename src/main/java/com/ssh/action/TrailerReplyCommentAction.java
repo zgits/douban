@@ -1,10 +1,15 @@
 package com.ssh.action;
 
+import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Trailer_Replycomment;
 import com.ssh.service.Trailer_ReplyCommentService;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by 幻夜~星辰 on 2018/12/5.
@@ -22,8 +27,31 @@ public class TrailerReplyCommentAction extends ActionSupport{
         this.trailer_replycomment = trailer_replycomment;
     }
 
-    public void insertReplyComment(){
-        trailer_replyCommentService.insertReplyComment(trailer_replycomment);
+    public Trailer_Replycomment getTrailer_replycomment() {
+        return trailer_replycomment;
+    }
+
+    public void insertReplyComment() throws IOException {
+        System.out.println(trailer_replycomment.getComment_id()+
+                trailer_replycomment.getContent());
+
+        String flag ="";
+        try{
+            trailer_replyCommentService.insertReplyComment(trailer_replycomment);
+            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
     }
     /***增加回复end***/
 
@@ -32,6 +60,10 @@ public class TrailerReplyCommentAction extends ActionSupport{
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public void deleteReplyComment(){

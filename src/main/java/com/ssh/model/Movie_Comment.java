@@ -20,6 +20,9 @@ public class Movie_Comment {
     @Column(name="userId",columnDefinition="integer(5) COMMENT '对应用户表的id'")
     private Integer userId;//对应用户表的id
 
+    @Column(name="username",columnDefinition="varchar(255) COMMENT '对应用户表的名字'")
+    private String username;
+
     @Column(name="score",columnDefinition="integer(2) COMMENT '用户评论的分数'")
     private Integer score;//用户评论的分数
 
@@ -43,6 +46,7 @@ public class Movie_Comment {
         return "Movie_Comment{" +
                 "id=" + id +
                 ", userId=" + userId +
+                ", username='" + username + '\'' +
                 ", score=" + score +
                 ", number=" + number +
                 ", movieId=" + movieId +
@@ -53,13 +57,23 @@ public class Movie_Comment {
     }
 
 
-    public List<Movie_Replycomment> getReplycomments() {
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<Movie_Replycomment> getMovieReplycomments() {
         return movieReplycomments;
     }
 
-    public void setReplycomments(List<Movie_Replycomment> movieReplycomments) {
+    public void setMovieReplycomments(List<Movie_Replycomment> movieReplycomments) {
         this.movieReplycomments = movieReplycomments;
     }
+
+
 
     public Date getTime() {
         return time;

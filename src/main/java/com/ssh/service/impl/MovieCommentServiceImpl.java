@@ -34,8 +34,17 @@ public class MovieCommentServiceImpl implements Movie_CommentService {
 
         Date date=managerUserService.selectEndTime(movieComment.getUserId());
         movieComment.setTime(new Date());
+        movieComment.setUsername(managerUserService.getUsername(movieComment.getUserId()));
         //判断禁言是否结束
-        if (movieComment.getTime().after(date)){
+        boolean flag=false;
+        if(date==null) {
+            flag = true;
+        }else if (movieComment.getTime().after(date)){
+             flag=true;
+        }else{
+            flag=false;
+        }
+        if (flag){
             return movieCommentDao.insertComment(movieComment);
         }else{
             return false;
@@ -67,7 +76,7 @@ public class MovieCommentServiceImpl implements Movie_CommentService {
         List<Movie_Comment> list = movieCommentDao.findComment(movieId,begin, pageSize);
 
         for (Movie_Comment movie_comment:list){
-            movie_comment.setReplycomments(movie_replyCommentService.selectReplyComment(movie_comment.getId()));
+            movie_comment.setMovieReplycomments(movie_replyCommentService.selectReplyComment(movie_comment.getId()));
         }
         pageBean.setLists(list);
         return pageBean;

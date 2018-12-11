@@ -34,7 +34,18 @@ public class Trailer_ReplyCommentServiceImpl implements Trailer_ReplyCommentServ
     public boolean insertReplyComment(Trailer_Replycomment trailer_replycomment) {
         Date date=managerUserDao.selectEndTime(trailer_replycomment.getUserId());
         trailer_replycomment.setTime(new Date());
-        if (trailer_replycomment.getTime().after(date)){
+        trailer_replycomment.setUsername(managerUserDao.getUserName(trailer_replycomment.getUserId()));
+        trailer_replycomment.setTo_userIdusername(managerUserDao.getUserName(trailer_replycomment.getTo_userId()));
+
+        boolean flag=false;
+        if(date==null){
+            flag=true;
+        }else if(trailer_replycomment.getTime().after(date)){
+            flag=true;
+        }else{
+            flag=false;
+        }
+        if (flag){
             if (trailer_replycomment.getReply_type()==1){//代表是回复评论的
                 trailer_replycomment.setReply_id(trailer_replycomment.getComment_id());
             }else if (trailer_replycomment.getReply_type()==2){//代表是回复的回复

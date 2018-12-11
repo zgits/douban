@@ -26,7 +26,20 @@
             <result name="success">/trailermovie.jsp</result>
         </action>
 
-        <action name="trailerreplycomment*" class="TrailerReplyComment" method="{1}">
+        <action name="rtrailerreplycomment*" class="TrailerReplyComment" method="{1}">
+
+        </action>
+        
+        <action name="movie/*" class="MovieAction" method="{1}">
+
+            <result name="moviededetail">/moviedetails.jsp</result>
+        </action>
+
+        <action name="moviecomment/*" class="MovieComment" method="{1}">
+
+        </action>
+
+        <action name="moviereplycomment/*" class="MovieReplyComment" method="{1}">
 
         </action>
 

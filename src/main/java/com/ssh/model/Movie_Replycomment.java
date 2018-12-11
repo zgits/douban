@@ -27,8 +27,14 @@ public class Movie_Replycomment {
     @Column(name="userId",columnDefinition="integer(5) COMMENT '回复人的id，可以通过这个id查询到用户的其它信息'")
     private Integer userId;//回复人的id，可以通过这个id查询到用户的其它信息
 
+    @Column(name="username",columnDefinition="varchar(255) COMMENT '回复人的名字'")
+    private String username;
+
     @Column(name="to_userId",columnDefinition="integer(5) COMMENT '回复的目标用户的id'")
     private Integer to_userId;//回复的目标用户的id
+
+    @Column(name="to_userIdusername",columnDefinition="varchar(255) COMMENT '回复的目标用户的名字'")
+    private String to_userIdusername;
 
     @Column(name="comment_id",columnDefinition="integer(5) COMMENT '要回复评论的id'")
     private Integer comment_id;//要回复评论的id
@@ -46,11 +52,29 @@ public class Movie_Replycomment {
                 ", content='" + content + '\'' +
                 ", time=" + time +
                 ", userId=" + userId +
+                ", username='" + username + '\'' +
                 ", to_userId=" + to_userId +
+                ", to_userIdusername='" + to_userIdusername + '\'' +
                 ", comment_id=" + comment_id +
                 ", reply_type=" + reply_type +
                 ", reply_id=" + reply_id +
                 '}';
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getTo_userIdusername() {
+        return to_userIdusername;
+    }
+
+    public void setTo_userIdusername(String to_userIdusername) {
+        this.to_userIdusername = to_userIdusername;
     }
 
     public Integer getId() {
