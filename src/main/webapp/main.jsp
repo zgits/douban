@@ -1,3 +1,13 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+%>
+<c:set var="basepath" value="<%=basePath%>" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +50,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.html"><img class="img-circle" src="image/logo.PNG"
+            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG"
                                                           style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
@@ -133,7 +143,8 @@
                             &nbsp;7.6
                         </div>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <%--默认的id为1，后期更改--%>
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -166,7 +177,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -199,7 +210,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -232,7 +243,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -265,7 +276,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -298,7 +309,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -331,7 +342,7 @@
                             </script>&nbsp;7.6
                         </h6>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -364,7 +375,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="moviedetails.jsp" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>

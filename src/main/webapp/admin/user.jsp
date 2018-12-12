@@ -2,6 +2,13 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+%>
+<c:set var="basepath" value="<%=basePath%>" />
+
 <!--删除用户的时候注意异步传输的id的获取-->
 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
@@ -215,7 +222,7 @@
 
             $.ajax({
                 type: "get",
-                url: "127.0.0.1:8090/deleteUser",
+                url: "${basepath}/manageruserdeleteUser",
                 async: true,
                 data: {
                     id:id
@@ -263,7 +270,7 @@
 
             $.ajax({
                 type: "get",
-                url: "127.0.0.1:8090/deleteForbidden",
+                url: "${basepath}/manageruserdeleteForbidden",
                 async: true,
                 data: {
                     id:id
@@ -331,7 +338,7 @@
 
             $.ajax({
                 type: "get",
-                url: "127.0.0.1:8090/insertForbidden",
+                url: "${basepath}/manageruserinsertForbidden",
                 async: true,
                 data: form_data,
                 beforeSend: function (XMLHttpRequest) {

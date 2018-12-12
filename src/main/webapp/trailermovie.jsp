@@ -5,7 +5,9 @@
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
 %>
+<c:set var="basepath" value="<%=basePath%>" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,6 +34,10 @@
     <link rel="stylesheet" href="/static_resources/movieComment/css/movieComment.css">
     <!--评论区end-->
 
+    <%----%>
+    <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
+    <script src="/static_resources/toastr/toastr.min.js"></script>
+
     <style type="text/css">
         .m {
             margin-left: -15px;
@@ -48,8 +54,8 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.html"><img class="img-circle" src="image/logo.PNG"
-                                                          style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG"
+                                                         style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
             <form class="navbar-form navbar-left" role="search">
@@ -172,6 +178,22 @@
     </div>
 
     <script>
+
+        var messageOpts = {
+            "closeButton": true,//是否显示关闭按钮
+            "debug": false,//是否使用debug模式
+            "positionClass": "toast-top-right",//弹出窗的位置
+            "onclick": null,
+            "showDuration": "3000",//显示的动画时间
+            "hideDuration": "1000",//消失的动画时间
+            "timeOut": "3000",//展现时间
+            "extendedTimeOut": "1000",//加长展示时间
+            "showEasing": "swing",//显示时的动画缓冲方式
+            "hideEasing": "linear",//消失时的动画缓冲方式
+            "showMethod": "fadeIn",//显示时的动画方式
+            "hideMethod": "fadeOut" //消失时的动画方式
+        };
+        toastr.options = messageOpts;
         <%--对评论的回复的函数--%>
         function replyComment(contentId,commentId,to_userId,userId,type) {
             var content=document.getElementById(contentId).value;
@@ -180,7 +202,7 @@
             var userId=userId;
             $.ajax({
                 type:"post",
-                url:"/rtrailerreplycommentinsertReplyComment",
+                url:"${basepath}/rtrailerreplycommentinsertReplyComment",
                 data:{
                     "trailer_replycomment.content":content,
                     "trailer_replycomment.comment_id":commentId,
@@ -188,8 +210,15 @@
                     "trailer_replycomment.userId":userId,
                     "trailer_replycomment.reply_type":type
                 },
+//                beforeSend: function (XMLHttpRequest) {
+//                    $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+//                },
                 success:function (data) {
-                    alert(data);
+                    if(data==1){
+                        toastr.success('回复成功');
+                    }else{
+                        toastr.error("回复失败");
+                    }
                     setTimeout("window.location.reload()",3000);
                 }
             })
@@ -203,7 +232,7 @@
             var to_id=to_id;
             $.ajax({
                 type:"post",
-                url:"/rtrailerreplycommentinsertReplyComment",
+                url:"${basepath}/rtrailerreplycommentinsertReplyComment",
                 data:{
                     "trailer_replycomment.content":content,
                     "trailer_replycomment.comment_id":commentId,
@@ -213,7 +242,11 @@
                     "trailer_replycomment.reply_id":to_id
                 },
                 success:function (data) {
-                    alert(data);
+                    if(data==1){
+                        toastr.success('回复成功');
+                    }else{
+                        toastr.error("回复失败");
+                    }
                     setTimeout("window.location.reload()",3000);
                 }
             })
@@ -237,20 +270,40 @@
         </div>
     </div>
     <script>
+        var messageOpts = {
+            "closeButton": true,//是否显示关闭按钮
+            "debug": false,//是否使用debug模式
+            "positionClass": "toast-top-right",//弹出窗的位置
+            "onclick": null,
+            "showDuration": "3000",//显示的动画时间
+            "hideDuration": "1000",//消失的动画时间
+            "timeOut": "3000",//展现时间
+            "extendedTimeOut": "1000",//加长展示时间
+            "showEasing": "swing",//显示时的动画缓冲方式
+            "hideEasing": "linear",//消失时的动画缓冲方式
+            "showMethod": "fadeIn",//显示时的动画方式
+            "hideMethod": "fadeOut" //消失时的动画方式
+        };
+        toastr.options = messageOpts;
         function trailercomment() {
             var userId=document.getElementById("userId").value;
             var trailerId=document.getElementById("trailerId").value;
             var content=document.getElementById("content").value;
             $.ajax({
                 type:"post",
-                url:"/trailercommentinsertComment",
+                url:"${basepath}/trailercommentinsertComment",
                 data:{
                     "trailer_comment.userId":userId,
                     "trailer_comment.trailerId":trailerId,
                     "trailer_comment.content":content
                 },
-                success:function () {
-                    alert("chengg");
+                success:function (data) {
+                    if(data==1){
+                        toastr.success('评论成功');
+                    }else{
+                        toastr.error("评论失败");
+                    }
+                    setTimeout("window.location.reload()",3000);
                 }
             })
 

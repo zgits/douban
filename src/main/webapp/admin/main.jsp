@@ -1,4 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+%>
+<c:set var="basepath" value="<%=basePath%>" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +83,7 @@
     <%--<div id="matter5" style="display: none">--%>
         <%--<jsp:include page="upload.jsp"></jsp:include>--%>
     <%--</div>--%>
-        <iframe src="127.0.0.1:8090/findAll" frameborder='0' scrolling="no" class="container col-lg-12 " style="height:100%;margin:0px;float:left;">    //右栏原始页面
+        <iframe src="${basepath}/manageruserfindAll" frameborder='0' scrolling="no" class="container col-lg-12 " style="height:100%;margin:0px;float:left;">    //右栏原始页面
         </iframe>
 </div>
 <!--右侧展示内容end-->
@@ -92,7 +99,7 @@
         });
         $("#li_three").click(function(){
 
-            $("iframe").attr("src", "127.0.0.1:8090/findAll");
+            $("iframe").attr("src", "${basepath}/manageruserfindAll");
         });
         $("#li_four").click(function(){
 

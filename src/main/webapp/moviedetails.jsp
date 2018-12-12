@@ -1,10 +1,14 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
+%>
+<c:set var="basepath" value="<%=basePath%>" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -144,6 +148,9 @@
     <!--显示星数-->
     <link href="static_resources/star/star.css" rel="stylesheet">
 
+    <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
+    <script src="/static_resources/toastr/toastr.min.js"></script>
+
 
 </head>
 <body>
@@ -151,7 +158,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.html"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
             <form class="navbar-form navbar-left" role="search">
@@ -447,462 +454,7 @@
         </div>
         <div class="row">
             <ul class="list-group" style="width: 800px">
-                <li class="list-group-item" style="border: none">
-                    <!--显示个人信息以及评论时间，点赞数-->
-                    <div class="row">
-                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>xxxx用户名</span>
-                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                        <!--星数展示start-->
-                        <div id="userid1" class="star-vote">
-                            <span id="add_staruserid1" class="add-star"></span>
-                            <span id="del_staruserid1" class="del-star"></span>
-                        </div>
-                        <!--根据用户的id来生成对应的名字-->
-                        <script>
-                            window.onload = showStaruserid1(4);
 
-                            //n表示后台获取的星数
-                            function showStaruserid1(n) {
-                                var con_wid = document.getElementById("userid1").offsetWidth;
-                                var del_star = document.getElementById("del_staruserid1");
-                                console.log(con_wid);
-
-                                //透明星星移动的像素
-                                var del_move = (n * con_wid) / 10;
-
-                                del_star.style.backgroundPosition = -del_move + "px 0px";
-                                del_star.style.left = del_move + "px";
-                            }
-                        </script>
-                        <!--星数展示end-->
-                        <!--点赞start-->
-                        <div class="praise">
-                            <span id="praise1"><img src="/static_resources/likes/dianzan/Images/zan.png"
-                                                    id="praise1-img" style="width: 20px;height:20px"/></span>
-                            <span id="praise-txt1" style="margin-top: -40px;margin-left: 30px">1455</span>
-                            <span id="add-num1"><em>+1</em></span>
-                        </div>
-                        <!--点赞end-->
-                    </div>
-                    <br>
-                    <div class="row">
-                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                        面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                    </div>
-
-                    <div class="row col-md-offset-10">
-                        <a class="btn btn-sm">举报</a>
-                        <a data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseuserId1" class="btn btn-sm">回复</a>
-                    </div>
-                    <div id="collapseuserId1" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row">
-                                <form class="form-horizontal">
-                                    <div class="form-group col-md-8">
-                                        <input class="form-control" type="text" value="@xxxxx用户名:">
-                                    </div>
-
-                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <hr>
-                <li class="list-group-item" style="border: none">
-                    <!--显示个人信息以及评论时间，点赞数-->
-                    <div class="row">
-                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>xxxx用户名</span>
-                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                        <div id="userid2" class="star-vote">
-                        <span id="add_staruserid2" class="add-star"></span>
-                        <span id="del_staruserid2" class="del-star"></span>
-                    </div>
-                        <!--根据用户的id来生成对应的名字-->
-                        <script>
-                            window.onload = showStaruserid2(5);
-
-                            //n表示后台获取的星数
-                            function showStaruserid2(n) {
-                                var con_wid = document.getElementById("userid2").offsetWidth;
-                                var del_star = document.getElementById("del_staruserid2");
-                                console.log(con_wid);
-
-                                //透明星星移动的像素
-                                var del_move = (n * con_wid) / 10;
-
-                                del_star.style.backgroundPosition = -del_move + "px 0px";
-                                del_star.style.left = del_move + "px";
-                            }
-                        </script> 2018-11-20
-                        <div class="praise">
-                            <span id="praise2"><img src="/static_resources/likes/dianzan/Images/zan.png"
-                                                    id="praise2-img" style="width: 20px;height:20px"/></span>
-                            <span id="praise-txt2" style="margin-top: -40px;margin-left: 30px">1455</span>
-                            <span id="add-num2"><em>+1</em></span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                        面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                    </div>
-
-                    <div class="row col-md-offset-10">
-                        <a class="btn btn-sm">举报</a>
-                        <a data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseidx" class="btn btn-sm">回复</a>
-                    </div>
-                    <div id="collapseidx" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row">
-                                <form class="form-horizontal">
-                                    <div class="form-group col-md-8">
-                                        <input class="form-control" type="text" value="@xxxxx用户名:">
-                                    </div>
-
-                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                </form>
-                            </div>
-                        </div>
-
-                        </div>
-
-                </li>
-                <hr>
-                <li class="list-group-item" style="border: none">
-                    <!--显示个人信息以及评论时间，点赞数-->
-                    <div class="row">
-                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>xxxx用户名</span>
-                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                        <div id="userid3" class="star-vote">
-                        <span id="add_staruserid3" class="add-star"></span>
-                        <span id="del_staruserid3" class="del-star"></span>
-                    </div>
-                        <!--根据用户的id来生成对应的名字-->
-                        <script>
-                            window.onload = showStaruserid3(4);
-
-                            //n表示后台获取的星数
-                            function showStaruserid3(n) {
-                                var con_wid = document.getElementById("userid3").offsetWidth;
-                                var del_star = document.getElementById("del_staruserid3");
-                                console.log(con_wid);
-
-                                //透明星星移动的像素
-                                var del_move = (n * con_wid) / 10;
-
-                                del_star.style.backgroundPosition = -del_move + "px 0px";
-                                del_star.style.left = del_move + "px";
-                            }
-                        </script> 2018-11-20
-                        <div class="praise">
-                            <span id="praise3"><img src="/static_resources/likes/dianzan/Images/zan.png"
-                                                    id="praise3-img" style="width: 20px;height:20px"/></span>
-                            <span id="praise-txt3" style="margin-top: -40px;margin-left: 30px">1455</span>
-                            <span id="add-num3"><em>+1</em></span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                        面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                    </div>
-
-                    <div class="row col-md-offset-10">
-                        <a class="btn btn-sm">举报</a>
-                        <a data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseOne" class="btn btn-sm">回复</a>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row">
-                                <form class="form-horizontal">
-                                    <div class="form-group col-md-8">
-                                        <input class="form-control" type="text" value="@xxxxx用户名:">
-                                    </div>
-
-                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                </form>
-                            </div>
-                            <div class="row">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>xxxx用户名</span>
-                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                        <br>
-                                        <div class="row">
-                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                            <a class="btn btn-sm col-md-offset-10">举报</a>
-                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                               href="#collapsereplay1">回复</a>
-                                        </div>
-                                        <div id="collapsereplay1" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="form-group col-md-8">
-                                                    <input class="form-control" type="text" value="@xxx用户名:">
-
-                                                </div>
-                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                            </div>
-
-                                        </div>
-                                    </li>
-
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <hr>
-                <li class="list-group-item" style="border: none">
-                    <!--显示个人信息以及评论时间，点赞数-->
-                    <div class="row">
-                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>xxxx用户名</span>
-                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                        <div id="userid4" class="star-vote">
-                        <span id="add_staruserid4" class="add-star"></span>
-                        <span id="del_staruserid4" class="del-star"></span>
-                    </div>
-                        <!--根据用户的id来生成对应的名字userId到时候全部替换成用户的id-->
-                        <script>
-                            window.onload = showStaruserid4(4);
-
-                            //n表示后台获取的星数
-                            function showStaruserid4(n) {
-                                var con_wid = document.getElementById("userid4").offsetWidth;
-                                var del_star = document.getElementById("del_staruserid4");
-                                console.log(con_wid);
-
-                                //透明星星移动的像素
-                                var del_move = (n * con_wid) / 10;
-
-                                del_star.style.backgroundPosition = -del_move + "px 0px";
-                                del_star.style.left = del_move + "px";
-                            }
-                        </script> 2018-11-20
-                        <div class="praise">
-                            <span id="praise4"><img src="/static_resources/likes/dianzan/Images/zan.png"
-                                                    id="praise4-img" style="width: 20px;height:20px"/></span>
-                            <span id="praise-txt4" style="margin-top: -40px;margin-left: 30px">1455</span>
-                            <span id="add-num4"><em>+1</em></span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                        面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                    </div>
-
-                    <div class="row col-md-offset-10">
-                        <a class="btn btn-sm">举报</a>
-                        <a data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseuserId4" class="btn btn-sm">回复</a>
-                    </div>
-                    <div id="collapseuserId4" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row">
-                                <form class="form-horizontal">
-                                    <div class="form-group col-md-8">
-                                        <input class="form-control" type="text" value="@xxxxx用户名:">
-                                    </div>
-
-                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                </form>
-                            </div>
-
-                        </div>
-                    </div>
-                </li>
-                <hr>
-                <li class="list-group-item" style="border: none">
-                    <!--显示个人信息以及评论时间，点赞数-->
-                    <div class="row">
-                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span>xxxx用户名</span>
-                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                        <div id="userid5" class="star-vote">
-                        <span id="add_staruserid5" class="add-star"></span>
-                        <span id="del_staruserid5" class="del-star"></span>
-                    </div>
-                        <!--根据用户的id来生成对应的名字-->
-                        <script>
-                            window.onload = showStaruserid5(9);
-
-                            //n表示后台获取的星数
-                            function showStaruserid5(n) {
-                                var con_wid = document.getElementById("userid5").offsetWidth;
-                                var del_star = document.getElementById("del_staruserid5");
-                                console.log(con_wid);
-
-                                //透明星星移动的像素
-                                var del_move = (n * con_wid) / 10;
-
-                                del_star.style.backgroundPosition = -del_move + "px 0px";
-                                del_star.style.left = del_move + "px";
-                            }
-                        </script> 2018-11-20
-                        <div class="praise">
-                            <span id="praise5"><img src="/static_resources/likes/dianzan/Images/zan.png"
-                                                    id="praise5-img" style="width: 20px;height:20px"/></span>
-                            <span id="praise-txt5" style="margin-top: -40px;margin-left: 30px">1455</span>
-                            <span id="add-num5"><em>+1</em></span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        一场大规模的恐怖袭击，一个牵扯无数内幕的神秘组织，这个关乎整个东京的可怕计划即将拉开帷幕…首脑云集的东京峰会举办在即，
-                        会场突然发生超大规模的爆炸事件，不仅在现场发现行踪诡异的安室透，毛利小五郎更是惨遭陷害。
-                        面对最危险任务，最烧脑的推理，最艰难的博弈，柯南能否在迷雾中寻找到唯一的真相。
-                    </div>
-
-                    <div class="row col-md-offset-10">
-                        <a class="btn btn-sm">举报</a>
-                        <a data-toggle="collapse" data-parent="#accordion"
-                           href="#collapseuserId5" class="btn btn-sm">回复</a>
-                    </div>
-                    <div id="collapseuserId5" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="row">
-                                <form class="form-horizontal">
-                                    <div class="form-group col-md-8">
-                                        <input class="form-control" type="text" value="@xxxxx用户名:">
-                                    </div>
-
-                                    <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                </form>
-                            </div>
-                            <div class="row">
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>xxxx用户名</span>
-                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                        <br>
-                                        <div class="row">
-                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                            <a class="btn btn-sm col-md-offset-10">举报</a>
-                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                               href="#collapseid1">回复</a>
-                                        </div>
-                                        <div id="collapseid1" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="form-group col-md-8">
-                                                    <input class="form-control" type="text" value="@xxx用户名:">
-
-                                                </div>
-                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                            </div>
-
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>xxxx用户名</span>
-                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                        <br>
-                                        <div class="row">
-                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                            <a class="btn btn-sm col-md-offset-10">举报</a>
-                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                href="#collapseid2">回复</a>
-                                        </div>
-                                        <div id="collapseid2" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="form-group col-md-8">
-                                                    <input class="form-control" type="text" value="@xxx用户名:">
-
-                                                </div>
-                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                            </div>
-
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>xxxx用户名</span>
-                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                        <br>
-                                        <div class="row">
-                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                            <a class="btn btn-sm col-md-offset-10">举报</a>
-                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                href="#collapseid3">回复</a>
-                                        </div>
-                                        <div id="collapseid3" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="form-group col-md-8">
-                                                    <input class="form-control" type="text" value="@xxx用户名:">
-
-                                                </div>
-                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                            </div>
-
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>xxxx用户名</span>
-                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                        <br>
-                                        <div class="row">
-                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                            <a class="btn btn-sm col-md-offset-10">举报</a>
-                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                href="#collapseid4">回复</a>
-                                        </div>
-                                        <div id="collapseid4" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="form-group col-md-8">
-                                                    <input class="form-control" type="text" value="@xxx用户名:">
-
-                                                </div>
-                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                            </div>
-
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <span>xxxx用户名</span>
-                                        &nbsp;&nbsp;2018-11-20&nbsp;17:15:14
-                                        <br>
-                                        <div class="row">
-                                            <span class="col-md-offset-1">回复@xxxx用户名:该用户回复的内容</span>
-                                            <a class="btn btn-sm col-md-offset-10">举报</a>
-                                            <a  class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                href="#collapseid5">回复</a>
-                                        </div>
-                                        <div id="collapseid5" class="panel-collapse collapse">
-                                            <div class="panel-body">
-                                                <div class="form-group col-md-8">
-                                                    <input class="form-control" type="text" value="@xxx用户名:">
-
-                                                </div>
-                                                <input class="col-md-offset-2 btn btn-success" type="submit" value="回复">
-                                            </div>
-
-                                        </div>
-                                    </li>
-
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <hr>
                 <%--oneMoive.movieComments!=null && fn:length(oneMoive.movieComments) >0--%>
                 <c:choose>
                     <c:when test="${empty oneMoive.movieComments}">
@@ -1017,6 +569,22 @@
 
         <script>
             <%--对评论的回复的函数--%>
+
+            var messageOpts = {
+                "closeButton": true,//是否显示关闭按钮
+                "debug": false,//是否使用debug模式
+                "positionClass": "toast-top-right",//弹出窗的位置
+                "onclick": null,
+                "showDuration": "3000",//显示的动画时间
+                "hideDuration": "1000",//消失的动画时间
+                "timeOut": "3000",//展现时间
+                "extendedTimeOut": "1000",//加长展示时间
+                "showEasing": "swing",//显示时的动画缓冲方式
+                "hideEasing": "linear",//消失时的动画缓冲方式
+                "showMethod": "fadeIn",//显示时的动画方式
+                "hideMethod": "fadeOut" //消失时的动画方式
+            };
+            toastr.options = messageOpts;
             function replyComment(contentId,commentId,to_userId,userId,type) {
                 var content=document.getElementById(contentId).value;
                 var commentId=commentId;
@@ -1024,7 +592,7 @@
                 var userId=userId;
                 $.ajax({
                     type:"post",
-                    url:"/rmoviereplycommentinsertReplyComment",
+                    url:"${basepath}/rmoviereplycommentinsertReplyComment",
                     data:{
                         "movie_replycomment.content":content,
                         "movie_replycomment.comment_id":commentId,
@@ -1033,7 +601,11 @@
                         "movie_replycomment.reply_type":type
                     },
                     success:function (data) {
-                        alert(data);
+                        if(data==1){
+                            toastr.success('回复成功');
+                        }else{
+                            toastr.error("回复失败");
+                        }
                         setTimeout("window.location.reload()",3000);
                     }
                 })
@@ -1047,7 +619,7 @@
                 var to_id=to_id;
                 $.ajax({
                     type:"post",
-                    url:"/rmoviereplycommentinsertReplyComment",
+                    url:"${basepath}/rmoviereplycommentinsertReplyComment",
                     data:{
                         "movie_replycomment.content":content,
                         "movie_replycomment.comment_id":commentId,
@@ -1057,7 +629,11 @@
                         "movie_replycomment.reply_id":to_id
                     },
                     success:function (data) {
-                        alert(data);
+                        if(data==1){
+                            toastr.success('回复成功');
+                        }else{
+                            toastr.error("回复失败");
+                        }
                         setTimeout("window.location.reload()",3000);
                     }
                 })
@@ -1196,20 +772,40 @@
     </div>
 
     <script>
+        var messageOpts = {
+            "closeButton": true,//是否显示关闭按钮
+            "debug": false,//是否使用debug模式
+            "positionClass": "toast-top-right",//弹出窗的位置
+            "onclick": null,
+            "showDuration": "3000",//显示的动画时间
+            "hideDuration": "1000",//消失的动画时间
+            "timeOut": "3000",//展现时间
+            "extendedTimeOut": "1000",//加长展示时间
+            "showEasing": "swing",//显示时的动画缓冲方式
+            "hideEasing": "linear",//消失时的动画缓冲方式
+            "showMethod": "fadeIn",//显示时的动画方式
+            "hideMethod": "fadeOut" //消失时的动画方式
+        };
+        toastr.options = messageOpts;
         function moviecomment() {
             var userId=document.getElementById("userId").value;
             var movieId=document.getElementById("movieId").value;
             var content=document.getElementById("content").value;
             $.ajax({
                 type:"post",
-                url:"/moviecomment_insertComment",
+                url:"${basepath}/moviecomment_insertComment",
                 data:{
                     "movie_comment.userId":userId,
                     "movie_comment.movieId":movieId,
                     "movie_comment.content":content
                 },
-                success:function () {
-                    alert("chengg");
+                success:function (data) {
+                    if(data==1){
+                        toastr.success('评论成功');
+                    }else{
+                        toastr.error("评论失败");
+                    }
+                    setTimeout("window.location.reload()",3000);
                 }
             })
 
