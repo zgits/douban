@@ -154,7 +154,7 @@
                                                         <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
 
                                                     </div>
-                                                    <input onclick="replyComment('s${reply.id}',${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                    <input onclick="replyComment2('s${reply.id}',${trailercomment.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                                 </div>
 
                                             </div>
@@ -187,6 +187,30 @@
                     "trailer_replycomment.to_userId":to_userId,
                     "trailer_replycomment.userId":userId,
                     "trailer_replycomment.reply_type":type
+                },
+                success:function (data) {
+                    alert(data);
+                    setTimeout("window.location.reload()",3000);
+                }
+            })
+        }
+
+        function replyComment2(contentId,commentId,to_id,to_userId,userId,type) {
+            var content=document.getElementById(contentId).value;
+            var commentId=commentId;
+            var to_userId=to_userId;
+            var userId=userId;
+            var to_id=to_id;
+            $.ajax({
+                type:"post",
+                url:"/rtrailerreplycommentinsertReplyComment",
+                data:{
+                    "trailer_replycomment.content":content,
+                    "trailer_replycomment.comment_id":commentId,
+                    "trailer_replycomment.to_userId":to_userId,
+                    "trailer_replycomment.userId":userId,
+                    "trailer_replycomment.reply_type":type,
+                    "trailer_replycomment.reply_id":to_id
                 },
                 success:function (data) {
                     alert(data);

@@ -79,7 +79,15 @@ public class MovieAction extends ActionSupport{
         this.id = id;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     private Movie movie;
+
+    public MovieServie getMovieServie() {
+        return movieServie;
+    }
 
     public void setMovie(Movie movie) {
         this.movie = movie;
@@ -87,9 +95,14 @@ public class MovieAction extends ActionSupport{
 
     /********通过id获取电影信息,用于单击超链接时用*************/
     public String getMovie(){
-        Movie movie=movieServie.selctMovieById(id);
-        ActionContext.getContext().put("oneMovie",movie);
-        return "moviededetail";
+        try{
+            Movie movie=movieServie.selctMovieById(id);
+            ActionContext.getContext().put("oneMovie",movie);
+            return "moviedetail";
+        }catch (Exception e){
+            return null;
+        }
+
     }
 
     /*********end************/
@@ -115,7 +128,7 @@ public class MovieAction extends ActionSupport{
 
     /********删除电影信息********/
 
-    //需要重载页面，还未完成2018-12-05
+
     public void deleteMovie(){
         movieServie.deleteMovie(id);
     }
@@ -124,6 +137,10 @@ public class MovieAction extends ActionSupport{
     /*********查询电影信息************/
 
     private Integer currPage=1;
+
+    public Integer getCurrPage() {
+        return currPage;
+    }
 
     public void setCurrPage(Integer currPage) {
         this.currPage = currPage;
@@ -136,6 +153,10 @@ public class MovieAction extends ActionSupport{
     }
     private String movieName;
 
+    public String getMovieName() {
+        return movieName;
+    }
+
     public void setMovieName(String movieName) {
         this.movieName = movieName;
     }
@@ -147,7 +168,6 @@ public class MovieAction extends ActionSupport{
 
     /*********end************/
 
-    //异步刷新的数据？？？？？2018-12-5，暂时未写
 
 
 

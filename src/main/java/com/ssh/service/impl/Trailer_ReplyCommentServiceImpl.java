@@ -50,7 +50,7 @@ public class Trailer_ReplyCommentServiceImpl implements Trailer_ReplyCommentServ
                 trailer_replycomment.setReply_id(trailer_replycomment.getComment_id());
             }else if (trailer_replycomment.getReply_type()==2){//代表是回复的回复
                 //设置该回复的id为目标回复的id,目标回复id通过前端发送，
-                trailer_replycomment.setReply_id(trailer_replycomment.getId());
+                trailer_replycomment.setReply_id(trailer_replycomment.getReply_id());
             }
             /**
              * 以下是设置消息提醒的

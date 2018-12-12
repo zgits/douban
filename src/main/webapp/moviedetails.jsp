@@ -1,3 +1,11 @@
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -175,7 +183,7 @@
 </nav>
 <!--电影详情介绍-->
 <div class="container">
-    <h1>xxxxxxxx电影名名侦探柯南：零的执行者</h1>
+    <h1>${oneMovie.moviename}</h1>
     <!--电影简单介绍页-->
     <div class="row">
         <!--电影海报页-->
@@ -895,8 +903,167 @@
                     </div>
                 </li>
                 <hr>
+                <%--oneMoive.movieComments!=null && fn:length(oneMoive.movieComments) >0--%>
+                <c:choose>
+                    <c:when test="${empty oneMoive.movieComments}">
+                        <c:forEach items="${oneMovie.movieComments}" var="moviecomments" varStatus="status">
+                            <li class="list-group-item" style="border: none">
+                                <!--显示个人信息以及评论时间，点赞数-->
+                                <div class="row">
+                                    <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span>${moviecomments.username}</span>
+                                    &nbsp;&nbsp;<fmt:formatDate value="${moviecomments.time}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+
+
+                                    <c:if test="${not empty moviecomments.score}">
+                                        <!--星数展示start-->
+                                        <div id="${moviecomments.id}" class="star-vote">
+                                            <span id="add_staruser${status.count}" class="add-star"></span>
+                                            <span id="del_staruser${status.count}" class="del-star"></span>
+                                        </div>
+                                        <!--根据用户的id来生成对应的名字-->
+                                        <script>
+                                            window.onload = showStar${moviecomments.id}(${moviecomments.score});
+
+                                            //n表示后台获取的星数
+                                            function showStar${moviecomments.id}(n) {
+                                                var con_wid = document.getElementById("${moviecomments.id}").offsetWidth;
+                                                var del_star = document.getElementById("del_staruser${status.count}");
+                                                console.log(con_wid);
+
+                                                //透明星星移动的像素
+                                                var del_move = (n * con_wid) / 5;
+
+                                                del_star.style.backgroundPosition = -del_move + "px 0px";
+                                                del_star.style.left = del_move + "px";
+                                            }
+                                        </script>
+                                        <!--星数展示end-->
+                                    </c:if>
+
+                                    <!--点赞start-->
+                                    <div class="praise">
+                            <span id="praise1"><img src="/static_resources/likes/dianzan/Images/zan.png"
+                                                    id="praise1-img" style="width: 20px;height:20px"/></span>
+                                        <span id="praise-txt1" style="margin-top: -40px;margin-left: 30px">1455</span>
+                                        <span id="add-num1"><em>+1</em></span>
+                                    </div>
+                                    <!--点赞end-->
+                                </div>
+                                <br>
+                                <div class="row">
+                                        ${moviecomments.content}
+                                </div>
+
+                                <div class="row col-md-offset-10">
+                                    <a class="btn btn-sm">举报</a>
+                                    <a data-toggle="collapse" data-parent="#accordion"
+                                       href="#r${moviecomments.id}" class="btn btn-sm">回复</a>
+                                </div>
+                                <div id="r${moviecomments.id}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="form-horizontal">
+                                                <div class="form-group col-md-8">
+                                                    <input id="tor${moviecomments.id}" class="form-control" type="text" placeholder="@${moviecomments.username}:">
+                                                </div>
+
+                                                <input onclick="replyComment('tor${moviecomments.id}','${moviecomments.id}','${moviecomments.userId}',1,1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <ul class="list-group">
+                                                <c:forEach items="${moviecomments.movieReplycomments}" var="reply" varStatus="status">
+                                                    <li class="list-group-item">
+                                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <span>${reply.username}</span>
+                                                        &nbsp;&nbsp;<fmt:formatDate value="${reply.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
+
+                                                        <br>
+                                                        <div class="row">
+                                                            <span class="col-md-offset-1">回复@${reply.to_userIdusername}:${reply.content}</span>
+                                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+                                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                               href="#s${moviecomments.id}${status.count}">回复</a>
+                                                        </div>
+                                                        <div id="s${moviecomments.id}${status.count}" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <div class="form-group col-md-8">
+                                                                    <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
+
+                                                                </div>
+                                                                <input onclick="replyComment2('s${reply.id}',${moviecomments.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                            </div>
+
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                        </c:forEach>
+
+                    </c:when>
+                    <c:otherwise>
+                        暂无评论信息
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
+
+        <script>
+            <%--对评论的回复的函数--%>
+            function replyComment(contentId,commentId,to_userId,userId,type) {
+                var content=document.getElementById(contentId).value;
+                var commentId=commentId;
+                var to_userId=to_userId;
+                var userId=userId;
+                $.ajax({
+                    type:"post",
+                    url:"/rmoviereplycommentinsertReplyComment",
+                    data:{
+                        "movie_replycomment.content":content,
+                        "movie_replycomment.comment_id":commentId,
+                        "movie_replycomment.to_userId":to_userId,
+                        "movie_replycomment.userId":userId,
+                        "movie_replycomment.reply_type":type
+                    },
+                    success:function (data) {
+                        alert(data);
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+            function replyComment2(contentId,commentId,to_id,to_userId,userId,type) {
+                var content=document.getElementById(contentId).value;
+                var commentId=commentId;
+                var to_userId=to_userId;
+                var userId=userId;
+                var to_id=to_id;
+                $.ajax({
+                    type:"post",
+                    url:"/rmoviereplycommentinsertReplyComment",
+                    data:{
+                        "movie_replycomment.content":content,
+                        "movie_replycomment.comment_id":commentId,
+                        "movie_replycomment.to_userId":to_userId,
+                        "movie_replycomment.userId":userId,
+                        "movie_replycomment.reply_type":type,
+                        "movie_replycomment.reply_id":to_id
+                    },
+                    success:function (data) {
+                        alert(data);
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+        </script>
         <script>
             /*
              * 动态点赞
@@ -1014,16 +1181,40 @@
 
     <!--自己评论界面-->
     <div class="row ">
-        <form role="form col-md-8">
+        <div role="form col-md-8">
+
+            <%--登录后可以获取id--%>
+            <input id="userId" type="hidden" name="movie_comment.userId" value="1">
+            <input id="movieId" type="hidden" name="movie_comment.movieId" value="${oneMovie.id}">
             <div class="form-group" style="margin-left:-50px ">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea id="content" name="movie_comment.content" class="form-control" rows="3"></textarea>
             </div>
             <div class="col-md-offset-11">
-                <button type="submit" class="btn btn-primary">发布</button>
+                <button onclick="moviecomment()" type="submit" class="btn btn-primary">发布</button>
             </div>
-        </form>
+        </div>
     </div>
 
+    <script>
+        function moviecomment() {
+            var userId=document.getElementById("userId").value;
+            var movieId=document.getElementById("movieId").value;
+            var content=document.getElementById("content").value;
+            $.ajax({
+                type:"post",
+                url:"/moviecomment_insertComment",
+                data:{
+                    "movie_comment.userId":userId,
+                    "movie_comment.movieId":movieId,
+                    "movie_comment.content":content
+                },
+                success:function () {
+                    alert("chengg");
+                }
+            })
+
+        }
+    </script>
     <!--分页界面-->
     <div class="row">
         <div class="inner clearfix">
@@ -1055,25 +1246,6 @@
 
         </div>
     </div>
-
-    <!--<div class="container col-md-12 navbar-fixed-bottom" style="height: 70px;background-color: #1c1f21">-->
-    <!--<div class="row">-->
-
-    <!--<ul class="list-inline col-md-offset-2">-->
-    <!--<li>-->
-    <!--<span style="color: white;font-size: 12px;">网站首页</span>-->
-    <!--</li>-->
-    <!--<li style="margin-left: 50px;">-->
-    <!--<span style="color: white;font-size: 12px;">联系我们</span>-->
-    <!--</li>-->
-    <!--<li style="margin-left: 50px;">-->
-    <!--<span style="color: white;font-size: 12px;">意见反馈</span>-->
-    <!--</li>-->
-    <!--</ul>-->
-    <!--<span style="color: white;font-size: 12px;" class="col-md-offset-2">Copyright © 2018 xxxx.com All Rights Reserved | 京ICP备 12003892号-11</span>-->
-
-    <!--</div>-->
-    <!--</div>-->
 
 </div>
 <!--底部版权信息-->

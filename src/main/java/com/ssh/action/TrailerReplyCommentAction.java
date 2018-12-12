@@ -20,6 +20,8 @@ public class TrailerReplyCommentAction extends ActionSupport{
 
     @Autowired
     private Trailer_ReplyCommentService trailer_replyCommentService;
+
+
     /****增加回复***/
     private Trailer_Replycomment trailer_replycomment;
 
@@ -66,8 +68,24 @@ public class TrailerReplyCommentAction extends ActionSupport{
         return id;
     }
 
-    public void deleteReplyComment(){
-        trailer_replyCommentService.deleteReplyComment(id);
+    public void deleteReplyComment() throws IOException {
+        String flag ="";
+        try{
+            trailer_replyCommentService.deleteReplyComment(id);
+            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
 
     }
     /*******删除回复end*******/

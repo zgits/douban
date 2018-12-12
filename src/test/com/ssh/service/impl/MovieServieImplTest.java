@@ -16,6 +16,36 @@ public class MovieServieImplTest extends BaseTest{
     @Autowired
     private MovieServie movieServie;
     @Test
+    public void insertMovie1() throws Exception {
+    }
+
+    @Test
+    public void deleteMovie1() throws Exception {
+    }
+
+    @Test
+    public void updateMovie1() throws Exception {
+    }
+
+    @Test
+    public void seleceMovie1() throws Exception {
+    }
+
+    @Test
+    public void selctMovieById1() throws Exception {
+    }
+
+    @Test
+    public void selectMovieByName() throws Exception {
+    }
+
+    @Test
+    public void selectAllMovies() throws Exception {
+        System.out.println(movieServie.selectAllMovies());
+    }
+
+
+    @Test
     public void insertMovie() throws Exception {
     }
 
@@ -33,6 +63,8 @@ public class MovieServieImplTest extends BaseTest{
 
     @Test
     public void seleceMovie() throws Exception {
+
+        System.out.println(movieServie.selctMovieById(1));
     }
 
     @Test

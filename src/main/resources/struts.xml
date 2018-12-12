@@ -28,20 +28,22 @@
 
         <action name="rtrailerreplycomment*" class="TrailerReplyComment" method="{1}">
 
+
+        </action>
+
+        <action name="rmoviereplycomment*" class="MovieReplyComment" method="{1}">
+
         </action>
         
-        <action name="movie/*" class="MovieAction" method="{1}">
+        <action name="movie_*" class="MovieAction" method="{1}">
 
-            <result name="moviededetail">/moviedetails.jsp</result>
+            <result name="moviedetail">/moviedetails.jsp</result>
         </action>
 
-        <action name="moviecomment/*" class="MovieComment" method="{1}">
+        <action name="moviecomment_*" class="MovieComment" method="{1}">
 
         </action>
 
-        <action name="moviereplycomment/*" class="MovieReplyComment" method="{1}">
-
-        </action>
 
         <!--文件上传-->
         <action name="upload" class="MovieAction" method="saveFile">

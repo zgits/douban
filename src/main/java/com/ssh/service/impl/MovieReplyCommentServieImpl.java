@@ -53,7 +53,7 @@ public class MovieReplyCommentServieImpl implements Movie_ReplyCommentService {
                 movieReplycomment.setReply_id(movieReplycomment.getComment_id());
             }else if (movieReplycomment.getReply_type()==2){//代表是回复的回复
                 //设置该回复的id为目标回复的id,目标回复id通过前端发送，
-                movieReplycomment.setReply_id(movieReplycomment.getId());
+                movieReplycomment.setReply_id(movieReplycomment.getReply_id());
             }
             /**
              * 以下是设置消息提醒的
