@@ -122,11 +122,27 @@
                         &nbsp;&nbsp;
                         ${trailercomment.content}
                     </div>
-                    <div class="row col-md-offset-10">
-                        <a class="btn btn-sm">举报</a>
-                        <a data-toggle="collapse" data-parent="#accordion"
-                           href="#${trailercomment.userId}${status.count}" class="btn btn-sm">回复</a>
-                    </div>
+                    <c:choose>
+                        <c:when test="${trailercomment.userId==1}">
+                            <div class="row col-md-offset-10">
+                                    <%--id的获取需要登录--%>
+                                <a class="btn btn-sm">删除</a>
+
+
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   href="#${trailercomment.userId}${status.count}" class="btn btn-sm">回复</a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="row col-md-offset-10">
+
+                                <a class="btn btn-sm">举报</a>
+                                <a data-toggle="collapse" data-parent="#accordion"
+                                   href="#${trailercomment.userId}${status.count}" class="btn btn-sm">回复</a>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+
                     <div id="${trailercomment.userId}${status.count}" class="panel-collapse collapse">
                         <div class="panel-body">
                             <div class="row">
@@ -150,9 +166,31 @@
                                             <br>
                                             <div class="row">
                                                 <span class="col-md-offset-1">回复@${reply.to_userIdusername}:${reply.content}</span>
-                                                <a class="btn btn-sm col-md-offset-10">举报</a>
-                                                <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                   href="#s${trailercomment.id}${status.count}">回复</a>
+
+                                                <c:choose>
+                                                    <c:when test="${reply.userId==1}">
+                                                        <div class="row col-md-offset-10">
+
+                                                            <a class="btn btn-sm">删除</a>
+
+
+                                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                               href="#s${trailercomment.id}${status.count}">回复</a>
+
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div class="row col-md-offset-10">
+
+                                                            <a class="btn btn-sm">举报</a>
+                                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                               href="#s${trailercomment.id}${status.count}">回复</a>
+
+                                                        </div>
+                                                    </c:otherwise>
+                                                </c:choose>
+
+
                                             </div>
                                             <div id="s${trailercomment.id}${status.count}" class="panel-collapse collapse">
                                                 <div class="panel-body">
