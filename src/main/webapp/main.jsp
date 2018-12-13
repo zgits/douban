@@ -144,7 +144,7 @@
                         </div>
                         <p>
                             <%--默认的id为1，后期更改--%>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -177,7 +177,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -210,7 +210,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -243,7 +243,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -276,7 +276,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -309,7 +309,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -342,7 +342,7 @@
                             </script>&nbsp;7.6
                         </h6>
                         <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
@@ -375,7 +375,7 @@
                             </script>&nbsp;7.6
                         </div>
                         <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=1" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
