@@ -45,6 +45,19 @@
             width: 840px;
             margin-top: 100px;
         }
+        .loading {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -25px;
+            margin-left: -25px;
+            z-index: 9999;
+        }
+        #loading {
+            margin-top: 10px;
+        }
 
     </style>
 </head>
@@ -103,6 +116,13 @@
         </div>
     </div>
 </div>
+
+<div id="loading" style="display: block">
+    <div class="loading show">
+        <img src='/image/loading1.gif' />
+    </div>
+</div>
+
 <!--评论区展示-->
 <div class="container">
 
@@ -126,7 +146,7 @@
                         <c:when test="${trailercomment.userId==1}">
                             <div class="row col-md-offset-10">
                                     <%--id的获取需要登录--%>
-                                <a class="btn btn-sm">删除</a>
+                                <a class="btn btn-sm" onclick="deletecomment(${trailercomment.id})">删除</a>
 
 
                                 <a data-toggle="collapse" data-parent="#accordion"
@@ -171,7 +191,7 @@
                                                     <c:when test="${reply.userId==1}">
                                                         <div class="row col-md-offset-10">
 
-                                                            <a class="btn btn-sm">删除</a>
+                                                            <a class="btn btn-sm" onclick="deletereplycomment(${reply.id})">删除</a>
 
 
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
@@ -217,6 +237,9 @@
 
     <script>
 
+        window.onload=function(){
+            $("#loading").hide();
+        }
         var messageOpts = {
             "closeButton": true,//是否显示关闭按钮
             "debug": false,//是否使用debug模式
@@ -248,10 +271,11 @@
                     "trailer_replycomment.userId":userId,
                     "trailer_replycomment.reply_type":type
                 },
-//                beforeSend: function (XMLHttpRequest) {
-//                    $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
-//                },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show(); //在后台返回success之前显示loading图标
+                },
                 success:function (data) {
+                    $("#loading").hide();
                     if(data==1){
                         toastr.success('回复成功');
                     }else{
@@ -279,11 +303,60 @@
                     "trailer_replycomment.reply_type":type,
                     "trailer_replycomment.reply_id":to_id
                 },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show();
+                    },
                 success:function (data) {
+                    $("#loading").hide();
                     if(data==1){
                         toastr.success('回复成功');
                     }else{
                         toastr.error("回复失败");
+                    }
+                    setTimeout("window.location.reload()",3000);
+                }
+            })
+        }
+
+
+        function deletecomment(commentId){
+            var id=commentId;
+            $.ajax({
+                url:"${basepath}/trailercommentdelete",
+                type:"post",
+                data:{
+                    "commentId":id
+                },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show(); //在后台返回success之前显示loading图标
+                },
+                success:function (data) {
+                    $("#loading").hide();
+                    if(data==1){
+                        toastr.success('删除成功');
+                    }else{
+                        toastr.error("删除失败");
+                    }
+                    setTimeout("window.location.reload()",3000);
+                }
+            })
+        }
+        function deletereplycomment(id){
+            $.ajax({
+                url:"${basepath}/rtrailerreplycommentdeleteReplyComment",
+                type:"post",
+                data:{
+                    "id":id
+                },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show(); //在后台返回success之前显示loading图标
+                },
+                success:function (data) {
+                    $("#loading").hide();
+                    if(data==1){
+                        toastr.success('删除成功');
+                    }else{
+                        toastr.error("删除失败");
                     }
                     setTimeout("window.location.reload()",3000);
                 }
@@ -335,7 +408,11 @@
                     "trailer_comment.trailerId":trailerId,
                     "trailer_comment.content":content
                 },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show(); //在后台返回success之前显示loading图标
+                },
                 success:function (data) {
+                    $("#loading").hide();
                     if(data==1){
                         toastr.success('评论成功');
                     }else{

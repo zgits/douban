@@ -31,6 +31,20 @@
     <script src="/static_resources/pinglun/js/star-rating.js" type="text/javascript"></script>
 
     <style type="text/css">
+
+        .loading {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -25px;
+            margin-left: -25px;
+            z-index: 9999;
+        }
+        #loading {
+            margin-top: 10px;
+        }
         .demo {
             padding: 2em 0;
         }
@@ -141,6 +155,8 @@
         }
 
     </style>
+
+    <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
 
     <!--点赞-->
     <link type="text/css" rel="stylesheet" href="/static_resources/likes/dianzan/Css/demo.css">
@@ -508,7 +524,16 @@
                                 </div>
 
                                 <div class="row col-md-offset-10">
-                                    <a class="btn btn-sm">举报</a>
+                                    <c:choose>
+                                        <c:when test="${moviecomments.userId==1}">
+                                            <a class="btn btn-sm" onclick="deletecomment(${moviecomments.id})">删除</a>
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="btn btn-sm">举报</a>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                     <a data-toggle="collapse" data-parent="#accordion"
                                        href="#r${moviecomments.id}" class="btn btn-sm">回复</a>
                                 </div>
@@ -534,7 +559,17 @@
                                                         <br>
                                                         <div class="row">
                                                             <span class="col-md-offset-1">回复@${reply.to_userIdusername}:${reply.content}</span>
-                                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+
+                                                            <c:choose>
+                                                                <c:when test="${reply.userId==1}">
+                                                                    <a class="btn btn-sm col-md-offset-10" onclick="deletecomment2(${reply.id})">删除</a>
+
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a class="btn btn-sm col-md-offset-10">举报</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
                                                                href="#s${moviecomments.id}${status.count}">回复</a>
                                                         </div>
@@ -567,9 +602,66 @@
             </ul>
         </div>
 
+        <div class="modal fade" id="delcfmModel1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="replyid"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="deletereply()" class="btn btn-info" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div class="modal fade" id="delcfmModel2">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="commentId"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="deletemoviecomment()" class="btn btn-info" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+        <div id="loading" style="display: block">
+            <div class="loading show">
+                <img src='/image/loading1.gif' />
+            </div>
+        </div>
         <script>
             <%--对评论的回复的函数--%>
 
+            function deletecomment(id) {
+                $('#commentId').val(id);
+                $('#delcfmModel2').modal();
+            }
+            function deletecomment2(replyid) {
+                $('#replyid').val(replyid);//给会话中的隐藏属性URL赋值
+                $('#delcfmModel1').modal();
+            }
+            window.onload=function(){
+                $("#loading").hide();
+            }
             var messageOpts = {
                 "closeButton": true,//是否显示关闭按钮
                 "debug": false,//是否使用debug模式
@@ -600,7 +692,11 @@
                         "movie_replycomment.userId":userId,
                         "movie_replycomment.reply_type":type
                     },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
                     success:function (data) {
+                        $("#loading").hide();
                         if(data==1){
                             toastr.success('回复成功');
                         }else{
@@ -628,11 +724,61 @@
                         "movie_replycomment.reply_type":type,
                         "movie_replycomment.reply_id":to_id
                     },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
                     success:function (data) {
+                        $("#loading").hide();
                         if(data==1){
                             toastr.success('回复成功');
                         }else{
                             toastr.error("回复失败");
+                        }
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+            function deletemoviecomment() {
+                var id = $.trim($("#commentId").val());
+                $.ajax({
+                    url:"${basepath}/moviecomment_delete",
+                    type:"post",
+                    data:{
+                        "id":id
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('删除成功');
+                        }else{
+                            toastr.error("删除失败");
+                        }
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+            function deletereply() {
+                var id = $.trim($("#replyid").val());
+                $.ajax({
+                    url:"${basepath}/rmoviereplycommentdeleteReplyComment",
+                    type:"post",
+                    data:{
+                        "id":id
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('删除成功');
+                        }else{
+                            toastr.error("删除失败");
                         }
                         setTimeout("window.location.reload()",3000);
                     }
@@ -799,7 +945,11 @@
                     "movie_comment.movieId":movieId,
                     "movie_comment.content":content
                 },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show(); //在后台返回success之前显示loading图标
+                },
                 success:function (data) {
+                    $("#loading").hide();
                     if(data==1){
                         toastr.success('评论成功');
                     }else{

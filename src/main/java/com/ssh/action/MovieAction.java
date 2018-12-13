@@ -171,10 +171,4 @@ public class MovieAction extends ActionSupport{
 
 
 
-
-
-
-
-
-
 }
