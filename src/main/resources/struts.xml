@@ -79,4 +79,17 @@
 
     </package>
 
+    <package name="firm-table" extends="json-default"  namespace="/" >
+        <action name="getMovieTable" method="getAllMovies" class="MovieAction">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <action name="getAllUserToTable" class="ManagerUser" method="findAll">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+    </package>
+
 </struts>

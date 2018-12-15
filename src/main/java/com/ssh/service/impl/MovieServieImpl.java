@@ -72,11 +72,11 @@ public class MovieServieImpl implements MovieServie{
         // 封装当前页记录
         int begin= (currPage - 1)*pageSize;
         List<Movie> list = movieDao.selectMovie(begin, pageSize);
-        for (Movie movie:list){
-            movie.setImages(imageService.getMovieImages(movie.getId()));
-            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-           // movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
-        }
+//        for (Movie movie:list){
+//            movie.setImages(imageService.getMovieImages(movie.getId()));
+//            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
+//           // movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+//        }
 
         pageBean.setLists(list);
         return pageBean;

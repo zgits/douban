@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
+%>
+<c:set var="basepath" value="<%=basePath%>" />
 <%--弹窗的增删改，可以参考https://blog.csdn.net/luojun_/article/details/79086878--%>
 
 <!-- 新 Bootstrap 核心 CSS 文件 -->
@@ -28,103 +33,103 @@
 <div>
     <table style="width: 100%" class="table table-bordered" id="table_user">
         <caption class="text-center" style="color: #2f904d;font-size: 25px">电影信息表</caption>
-        <thead>
-        <tr>
-            <th>电影名</th>
-            <th>添加时间</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th>xxxx</th>
-            <th>2018-8-8</th>
-            <th>
-                <button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"
-                        data-target="#addUserModal">编辑</button>
-                <button class="btn btn-info">查看</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
-                <button class="btn btn-danger" onClick="delcfm2()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>2018-8-8</th>
-            <th>
-                <button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"
-                        data-target="#addUserModal">编辑</button>
-                <button class="btn btn-info">查看</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
-                <button class="btn btn-danger" onClick="delcfm2()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>2018-8-8</th>
-            <th>
-                <button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"
-                        data-target="#addUserModal">编辑</button>
-                <button class="btn btn-info">查看</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
-                <button class="btn btn-danger" onClick="delcfm2()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>2018-8-8</th>
-            <th>
-                <button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"
-                        data-target="#addUserModal">编辑</button>
-                <button class="btn btn-info">查看</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
-                <button class="btn btn-danger" onClick="delcfm2()">删除</button>
-            </th>
-        </tr>
-        <tr>
-            <th>xxxx</th>
-            <th>2018-8-8</th>
-            <th>
-                <button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"
-                        data-target="#addUserModal">编辑
-                </button>
-                <button class="btn btn-info">查看</button>
-                <!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->
-                <button class="btn btn-danger" onClick="delcfm2()">删除</button>
-            </th>
-        </tr>
-        </tbody>
+        <%--<thead>--%>
+        <%--<tr>--%>
+            <%--<th>电影名</th>--%>
+            <%--<th>添加时间</th>--%>
+            <%--<th>操作</th>--%>
+        <%--</tr>--%>
+        <%--</thead>--%>
+        <%--<tbody>--%>
+        <%--<tr>--%>
+            <%--<th>xxxx</th>--%>
+            <%--<th>2018-8-8</th>--%>
+            <%--<th>--%>
+                <%--<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"--%>
+                        <%--data-target="#addUserModal">编辑</button>--%>
+                <%--<button class="btn btn-info">查看</button>--%>
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
+                <%--<button class="btn btn-danger" onClick="delcfm2()">删除</button>--%>
+            <%--</th>--%>
+        <%--</tr>--%>
+        <%--<tr>--%>
+            <%--<th>xxxx</th>--%>
+            <%--<th>2018-8-8</th>--%>
+            <%--<th>--%>
+                <%--<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"--%>
+                        <%--data-target="#addUserModal">编辑</button>--%>
+                <%--<button class="btn btn-info">查看</button>--%>
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
+                <%--<button class="btn btn-danger" onClick="delcfm2()">删除</button>--%>
+            <%--</th>--%>
+        <%--</tr>--%>
+        <%--<tr>--%>
+            <%--<th>xxxx</th>--%>
+            <%--<th>2018-8-8</th>--%>
+            <%--<th>--%>
+                <%--<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"--%>
+                        <%--data-target="#addUserModal">编辑</button>--%>
+                <%--<button class="btn btn-info">查看</button>--%>
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
+                <%--<button class="btn btn-danger" onClick="delcfm2()">删除</button>--%>
+            <%--</th>--%>
+        <%--</tr>--%>
+        <%--<tr>--%>
+            <%--<th>xxxx</th>--%>
+            <%--<th>2018-8-8</th>--%>
+            <%--<th>--%>
+                <%--<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"--%>
+                        <%--data-target="#addUserModal">编辑</button>--%>
+                <%--<button class="btn btn-info">查看</button>--%>
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
+                <%--<button class="btn btn-danger" onClick="delcfm2()">删除</button>--%>
+            <%--</th>--%>
+        <%--</tr>--%>
+        <%--<tr>--%>
+            <%--<th>xxxx</th>--%>
+            <%--<th>2018-8-8</th>--%>
+            <%--<th>--%>
+                <%--<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1)"--%>
+                        <%--data-target="#addUserModal">编辑--%>
+                <%--</button>--%>
+                <%--<button class="btn btn-info">查看</button>--%>
+                <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
+                <%--<button class="btn btn-danger" onClick="delcfm2()">删除</button>--%>
+            <%--</th>--%>
+        <%--</tr>--%>
+        <%--</tbody>--%>
     </table>
 
-    <div class="">
-        <div class="inner clearfix">
-            <section id="main-content">
+    <%--<div class="">--%>
+        <%--<div class="inner clearfix">--%>
+            <%--<section id="main-content">--%>
 
-                <div class="text-center">
-                    <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                        <li>
-                            <!--异步传输页数，返回数据得到结果-->
-                            <form class="col-sm-3" role="form">
-                                <div class="input-group">
-                                    <input type="text" class="form-control">
-                                    <span onclick="test()" class="input-group-addon">go</span>
-                                </div>
-                            </form>
-                        </li>
-                        <li><a style="border: none">共6页</a></li>
-                    </ul>
-                </div>
+                <%--<div class="text-center">--%>
+                    <%--<ul class="pagination">--%>
+                        <%--<li><a href="#">&laquo;</a></li>--%>
+                        <%--<li class="active"><a href="#">1</a></li>--%>
+                        <%--<li><a href="#">2</a></li>--%>
+                        <%--<li><a href="#">3</a></li>--%>
+                        <%--<li><a href="#">4</a></li>--%>
+                        <%--<li><a href="#">5</a></li>--%>
+                        <%--<li><a href="#">&raquo;</a></li>--%>
+                        <%--<li>--%>
+                            <%--<!--异步传输页数，返回数据得到结果-->--%>
+                            <%--<form class="col-sm-3" role="form">--%>
+                                <%--<div class="input-group">--%>
+                                    <%--<input type="text" class="form-control">--%>
+                                    <%--<span onclick="test()" class="input-group-addon">go</span>--%>
+                                <%--</div>--%>
+                            <%--</form>--%>
+                        <%--</li>--%>
+                        <%--<li><a style="border: none">共6页</a></li>--%>
+                    <%--</ul>--%>
+                <%--</div>--%>
 
-            </section>
+            <%--</section>--%>
 
-        </div>
-    </div>
+        <%--</div>--%>
+    <%--</div>--%>
 
     <form method="post" action="" class="form-horizontal" role="form" id="form_data" onsubmit="return check_form()"
           style="margin: 20px;">
@@ -373,14 +378,15 @@
 
         $.ajax(
             {
-                url: "action/user_action.php",//后台请求接口地址
-                data: {"id": id, "act": "get"},
+                url: "movie_getMovieToUpdate",//后台请求接口地址
+                data: {"id": id},
                 type: "post",
                 beforeSend: function () {
                     // $("#tip").html("<span style='color:blue'>正在处理...</span>");
                     return true;
                 },
                 success: function (data) {
+                    alert(data);
                     if (data) {
 
                         // 解析json数据
@@ -476,3 +482,120 @@
         })
     });
 </script>
+
+<%--<div class="panel-body" style="padding-bottom:0px;">--%>
+    <%--<div class="panel panel-default">--%>
+        <%--<div class="panel-heading">查询条件</div>--%>
+        <%--<div class="panel-body">--%>
+            <%--<form id="formSearch" class="form-horizontal">--%>
+                <%--<div class="form-group" style="margin-top:15px">--%>
+                    <%--<label class="control-label col-sm-1" for="txt_search_departmentname">部门名称</label>--%>
+                    <%--<div class="col-sm-3">--%>
+                        <%--<input type="text" class="form-control" id="txt_search_departmentname">--%>
+                    <%--</div>--%>
+                    <%--<label class="control-label col-sm-1" for="txt_search_statu">状态</label>--%>
+                    <%--<div class="col-sm-3">--%>
+                        <%--<input type="text" class="form-control" id="txt_search_statu">--%>
+                    <%--</div>--%>
+                    <%--<div class="col-sm-4" style="text-align:left;">--%>
+                        <%--<button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+            <%--</form>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+
+    <%--<div id="toolbar" class="btn-group">--%>
+        <%--<button id="btn_add" type="button" class="btn btn-default">--%>
+            <%--<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增--%>
+        <%--</button>--%>
+        <%--<button id="btn_edit" type="button" class="btn btn-default">--%>
+            <%--<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改--%>
+        <%--</button>--%>
+        <%--<button id="btn_delete" type="button" class="btn btn-default">--%>
+            <%--<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除--%>
+        <%--</button>--%>
+    <%--</div>--%>
+
+
+<div id="reportTableDiv" >
+    <table id="reportTable"></table>
+</div>
+<script type="text/javascript">
+
+    $(function () {
+        $('#reportTable').bootstrapTable({
+            url : 'getMovieTable.action', // 请求后台的URL（*）
+            pagination: true,
+            dataType: "json",
+            pagination: true, //前端处理分页
+            singleSelect: false,//是否只能单选
+            search: true, //显示搜索框，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            toolbar: '#toolbar', //工具按钮用哪个容器
+            striped: true, //是否显示行间隔色
+            cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pageNumber: 1, //初始化加载第10页，默认第一页
+            pageSize: 3, //每页的记录行数（*）
+            pageList: [10, 20, 50, 100], //可供选择的每页的行数（*）
+            strictSearch: true,//设置为 true启用 全匹配搜索，false为模糊搜索
+            showColumns: true, //显示内容列下拉框
+            showRefresh: true, //显示刷新按钮
+            minimumCountColumns: 2, //当列数小于此值时，将隐藏内容列下拉框
+            clickToSelect: true, //设置true， 将在点击某行时，自动勾选rediobox 和 checkbox
+            height: 500, //表格高度，如果没有设置height属性，表格自动根据记录条数决定表格高度#}
+            uniqueId: "id", //每一行的唯一标识，一般为主键列
+            showToggle: true, //是否显示详细视图和列表视图的切换按钮
+            cardView: false, //是否显示详细视图
+            //detailView: true, //是否显示父子表，设置为 true 可以显示详细页面模式,在每行最前边显示+号#}
+            sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+            columns: [
+                {
+                    checkbox:true
+                },
+                  //定义表头,这个表头必须定义,下边field后边跟的字段名字必须与后端传递的字段名字相同.如:id、name、price
+            //跟后端的字段名id  name price是完全一样的
+
+
+         {
+            field: 'moviename',
+                title: '电影名',
+                align: 'center'
+        }, {
+            field: 'release_time',
+                title: '上映时间',
+                align: 'center',
+                    formatter: function (value, row, index) {
+                        return changeDateFormat(value)
+                    }
+
+        }, {
+            title: '操作',
+                field: 'id',
+                align: 'center',
+                formatter: function (value, row, index) {
+                var e = '<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(1) "data-target="#addUserModal">编辑 </button> ';  //row.id为每行的id
+                var d = '<button class="btn btn-info">查看</button>';
+                var c='<button class="btn btn-danger" onClick="delcfm2()">删除</button>';
+                return e + d+c;
+            }
+        }
+        ],
+        });
+    });
+    //转换日期格式(时间戳转换为datetime格式)
+    function changeDateFormat(cellval) {
+        var dateVal = cellval + "";
+        if (cellval != null) {
+            var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+            var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+            var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+            var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+            return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
+        }
+    }
+</script>
+
