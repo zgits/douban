@@ -201,4 +201,15 @@ public class Movie {
     public void setTrailers(List<Trailer> Trailers) {
         this.Trailers = Trailers;
     }
+
+    public Movie(){
+
+    }
+    public Movie(Integer id,String moviename,float filmscore,Date release_time){
+        super();
+        this.id=id;
+        this.moviename=moviename;
+        this.filmscore=filmscore;
+        this.release_time=release_time;
+    }
 }

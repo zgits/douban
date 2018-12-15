@@ -76,5 +76,9 @@ public class MovieServieImplTest extends BaseTest{
     public void compareDate() throws Exception{
 
     }
+    @Test
+    public void selectMoving() throws Exception{
+        System.out.println(movieServie.selectMoving());
+    }
 
 }

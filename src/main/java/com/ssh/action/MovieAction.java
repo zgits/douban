@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/29.
@@ -166,6 +167,12 @@ public class MovieAction extends ActionSupport{
         movieServie.selectMovieByName(movieName,currPage);
     }
 
+    //主页面显示正在热映影片
+    public String getMoving(){
+        List<Movie> movies=movieServie.selectMoving();
+        ActionContext.getContext().put("movies",movies);
+        return "getMoving";
+    }
     /*********end************/
 
 

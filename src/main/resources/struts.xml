@@ -44,6 +44,9 @@
 
         </action>
 
+        <action name="getMoving" class="MovieAction" method="getMoving">
+            <result name="getMoving">/main.jsp</result>
+        </action>
 
         <!--文件上传-->
         <action name="upload" class="MovieAction" method="saveFile">

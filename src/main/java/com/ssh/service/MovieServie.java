@@ -62,5 +62,9 @@ public interface MovieServie {
      */
     public List<Movie> selectAllMovies();
 
-
+    /**
+     * 得到正在热映的电影
+     * @return
+     */
+    public List<Movie> selectMoving();
 }

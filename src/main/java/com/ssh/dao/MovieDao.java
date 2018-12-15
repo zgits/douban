@@ -75,4 +75,8 @@ public interface MovieDao {
      */
     public List<Movie> selectAllMovie();
 
+    /**
+     * 得到正在上映的电影信息
+     */
+    public List<Movie> selectMoving();
 }

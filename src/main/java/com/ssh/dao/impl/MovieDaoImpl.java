@@ -93,18 +93,24 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     }
 
     @Override
-    public Integer getMovieCountByName(String moviename) {
-        String hql="select count(*) from Movie where moviename like %"+moviename+"%";
-        List<Long> list= (List<Long>) this.getHibernateTemplate().find(hql);
-        if (list.size()>0){
-            return list.get(0).intValue();
-        }
-        return 0;
-    }
+   public Integer getMovieCountByName(String moviename) {
+//        String hql="select count(*) from Movie where moviename like %"+moviename+"%";
+//        List<Long> list= (List<Long>) this.getHibernateTemplate().find(hql);
+//        if (list.size()>0){
+//            return list.get(0).intValue();
+//        }
+      return 0;
+   }
 
     @Override
     public List<Movie> selectAllMovie() {
         Query query=this.getSessionFactory().getCurrentSession().createQuery("from Movie");
+        return query.list();
+    }
+
+    public List<Movie> selectMoving() {
+        String hql="select new Movie(id,moviename,filmscore,release_time) from Movie";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
         return query.list();
     }
 }

@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -7,6 +8,7 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 %>
+
 <c:set var="basepath" value="<%=basePath%>" />
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +52,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG"
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
                                                           style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
@@ -91,6 +93,7 @@
 <div class="container">
 
 </div>
+
 <!--各个标签的简单情况-->
 <div class="container">
     <div class="row">
@@ -115,22 +118,23 @@
             </ul>
             <ul class="list-inline">
                 <!--设置详情介绍居中未设置，-->
+                <c:forEach items="${movies}" var="movie" begin="0" end="7">
                 <li>
                     <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
                     <div class="caption">
-                        <h6>毒液：致命守护.</h6>
+                        <h6>${movie.moviename}</h6>
                         <div class="text-center">
-                            <div id="star_con" class="star-vote">
-                                <span id="add_star" class="add-star"></span>
-                                <span id="del_star" class="del-star"></span>
+                            <div id="star_con_movie${movie.id}" class="star-vote">
+                                <span id="add_star_movie${movie.id}" class="add-star"></span>
+                                <span id="del_star_movie${movie.id}" class="del-star"></span>
                             </div>
                             <script>
-                                window.onload = showStar(7.8);
+                                window.onload = showStar(${movie.filmscore});
 
                                 //n表示后台获取的星数
                                 function showStar(n) {
-                                    var con_wid = document.getElementById("star_con").offsetWidth;
-                                    var del_star = document.getElementById("del_star");
+                                    var con_wid = document.getElementById("star_con_movie${movie.id}").offsetWidth;
+                                    var del_star = document.getElementById("del_star_movie${movie.id}");
                                     console.log(con_wid);
 
                                     //透明星星移动的像素
@@ -140,247 +144,50 @@
                                     del_star.style.left = del_move + "px";
                                 }
                             </script>
-                            &nbsp;7.6
+                            &nbsp;${movie.filmscore}
                         </div>
                         <p>
                             <%--默认的id为1，后期更改--%>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovie?id=${movie.id}" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
                     </div>
                 </li>
-                <li>
-                    <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
-                    <div class="caption">
-                        <h6>毒液：致命守护.</h6>
-                        <div class="text-center">
-                            <div id="star_con_movieid4" class="star-vote">
-                                <span id="add_star_movieid4" class="add-star"></span>
-                                <span id="del_star_movieid4" class="del-star"></span>
-                            </div>
-                            <script>
-                                window.onload = showStar_movieid4(7.8);
+                </c:forEach>
+                <%--<li>--%>
+                    <%--<img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">--%>
+                    <%--<div class="caption">--%>
+                        <%--<h6>柯南：零的执行者</h6>--%>
+                        <%--<div class="text-center">--%>
+                            <%--<div id="star_con_movieid2" class="star-vote">--%>
+                                <%--<span id="add_star_movieid2" class="add-star"></span>--%>
+                                <%--<span id="del_star_movieid2" class="del-star"></span>--%>
+                            <%--</div>--%>
+                            <%--<script>--%>
+                                <%--window.onload = showStar_movieid2(7.8);--%>
 
-                                //n表示后台获取的星数
-                                function showStar_movieid4(n) {
-                                    var con_wid = document.getElementById("star_con_movieid4").offsetWidth;
-                                    var del_star = document.getElementById("del_star_movieid4");
-                                    console.log(con_wid);
+                                <%--//n表示后台获取的星数--%>
+                                <%--function showStar_movieid2(n) {--%>
+                                    <%--var con_wid = document.getElementById("star_con_movieid2").offsetWidth;--%>
+                                    <%--var del_star = document.getElementById("del_star_movieid2");--%>
+                                    <%--console.log(con_wid);--%>
 
-                                    //透明星星移动的像素
-                                    var del_move = (n * con_wid) / 10;
+                                    <%--//透明星星移动的像素--%>
+                                    <%--var del_move = (n * con_wid) / 10;--%>
 
-                                    del_star.style.backgroundPosition = -del_move + "px 0px";
-                                    del_star.style.left = del_move + "px";
-                                }
-                            </script>&nbsp;7.6
-                        </div>
-                        <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
-                                详情介绍
-                            </a>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
-                    <div class="caption">
-                        <h6>毒液：致命守护.</h6>
-                        <div class="text-center">
-                            <div id="star_con_movieid5" class="star-vote">
-                                <span id="add_star_movieid5" class="add-star"></span>
-                                <span id="del_star_movieid5" class="del-star"></span>
-                            </div>
-                            <script>
-                                window.onload = showStar_movieid5(7.8);
-
-                                //n表示后台获取的星数
-                                function showStar_movieid5(n) {
-                                    var con_wid = document.getElementById("star_con_movieid5").offsetWidth;
-                                    var del_star = document.getElementById("del_star_movieid5");
-                                    console.log(con_wid);
-
-                                    //透明星星移动的像素
-                                    var del_move = (n * con_wid) / 10;
-
-                                    del_star.style.backgroundPosition = -del_move + "px 0px";
-                                    del_star.style.left = del_move + "px";
-                                }
-                            </script>&nbsp;7.6
-                        </div>
-                        <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
-                                详情介绍
-                            </a>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
-                    <div class="caption">
-                        <h6>毒液：致命守护.</h6>
-                        <div class="text-center">
-                            <div id="star_con_movieid6" class="star-vote">
-                                <span id="add_star_movieid6" class="add-star"></span>
-                                <span id="del_star_movieid6" class="del-star"></span>
-                            </div>
-                            <script>
-                                window.onload = showStar_movieid6(7.8);
-
-                                //n表示后台获取的星数
-                                function showStar_movieid6(n) {
-                                    var con_wid = document.getElementById("star_con_movieid6").offsetWidth;
-                                    var del_star = document.getElementById("del_star_movieid6");
-                                    console.log(con_wid);
-
-                                    //透明星星移动的像素
-                                    var del_move = (n * con_wid) / 10;
-
-                                    del_star.style.backgroundPosition = -del_move + "px 0px";
-                                    del_star.style.left = del_move + "px";
-                                }
-                            </script>&nbsp;7.6
-                        </div>
-                        <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
-                                详情介绍
-                            </a>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">
-                    <div class="caption">
-                        <h6>柯南：零的执行者</h6>
-                        <div class="text-center">
-                            <div id="star_con_movieid8" class="star-vote">
-                                <span id="add_star_movieid8" class="add-star"></span>
-                                <span id="del_star_movieid8" class="del-star"></span>
-                            </div>
-                            <script>
-                                window.onload = showStar_movieid8(7.8);
-
-                                //n表示后台获取的星数
-                                function showStar_movieid8(n) {
-                                    var con_wid = document.getElementById("star_con_movieid8").offsetWidth;
-                                    var del_star = document.getElementById("del_star_movieid8");
-                                    console.log(con_wid);
-
-                                    //透明星星移动的像素
-                                    var del_move = (n * con_wid) / 10;
-
-                                    del_star.style.backgroundPosition = -del_move + "px 0px";
-                                    del_star.style.left = del_move + "px";
-                                }
-                            </script>&nbsp;7.6
-                        </div>
-                        <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
-                                详情介绍
-                            </a>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">
-                    <div class="caption">
-                        <h6>柯南：零的执行者</h6>
-                        <div class="text-center">
-                            <div id="star_con_movieid3" class="star-vote">
-                                <span id="add_star_movieid3" class="add-star"></span>
-                                <span id="del_star_movieid3" class="del-star"></span>
-                            </div>
-                            <script>
-                                window.onload = showStar_movieid3(7.8);
-
-                                //n表示后台获取的星数
-                                function showStar_movieid3(n) {
-                                    var con_wid = document.getElementById("star_con_movieid3").offsetWidth;
-                                    var del_star = document.getElementById("del_star_movieid3");
-                                    console.log(con_wid);
-
-                                    //透明星星移动的像素
-                                    var del_move = (n * con_wid) / 10;
-
-                                    del_star.style.backgroundPosition = -del_move + "px 0px";
-                                    del_star.style.left = del_move + "px";
-                                }
-                            </script>&nbsp;7.6
-                        </div>
-                        <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
-                                详情介绍
-                            </a>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">
-                    <div class="caption">
-                        <h6>柯南：零的执行者</h6>
-                        <h6 class="text-center">
-                            <div id="star_con_movieid1" class="star-vote">
-                                <span id="add_star_movieid1" class="add-star"></span>
-                                <span id="del_star_movieid1" class="del-star"></span>
-                            </div>
-                            <script>
-                                window.onload = showStar_movieid1(7.8);
-
-                                //n表示后台获取的星数
-                                function showStar_movieid1(n) {
-                                    var con_wid = document.getElementById("star_con_movieid1").offsetWidth;
-                                    var del_star = document.getElementById("del_star_movieid1");
-                                    console.log(con_wid);
-
-                                    //透明星星移动的像素
-                                    var del_move = (n * con_wid) / 10;
-
-                                    del_star.style.backgroundPosition = -del_move + "px 0px";
-                                    del_star.style.left = del_move + "px";
-                                }
-                            </script>&nbsp;7.6
-                        </h6>
-                        <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
-                                详情介绍
-                            </a>
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">
-                    <div class="caption">
-                        <h6>柯南：零的执行者</h6>
-                        <div class="text-center">
-                            <div id="star_con_movieid2" class="star-vote">
-                                <span id="add_star_movieid2" class="add-star"></span>
-                                <span id="del_star_movieid2" class="del-star"></span>
-                            </div>
-                            <script>
-                                window.onload = showStar_movieid2(7.8);
-
-                                //n表示后台获取的星数
-                                function showStar_movieid2(n) {
-                                    var con_wid = document.getElementById("star_con_movieid2").offsetWidth;
-                                    var del_star = document.getElementById("del_star_movieid2");
-                                    console.log(con_wid);
-
-                                    //透明星星移动的像素
-                                    var del_move = (n * con_wid) / 10;
-
-                                    del_star.style.backgroundPosition = -del_move + "px 0px";
-                                    del_star.style.left = del_move + "px";
-                                }
-                            </script>&nbsp;7.6
-                        </div>
-                        <p>
-                            <a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">
-                                详情介绍
-                            </a>
-                        </p>
-                    </div>
-                </li>
+                                    <%--del_star.style.backgroundPosition = -del_move + "px 0px";--%>
+                                    <%--del_star.style.left = del_move + "px";--%>
+                                <%--}--%>
+                            <%--</script>&nbsp;7.6--%>
+                        <%--</div>--%>
+                        <%--<p>--%>
+                            <%--<a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">--%>
+                                <%--详情介绍--%>
+                            <%--</a>--%>
+                        <%--</p>--%>
+                    <%--</div>--%>
+                <%--</li>--%>
             </ul>
 
 

@@ -131,11 +131,20 @@ public class MovieServieImpl implements MovieServie{
     @Override
     public List<Movie> selectAllMovies() {
         List<Movie> movies=movieDao.selectAllMovie();
-        for (Movie movie:movies){
-            movie.setImages(imageService.getMovieImages(movie.getId()));
-            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-            movie.setMovieComments(movie_commentService.findComment(movie.getId(),1).getLists());
+//        for (Movie movie:movies){
+//            movie.setImages(imageService.getMovieImages(movie.getId()));
+//            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
+//            movie.setMovieComments(movie_commentService.findComment(movie.getId(),1).getLists());
 
+        //}
+        return movies;
+    }
+
+    @Override
+    public List<Movie> selectMoving() {
+        List<Movie> movies=movieDao.selectMoving();
+        for(Movie movie:movies){
+            movie.setImages(imageService.getMovieImages(movie.getId()));
         }
         return movies;
     }

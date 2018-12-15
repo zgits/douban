@@ -158,7 +158,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
             <form class="navbar-form navbar-left" role="search">
@@ -203,13 +203,13 @@
             <div>
                 <ul class="list-group">
                     <li class="list-group-item" style="border: none">
-                        导演: 拉斯·霍尔斯道姆 / 乔·庄斯顿
+                        导演: ${oneMovie.director}
                     </li>
+                    <%--<li class="list-group-item" style="border: none">--%>
+                        <%--编剧: 阿什利·鲍威尔 / 汤姆·麦卡锡 / E·T·A·霍夫曼--%>
+                    <%--</li>--%>
                     <li class="list-group-item" style="border: none">
-                        编剧: 阿什利·鲍威尔 / 汤姆·麦卡锡 / E·T·A·霍夫曼
-                    </li>
-                    <li class="list-group-item" style="border: none">
-                        主演: 麦肯吉·弗依 / 摩根·弗里曼 / 凯拉·奈特莉 / 马修·麦克费登 / 海伦·米伦
+                        主演: ${oneMovie.actor}
                         <a data-toggle="collapse"
                            href="#collapse">更多</a>
                         <div id="collapse" class="panel-collapse collapse">
@@ -221,16 +221,16 @@
                         类型: 奇幻 / 冒险
                     </li>
                     <li class="list-group-item" style="border: none">
-                        制片国家/地区: 美国
+                        制片国家/地区: ${oneMovie.region}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        语言: 英语
+                        语言: ${oneMovie.language}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        上映日期: 2018-11-02(中国大陆/美国)
+                        上映日期: ${oneMovie.release_time}(${oneMovie.release_region}/美国)
                     </li>
                     <li class="list-group-item" style="border: none">
-                        片长: 99分钟
+                        片长:${oneMovie.length}分钟
                     </li>
                 </ul>
             </div>
