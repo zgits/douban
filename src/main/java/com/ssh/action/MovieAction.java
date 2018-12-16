@@ -144,8 +144,29 @@ public class MovieAction extends ActionSupport{
 
     /******修改电影信息*******/
     //在修改电影信息时，先获取原来的电影信息，转成特定格式
-    public void getMovieToUpdate(){
-        movieServie.selctMovieById(id);
+    public void getMovieToUpdate() throws IOException {
+
+        String movie ="";
+        try{
+            movie = JSON.toJSONString(movieServie.selctMovieById(id));//使用fastjson将数据转换成json格式
+
+        }catch (Exception e){
+            movie =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        System.out.println(movie);
+
+        writer.write(movie);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
     }
 
     public void updateMovie(){
@@ -158,8 +179,29 @@ public class MovieAction extends ActionSupport{
     /********删除电影信息********/
 
 
-    public void deleteMovie(){
-        movieServie.deleteMovie(id);
+    public void deleteMovie() throws IOException {
+        String flag ="";
+        try{
+            if(movieServie.deleteMovie(id)){
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
     }
     /********end********/
 
