@@ -19,7 +19,7 @@ a{text-decoration:none;}
 .nav .nav-icon{font-size: 20px;position: absolute;margin-left:-1px;}
 /* 此处修改导航图标 可自定义iconfont 替换*/
 .icon_1::after{content: "\e62b";}
-.icon_2::after{content: "\e669";}
+.icon_2::after{content: "\e61a";}
 .icon_3::after{content: "\e61d";}
 /*---------------------*/
 .nav-more{float:right;margin-right: 20px;font-size: 12px;transition: transform .3s;}

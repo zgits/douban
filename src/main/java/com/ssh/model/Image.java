@@ -23,13 +23,25 @@ public class Image {
     @Column(name="path",columnDefinition="varchar(255) COMMENT '保存图片的地址'")
     private String path;//保存图片的地址
 
+    @Column(name="imagename",columnDefinition="varchar(255) COMMENT '图片的名字'")
+    private String imageName;//图片的名字
+
     @Override
     public String toString() {
         return "Image{" +
                 "id=" + id +
                 ", movieId=" + movieId +
                 ", path='" + path + '\'' +
+                ", imageName='" + imageName + '\'' +
                 '}';
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public Integer getId() {
@@ -44,7 +56,7 @@ public class Image {
         return movieId;
     }
 
-    public void setMovieId(int movieId) {
+    public void setMovieId(Integer movieId) {
         this.movieId = movieId;
     }
 

@@ -57,12 +57,18 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         }
     }
 
+    /**
+     * int begin, int pageSize
+     * @return
+     */
     @Override
-    public List<Movie> selectMovie(int begin, int pageSize) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Movie.class);
-        // 查询分页数据
-        List<Movie> list = (List<Movie>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
-        return list;
+    public List<Movie> selectMovie() {
+//        DetachedCriteria criteria = DetachedCriteria.forClass(Movie.class);
+//        // 查询分页数据
+//        List<Movie> list = (List<Movie>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
+        String hql="from Movie";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        return query.list();
     }
 
     @Override
@@ -78,7 +84,11 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
 
     @Override
     public Movie selectMovieById(Integer id) {
-        return (Movie)this.getSessionFactory().getCurrentSession().createQuery("from Movie where id=?").setParameter(0,id).uniqueResult();
+        System.out.println("dao查询");
+        String hql="from Movie as movie where movie.id=:id";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setInteger("id",id);
+        return (Movie)query.list().get(0);
 
     }
 
@@ -105,6 +115,24 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     @Override
     public List<Movie> selectAllMovie() {
         Query query=this.getSessionFactory().getCurrentSession().createQuery("from Movie");
+        return query.list();
+    }
+
+    @Override
+    public String getMovieNameById(Integer movieId) {
+
+        return (String)this.getSessionFactory().getCurrentSession().createQuery(" select moviename from Movie where id=?").setParameter(0,movieId).uniqueResult();
+
+    }
+
+    @Override
+    public List<Object[]> getAllMovieName() {
+        String hql = " select id,moviename from Movie";
+
+        Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
+
+        //默认查询出来的list里存放的是一个Object数组
+
         return query.list();
     }
 }

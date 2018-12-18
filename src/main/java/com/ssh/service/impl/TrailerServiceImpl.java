@@ -72,4 +72,9 @@ public class TrailerServiceImpl implements TrailerService{
         trailer.setTrailerComments(trailer_commentService.findComment(id,1).getLists());
         return trailer;
     }
+
+    @Override
+    public List<Trailer> getAllTrailer() {
+        return trailerDao.getAllTrailers();
+    }
 }

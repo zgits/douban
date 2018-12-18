@@ -67,7 +67,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG"
+            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="${basepath}/image/logo.PNG"
                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
@@ -91,7 +91,7 @@
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg"
+                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="${basepath}/image/test.jpg"
                                                                                         class="img-circle img-responsive"
                                                                                         style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
@@ -119,7 +119,7 @@
 
 <div id="loading" style="display: block">
     <div class="loading show">
-        <img src='/image/loading1.gif' />
+        <img src='${basepath}/image/loading1.gif' />
     </div>
 </div>
 
@@ -132,7 +132,7 @@
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间-->
                     <div class="row">
-                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
                         <span>${trailercomment.username}</span>
                         &nbsp;&nbsp;
                         <fmt:formatDate value="${trailercomment.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
@@ -179,7 +179,7 @@
                                 <ul class="list-group">
                                     <c:forEach items="${trailercomment.trailerReplycomments}" var="reply" varStatus="status">
                                         <li class="list-group-item">
-                                            <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span>${reply.username}</span>
                                             &nbsp;&nbsp;<fmt:formatDate value="${reply.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
 

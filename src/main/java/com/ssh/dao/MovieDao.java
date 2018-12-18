@@ -34,9 +34,10 @@ public interface MovieDao {
 
     /**
      * 查询电影信息
+     * int begin,int pageSize
      * @return
      */
-    public List<Movie> selectMovie(int begin,int pageSize);
+    public List<Movie> selectMovie();
 
     /**
      * 获得电影的数量
@@ -74,5 +75,20 @@ public interface MovieDao {
      * @return
      */
     public List<Movie> selectAllMovie();
+
+
+    /**
+     * 根据id获取电影名
+     * @param movieId
+     * @return
+     */
+    public String getMovieNameById(Integer movieId);
+
+
+    /**
+     * 得到
+     * @return
+     */
+    public List<Object[]> getAllMovieName();
 
 }

@@ -74,7 +74,7 @@
 
                 <!--<prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>-->
                 <prop key="hibernate.max_fetch_depth">3</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://47.107.248.31:3306/ssh</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://127.0.0.1:3306/ssh</prop>
                 <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
             </props>
 

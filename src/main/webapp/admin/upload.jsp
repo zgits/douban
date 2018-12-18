@@ -41,7 +41,7 @@
         </div>
     </form>
 </div>
-</body>
+
 <script>
     function test() {
         var message=$('#selectname option:selected').text();//选中的文本

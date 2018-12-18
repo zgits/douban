@@ -54,4 +54,11 @@ public interface TrailerDao {
      * @return
      */
     public Trailer getMovieTrailer(Integer id);
+
+
+    /**
+     * 后台管理媒体信息时所用，得到全部的预告片
+     * @return
+     */
+    public List<Trailer> getAllTrailers();
 }

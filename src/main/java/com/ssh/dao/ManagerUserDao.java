@@ -21,9 +21,11 @@ public interface ManagerUserDao {
 
     /**
      * 得到所有的用户
+     * 2018-12-18,取消了后台的分页
+     * int begin,int pagesize，原参数
      * @return
      */
-    public List<User> getAllUser(int begin,int pagesize);
+    public List<User> getAllUser();
 
     /**
      * 根据用户id得到用户名，用来做消息提醒用

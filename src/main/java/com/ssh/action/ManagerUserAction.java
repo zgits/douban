@@ -47,20 +47,8 @@ public class ManagerUserAction extends ActionSupport {
      */
     public String findAll(){
 
-//        ActionContext.getContext().put("pageBean",pageBean);
-//        return "findAll";
-
-        int limit=5;
-        //获取已经显示的个数，然后除以一页的个数就是页数
-        //String offset1=request.getParameter("offset");
-        int offset=1;
-        //初始化最大的读取个数
-        int max=0;
         System.out.println("已经进来了...");
-        System.out.println("页数为"+offset);
-        System.out.println("页面大小为"+limit);
-        //获取数据库中所有的数据
-        //List <SoftInfo>allsoft=this.firmAdminService.firmAdminSoft(id);
+
         List<User> users=new ArrayList<>();
         try{
             PageBean<User> pageBean = managerUserService.getUsers(currPage);
@@ -68,30 +56,23 @@ public class ManagerUserAction extends ActionSupport {
         }catch (Exception e){
 
         }
-//      session.setAttribute("allsoft", allsoft);
         if(users!=null){
             System.out.println("成功取得"+users.size()+"条数据...");
         }else{
             System.out.println("查询失败...");
         }
-//      System.out.println("softInfo"+allsoft);
         JSONArray arr=new JSONArray();
-        //判定最大的读取个数
-        if(offset*limit+limit<=users.size()){
-            max=offset*limit+limit;
-        }else{
-            max=users.size();
-        }
+
         //读取数据
-        for(int i=0;i<max;i++){
+        for(User user:users){
             JSONObject ob=new JSONObject();
             //将单独的数据装进json数据
-            ob.put("id", users.get(i).getId());
-            ob.put("username", users.get(i).getUsername());
-            ob.put("email", users.get(i).getEmail());
-            ob.put("password",users.get(i).getPassword());
-            ob.put("endtime",users.get(i).getEndTime());
-            ob.put("last_login",users.get(i).getLast_login());
+            ob.put("id", user.getId());
+            ob.put("username", user.getUsername());
+            ob.put("email", user.getEmail());
+            ob.put("password",user.getPassword());
+            ob.put("endtime",user.getEndTime());
+            ob.put("last_login",user.getLast_login());
             //装进数组
             arr.add(ob);
         }

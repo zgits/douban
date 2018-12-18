@@ -11,9 +11,17 @@
 
     <constant name="struts.multipart.saveDir" value="d:/datetemp"/>
 
+
+
+
     <package name="user" namespace="/" extends="struts-default">
 
+        <!--<interceptors>-->
+            <!--<interceptor name="Interceptor" class="com.ssh.action.interceptor.Interceptor"/>-->
+        <!--</interceptors>-->
+
         <action name="manageruser*" class="ManagerUser" method="{1}">
+
             <result name="findAll">/admin/user.jsp</result>
         </action>
 
@@ -37,12 +45,45 @@
         
         <action name="movie_*" class="MovieAction" method="{1}">
 
+
+
+            <!--&lt;!&ndash; 使用自定义拦截器 &ndash;&gt;-->
+            <!--<interceptor-ref name="Interceptor">-->
+                <!--&lt;!&ndash; 配置action中某些方法不进行拦截-->
+                    <!--name属性值：excludeMethods-->
+                    <!--值：action不拦截的方法名称-->
+                    <!--<param name="excludeMethods">login</param>-->
+                 <!--&ndash;&gt;-->
+                <!--<param name="includeMethods">-->
+                    <!--addMovie,updateMovie,deleteMovie-->
+                <!--</param>-->
+
+            <!--</interceptor-ref>-->
+
+            <!--<result name="login" type="redirect">/login.html</result>-->
+
             <result name="moviedetail">/moviedetails.jsp</result>
+
+            <interceptor-ref name="defaultStack"></interceptor-ref>
         </action>
 
         <action name="moviecomment_*" class="MovieComment" method="{1}">
 
+            <!--&lt;!&ndash; 使用自定义拦截器 &ndash;&gt;-->
+            <!--<interceptor-ref name="Interceptor">-->
+                <!--&lt;!&ndash; 配置action中某些方法不进行拦截-->
+                    <!--name属性值：excludeMethods-->
+                    <!--值：action不拦截的方法名称-->
+                    <!--<param name="excludeMethods">login</param>-->
+                 <!--&ndash;&gt;-->
+
+            <!--</interceptor-ref>-->
+
+            <!--<interceptor-ref name="defaultStack"></interceptor-ref>-->
+
         </action>
+
+
 
 
         <!--文件上传-->
@@ -86,6 +127,16 @@
             </result>
         </action>
         <action name="getAllUserToTable" class="ManagerUser" method="findAll">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <action name="getAllTrailerTable" class="Trailer" method="getAllTrailers">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <action name="getAllMovieName" class="MovieAction" method="getAllMovieName">
             <result name="success" type="json">
                 <param name="root">returndata</param>
             </result>

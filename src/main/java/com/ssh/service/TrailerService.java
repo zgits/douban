@@ -53,4 +53,11 @@ public interface TrailerService {
      * @return
      */
     public Trailer getMovieTrailer(Integer id);
+
+
+    /**
+     * 得到所有的预告片，用于后台管理预告片所用
+     * @return
+     */
+    public List<Trailer> getAllTrailer();
 }

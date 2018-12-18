@@ -12,7 +12,9 @@ import com.ssh.service.TrailerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
@@ -71,7 +73,7 @@ public class MovieServieImpl implements MovieServie{
         pageBean.setTotalPage(totalPage);
         // 封装当前页记录
         int begin= (currPage - 1)*pageSize;
-        List<Movie> list = movieDao.selectMovie(begin, pageSize);
+        List<Movie> list = movieDao.selectMovie();
 //        for (Movie movie:list){
 //            movie.setImages(imageService.getMovieImages(movie.getId()));
 //            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
@@ -138,5 +140,29 @@ public class MovieServieImpl implements MovieServie{
 
         }
         return movies;
+    }
+
+    @Override
+    public Movie ToUpdateselctMovieById(Integer id) {
+
+        System.out.println("service查询");
+        return  movieDao.selectMovieById(id);
+    }
+
+    @Override
+    public String getMovieNameById(Integer movieId) {
+        return movieDao.getMovieNameById(movieId);
+    }
+
+    @Override
+    public Map<Integer, String> getAllMovieName() {
+        Map<Integer, String> id_name=new HashMap<>();
+        List<Object[]> list=movieDao.getAllMovieName();
+        for (Object[] object:list){
+            for(int i=0;i<object.length;i+=2){
+                id_name.put((Integer) object[i],(String)object[i+1]);
+            }
+        }
+        return id_name;
     }
 }
