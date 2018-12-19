@@ -44,4 +44,6 @@ public interface ImageDao {
     /**
      * end针对后台管理电影时对预告片的方法
      */
+
+    public List<Image> getAllImage();
 }

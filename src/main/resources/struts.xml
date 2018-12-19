@@ -84,10 +84,15 @@
         </action>
 
 
+        <action name="image_*" class="Image" method="{1}">
+
+        </action>
+
+
 
 
         <!--文件上传-->
-        <action name="upload" class="MovieAction" method="saveFile">
+        <action name="upload" class="Trailer" method="saveFile1">
             <!--<interceptor-ref name="defaultStack">-->
             <!--&lt;!&ndash;-->
                 <!--修改允许上传文件的大小(默认值是2M),-->
@@ -110,13 +115,23 @@
 
             <!--</interceptor-ref>-->
 
-            <result name="success">/success.jsp</result>
+            <result name="success"></result>
 
             <!-- 配置错误视图 -->
-            <result name="input">/main.html</result>
+            <result name="input"></result>
 
         </action>
         <!--文件上传end-->
+
+
+        <!--image图片上传-->
+
+        <action name="imageupload" class="Image" method="saveFile">
+            <result name="success"></result>
+
+            <!-- 配置错误视图 -->
+            <result name="input"></result>
+        </action>
 
     </package>
 
@@ -137,6 +152,12 @@
             </result>
         </action>
         <action name="getAllMovieName" class="MovieAction" method="getAllMovieName">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getAllImageTable" class="Image" method="gerAllImage">
             <result name="success" type="json">
                 <param name="root">returndata</param>
             </result>

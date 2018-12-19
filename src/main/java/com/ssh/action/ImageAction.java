@@ -3,82 +3,56 @@ package com.ssh.action;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.ssh.model.PageBean;
-import com.ssh.model.Trailer;
+import com.ssh.model.Image;
+import com.ssh.service.ImageService;
 import com.ssh.service.MovieServie;
-import com.ssh.service.TrailerService;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Created by 幻夜~星辰 on 2018/12/5.
+ * Created by 幻夜~星辰 on 2018/12/19.
  */
-@Controller("Trailer")
-public class TrailerAction extends ActionSupport {
-
+@Controller("Image")
+public class ImageAction extends ActionSupport{
 
     @Autowired
-    private TrailerService trailerService;
+    private ImageService imageService;
 
     @Autowired
     private MovieServie movieServie;
 
-    /**
-     * 根据id获取预告片信息，包括评论，我（zjf）的主要是评论
-     ********/
-
-    private Integer id;
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTrailer() {
-
-        Trailer trailer = trailerService.getMovieTrailer(id);
-        ActionContext.getContext().put("OneTrailer", trailer);
-        return "success";
-    }
-    /************根据id获取预告片及评论end**************/
-
-
-    /*************后台得到所有预告片start**************/
-    public String getAllTrailers() throws IOException {
-
-
+    public String gerAllImage(){
         //获取数据库中所有的数据
-        List<Trailer> trailers = new ArrayList<>();
+        List<Image> images = new ArrayList<>();
         try {
-            trailers = trailerService.getAllTrailer();
+            images = imageService.getAllImage();
         } catch (Exception e) {
 
         }
-        if (trailers != null) {
-            System.out.println("成功取得" + trailers.size() + "条数据...");
+        if (images != null) {
+            System.out.println("成功取得" + images.size() + "条数据...");
         } else {
             System.out.println("查询失败...");
         }
         JSONArray arr = new JSONArray();
         //判定最大的读取个数
         //读取数据
-        for (Trailer trailer : trailers) {
+        for (Image image : images) {
             JSONObject ob = new JSONObject();
             //将单独的数据装进json数据
-            ob.put("id", trailer.getId());
-            ob.put("trailername", trailer.getName());
-            ob.put("time", trailer.getTime());
-            ob.put("moviename", movieServie.getMovieNameById(trailer.getMovieId()));
-
+            ob.put("id", image.getId());
+            ob.put("imagename", image.getImageName());
+            ob.put("path",image.getPath());
+            ob.put("moviename", movieServie.getMovieNameById(image.getMovieId()));
             //装进数组
             arr.add(ob);
         }
@@ -86,7 +60,7 @@ public class TrailerAction extends ActionSupport {
         //放置数据
         ob.put("rows", arr);
         //放置所有的数据个数
-        ob.put("total", trailers.size());
+        ob.put("total", images.size());
         String returndata = ob.toString();
         System.out.println("成功转换" + returndata.length() + "大小的数据...");
         System.out.println(arr);
@@ -103,15 +77,22 @@ public class TrailerAction extends ActionSupport {
             e.printStackTrace();
         }
         return "success";
-
     }
-    /*************后台得到所有预告片end***************/
 
-    /**********删除预告片start**********/
-    public void deleteTrailer() throws IOException {
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void deleteImage() throws IOException {
         String flag = "";
         try {
-            if (trailerService.deleteTrailer(id)) {
+            if (imageService.deleteImage(id)) {
                 flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
                 System.out.println("成功");
             } else {
@@ -125,22 +106,12 @@ public class TrailerAction extends ActionSupport {
 
         writer.write(flag);
 
-
         writer.flush();
 
         writer.close();
     }
-    /*********删除预告片end***********/
 
 
-    /************得到所有电影名******************/
-    public void getAllMovieName() {
-
-    }
-    /*************得到所有电影名end**************/
-
-
-    /***********文件上传简单版*************/
     private File upload;   //上传到服务器的文件对象
     private String uploadContentType;  //上传的文件类型
     private String uploadFileName;   //上传文件的名称
@@ -178,13 +149,13 @@ public class TrailerAction extends ActionSupport {
         this.uploadFileName = uploadFileName;
     }
 
-    public String saveFile1() throws IOException {
+    public String saveFile() throws IOException {
         ///拿到上传的文件，进行处理
         System.out.println("FileUpload.execute()"+uploadFileName);
         /**
          * 把文件上传到upload目录
          */
-        String path="D:/date";
+        String path="D:\\date\\"+String.valueOf(movieId);
 
         String flag ="";
         //创建目标文件对象
@@ -195,15 +166,14 @@ public class TrailerAction extends ActionSupport {
 
             System.out.println("uploadend");
 
-            List<Trailer> trailers=new ArrayList<>();
+            List<Image> images=new ArrayList<>();
 
-            Trailer trailer=new Trailer();
-            trailer.setTime(new Date());
-            trailer.setMovieId(movieId);
-            trailer.setName(uploadFileName);
-            trailer.setPath(path+"/"+uploadFileName);
-            trailers.add(trailer);
-            trailerService.insertTrailer(trailers);
+            Image image=new Image();
+            image.setMovieId(movieId);
+            image.setImageName(uploadFileName);
+            image.setPath(path+"\\"+uploadFileName);
+            images.add(image);
+            imageService.insertImage(images);
             flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
 
         }catch (Exception e){
@@ -224,6 +194,5 @@ public class TrailerAction extends ActionSupport {
         return "success";
     }
     /*******end*******/
-
 
 }

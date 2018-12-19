@@ -70,4 +70,10 @@ public class ImageDaoImpl extends HibernateDaoSupport implements ImageDao{
         Query query=this.getSessionFactory().getCurrentSession().createQuery("from Image");
         return query.list();
     }
+
+    @Override
+    public List<Image> getAllImage() {
+        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Image");
+        return query.list();
+    }
 }

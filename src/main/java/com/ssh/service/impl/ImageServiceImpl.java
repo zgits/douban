@@ -38,4 +38,9 @@ public class ImageServiceImpl implements ImageService{
     public List<Image> getMovieImages(Integer movieId) {
         return imageDao.getMovieImages(movieId);
     }
+
+    @Override
+    public List<Image> getAllImage() {
+        return imageDao.getAllImage();
+    }
 }
