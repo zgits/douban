@@ -32,6 +32,12 @@ public class Trailer {
     @Column(name="time",columnDefinition="datetime COMMENT '预告片上传时间'")
     private Date time;//预告片上传时间
 
+    @Column(name="release_time",columnDefinition="datetime COMMENT '上映时间'")
+    private Date release_time;//上映时间
+
+    @OneToMany(targetEntity = Image.class,mappedBy = "movieId")
+    private List<Image> Images;//电影的海报，图片之类的
+
     /**
      * 为了查看方便，直接就封装了分页
      * 原来是List<Trailer_Comment>
@@ -43,7 +49,6 @@ public class Trailer {
 //    private List<Image> Images;//预告片对应的图片
 
 
-
     @Override
     public String toString() {
         return "Trailer{" +
@@ -53,6 +58,8 @@ public class Trailer {
                 ", name='" + name + '\'' +
                 ", number=" + number +
                 ", time=" + time +
+                ", release_time=" + release_time +
+                ", Images=" + Images +
                 ", trailerComments=" + trailerComments +
                 '}';
     }
@@ -119,6 +126,21 @@ public class Trailer {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+    public Date getRelease_time() {
+        return release_time;
+    }
+
+    public void setRelease_time(Date release_time) {
+        this.release_time = release_time;
+    }
+
+    public List<Image> getImages() {
+        return Images;
+    }
+
+    public void setImages(List<Image> images) {
+        Images = images;
     }
 
 

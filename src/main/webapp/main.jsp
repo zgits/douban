@@ -1,4 +1,4 @@
-
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -102,7 +102,7 @@
             <!--针对电影的标签-->
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="ranking_list.html">排行榜</a></li>
-                <li><a href="trailer.html">预告片</a></li>
+                <li><a href="getAllTrailer">预告片</a></li>
                 <!--<li><a href="#">影评</a></li>-->
                 <li><a href="sort.html">分类</a></li>
             </ul>
@@ -118,7 +118,17 @@
             </ul>
             <ul class="list-inline">
                 <!--设置详情介绍居中未设置，-->
-                <c:forEach items="${movies}" var="movie" begin="0" end="7">
+                <c:set var="today">
+                    <fmt:formatDate value="<%=new Date()%>" type="date"/>
+                </c:set>
+                <c:set var="num" value="${0}"/>
+                <c:forEach items="${movies}" var="movie" >
+                    <fmt:parseDate value="${today}" var="tod" pattern="yyyy-MM-dd"/>
+                    <fmt:parseDate value="${movie.release_time}" var="time" pattern="yyyy-MM-dd"/>
+                    <fmt:formatNumber value="${(tod.getTime()-time.getTime())/1000/60/60/24}" pattern="#0" var="date"/>
+                    <c:choose>
+                        <c:when test="${date>=0&&date<=30&&num<=7}">
+                            <c:set value="${num+1}" var="num"/>
                 <li>
                     <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
                     <div class="caption">
@@ -148,94 +158,46 @@
                         </div>
                         <p>
                             <%--默认的id为1，后期更改--%>
-                            <a href="${basepath}/movie_getMovie?id=${movie.id}" class="btn btn-primary btn-xs" role="button">
+                            <a href="${basepath}/movie_getMovieById?id=${movie.id}" class="btn btn-primary btn-xs" role="button">
                                 详情介绍
                             </a>
                         </p>
                     </div>
                 </li>
+                        </c:when>
+                    </c:choose>
                 </c:forEach>
-                <%--<li>--%>
-                    <%--<img src="/image/kenan.png" class="img-responsive" style="width: 132px;height: 150px;">--%>
-                    <%--<div class="caption">--%>
-                        <%--<h6>柯南：零的执行者</h6>--%>
-                        <%--<div class="text-center">--%>
-                            <%--<div id="star_con_movieid2" class="star-vote">--%>
-                                <%--<span id="add_star_movieid2" class="add-star"></span>--%>
-                                <%--<span id="del_star_movieid2" class="del-star"></span>--%>
-                            <%--</div>--%>
-                            <%--<script>--%>
-                                <%--window.onload = showStar_movieid2(7.8);--%>
 
-                                <%--//n表示后台获取的星数--%>
-                                <%--function showStar_movieid2(n) {--%>
-                                    <%--var con_wid = document.getElementById("star_con_movieid2").offsetWidth;--%>
-                                    <%--var del_star = document.getElementById("del_star_movieid2");--%>
-                                    <%--console.log(con_wid);--%>
-
-                                    <%--//透明星星移动的像素--%>
-                                    <%--var del_move = (n * con_wid) / 10;--%>
-
-                                    <%--del_star.style.backgroundPosition = -del_move + "px 0px";--%>
-                                    <%--del_star.style.left = del_move + "px";--%>
-                                <%--}--%>
-                            <%--</script>&nbsp;7.6--%>
-                        <%--</div>--%>
-                        <%--<p>--%>
-                            <%--<a href="${basepath}/movie_getMovie?id=1" class="btn btn-primary btn-xs" role="button">--%>
-                                <%--详情介绍--%>
-                            <%--</a>--%>
-                        <%--</p>--%>
-                    <%--</div>--%>
-                <%--</li>--%>
             </ul>
 
 
         </div>
         <div class="col-md-3">
             <div class="row">
-                <!--<div class="col-md-10">
-                    <h6>分类(<a  href="#">更多</a>)</h6>
-                    <div class="">
-                        <ul class="nav nav-pills">
-                            <li><a href="#">爱情</a></li>
-                            <li><a href="#">喜剧</a></li>
-                            <li><a href="#">剧情</a></li>
-                            <li><a href="#">动画</a></li>
-                            <li><a href="#">科幻</a></li>
-                            <li><a href="#">动作</a></li>
-                            <li><a href="#">经典</a></li>
-                            <li><a href="#">悬疑</a></li>
-                            <li><a href="#">犯罪</a></li>
-                            <li><a href="#">青春</a></li>
-                            <li><a href="#">惊悚</a></li>
-                            <li><a href="#">文艺</a></li>
-                            <li><a href="#">搞笑</a></li>
-                            <li><a href="#">励志</a></li>
-                            <li><a href="#">纪录片</a></li>
-                            <li><a href="#">战争</a></li>
-                            <li><a href="#">恐怖</a></li>
-                        </ul>
-                    </div>
-                </div>-->
+
                 <div class="col-md-10">
                     近期热门(<a href="ranking_list.html">更多</a>)
                     <ul class="nav nav-pills nav-stacked">
+                        <c:set var="today">
+                            <fmt:formatDate value="<%=new Date()%>" type="date"/>
+                        </c:set>
+                        <c:set var="num" value="${0}"/>
+                        <c:forEach items="${movies}" var="movie" >
+                        <fmt:parseDate value="${today}" var="tod" pattern="yyyy-MM-dd"/>
+                        <fmt:parseDate value="${movie.release_time}" var="time" pattern="yyyy-MM-dd"/>
+                        <fmt:formatNumber value="${(tod.getTime()-time.getTime())/1000/60/60/24}" pattern="#0" var="date"/>
+                        <c:choose>
+                        <c:when test="${date>=0&&date<=30&&num<=4}">
+                        <c:set value="${num+1}" var="num"/>
                         <li>
-                            <a href="#">1.网络谜踪</a>
+                            <a href="#">${num}.${movie.moviename}</a>
                         </li>
-                        <li>
-                            <a href="#">2.网络谜踪</a>
-                        </li>
-                        <li>
-                            <a href="#">3.网络谜踪</a>
-                        </li>
-                        <li>
-                            <a href="#">4.网络谜踪</a>
-                        </li>
-                        <li>
-                            <a href="#">5.网络谜踪</a>
-                        </li>
+                        </c:when>
+                        </c:choose>
+                        </c:forEach>
+                        <%--<li>--%>
+                            <%--<a href="#">2.网络谜踪</a>--%>
+                        <%--</li>--%>
                     </ul>
 
                 </div>

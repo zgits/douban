@@ -4,13 +4,12 @@ import com.ssh.dao.TrailerDao;
 import com.ssh.dao.Trailer_CommentDao;
 import com.ssh.dao.Trailer_ReplyCommentDao;
 import com.ssh.model.Trailer;
-import com.ssh.service.TrailerService;
-import com.ssh.service.Trailer_CommentService;
-import com.ssh.service.Trailer_ReplyCommentService;
+import com.ssh.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +26,10 @@ public class TrailerServiceImpl implements TrailerService{
 
     @Autowired
     private  Trailer_CommentService trailer_commentService;
+    @Autowired
+    private ImageService imageService;
+    @Autowired
+    private MovieServie movieServie;
 
 
 
@@ -71,5 +74,18 @@ public class TrailerServiceImpl implements TrailerService{
          */
         trailer.setTrailerComments(trailer_commentService.findComment(id,1).getLists());
         return trailer;
+    }
+
+    @Override
+    public List<Trailer> getAllTrailer() {
+        List<Trailer> trailers=trailerDao.getAllTrailer();
+
+        for(Trailer trailer:trailers){
+            trailer.setRelease_time(movieServie.selctMovieById(trailer.getMovieId()).getRelease_time());
+            trailer.setImages(imageService.getMovieImages(trailer.getMovieId()));
+
+        }
+        return trailers;
+
     }
 }

@@ -53,4 +53,9 @@ public interface TrailerService {
      * @return
      */
     public Trailer getMovieTrailer(Integer id);
+
+    /**
+     * 获取全部预告片
+     */
+    public List<Trailer> getAllTrailer();
 }

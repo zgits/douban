@@ -1,5 +1,6 @@
 package com.ssh.action;
 
+import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Movie;
@@ -86,8 +87,9 @@ public class MovieAction extends ActionSupport{
 
     private Movie movie;
 
-    public MovieServie getMovieServie() {
-        return movieServie;
+
+    public Movie getMovie() {
+        return movie;
     }
 
     public void setMovie(Movie movie) {
@@ -95,7 +97,7 @@ public class MovieAction extends ActionSupport{
     }
 
     /********通过id获取电影信息,用于单击超链接时用*************/
-    public String getMovie(){
+    public String getMovieById(){
         try{
             Movie movie=movieServie.selctMovieById(id);
             ActionContext.getContext().put("oneMovie",movie);
@@ -109,8 +111,27 @@ public class MovieAction extends ActionSupport{
     /*********end************/
 
     /*********增加电影信息***********/
-    public void addMovie(){
-        movieServie.insertMovie(movie);
+    public void addMovie() throws IOException {
+        System.out.println(movie);
+
+
+        String flag ="";
+        try{
+            movieServie.insertMovie(movie);
+            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
     }
     /***********end************/
 
@@ -174,12 +195,6 @@ public class MovieAction extends ActionSupport{
         return "getMoving";
     }
     /*********end************/
-
-
-
-
-
-
 
 
 

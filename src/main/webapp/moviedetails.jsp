@@ -1,3 +1,6 @@
+<%@ page import="com.ssh.model.Movie" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -7,6 +10,10 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
+%>
+<%
+    List<Movie> movies=(List<Movie>) session.getAttribute("oneMovie");
+    session.removeAttribute("oneMovie");
 %>
 <c:set var="basepath" value="<%=basePath%>" />
 
@@ -31,6 +38,20 @@
     <script src="/static_resources/pinglun/js/star-rating.js" type="text/javascript"></script>
 
     <style type="text/css">
+
+        .loading {
+            width: 50px;
+            height: 50px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -25px;
+            margin-left: -25px;
+            z-index: 9999;
+        }
+        #loading {
+            margin-top: 10px;
+        }
         .demo {
             padding: 2em 0;
         }
@@ -142,6 +163,8 @@
 
     </style>
 
+    <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
+
     <!--点赞-->
     <link type="text/css" rel="stylesheet" href="/static_resources/likes/dianzan/Css/demo.css">
 
@@ -208,15 +231,32 @@
                     <%--<li class="list-group-item" style="border: none">--%>
                         <%--编剧: 阿什利·鲍威尔 / 汤姆·麦卡锡 / E·T·A·霍夫曼--%>
                     <%--</li>--%>
-                    <li class="list-group-item" style="border: none">
-                        主演: ${oneMovie.actor}
+                    <c:choose>
+                        <c:when test="${fn:length(fn:split(oneMovie.actor,'/' ))<=5}">
+                        <li class="list-group-item" style="border: none">
+                        主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor">
+                            ${actor}/
+                    </c:forEach>
                         <a data-toggle="collapse"
-                           href="#collapse">更多</a>
-                        <div id="collapse" class="panel-collapse collapse">
-                            / 艾丽·巴姆博 / 米兰达·哈特 / 欧赫尼奥·德尔维斯 / 杰克·怀特霍尔 / 理查德·E·格兰特 / 谢尔盖·波卢宁 / 欧米德·吉亚李利 / 梅拉·沙尔 / 尼克·穆罕默德 /
-                            杰茜·维宁 / 汤姆·斯威特 / 马里安·洛伦西克 / 芙洛·费拉科 / 丽塔-麦克唐纳丹帕 / 查尔斯·斯特里特
-                        </div>
-                    </li>
+                           href="#collapse"></a>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="list-group-item" style="border: none">
+                            主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="0" end="4">
+                            ${actor}/
+                        </c:forEach>
+                            <a data-toggle="collapse"
+                               href="#collapse">更多</a>
+                            <div id="collapse" class="panel-collapse collapse">
+                               <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="5" >
+                                    ${actor}/
+                               </c:forEach>
+                                <%--/ 艾丽·巴姆博 / 米兰达·哈特 / 欧赫尼奥·德尔维斯 / 杰克·怀特霍尔 / 理查德·E·格兰特 / 谢尔盖·波卢宁 / 欧米德·吉亚李利 / 梅拉·沙尔 / 尼克·穆罕默德 /&ndash;%&gt;--%>
+                                <%--杰茜·维宁 / 汤姆·斯威特 / 马里安·洛伦西克 / 芙洛·费拉科 / 丽塔-麦克唐纳丹帕 / 查尔斯·斯特里特--%>
+                            </div>
+                            </li>
+                    </c:otherwise>
+                    </c:choose>
                     <li class="list-group-item" style="border: none">
                         类型: 奇幻 / 冒险
                     </li>
@@ -227,7 +267,7 @@
                         语言: ${oneMovie.language}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        上映日期: ${oneMovie.release_time}(${oneMovie.release_region}/美国)
+                        上映日期: <fmt:formatDate value="${oneMovie.release_time}" pattern="yyyy-MM-dd"/>(${oneMovie.release_region}/美国)
                     </li>
                     <li class="list-group-item" style="border: none">
                         片长:${oneMovie.length}分钟
@@ -245,21 +285,21 @@
 
 
                     <div class="col-sm-2">
-                        <span style="font-weight: bold;font-size: 15px">7.4</span>
+                        <span style="font-weight: bold;font-size: 15px">${oneMovie.filmscore}</span>
                     </div>
                     <div class="col-sm-5">
-                        <div id="star_con" class="star-vote">
-                            <span id="add_star" class="add-star"></span>
-                            <span id="del_star" class="del-star"></span>
+                        <div id="star_con_movie${oneMovie.id}" class="star-vote">
+                            <span id="add_star_movie${oneMovie.id}" class="add-star"></span>
+                            <span id="del_star_movie${oneMovie.id}" class="del-star"></span>
                         </div>
                         24500人评价
                         <script>
-                            window.onload = showStar(7.8);
+                            window.onload = showStar(${oneMovie.filmscore});
 
                             //n表示后台获取的星数
                             function showStar(n) {
-                                var con_wid = document.getElementById("star_con").offsetWidth;
-                                var del_star = document.getElementById("del_star");
+                                var con_wid = document.getElementById("star_con_movie${oneMovie.id}").offsetWidth;
+                                var del_star = document.getElementById("del_star_movie${oneMovie.id}");
                                 console.log(con_wid);
 
                                 //透明星星移动的像素
@@ -388,12 +428,10 @@
     <div class="row">
         <div class="col-md-8">
             <h4 style="color: #2f904d">
-                xxxxxxx电影剧情简介
+                ${oneMovie.moviename}电影剧情简介
             </h4>
             <div>
-                克拉拉一直在寻找一把钥匙——这把与众不同的钥匙将可以开启已故母亲装有无价之宝的盒子。在教父德罗塞尔梅耶举办的一次节日聚会上，
-                一根金线指引着她找到了这把梦寐以求的钥匙，却在瞬间消失进入一个陌生而神秘的平行世界。在平行世界里，克拉拉结识了士兵菲利普、一群老鼠、
-                以及分别掌管雪花王国、鲜花王国、糖果王国的三位国王。克拉拉和菲利普必须勇敢地接受第四位国王——暴君姜母的考验，才能够找回钥匙、并将和平重新带回这个摇摇欲坠的平行世界。
+               ${oneMovie.plot_introduction }
             </div>
         </div>
 
@@ -404,7 +442,7 @@
     <!--暂时显示3个预告片，更多稍后添加-->
     <div class="row">
         <h4 style="color: #2f904d">
-            xxxxxxx电影相关预告片
+            ${oneMovie.moviename}电影相关预告片
         </h4>
         <ul class="list-inline">
             <li>
@@ -443,7 +481,7 @@
     <!--评论显示界面-->
     <div class="row">
         <h4 style="color: #2f904d">
-            xxxx电影的短评(共1252条)
+            ${oneMovie.moviename}电影的短评(共1252条)
         </h4>
         <!--Ajax异步得到-->
         <div class="row">
@@ -508,7 +546,16 @@
                                 </div>
 
                                 <div class="row col-md-offset-10">
-                                    <a class="btn btn-sm">举报</a>
+                                    <c:choose>
+                                        <c:when test="${moviecomments.userId==1}">
+                                            <a class="btn btn-sm" onclick="deletecomment(${moviecomments.id})">删除</a>
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="btn btn-sm">举报</a>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                     <a data-toggle="collapse" data-parent="#accordion"
                                        href="#r${moviecomments.id}" class="btn btn-sm">回复</a>
                                 </div>
@@ -534,7 +581,17 @@
                                                         <br>
                                                         <div class="row">
                                                             <span class="col-md-offset-1">回复@${reply.to_userIdusername}:${reply.content}</span>
-                                                            <a class="btn btn-sm col-md-offset-10">举报</a>
+
+                                                            <c:choose>
+                                                                <c:when test="${reply.userId==1}">
+                                                                    <a class="btn btn-sm col-md-offset-10" onclick="deletecomment2(${reply.id})">删除</a>
+
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <a class="btn btn-sm col-md-offset-10">举报</a>
+                                                                </c:otherwise>
+                                                            </c:choose>
+
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
                                                                href="#s${moviecomments.id}${status.count}">回复</a>
                                                         </div>
@@ -567,9 +624,66 @@
             </ul>
         </div>
 
+        <div class="modal fade" id="delcfmModel1">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="replyid"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="deletereply()" class="btn btn-info" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div class="modal fade" id="delcfmModel2">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="commentId"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="deletemoviecomment()" class="btn btn-info" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+
+        <div id="loading" style="display: block">
+            <div class="loading show">
+                <img src='/image/loading1.gif' />
+            </div>
+        </div>
         <script>
             <%--对评论的回复的函数--%>
 
+            function deletecomment(id) {
+                $('#commentId').val(id);
+                $('#delcfmModel2').modal();
+            }
+            function deletecomment2(replyid) {
+                $('#replyid').val(replyid);//给会话中的隐藏属性URL赋值
+                $('#delcfmModel1').modal();
+            }
+            window.onload=function(){
+                $("#loading").hide();
+            }
             var messageOpts = {
                 "closeButton": true,//是否显示关闭按钮
                 "debug": false,//是否使用debug模式
@@ -600,7 +714,11 @@
                         "movie_replycomment.userId":userId,
                         "movie_replycomment.reply_type":type
                     },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
                     success:function (data) {
+                        $("#loading").hide();
                         if(data==1){
                             toastr.success('回复成功');
                         }else{
@@ -628,11 +746,61 @@
                         "movie_replycomment.reply_type":type,
                         "movie_replycomment.reply_id":to_id
                     },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
                     success:function (data) {
+                        $("#loading").hide();
                         if(data==1){
                             toastr.success('回复成功');
                         }else{
                             toastr.error("回复失败");
+                        }
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+            function deletemoviecomment() {
+                var id = $.trim($("#commentId").val());
+                $.ajax({
+                    url:"${basepath}/moviecomment_delete",
+                    type:"post",
+                    data:{
+                        "id":id
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('删除成功');
+                        }else{
+                            toastr.error("删除失败");
+                        }
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+            function deletereply() {
+                var id = $.trim($("#replyid").val());
+                $.ajax({
+                    url:"${basepath}/rmoviereplycommentdeleteReplyComment",
+                    type:"post",
+                    data:{
+                        "id":id
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('删除成功');
+                        }else{
+                            toastr.error("删除失败");
                         }
                         setTimeout("window.location.reload()",3000);
                     }
@@ -799,7 +967,11 @@
                     "movie_comment.movieId":movieId,
                     "movie_comment.content":content
                 },
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show(); //在后台返回success之前显示loading图标
+                },
                 success:function (data) {
+                    $("#loading").hide();
                     if(data==1){
                         toastr.success('评论成功');
                     }else{

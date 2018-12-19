@@ -48,6 +48,10 @@
             <result name="getMoving">/main.jsp</result>
         </action>
 
+        <action name="getAllTrailer" class="Trailer" method="getAllTrailer">
+            <result name="success">trailer.jsp</result>
+        </action>
+
         <!--文件上传-->
         <action name="upload" class="MovieAction" method="saveFile">
             <!--<interceptor-ref name="defaultStack">-->

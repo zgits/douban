@@ -54,4 +54,12 @@ public interface TrailerDao {
      * @return
      */
     public Trailer getMovieTrailer(Integer id);
+
+    /**
+     * 获取全部预告片信息
+     */
+    public List<Trailer> getAllTrailer();
+    /**
+     * 获取影片上映时间
+     */
 }
