@@ -220,5 +220,40 @@ public class ManagerUserAction extends ActionSupport {
     /*******通过用户名查找用户end*********/
 
 
+    /**
+     *批量删除用户
+     */
+    private Integer[] ids;
 
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
+    }
+
+    public void deleteUsers() throws IOException {
+        String flag ="";
+        try{
+            if(managerUserService.deleteUsers(ids)){
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }
+
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
+    }
 }

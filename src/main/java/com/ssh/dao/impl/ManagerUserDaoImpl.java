@@ -156,5 +156,23 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
         return 0;
     }
 
+    @Override
+    public boolean deleteUsers(Integer[] ids) {
+        String hql="delete from User where id in (:ids)";
+        int ret=0;
+        try{
+            Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(hql);
+            query.setParameterList("ids", ids);
+            ret = query.executeUpdate();
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }

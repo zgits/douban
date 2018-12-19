@@ -133,5 +133,11 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         return managerUserDao.getUserName(id);
     }
 
+    @Override
+    public boolean deleteUsers(Integer[] ids) {
+        System.out.println("批量删除用户中的ids"+ids);
+        return managerUserDao.deleteUsers(ids);
+    }
+
 
 }

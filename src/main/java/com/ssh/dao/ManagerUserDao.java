@@ -82,4 +82,12 @@ public interface ManagerUserDao {
      * @return
      */
     public Integer getUserCountByName(String username);
+
+
+    /**
+     * 根据id批量删除用户
+     * @param ids
+     * @return
+     */
+    public boolean deleteUsers(Integer[] ids);
 }

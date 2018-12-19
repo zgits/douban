@@ -99,10 +99,7 @@
 
     <%--用户工具按钮--%>
     <div id="toolbar4" class="btn-group">
-        <button id="btn_add" type="button" class="btn btn-success">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-        </button>
-        <button id="btn_delete" type="button" class="btn btn-default">
+        <button id="btn_delete" type="button" class="btn btn-default" onclick="deleteUsers()">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
         </button>
     </div>
@@ -118,16 +115,16 @@
         </button>
     </div>
 
-        <%--图片工具按钮--%>
-        <div id="toolbar3" class="btn-group">
-            <button id="btn_add3" type="button" class="btn btn-success" data-toggle="modal"
-                    data-target="#add_image_modal" onclick="getAllMovieName2()">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-            </button>
-            <button id="btn_delete3" type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-            </button>
-        </div>
+    <%--图片工具按钮--%>
+    <div id="toolbar3" class="btn-group">
+        <button id="btn_add3" type="button" class="btn btn-success" data-toggle="modal"
+                data-target="#add_image_modal" onclick="getAllMovieName2()">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+        </button>
+        <button id="btn_delete3" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+        </button>
+    </div>
 
     <%--电影新增--%>
     <div id="toolbar1" class="btn-group">
@@ -139,6 +136,18 @@
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
         </button>
     </div>
+        <%--标签管理工具--%>
+
+        <div id="toolbar5" class="btn-group">
+            <button id="btn_add5" type="button" class="btn btn-success" data-toggle="modal"
+                    data-target="#add_label_modal" onclick="getParentLabelName()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+            </button>
+            <button id="btn_delete5" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+            </button>
+        </div>
+
     <div id="matter1">
         <div>
             <table style="width: 100%" class="table table-bordered" id="table_movie">
@@ -922,7 +931,6 @@
         </script>
 
 
-
         <div id="reportTableDiv">
             <table id="reportTable"></table>
         </div>
@@ -1016,63 +1024,6 @@
     </div>
 
     <div id="matter2" style="display: none">
-        <%--<jsp:include page="upload.jsp"></jsp:include>--%>
-
-        <%--<div class="">--%>
-
-        <%--<br>--%>
-        <%--<form class="form-horizontal" role="form" enctype="multipart/form-data">--%>
-
-        <%--<div class="form-group">--%>
-        <%--<label for="selectname" class="col-sm-2 control-label">选择电影</label>--%>
-        <%--<div class="col-sm-5">--%>
-        <%--<select id="selectname" class="form-control">--%>
-        <%--<option>xxx电影名1</option>--%>
-        <%--<option>xxx电影名2</option>--%>
-        <%--<option>xxx电影名3</option>--%>
-        <%--<option>xxx电影名4</option>--%>
-        <%--<option>xxx电影名5</option>--%>
-        <%--</select>--%>
-        <%--</div>--%>
-
-        <%--</div>--%>
-        <%--<div class="form-group col-sm-8">--%>
-        <%--<input id="file-1" type="file" multiple class="file" data-overwrite-initial="false"--%>
-        <%--data-min-file-count="1">--%>
-        <%--</div>--%>
-        <%--<div class="form-group">--%>
-        <%--<div class="col-sm-offset-7 col-sm-2">--%>
-        <%--<button type="submit" class="btn btn-default" onclick="test()">上传</button>--%>
-        <%--</div>--%>
-        <%--</div>--%>
-        <%--</form>--%>
-        <%--</div>--%>
-
-        <%--<script>--%>
-        <%--function test() {--%>
-        <%--var message = $('#selectname option:selected').text();//选中的文本--%>
-        <%--alert(message);--%>
-        <%--}--%>
-        <%--$("#file-1").fileinput({--%>
-        <%--language: 'zh',--%>
-        <%--uploadUrl: '#', // you must set a valid URL here else you will get an error--%>
-        <%--allowedFileExtensions: ['jpg', 'png', 'gif'],--%>
-        <%--overwriteInitial: false,--%>
-        <%--maxFileSize: 100000,--%>
-        <%--maxFilesNum: 5,--%>
-        <%--showUpload: true, //是否显示上传按钮--%>
-        <%--showRemove: false,--%>
-        <%--//allowedFileTypes: ['Image', 'video', 'flash'],--%>
-        <%--slugCallback: function (uploadFileName) {--%>
-        <%--return uploadFileName.replace('(', '_').replace(']', '_');--%>
-        <%--},--%>
-        <%--layoutTemplates: {--%>
-        <%--actionUpload: '' // 预览区域的上传按钮--%>
-        <%--}--%>
-        <%--});--%>
-
-        <%--</script>--%>
-
 
         <%--初始化表格--%>
 
@@ -1176,7 +1127,7 @@
         <%--删除模态框--%>
 
         <div class="modal fade" id="deleteTrailerModal">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-sm">
                 <div class="modal-content message_align">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -1189,7 +1140,7 @@
                     <div class="modal-footer">
                         <input type="hidden" id="TrailerId"/>
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <a onclick="deleteTrailerDo()" class="btn btn-danger" data-dismiss="modal">确定</a>
+                        <a onclick="deleteTrailerDo()" class="btn btn-success" data-dismiss="modal">确定</a>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -1198,46 +1149,46 @@
 
         <%--新增预告片模态框--%>
         <div class="modal fade" id="add_trailer_modal" tabindex="-1" role="dialog" aria-labelledby="add_trailer_modal"
-        aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-        ×
-        </button>
-        <h4 class="modal-title" id="add_trailer">
-        新增电影信息
-        </h4>
-        </div>
-        <div id="add_trailer_info">
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="add_trailer">
+                            新增电影信息
+                        </h4>
+                    </div>
+                    <div id="add_trailer_info">
 
-        <!--复选框end-->
-        <div class="form-group" id="fileinput">
-        <label for="moviename" class="col-sm-3 control-label">所属电影</label>
-        <div class="col-sm-9">
-        <select id="moviename" class="form-control">
-        </select>
-        <input id="file-1" type="file" name="upload">
+                        <!--复选框end-->
+                        <div class="form-group" id="fileinput">
+                            <label for="moviename" class="col-sm-3 control-label">所属电影</label>
+                            <div class="col-sm-9">
+                                <select id="moviename" class="form-control">
+                                </select>
+                                <input id="file-1" type="file" name="upload">
 
 
-        </div>
+                            </div>
 
-        </div>
-        <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-        </button>
-        <%--<button type="button" onclick="add_trailer()" data-dismiss="modal" class="btn btn-success">--%>
-        <%--<i class="glyphicon glyphicon-check">添加</i>--%>
-        <%--</button>--%>
-        </div>
-        </div>
-        </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <%--<button type="button" onclick="add_trailer()" data-dismiss="modal" class="btn btn-success">--%>
+                            <%--<i class="glyphicon glyphicon-check">添加</i>--%>
+                            <%--</button>--%>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
         </div>
 
         <script>
 
-            fodderType = function () {
+            fodderType1 = function () {
                 return $("#moviename").val();
             };
             function getAllMovieName() {
@@ -1256,13 +1207,19 @@
 
                     uploadExtraData: function (previewId, index) {  //传递参数
                         var obj = {};
-                        obj.movieId = fodderType();
+                        obj.movieId = fodderType1();
                         console.log(obj);
                         return obj;
                     }
 
                 }).on("fileuploaded", function (event, data, previewId, index) {
-                    alert(data.response);
+                    if (data.response == 1) {
+                        toastr.success('上传成功');
+
+                    } else {
+                        toastr.error('上传失败');
+                    }
+                    setTimeout("window.location.reload()", 3000);
 
                 });
 
@@ -1515,11 +1472,10 @@
                     }
 
                 }).on("fileuploaded", function (event, data, previewId, index) {
-                    if(data.response==1)
-                    {
+                    if (data.response == 1) {
                         toastr.success('上传成功');
 
-                    }else {
+                    } else {
                         toastr.error('上传失败');
                     }
                     setTimeout("window.location.reload()", 3000);
@@ -1961,338 +1917,348 @@
 
 
             </script>
+
+
+            <script>
+                // 删除按钮事件
+                function deleteUsers() {
+                    // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                    var rows = $("#userTable").bootstrapTable('getSelections');
+                    console.log(rows);
+                    if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+                        alert("请先选择要删除的记录!");
+                        return;
+                    } else {
+                        var arrays = new Array();// 声明一个数组
+                        $(rows).each(function () {// 通过获得别选中的来进行遍历
+                            arrays.push(this.id);// cid为获得到的整条数据中的一列
+                        });
+                        var ids = arrays; // 获得要删除的id//.join(',')
+                        console.log(ids);
+                    }
+
+                    var messageOpts = {
+                        "closeButton": true,//是否显示关闭按钮
+                        "debug": false,//是否使用debug模式
+                        "positionClass": "toast-top-right",//弹出窗的位置
+                        "onclick": null,
+                        "showDuration": "3000",//显示的动画时间
+                        "hideDuration": "1000",//消失的动画时间
+                        "timeOut": "3000",//展现时间
+                        "extendedTimeOut": "1000",//加长展示时间
+                        "showEasing": "swing",//显示时的动画缓冲方式
+                        "hideEasing": "linear",//消失时的动画缓冲方式
+                        "showMethod": "fadeIn",//显示时的动画方式
+                        "hideMethod": "fadeOut" //消失时的动画方式
+                    };
+                    toastr.options = messageOpts;
+
+                    $.ajax({
+                        type: "get",
+                        url: "${basepath}/manageruserdeleteUsers",
+                        async: true,
+                        traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                        data: {
+                            ids: ids
+                        },
+                        beforeSend: function (XMLHttpRequest) {
+                            $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                        },
+                        success: function (flag) {
+                            $("#loading").empty();
+                            if (flag == 1) {
+                                toastr.success('删除成功');
+                            } else {
+
+                                toastr.error('删除失败');
+                            }
+                            setTimeout("window.location.reload()", 3000);
+
+                        }
+                    })
+
+                }
+            </script>
         </div>
     </div>
     <div id="matter5" style="display: none">
-        <%--<jsp:include page="addmovie.jsp"></jsp:include>--%>
-        <%--<div>--%>
-        <%--&lt;%&ndash;展示数据&ndash;%&gt;--%>
-        <%--<table class="table table-bordered" id="table_user">--%>
-        <%--<caption class="text-center" style="color: #2f904d;font-size: 25px">分类信息表</caption>--%>
-        <%--<thead>--%>
-        <%--<tr>--%>
-        <%--<th>分类名称</th>--%>
-        <%--<th>分类等级</th>--%>
-        <%--<th>父级分类</th>--%>
-        <%--<th>操作</th>--%>
-        <%--</tr>--%>
-        <%--</thead>--%>
-        <%--<tbody>--%>
-        <%--<tr>--%>
-        <%--<th>全部地区</th>--%>
-        <%--<th>1</th>--%>
-        <%--<th>无</th>--%>
-        <%--<th>--%>
-        <%--<button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加</button>--%>
-        <%--<button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"--%>
-        <%--data-target="#edit_label">修改--%>
-        <%--</button>--%>
-        <%--<button class="btn btn-danger" onClick="delcfm()">删除</button>--%>
-        <%--</th>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-        <%--<th>全部地区</th>--%>
-        <%--<th>1</th>--%>
-        <%--<th>无</th>--%>
-        <%--<th>--%>
-        <%--<button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加</button>--%>
-        <%--<button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"--%>
-        <%--data-target="#edit_label">修改--%>
-        <%--</button>--%>
-
-        <%--<button class="btn btn-danger" onClick="delcfm()">删除</button>--%>
-        <%--</th>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-        <%--<th>全部地区</th>--%>
-        <%--<th>1</th>--%>
-        <%--<th>无</th>--%>
-        <%--<th>--%>
-        <%--<button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加</button>--%>
-        <%--<button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info(1)"--%>
-        <%--data-target="#edit_label">修改--%>
-        <%--</button>--%>
-        <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-        <%--<button class="btn btn-danger" onClick="delcfm()">删除</button>--%>
-        <%--</th>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-        <%--<th>全部地区</th>--%>
-        <%--<th>1</th>--%>
-        <%--<th>无</th>--%>
-        <%--<th>--%>
-        <%--<button class="btn btn-success" data-toggle="modal" data-target="#addLabel">增加--%>
-        <%--</button>--%>
-        <%--<button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"--%>
-        <%--data-target="#edit_label">修改--%>
-        <%--</button>--%>
-
-        <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-        <%--<button class="btn btn-danger" onClick="delcfm()">删除</button>--%>
-        <%--</th>--%>
-        <%--</tr>--%>
-        <%--<tr>--%>
-        <%--<th>中国</th>--%>
-        <%--<th>2</th>--%>
-        <%--<th>全部地区</th>--%>
-        <%--<th>--%>
-        <%--<button class="btn btn-info" data-toggle="modal" onclick="return get_edit_info1(1)"--%>
-        <%--data-target="#edit_label">修改--%>
-        <%--</button>--%>
-        <%--<!--onClick="delcfm('${ctxPath}/manager/project/delete?id=${vo.id?default("")}')"-->--%>
-        <%--<button class="btn btn-danger" onClick="delcfm()">删除</button>--%>
-        <%--</th>--%>
-        <%--</tr>--%>
-        <%--</tbody>--%>
-        <%--</table>--%>
-        <%--&lt;%&ndash;展示数据end&ndash;%&gt;--%>
-        <%--&lt;%&ndash;分页&ndash;%&gt;--%>
-        <%--<div>--%>
-        <%--<div class="inner clearfix">--%>
-        <%--<section id="main-content">--%>
-
-        <%--<div class="text-center">--%>
-        <%--<ul class="pagination">--%>
-        <%--<li><a href="#">&laquo;</a></li>--%>
-        <%--<li class="active"><a href="#">1</a></li>--%>
-        <%--<li><a href="#">2</a></li>--%>
-        <%--<li><a href="#">3</a></li>--%>
-        <%--<li><a href="#">4</a></li>--%>
-        <%--<li><a href="#">5</a></li>--%>
-        <%--<li><a href="#">&raquo;</a></li>--%>
-        <%--<li>--%>
-        <%--<!--异步传输页数，返回数据得到结果-->--%>
-        <%--<form class="col-sm-3" role="form">--%>
-        <%--<div class="input-group">--%>
-        <%--<input type="text" class="form-control">--%>
-        <%--<span onclick="test()" class="input-group-addon">go</span>--%>
-        <%--</div>--%>
-        <%--</form>--%>
-        <%--</li>--%>
-        <%--<li><a style="border: none">共6页</a></li>--%>
-        <%--</ul>--%>
-        <%--</div>--%>
-
-        <%--</section>--%>
-
-        <%--</div>--%>
-        <%--</div>--%>
-        <%--&lt;%&ndash;分页end&ndash;%&gt;--%>
-        <%--<!--修改弹出框样式-->--%>
-        <%--<form method="post" action="" class="form-horizontal" role="form" id="form_data"--%>
-        <%--onsubmit="return check_form()"--%>
-        <%--style="margin: 20px;">--%>
-        <%--<div class="modal fade" id="edit_label" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"--%>
-        <%--aria-hidden="true">--%>
-        <%--<div class="modal-dialog">--%>
-        <%--<div class="modal-content">--%>
-        <%--<div class="modal-header">--%>
-        <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">--%>
-        <%--×--%>
-        <%--</button>--%>
-        <%--<h4 class="modal-title" id="myModalLabel">--%>
-        <%--修改标签信息--%>
-        <%--</h4>--%>
-        <%--</div>--%>
-        <%--<div class="modal-body">--%>
-        <%--<form class="form-horizontal" role="form">--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="edit_labelname" class="col-sm-3 control-label">标签名字</label>--%>
-        <%--<div class="col-sm-9">--%>
-        <%--<input type="text" class="form-control" id="edit_labelname"--%>
-        <%--name="edit_labelname"--%>
-        <%--value="{edit_labelname}"--%>
-        <%--placeholder="标签名字">--%>
-        <%--</div>--%>
-        <%--</div>--%>
-
-        <%--<div class="form-group">--%>
-        <%--<label for="edit_parentname" class="col-sm-3 control-label">上一级分类</label>--%>
-        <%--<div class="col-sm-9">--%>
-        <%--<input type="text" class="form-control" name="edit_parentname" value=""--%>
-        <%--id="edit_parentname"--%>
-        <%--placeholder="上一级分类">--%>
-        <%--</div>--%>
-        <%--</div>--%>
 
 
-        <%--<!--语言选择-->--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="edit_fenlei" class="col-sm-3 control-label">所属分类</label>--%>
-        <%--<div class="col-sm-9">--%>
-        <%--<select id="edit_fenlei" class="form-control">--%>
-        <%--<option>全部语言</option>--%>
-        <%--<option>全部地区</option>--%>
-        <%--<option>年代</option>--%>
-        <%--<option>4</option>--%>
-        <%--<option>5</option>--%>
-        <%--</select>--%>
-        <%--</div>--%>
+        <table class="table table-bordered" id="table_label">
+            <caption class="text-center" style="color: #2f904d;font-size: 25px">分类信息表</caption>
 
-        <%--</div>--%>
-        <%--<!--语言选择end-->--%>
+        </table>
 
+        <div id="labelTableDiv">
+            <table id="labelTable">
+            </table>
+        </div>
+        <script type="text/javascript">
 
-        <%--</form>--%>
-        <%--</div>--%>
-        <%--<div class="modal-footer">--%>
-        <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭--%>
-        <%--</button>--%>
-        <%--<button type="submit" class="btn btn-primary">--%>
-        <%--提交--%>
-        <%--</button>--%>
-        <%--<span id="tip"> </span>--%>
-        <%--</div>--%>
-        <%--</div><!-- /.modal-content -->--%>
-        <%--</div><!-- /.modal -->--%>
-        <%--</div>--%>
-        <%--</form>--%>
-        <%--&lt;%&ndash;得到要修改的数据的js&ndash;%&gt;--%>
-        <%--<script>--%>
-        <%--// 编辑表单--%>
-        <%--function get_edit_info1(id) {--%>
-        <%--if (!id) {--%>
-        <%--alert('Error！');--%>
-        <%--return false;--%>
-        <%--}--%>
-        <%--// var form_data = new Array();--%>
-
-        <%--$.ajax(--%>
-        <%--{--%>
-        <%--url: "action/user_action.php",//后台请求接口地址--%>
-        <%--data: {"id": id, "act": "get"},--%>
-        <%--type: "post",--%>
-        <%--beforeSend: function () {--%>
-        <%--// $("#tip").html("<span style='color:blue'>正在处理...</span>");--%>
-        <%--return true;--%>
-        <%--},--%>
-        <%--success: function (data) {--%>
-        <%--if (data) {--%>
-
-        <%--// 解析json数据--%>
-        <%--var data = data;--%>
-
-        <%--var data_obj = eval("(" + data + ")");--%>
-
-        <%--// 赋值--%>
-        <%--$("#edit_labelname").val(data_obj.labelname);--%>
-
-        <%--$("#edit_parentname").val(data_obj.parentname);--%>
-        <%--$("#edit_fenlei").val(data_obj.fenlei);--%>
-        <%--//                            暂时这样命名--%>
-        <%--$("#act").val("edit");--%>
-
-        <%--// 将input元素设置为readonly--%>
-        <%--$('#user_id').attr("readonly", "readonly")--%>
-        <%--// location.reload();--%>
-        <%--}--%>
-        <%--else {--%>
-        <%--$("#tip").html("<span style='color:red'>失败，请重试</span>");--%>
-        <%--//  alert('操作失败');--%>
-        <%--}--%>
-        <%--},--%>
-        <%--error: function () {--%>
-        <%--alert('请求出错');--%>
-        <%--},--%>
-        <%--complete: function () {--%>
-        <%--// $('#tips').hide();--%>
-        <%--}--%>
-        <%--});--%>
-
-        <%--return false;--%>
-        <%--}--%>
-        <%--</script>--%>
-        <%--&lt;%&ndash;修改数据end&ndash;%&gt;--%>
-        <%--&lt;%&ndash;删除弹出框&ndash;%&gt;--%>
-        <%--<script>--%>
-        <%--function delcfm(url) {--%>
-        <%--$('#url').val(url);//给会话中的隐藏属性URL赋值--%>
-        <%--$('#delcfmModel').modal();--%>
-        <%--}--%>
-        <%--function urlSubmit() {--%>
-        <%--var url = $.trim($("#url").val());//获取会话中的隐藏属性URL--%>
-        <%--window.location.href = url;--%>
-        <%--}--%>
-        <%--</script>--%>
-        <%--<div class="modal fade" id="delcfmModel">--%>
-        <%--<div class="modal-dialog modal-sm">--%>
-        <%--<div class="modal-content message_align">--%>
-        <%--<div class="modal-header">--%>
-        <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span--%>
-        <%--aria-hidden="true">×</span></button>--%>
-        <%--<h4 class="modal-title">提示信息</h4>--%>
-        <%--</div>--%>
-        <%--<div class="modal-body">--%>
-        <%--<p>您确认要删除吗？</p>--%>
-        <%--</div>--%>
-        <%--<div class="modal-footer">--%>
-        <%--<input type="hidden" id="url"/>--%>
-        <%--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>--%>
-        <%--<a onclick="urlSubmit()" class="btn btn-success" data-dismiss="modal">确定</a>--%>
-        <%--</div>--%>
-        <%--</div><!-- /.modal-content -->--%>
-        <%--</div><!-- /.modal-dialog -->--%>
-        <%--</div><!-- /.modal -->--%>
-        <%--&lt;%&ndash;删除弹出框end&ndash;%&gt;--%>
-
-        <%--&lt;%&ndash;增加模糊框&ndash;%&gt;--%>
-
-        <%--<form method="post" action="" class="form-horizontal" role="form" id="form_data"--%>
-        <%--onsubmit="return check_form()"--%>
-        <%--style="margin: 20px;">--%>
-        <%--<div class="modal fade" id="addLabel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"--%>
-        <%--aria-hidden="true">--%>
-        <%--<div class="modal-dialog">--%>
-        <%--<div class="modal-content">--%>
-        <%--<div class="modal-header">--%>
-        <%--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">--%>
-        <%--×--%>
-        <%--</button>--%>
-        <%--<h4 class="modal-title" id="addMessage">--%>
-        <%--增加分类--%>
-        <%--</h4>--%>
-        <%--</div>--%>
-        <%--<div class="modal-body">--%>
-        <%--<form class="form-horizontal" role="form">--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="addLabelName" class="col-sm-3 control-label">分类名字</label>--%>
-        <%--<div class="col-sm-9">--%>
-        <%--<input type="text" class="form-control" id="addLabelName" name="addLabel"--%>
-        <%--placeholder="电影名字">--%>
-        <%--</div>--%>
-        <%--</div>--%>
+            $(function () {
+                $('#labelTable').bootstrapTable({
+                    url: '${basepath}/getAllTrailerTable', // 请求后台的URL（*）
+                    dataType: "json",
+                    pagination: true, //前端处理分页
+                    singleSelect: false,//是否只能单选
+                    search: true, //显示搜索框，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                    toolbar: '#toolbar5', //工具按钮用哪个容器
+                    striped: true, //是否显示行间隔色
+                    cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                    pageNumber: 1, //初始化加载第10页，默认第一页
+                    pageSize: 5, //每页的记录行数（*）
+                    pageList: [5, 10, 20, 50], //可供选择的每页的行数（*）
+                    strictSearch: true,//设置为 true启用 全匹配搜索，false为模糊搜索
+                    showColumns: true, //显示内容列下拉框
+                    showRefresh: true, //显示刷新按钮
+                    minimumCountColumns: 2, //当列数小于此值时，将隐藏内容列下拉框
+                    clickToSelect: true, //设置true， 将在点击某行时，自动勾选rediobox 和 checkbox
+                    height: 450, //表格高度，如果没有设置height属性，表格自动根据记录条数决定表格高度#}
+                    uniqueId: "id", //每一行的唯一标识，一般为主键列
+                    showToggle: true, //是否显示详细视图和列表视图的切换按钮
+                    cardView: false, //是否显示详细视图
+                    //detailView: true, //是否显示父子表，设置为 true 可以显示详细页面模式,在每行最前边显示+号#}
+                    sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
+                    columns: [
+                        {
+                            checkbox: true
+                        },
+                        //定义表头,这个表头必须定义,下边field后边跟的字段名字必须与后端传递的字段名字相同.如:id、name、price
+                        //跟后端的字段名id  name price是完全一样的
 
 
-        <%--<!--复选框end-->--%>
-        <%--<div class="form-group">--%>
-        <%--<label for="edit_country" class="col-sm-3 control-label">选择分类</label>--%>
-        <%--<div class="col-sm-9">--%>
-        <%--<select id="edit_country" class="form-control">--%>
-        <%--<option>全部地区</option>--%>
-        <%--<option>全部年代</option>--%>
-        <%--<option>3</option>--%>
-        <%--<option>4</option>--%>
-        <%--<option>5</option>--%>
-        <%--</select>--%>
-        <%--</div>--%>
+                        {
+                            field: 'trailername',
+                            title: '预告片名',
+                            align: 'center'
+                        },
 
-        <%--</div>--%>
+                        {
+                            field: 'moviename',
+                            title: '所属电影',
+                            align: 'center'
+                        },
 
-        <%--</form>--%>
-        <%--</div>--%>
-        <%--<div class="modal-footer">--%>
-        <%--<button type="button" class="btn btn-default" data-dismiss="modal">关闭--%>
-        <%--</button>--%>
-        <%--<button type="submit" class="btn btn-primary">--%>
-        <%--提交--%>
-        <%--</button>--%>
-        <%--&lt;%&ndash;<span id="tip"> </span>&ndash;%&gt;--%>
-        <%--</div>--%>
-        <%--</div><!-- /.modal-content -->--%>
-        <%--</div><!-- /.modal -->--%>
-        <%--</div>--%>
-        <%--</form>--%>
-        <%--</div>--%>
+                        {
+                            field: 'time',
+                            title: '上传时间',
+                            align: 'center',
+                            formatter: function (value, row, index) {
+
+                                return changeDateFormat1(value);
+                            }
+                        },
+
+                        {
+                            title: '操作',
+                            field: 'id',
+                            align: 'center',
+                            formatter: function (value, row, index) {
+                                var d = '<a class="btn btn-info" href="trailergetTrailer?id=' + row.id + '">查看</a>';
+                                var c = '<button class="btn btn-danger" onClick="deleteLabel(' + row.id + ')">删除</button>';
+                                return d + c;
+
+
+                            }
+                        }
+                    ],
+                });
+            });
+        </script>
+
+        <%--删除模态框--%>
+
+        <div class="modal fade" id="deleteLabelModal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="hidden" id="LabelId"/>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="deleteLabelDo()" class="btn btn-success" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+        <%--新增分类模态框--%>
+        <div class="modal fade" id="add_label_modal" tabindex="-1" role="dialog" aria-labelledby="add_label_modal"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 400px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="add_label_title">
+                            添加分类
+                        </h4>
+                    </div>
+                    <div id="add_label_div">
+                        <label for="parentname" class="col-sm-3 control-label">所属分类</label>
+                        <div class="col-sm-9">
+                            <select id="parentname" class="form-control">
+                                <option>sdfasd</option>
+                                <option>sdfasd</option>
+                                <option>sd士大夫d</option>
+                            </select>
+
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <label for="label" class="col-sm-3 control-label">分类名字</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" id="label" name="label"/>
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" onclick="add_label()" data-dismiss="modal" class="btn btn-primary">
+                                添加
+                            </button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+        <script>
+
+            function add_label() {
+                var name=$("#label").val();
+                var parentId=$("#parentname").val();
+
+                alert(name);
+
+                var messageOpts = {
+                    "closeButton": true,//是否显示关闭按钮
+                    "debug": false,//是否使用debug模式
+                    "positionClass": "toast-top-right",//弹出窗的位置
+                    "onclick": null,
+                    "showDuration": "3000",//显示的动画时间
+                    "hideDuration": "1000",//消失的动画时间
+                    "timeOut": "3000",//展现时间
+                    "extendedTimeOut": "1000",//加长展示时间
+                    "showEasing": "swing",//显示时的动画缓冲方式
+                    "hideEasing": "linear",//消失时的动画缓冲方式
+                    "showMethod": "fadeIn",//显示时的动画方式
+                    "hideMethod": "fadeOut" //消失时的动画方式
+                };
+                toastr.options = messageOpts;
+
+                $.ajax({
+                    type:'post',
+                    url:'#',//后台的url地址
+                    data:{
+                        "name":name,
+                        "parentId":parentId
+                    },
+                    success: function (flag) {
+                        $("#loading").empty();
+                        if (flag == 1) {
+                            toastr.success('添加成功');
+                        } else {
+
+                            toastr.error('添加失败');
+                        }
+                        setTimeout("window.location.reload()", 3000);
+
+                    }
+                })
+            }
+
+            function getParentLabelName() {
+
+                $("#parentname").empty();
+
+                json1={
+                    "data":[
+                        {"id":1,"name":"名侦探沙雕李"},
+                        {"id":2,"name":"yyy"},
+                        {"id":5,"name":"test"},
+                        {"id":6,"name":"水电费555"}
+                        ]
+                };
+                var json = json1.data;
+                for (var i = 0; i < json.length; i++) {
+                    $("#parentname").append("<option value='" + json[i].id + "'>" + json[i].name + "</option>");
+                }
+
+                $.ajax({
+                    type: 'post',
+                    url: '#',//后台获取名字的url，格式参照获取电影名的格式,只获取parentId为0的分类，大分类
+                    dataType: 'json',
+                    success: function (data) {
+                        var json = data.data;
+                        for (var i = 0; i < json.length; i++) {
+                            $("#parentname").append("<option value='" + json[i].id + "'>" + json[i].name + "</option>");
+                        }
+                    }
+                })
+            }
+        </script>
+
+
+        <script>
+            function deleteLabel(id) {
+                $('#LabelId').val(id);//给会话中的隐藏属性URL赋值
+                $('#deleteLabelModal').modal();
+            }
+            function deleteLabelDo() {
+                var id = $.trim($("#LabelId").val());//获取会话中的隐藏属性URL
+                var messageOpts = {
+                    "closeButton": true,//是否显示关闭按钮
+                    "debug": false,//是否使用debug模式
+                    "positionClass": "toast-top-right",//弹出窗的位置
+                    "onclick": null,
+                    "showDuration": "3000",//显示的动画时间
+                    "hideDuration": "1000",//消失的动画时间
+                    "timeOut": "3000",//展现时间
+                    "extendedTimeOut": "1000",//加长展示时间
+                    "showEasing": "swing",//显示时的动画缓冲方式
+                    "hideEasing": "linear",//消失时的动画缓冲方式
+                    "showMethod": "fadeIn",//显示时的动画方式
+                    "hideMethod": "fadeOut" //消失时的动画方式
+                };
+                toastr.options = messageOpts;
+
+                $.ajax({
+                    type: "get",
+                    url: "#",//删除的地址
+                    async: true,
+                    data: {
+                        id: id
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                    },
+                    success: function (flag) {
+                        $("#loading").empty();
+                        if (flag == 1) {
+                            toastr.success('删除成功');
+                        } else {
+
+                            toastr.error('删除失败');
+                        }
+                        setTimeout("window.location.reload()", 3000);
+
+                    }
+                })
+            }
+        </script>
+
     </div>
 
 
