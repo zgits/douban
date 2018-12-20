@@ -441,12 +441,12 @@
                         <li><a href="#">&raquo;</a></li>
                         <li>
                             <!--异步传输页数，返回数据得到结果-->
-                            <form class="col-sm-3" role="form">
+                            <div class="col-sm-3" role="form">
                                 <div class="input-group">
                                     <input type="text" class="form-control">
-                                    <span onclick="test()" class="input-group-addon">go</span>
+                                    <button onclick="topage()" class="input-group-addon">go</button>
                                 </div>
-                            </form>
+                            </div>
                         </li>
                         <li><a style="border: none">共6页</a></li>
                     </ul>
@@ -456,6 +456,29 @@
 
         </div>
     </div>
+
+    <script>
+        function topage() {
+            alert("xxx");
+            $.ajax({
+                type:'post',
+                url:'${basepath}/getCommentsBypage',
+                data:{
+                    "currPage":2,
+                    "trailerId":1
+                },
+                success:function (data) {
+                    var obj=JSON.parse(data);
+
+                    console.log(data);
+
+                    console.log(obj.currPage);
+
+                }
+            });
+        }
+
+    </script>
 </div>
 <!--底部版权信息-->
 <div style="font:12px Tahoma;color: white;text-align:center;">

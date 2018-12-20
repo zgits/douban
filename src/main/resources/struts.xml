@@ -133,6 +133,11 @@
             <result name="input"></result>
         </action>
 
+
+        <action name="bgmain" class="background" method="goToBackground">
+            <result name="success">/admin/main.jsp</result>
+        </action>
+
     </package>
 
     <package name="firm-table" extends="json-default"  namespace="/" >
@@ -158,6 +163,12 @@
         </action>
 
         <action name="getAllImageTable" class="Image" method="gerAllImage">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getCommentsBypage" class="TrailerComment" method="getComments">
             <result name="success" type="json">
                 <param name="root">returndata</param>
             </result>

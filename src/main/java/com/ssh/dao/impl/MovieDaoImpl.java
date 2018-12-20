@@ -135,4 +135,24 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
 
         return query.list();
     }
+
+    @Override
+    public boolean deleteMovies(Integer[] ids) {
+        String hql="delete from Movie where id in (:ids)";
+        int ret=0;
+        try{
+            Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(hql);
+            query.setParameterList("ids", ids);
+            ret = query.executeUpdate();
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

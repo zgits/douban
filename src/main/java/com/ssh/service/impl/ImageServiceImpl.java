@@ -43,4 +43,9 @@ public class ImageServiceImpl implements ImageService{
     public List<Image> getAllImage() {
         return imageDao.getAllImage();
     }
+
+    @Override
+    public boolean deleteImages(Integer[] ids) {
+        return imageDao.deleteImages(ids);
+    }
 }

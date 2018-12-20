@@ -61,4 +61,12 @@ public interface TrailerDao {
      * @return
      */
     public List<Trailer> getAllTrailers();
+
+
+    /**
+     * 批量删除预告片
+     * @param ids
+     * @return
+     */
+    public boolean deleteTrailers(Integer[] ids);
 }

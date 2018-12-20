@@ -43,6 +43,10 @@ public class TrailerAction extends ActionSupport {
         this.id = id;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public String getTrailer() {
 
         Trailer trailer = trailerService.getMovieTrailer(id);
@@ -89,7 +93,6 @@ public class TrailerAction extends ActionSupport {
         ob.put("total", trailers.size());
         String returndata = ob.toString();
         System.out.println("成功转换" + returndata.length() + "大小的数据...");
-        System.out.println(arr);
         System.out.println(returndata);
         //转换编码
         ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
@@ -131,13 +134,6 @@ public class TrailerAction extends ActionSupport {
         writer.close();
     }
     /*********删除预告片end***********/
-
-
-    /************得到所有电影名******************/
-    public void getAllMovieName() {
-
-    }
-    /*************得到所有电影名end**************/
 
 
     /***********文件上传简单版*************/
@@ -226,4 +222,36 @@ public class TrailerAction extends ActionSupport {
     /*******end*******/
 
 
+    private Integer[] ids;
+
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
+    }
+
+    public void deleteTrailers() throws IOException {
+        String flag ="";
+        try{
+            if(trailerService.deleteTrailers(ids)){
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                System.out.println("成功");
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }
+
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        writer.flush();
+
+        writer.close();
+    }
 }

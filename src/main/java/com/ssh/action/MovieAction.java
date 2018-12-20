@@ -339,7 +339,39 @@ public class MovieAction extends ActionSupport{
     }
     /*************得到所有电影名end**************/
 
+    private Integer[] ids;
 
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
+    }
+
+    public void deleteMovies() throws IOException {
+        String flag ="";
+        try{
+            if(movieServie.deleteMovies(ids)){
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                System.out.println("成功");
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }
+
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        writer.flush();
+
+        writer.close();
+
+    }
 
 
 }

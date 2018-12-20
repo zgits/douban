@@ -49,6 +49,11 @@
           <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.29" />
           <element id="library" level="project" name="Maven: org.apache.struts:struts2-json-plugin:2.3.16.3" />
+          <element id="library" level="project" name="Maven: io.jsonwebtoken:jjwt:0.6.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.2" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.0" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.4.2" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
         </element>
       </element>
       <element id="directory" name="META-INF">

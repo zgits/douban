@@ -110,7 +110,7 @@
                 data-target="#add_trailer_modal" onclick="getAllMovieName()">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
         </button>
-        <button id="btn_delete2" type="button" class="btn btn-default">
+        <button id="btn_delete2" type="button" class="btn btn-default" onclick="deleteTrailers()">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
         </button>
     </div>
@@ -121,7 +121,7 @@
                 data-target="#add_image_modal" onclick="getAllMovieName2()">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
         </button>
-        <button id="btn_delete3" type="button" class="btn btn-default">
+        <button id="btn_delete3" type="button" class="btn btn-default" onclick="deleteImages()">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
         </button>
     </div>
@@ -132,7 +132,7 @@
                 data-target="#add_movie_modal">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
         </button>
-        <button id="btn_delete1" type="button" class="btn btn-default">
+        <button id="btn_delete1" type="button" class="btn btn-default" onclick="deleteMovies()">
             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
         </button>
     </div>
@@ -143,7 +143,7 @@
                     data-target="#add_label_modal" onclick="getParentLabelName()">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
             </button>
-            <button id="btn_delete5" type="button" class="btn btn-default">
+            <button id="btn_delete5" type="button" class="btn btn-default" onclick="deleteLabels()">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
             </button>
         </div>
@@ -1021,6 +1021,80 @@
                 }
             }
         </script>
+
+        <%--批量删除的模态框--%>
+        <div class="modal fade" id="deleteMoviesModal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="deleteMoviesDo()" class="btn btn-success" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+        <script>
+            function deleteMovies() {
+                // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                var rows = $("#reportTable").bootstrapTable('getSelections');
+                console.log(rows);
+                if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+                    toastr.warning('请先选择要删除的记录!');
+                    return;
+                }
+                $("#deleteMoviesModal").modal();
+
+            }
+
+            function deleteMoviesDo() {
+
+                // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                var rows = $("#reportTable").bootstrapTable('getSelections');
+                console.log(rows);
+
+                var arrays = new Array();// 声明一个数组
+                $(rows).each(function () {// 通过获得别选中的来进行遍历
+                    arrays.push(this.id);// cid为获得到的整条数据中的一列
+                });
+                var ids = arrays; // 获得要删除的id//.join(',')
+                console.log(ids);
+
+
+
+                $.ajax({
+                    type: "get",
+                    url: "${basepath}/movie_deleteMovies",//后台删除的地址
+                    async: true,
+                    traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                    data: {
+                        ids: ids
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                    },
+                    success: function (flag) {
+                        $("#loading").empty();
+                        if (flag == 1) {
+                            toastr.success('删除成功');
+                        } else {
+
+                            toastr.error('删除失败');
+                        }
+                        setTimeout("window.location.reload()", 3000);
+
+                    }
+                })
+
+            }
+        </script>
     </div>
 
     <div id="matter2" style="display: none">
@@ -1147,6 +1221,27 @@
         </div><!-- /.modal -->
 
 
+            <%--批量删除的模态框--%>
+            <div class="modal fade" id="deleteTrailersModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要删除吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a onclick="deleteTrailersDo()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+
+
         <%--新增预告片模态框--%>
         <div class="modal fade" id="add_trailer_modal" tabindex="-1" role="dialog" aria-labelledby="add_trailer_modal"
              aria-hidden="true">
@@ -1237,6 +1332,59 @@
                 })
             }
         </script>
+
+            <script>
+                function deleteTrailers() {
+                    var rows = $("#trailerTable").bootstrapTable('getSelections');
+                    console.log(rows);
+                    if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+                        toastr.warning("请先选择要删除的记录!");
+                        return;
+                    }
+                    $("#deleteTrailersModal").modal();
+
+                }
+
+                function deleteTrailersDo() {
+                    // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                    var rows = $("#trailerTable").bootstrapTable('getSelections');
+                    console.log(rows);
+
+                    var arrays = new Array();// 声明一个数组
+                    $(rows).each(function () {// 通过获得别选中的来进行遍历
+                        arrays.push(this.id);// cid为获得到的整条数据中的一列
+                    });
+                    var ids = arrays; // 获得要删除的id//.join(',')
+                    console.log(ids);
+
+
+
+                    $.ajax({
+                        type: "get",
+                        url: "${basepath}/trailerdeleteTrailers",//后台删除的地址
+                        async: true,
+                        traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                        data: {
+                            ids: ids
+                        },
+                        beforeSend: function (XMLHttpRequest) {
+                            $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                        },
+                        success: function (flag) {
+                            $("#loading").empty();
+                            if (flag == 1) {
+                                toastr.success('删除成功');
+                            } else {
+
+                                toastr.error('删除失败');
+                            }
+                            setTimeout("window.location.reload()", 3000);
+
+                        }
+                    })
+
+                }
+            </script>
 
 
         <script>
@@ -1338,7 +1486,7 @@
 
                         {
                             field: 'imagename',
-                            title: '预告片名',
+                            title: '图片片名',
                             align: 'center'
                         },
 
@@ -1545,6 +1693,79 @@
                 })
             }
         </script>
+
+
+            <%--批量删除的模态框--%>
+            <div class="modal fade" id="deleteImagesModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要删除吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a onclick="deleteImagesDo()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+            <%--批量删除图片--%>
+            <script>
+                function deleteImages() {
+                    // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                    var rows = $("#imageTable").bootstrapTable('getSelections');
+                    console.log(rows);
+                    if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+                        toastr.warning("请先选择要删除的记录!");
+                        return;
+                    }
+                    $("#deleteImagesModal").modal();
+
+                }
+
+                function deleteImagesDo() {
+                    // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                    var rows = $("#imageTable").bootstrapTable('getSelections');
+                    console.log(rows);
+
+                    var arrays = new Array();// 声明一个数组
+                    $(rows).each(function () {// 通过获得别选中的来进行遍历
+                        arrays.push(this.id);// cid为获得到的整条数据中的一列
+                    });
+                    var ids = arrays; // 获得要删除的id//.join(',')
+                    console.log(ids);
+
+                    $.ajax({
+                        type: "get",
+                        url: "${basepath}/image_deleteImages",//后台删除的地址
+                        async: true,
+                        traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                        data: {
+                            ids: ids
+                        },
+                        beforeSend: function (XMLHttpRequest) {
+                            $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                        },
+                        success: function (flag) {
+                            $("#loading").empty();
+                            if (flag == 1) {
+                                toastr.success('删除成功');
+                            } else {
+
+                                toastr.error('删除失败');
+                            }
+                            setTimeout("window.location.reload()", 3000);
+
+                        }
+                    })
+
+                }
+            </script>
 
 
     </div>
@@ -1919,39 +2140,51 @@
             </script>
 
 
+            <%--批量删除的模态框--%>
+            <div class="modal fade" id="deleteUsersModal">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content message_align">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">提示信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>您确认要删除吗？</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <a onclick="deleteUsersDo()" class="btn btn-success" data-dismiss="modal">确定</a>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
             <script>
-                // 删除按钮事件
+                // 批量删除按钮事件
                 function deleteUsers() {
                     // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
                     var rows = $("#userTable").bootstrapTable('getSelections');
                     console.log(rows);
                     if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
-                        alert("请先选择要删除的记录!");
+                        toastr.warning("请先选择要删除的记录!");
                         return;
-                    } else {
-                        var arrays = new Array();// 声明一个数组
-                        $(rows).each(function () {// 通过获得别选中的来进行遍历
-                            arrays.push(this.id);// cid为获得到的整条数据中的一列
-                        });
-                        var ids = arrays; // 获得要删除的id//.join(',')
-                        console.log(ids);
                     }
+                    $("#deleteUsersModal").modal();
 
-                    var messageOpts = {
-                        "closeButton": true,//是否显示关闭按钮
-                        "debug": false,//是否使用debug模式
-                        "positionClass": "toast-top-right",//弹出窗的位置
-                        "onclick": null,
-                        "showDuration": "3000",//显示的动画时间
-                        "hideDuration": "1000",//消失的动画时间
-                        "timeOut": "3000",//展现时间
-                        "extendedTimeOut": "1000",//加长展示时间
-                        "showEasing": "swing",//显示时的动画缓冲方式
-                        "hideEasing": "linear",//消失时的动画缓冲方式
-                        "showMethod": "fadeIn",//显示时的动画方式
-                        "hideMethod": "fadeOut" //消失时的动画方式
-                    };
-                    toastr.options = messageOpts;
+                }
+
+                function deleteUsersDo() {
+                    // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                    var rows = $("#userTable").bootstrapTable('getSelections');
+                    console.log(rows);
+
+                    var arrays = new Array();// 声明一个数组
+                    $(rows).each(function () {// 通过获得别选中的来进行遍历
+                        arrays.push(this.id);// cid为获得到的整条数据中的一列
+                    });
+                    var ids = arrays; // 获得要删除的id//.join(',')
+                    console.log(ids);
+
 
                     $.ajax({
                         type: "get",
@@ -2064,6 +2297,79 @@
                     ],
                 });
             });
+        </script>
+
+        <%--批量删除的模态框--%>
+        <div class="modal fade" id="deleteLabelsModal">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content message_align">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">提示信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>您确认要删除吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <a onclick="deleteLabelsDo()" class="btn btn-success" data-dismiss="modal">确定</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <%--批量删除事件--%>
+        <script>
+            function deleteLabels() {
+                // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                var rows = $("#labelTable").bootstrapTable('getSelections');
+                console.log(rows);
+                if (rows.length == 0) {// rows 主要是为了判断是否选中，下面的else内容才是主要
+                    toastr.warning("请先选择要删除的记录!");
+                    return;
+                }
+                $("#deleteLabelsModal").modal();
+
+            }
+
+            function deleteLabelsDo() {
+                // $("#table").bootstrapTable('getSelections');为bootstrapTable自带的，所以说一定要使用bootstrapTable显示表格,#table：为table的id
+                var rows = $("#labelTable").bootstrapTable('getSelections');
+                console.log(rows);
+
+                var arrays = new Array();// 声明一个数组
+                $(rows).each(function () {// 通过获得别选中的来进行遍历
+                    arrays.push(this.id);// cid为获得到的整条数据中的一列
+                });
+                var ids = arrays; // 获得要删除的id//.join(',')
+                console.log(ids);
+
+                $.ajax({
+                    type: "get",
+                    url: "#",//后台删除的地址
+                    async: true,
+                    traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                    data: {
+                        ids: ids
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
+                    },
+                    success: function (flag) {
+                        $("#loading").empty();
+                        if (flag == 1) {
+                            toastr.success('删除成功');
+                        } else {
+
+                            toastr.error('删除失败');
+                        }
+                        setTimeout("window.location.reload()", 3000);
+
+                    }
+                })
+
+            }
         </script>
 
         <%--删除模态框--%>

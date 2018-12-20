@@ -83,6 +83,24 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
         return query.list();
     }
 
+    @Override
+    public boolean deleteTrailers(Integer[] ids) {
+        String hql="delete from Trailer where id in (:ids)";
+        int ret=0;
+        try{
+            Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(hql);
+            query.setParameterList("ids", ids);
+            ret = query.executeUpdate();
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * 结束针对后台管理电影时对预告片的方法
      */

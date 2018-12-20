@@ -165,4 +165,9 @@ public class MovieServieImpl implements MovieServie{
         }
         return id_name;
     }
+
+    @Override
+    public boolean deleteMovies(Integer[] ids) {
+        return movieDao.deleteMovies(ids);
+    }
 }

@@ -46,4 +46,12 @@ public interface ImageService {
      */
 
     public List<Image> getAllImage();
+
+
+    /**
+     * 根据id批量删除图片
+     * @param ids
+     * @return
+     */
+    public boolean deleteImages(Integer[] ids);
 }

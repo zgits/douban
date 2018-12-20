@@ -195,4 +195,41 @@ public class ImageAction extends ActionSupport{
     }
     /*******end*******/
 
+    /**
+     * 批量删除图片
+     */
+    private Integer[] ids;
+
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
+    }
+
+    public void deleteImages() throws IOException {
+        String flag ="";
+        try{
+            if(imageService.deleteImages(ids)){
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                System.out.println("成功");
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }
+
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        writer.flush();
+
+        writer.close();
+
+    }
+
 }

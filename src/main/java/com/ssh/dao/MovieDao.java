@@ -86,9 +86,17 @@ public interface MovieDao {
 
 
     /**
-     * 得到
+     * 得到一个展示电影名的
      * @return
      */
     public List<Object[]> getAllMovieName();
+
+
+    /**
+     * 批量删除电影
+     * @param ids
+     * @return
+     */
+    public boolean deleteMovies(Integer[] ids);
 
 }

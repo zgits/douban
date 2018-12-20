@@ -87,7 +87,12 @@ public interface MovieServie {
     public Map<Integer,String> getAllMovieName();
 
 
-
+    /**
+     * 批量删除电影信息
+     * @param ids
+     * @return
+     */
+    public boolean deleteMovies(Integer[] ids);
 
 
 }

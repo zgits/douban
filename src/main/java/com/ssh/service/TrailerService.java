@@ -60,4 +60,11 @@ public interface TrailerService {
      * @return
      */
     public List<Trailer> getAllTrailer();
+
+    /**
+     * 批量删除预告片
+     * @param ids
+     * @return
+     */
+    public boolean deleteTrailers(Integer[] ids);
 }

@@ -77,4 +77,9 @@ public class TrailerServiceImpl implements TrailerService{
     public List<Trailer> getAllTrailer() {
         return trailerDao.getAllTrailers();
     }
+
+    @Override
+    public boolean deleteTrailers(Integer[] ids) {
+        return trailerDao.deleteTrailers(ids);
+    }
 }

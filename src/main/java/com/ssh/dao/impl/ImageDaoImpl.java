@@ -76,4 +76,22 @@ public class ImageDaoImpl extends HibernateDaoSupport implements ImageDao{
         Query query=this.getSessionFactory().getCurrentSession().createQuery("from Image");
         return query.list();
     }
+
+    @Override
+    public boolean deleteImages(Integer[] ids) {
+        String hql="delete from Image where id in (:ids)";
+        int ret=0;
+        try{
+            Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(hql);
+            query.setParameterList("ids", ids);
+            ret = query.executeUpdate();
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
