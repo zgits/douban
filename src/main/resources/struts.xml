@@ -173,6 +173,12 @@
                 <param name="root">returndata</param>
             </result>
         </action>
+
+        <action name="getMovieCommentsBypage" class="MovieComment" method="getComments">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
     </package>
 
 </struts>

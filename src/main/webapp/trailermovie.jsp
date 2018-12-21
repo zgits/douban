@@ -127,7 +127,7 @@
 <div class="container">
 
     <div class="row">
-        <ul class="list-group" style="width: 800px">
+        <ul id="showcomment" class="list-group" style="width: 800px">
             <c:forEach items="${OneTrailer.trailerComments}" var="trailercomment" varStatus="status">
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间-->
@@ -287,7 +287,7 @@
         }
 
         function replyComment2(contentId,commentId,to_id,to_userId,userId,type) {
-            var content=document.getElementById(contentId).value;
+            var content=$(contentId).val();
             var commentId=commentId;
             var to_userId=to_userId;
             var userId=userId;
@@ -418,6 +418,7 @@
                     }else{
                         toastr.error("评论失败");
                     }
+                    $("#content").val("");
                     setTimeout("window.location.reload()",3000);
                 }
             })
@@ -430,49 +431,287 @@
         <div class="inner clearfix">
             <section id="main-content">
 
-                <div class="text-center">
-                    <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                        <li>
-                            <!--异步传输页数，返回数据得到结果-->
-                            <div class="col-sm-3" role="form">
-                                <div class="input-group">
-                                    <input type="text" class="form-control">
-                                    <button onclick="topage()" class="input-group-addon">go</button>
-                                </div>
-                            </div>
-                        </li>
-                        <li><a style="border: none">共6页</a></li>
-                    </ul>
-                </div>
-
             </section>
 
         </div>
     </div>
 
     <script>
-        function topage() {
-            alert("xxx");
+
+
+        var totalpagenow=0;
+
+        $(document).ready(function(){
+            var id=${OneTrailer.id};
+            $("#main-content").empty();
+
+            $.ajax({
+                type:'post',
+                url:'${basepath}/getMovieCommentsBypage',
+                data:{
+                    "currPage":1,
+                    "trailerId":id
+                },
+                success:function (data) {
+                    var obj=JSON.parse(data);
+                    var appendpage="";
+                    console.log(obj);
+                    var totalPage=obj.totalPage;
+                    var currPage=obj.currPage;
+                    totalpagenow=obj.totalPage;
+                    console.log(totalPage);
+                    console.log(currPage);
+                    console.log(totalPage-currPage);
+
+                    if(totalPage>0){
+                        appendpage+='<div class="text-center">'+
+                                    '<ul class="pagination">'+
+                                    '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>'+
+                                    '<li id="front" value="1" onclick="topage(front)"><a style="cursor: pointer">上一页</a></li>';
+                        if(totalPage<=5){
+                            for(var i=1;i<=totalPage;i++){
+                                if(i==1){
+                                    appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                }else{
+                                    appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                }
+                            }
+                        }else{
+                            for(var i=1;i<=5;i++){
+                                if(i==1){
+                                    appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                }else{
+                                    appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                }
+                            }
+                        }
+                        appendpage+='<li id="next" value="2" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>'+
+                                    '<li id="last" value="'+obj.totalPage+'"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>'+
+                                    '<li>'+
+                                    '<div class="col-sm-3" role="form">'+
+                                    '<div class="input-group">'+
+                                    '<input id="page" type="text" class="form-control">'+
+                                    '<span onclick="topage(page)" class="input-group-addon">go</span>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</li>'+
+                                    '<li><a style="border: none">共'+obj.totalPage+'页</a></li>'+
+                                    '</ul>'+
+                                    '</div>';
+                        $("#main-content").append(appendpage);
+                    }
+
+
+                }
+            });
+
+
+        })
+
+        function changeDateFormat(cellval) {
+            var dateVal = cellval + "";
+            if (cellval != null) {
+                var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
+            }
+        }
+
+        function topage(id) {
+            var page=$(id).val();
+            if(page>totalpagenow){
+                page=totalpagenow;
+            }
             $.ajax({
                 type:'post',
                 url:'${basepath}/getCommentsBypage',
                 data:{
-                    "currPage":2,
-                    "trailerId":1
+                    "currPage":page,
+                    "trailerId":${OneTrailer.id}
                 },
                 success:function (data) {
                     var obj=JSON.parse(data);
 
-                    console.log(data);
+                    console.log(obj);
 
-                    console.log(obj.currPage);
+                    var totalPage=obj.totalPage;
+
+                    totalpagenow=obj.totalPage;
+
+
+                    var currPage=obj.currPage;
+
+
+                    $("#showcomment").empty();
+
+                    $("#main-content").empty();
+
+                    var comments=obj.lists;
+
+                    var appendhtml="";//要添加的显示内容
+
+                    var appendpage="";//分页的更改
+
+
+                    for(var i=0;i<comments.length;i++){
+                         appendhtml+=' <li class="list-group-item" style="border: none">'+
+                            '<div class="row">'+
+                            '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
+                             '<span>'+comments[i].username+'</span>'+
+                             '&nbsp;&nbsp;'+changeDateFormat(comments[i].time)+
+                             '</div>'+
+                             '<br>'+
+                             '<div class="row">'+
+                             '&nbsp;&nbsp;'+
+                               comments[i].content+
+                              '</div>';
+                          if(comments[i].userId==1) {
+                              appendhtml+='<div class="row col-md-offset-10">'+
+                                  '<a class="btn btn-sm" onclick="deletecomment('+comments[i].id+')">删除</a>'+
+                                  '<a data-toggle="collapse" data-parent="#accordion"'+
+                                  'href="#'+comments[i].userId+i+'" class="btn btn-sm">回复</a>'+
+                                  '</div>';
+                          }
+                          else {
+                              appendhtml+='<div class="row col-md-offset-10">'+
+
+                                  '<a class="btn btn-sm">举报</a>'+
+                                  '<a data-toggle="collapse" data-parent="#accordion"'+
+                                  'href="#'+comments[i].userId+i+'" class="btn btn-sm">回复</a>'+
+                                  '</div>';
+                          }
+                          appendhtml+='<div id="'+comments[i].userId+i+'" class="panel-collapse collapse">'+
+                                       '<div class="panel-body">'+
+                                       '<div class="row">'+
+                                       '<div class="form-horizontal">'+
+                                       '<div class="form-group col-md-8">'+
+                                       '<input id="'+i+'" class="form-control" type="text" placeholder="@'+comments[i].username+':">'+
+                                       '</div>'+
+                                       '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment('+i+','+comments[i].id+','+comments[i].userId+','+1+',1)" value="回复">'+
+                                       '</div>'+
+                                       '</div>'+
+                                       '<div class="row">'+
+                                       '<ul class="list-group">';
+
+                              var replycomments=comments[i].trailerReplycomments;
+                              console.log(replycomments);
+
+                                     for(var j=0;j<replycomments.length;j++){
+                                         appendhtml+='<li class="list-group-item">'+
+                                                      '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                                      '<span>'+replycomments[j].username+'</span>'+
+                                                      '&nbsp;&nbsp;'+changeDateFormat(replycomments[j].time)+
+                                                      '<br>'+
+                                                      '<div class="row">'+
+                                                      '<span class="col-md-offset-1">回复@'+replycomments[j].to_userIdusername+':'+replycomments[j].content+'</span>';
+                                                      if(replycomments[j].userId==1){
+                                                          appendhtml+='<div class="row col-md-offset-10">'+
+                                                                       '<a class="btn btn-sm" onclick="deletereplycomment('+replycomments[j].id+')">删除</a>'+
+                                                                       '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
+                                                                       'href="#s'+comments[i].id+j+'">回复</a>'+
+                                                                       '</div>';
+                                                      }else{
+                                                          appendhtml+='<div class="row col-md-offset-10">'+
+                                                              '<a class="btn btn-sm">举报</a>'+
+                                                              '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
+                                                              'href="#s'+comments[i].id+j+'">回复</a>'+
+                                                              '</div>';
+                                                      }
+                                                      appendhtml+='</div>'+
+                                                                   '<div id="s'+comments[i].id+j+'" class="panel-collapse collapse">'+
+                                                                   '<div class="panel-body">'+
+                                                                   '<div class="form-group col-md-8">'+
+                                                                   '<input id="s'+replycomments[j].id+'" class="form-control" type="text" placeholder="@'+replycomments[j].username+':">'+
+                                                                   '</div>'+
+                                                                   '<input onclick="replyComment2(s'+replycomments[j].id+','+comments[i].id+','+replycomments[j].id+','+replycomments[j].userId+',1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">'+
+                                                                   '</div>'+
+                                                                   '</div>'+
+                                                                   '</li>';
+
+                                     }
+
+                                     appendhtml+='</ul></div> </div> </div> </li> <hr>';
+
+
+                    }
+
+                    if(totalPage>0){
+                        var front=currPage-1;
+                        if(front<=0){
+                            front=1;
+                        }
+                        var next=currPage+1;
+                        if(next>totalPage){
+                            next=totalPage;
+                        }
+                        appendpage+='<div class="text-center">'+
+                            '<ul class="pagination">'+
+                            '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>'+
+                            '<li id="front" value="'+front+'" onclick="topage(front)"><a style="cursor: pointer">上一页</a></li>';
+
+                            if(totalPage<=5){
+                                for(var i=1;i<=totalPage;i++){
+                                    if(i==currPage){
+                                        appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                    }else{
+                                        appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                    }
+                                }
+                            }
+                            else{
+                                var test1=currPage;
+                                var test2=totalPage;
+                                if(totalPage-currPage>=5){
+                                    for(var i=currPage;i<=currPage+4;i++){
+                                        if(i==currPage){
+                                            appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                        }else{
+                                            appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                        }
+                                    }
+                                }
+                                else{
+                                    for(var i=totalPage-4;i<=totalPage;i++){
+                                        if(i==currPage){
+                                            appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                        }else{
+                                            appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                        }
+                                    }
+                                }
+
+                            }
+                            appendpage+='<li id="next" value="'+next+'" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>'+
+                                        '<li id="last" value="'+totalPage+'"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>'+
+                                        '<li>'+
+                                        '<div class="col-sm-3" role="form">'+
+                                        '<div class="input-group">'+
+                                        '<input id="page" type="text" class="form-control">'+
+                                        '<span onclick="topage(page)" class="input-group-addon" style="cursor: pointer">go</span>'+
+                                        '</div>'+
+                                        '</div>'+
+                                        '</li>'+
+                                        '<li><a style="border: none">共'+totalPage+'页</a></li>'+
+                                        '</ul>'+
+                                        '</div>';
+
+
+                    }
+
+
+                    $("#showcomment").append(appendhtml);
+                    $("#main-content").append(appendpage);
 
                 }
             });
