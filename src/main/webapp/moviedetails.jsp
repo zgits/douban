@@ -459,7 +459,7 @@
     <!--评论显示界面-->
     <div class="row">
         <h4 style="color: #2f904d">
-            xxxx电影的短评(共${fn:length(oneMovie.movieComments)}条)
+            xxxx电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
         </h4>
         <!--Ajax异步得到-->
         <div class="row">
@@ -496,10 +496,10 @@
                                             function showStar${moviecomments.id}(n) {
                                                 var con_wid = document.getElementById("${moviecomments.id}").offsetWidth;
                                                 var del_star = document.getElementById("del_staruser${status.count}");
-                                                console.log(con_wid);
+                                                console.log(con_wid+del_star);
 
                                                 //透明星星移动的像素
-                                                var del_move = (n * con_wid) / 5;
+                                                var del_move = (n * con_wid) / 10;
 
                                                 del_star.style.backgroundPosition = -del_move + "px 0px";
                                                 del_star.style.left = del_move + "px";
@@ -544,7 +544,7 @@
                                                     <input id="tor${moviecomments.id}" class="form-control" type="text" placeholder="@${moviecomments.username}:">
                                                 </div>
 
-                                                <input onclick="replyComment('tor${moviecomments.id}','${moviecomments.id}','${moviecomments.userId}',1,1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                <input onclick="replyComment(tor${moviecomments.id},'${moviecomments.id}','${moviecomments.userId}',1,1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -570,15 +570,15 @@
                                                             </c:choose>
 
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                               href="#s${moviecomments.id}${status.count}">回复</a>
+                                                               href="#div${moviecomments.id}${status.count}">回复</a>
                                                         </div>
-                                                        <div id="s${moviecomments.id}${status.count}" class="panel-collapse collapse">
+                                                        <div id="div${moviecomments.id}${status.count}" class="panel-collapse collapse">
                                                             <div class="panel-body">
                                                                 <div class="form-group col-md-8">
                                                                     <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
 
                                                                 </div>
-                                                                <input onclick="replyComment2('s${reply.id}',${moviecomments.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                                <input onclick="replyComment2(s${reply.id},${moviecomments.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                                             </div>
 
                                                         </div>
@@ -677,10 +677,15 @@
             };
             toastr.options = messageOpts;
             function replyComment(contentId,commentId,to_userId,userId,type) {
-                var content=document.getElementById(contentId).value;
+                var content=$(contentId).val();
                 var commentId=commentId;
                 var to_userId=to_userId;
                 var userId=userId;
+                $(contentId).val("");
+                if(content==""){
+                    toastr.warning("输入不能为空");
+                    return;
+                }
                 $.ajax({
                     type:"post",
                     url:"${basepath}/rmoviereplycommentinsertReplyComment",
@@ -707,11 +712,17 @@
             }
 
             function replyComment2(contentId,commentId,to_id,to_userId,userId,type) {
-                var content=document.getElementById(contentId).value;
+                var content=$(contentId).val();
                 var commentId=commentId;
                 var to_userId=to_userId;
                 var userId=userId;
                 var to_id=to_id;
+                $(contentId).val("");
+
+                if(content==""){
+                    toastr.warning("输入不能为空");
+                    return;
+                }
                 $.ajax({
                     type:"post",
                     url:"${basepath}/rmoviereplycommentinsertReplyComment",
@@ -907,10 +918,10 @@
             <%--登录后可以获取id--%>
             <input id="userId" type="hidden" name="movie_comment.userId" value="1">
             <input id="movieId" type="hidden" name="movie_comment.movieId" value="${oneMovie.id}">
-            <div class="form-group" style="margin-left:-50px ">
+            <div class="form-group" style="width: 800px ">
                 <textarea id="content" name="movie_comment.content" class="form-control" rows="3"></textarea>
             </div>
-            <div class="col-md-offset-11">
+            <div class="col-md-offset-8">
                 <button onclick="moviecomment()" type="submit" class="btn btn-primary">发布</button>
             </div>
         </div>
@@ -1001,6 +1012,9 @@
                     console.log(totalPage);
                     console.log(currPage);
                     console.log(obj.totalCount);
+
+                    $("#countcomments").empty();
+                    $("#countcomments").text(obj.totalCount);
 
 
                     if(totalPage>0){
@@ -1096,12 +1110,13 @@
 
                     var comments=obj.lists;
 
-                    alert(comments[0].score);
 
                     var appendhtml="";//要添加的显示内容
 
                     var appendpage="";//分页的更改
 
+
+                    appendhtml+='<ul class="list-group" style="width: 800px">';
 
                     for(var i=0;i<comments.length;i++){
                         appendhtml+=' <li class="list-group-item" style="border: none">'+
@@ -1109,20 +1124,26 @@
                             '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
                             '<span>'+comments[i].username+'</span>'+
                             '&nbsp;&nbsp;'+changeDateFormat(comments[i].time);
-                            if(comments[i].score in obj){
+                            if(typeof(comments[i].score)!="undefined"){
+                            appendhtml+='<div id='+comments[i].id+' class="star-vote">'+
+                                        '<span id=add_staruser'+i+' class="add-star"></span>'+
+                                        '<span id=del_staruser'+i+' class="del-star"></span>'+
+                                        '</div>';
+
+
 
                             }
                         appendhtml+='</div>'+
-                            '<br>'+
-                            '<div class="row">'+
-                            '&nbsp;&nbsp;'+
-                            comments[i].content+
-                            '</div>';
+                                    '<br>'+
+                                    '<div class="row">'+
+                                    '&nbsp;&nbsp;'+
+                                    comments[i].content+
+                                    '</div>';
                         if(comments[i].userId==1) {
                             appendhtml+='<div class="row col-md-offset-10">'+
                                 '<a class="btn btn-sm" onclick="deletecomment('+comments[i].id+')">删除</a>'+
                                 '<a data-toggle="collapse" data-parent="#accordion"'+
-                                'href="#'+comments[i].userId+i+'" class="btn btn-sm">回复</a>'+
+                                'href="#r'+comments[i].id+'" class="btn btn-sm">回复</a>'+
                                 '</div>';
                         }
                         else {
@@ -1130,17 +1151,17 @@
 
                                 '<a class="btn btn-sm">举报</a>'+
                                 '<a data-toggle="collapse" data-parent="#accordion"'+
-                                'href="#'+comments[i].userId+i+'" class="btn btn-sm">回复</a>'+
+                                'href="#r'+comments[i].id+'" class="btn btn-sm">回复</a>'+
                                 '</div>';
                         }
-                        appendhtml+='<div id="'+comments[i].userId+i+'" class="panel-collapse collapse">'+
+                        appendhtml+='<div id="r'+comments[i].id+'" class="panel-collapse collapse">'+
                             '<div class="panel-body">'+
                             '<div class="row">'+
                             '<div class="form-horizontal">'+
                             '<div class="form-group col-md-8">'+
-                            '<input id="'+i+'" class="form-control" type="text" placeholder="@'+comments[i].username+':">'+
+                            '<input id="tor'+comments[i].id+'" class="form-control" type="text" placeholder="@'+comments[i].username+':">'+
                             '</div>'+
-                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment('+i+','+comments[i].id+','+comments[i].userId+','+1+',1)" value="回复">'+
+                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment(tor'+comments[i].id+','+comments[i].id+','+comments[i].userId+','+1+',1)" value="回复">'+
                             '</div>'+
                             '</div>'+
                             '<div class="row">'+
@@ -1150,28 +1171,28 @@
                         console.log(replycomments);
 
                         for(var j=0;j<replycomments.length;j++){
-                            appendhtml+='<li class="list-group-item">'+
-                                '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
-                                '<span>'+replycomments[j].username+'</span>'+
-                                '&nbsp;&nbsp;'+changeDateFormat(replycomments[j].time)+
-                                '<br>'+
-                                '<div class="row">'+
-                                '<span class="col-md-offset-1">回复@'+replycomments[j].to_userIdusername+':'+replycomments[j].content+'</span>';
+                            appendhtml+= '<li class="list-group-item">'+
+                                        '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                        '<span>'+replycomments[j].username+'</span>'+
+                                        '&nbsp;&nbsp;'+changeDateFormat(replycomments[j].time)+
+                                        '<br>'+
+                                        '<div class="row">'+
+                                        '<span class="col-md-offset-1">回复@'+replycomments[j].to_userIdusername+':'+replycomments[j].content+'</span>';
                             if(replycomments[j].userId==1){
                                 appendhtml+='<div class="row col-md-offset-10">'+
-                                    '<a class="btn btn-sm" onclick="deletereplycomment('+replycomments[j].id+')">删除</a>'+
+                                    '<a class="btn btn-sm" onclick="deletecomment2('+replycomments[j].id+')">删除</a>'+
                                     '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
-                                    'href="#s'+comments[i].id+j+'">回复</a>'+
+                                    'href="#div'+comments[i].id+j+'">回复</a>'+
                                     '</div>';
                             }else{
                                 appendhtml+='<div class="row col-md-offset-10">'+
                                     '<a class="btn btn-sm">举报</a>'+
                                     '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
-                                    'href="#s'+comments[i].id+j+'">回复</a>'+
+                                    'href="#div'+comments[i].id+j+'">回复</a>'+
                                     '</div>';
                             }
                             appendhtml+='</div>'+
-                                '<div id="s'+comments[i].id+j+'" class="panel-collapse collapse">'+
+                                '<div id="div'+comments[i].id+j+'" class="panel-collapse collapse">'+
                                 '<div class="panel-body">'+
                                 '<div class="form-group col-md-8">'+
                                 '<input id="s'+replycomments[j].id+'" class="form-control" type="text" placeholder="@'+replycomments[j].username+':">'+
@@ -1255,9 +1276,35 @@
 
                     $("#showcomment").append(appendhtml);
                     $("#main-content").append(appendpage);
+                    $("#countcomments").empty();
+                    $("#countcomments").text(obj.totalCount);
+
+                    for(var i=0;i<comments.length;i++){
+                        if(typeof(comments[i].score)!="undefined"){
+                            showStar(comments[i].id,"del_staruser"+i,comments[i].score);
+                        }
+
+                    }
 
                 }
             });
+        }
+
+
+        //n表示后台获取的星数
+        function showStar(divid,del_star_id,n) {
+            console.log(divid);
+            console.log(del_star_id);
+
+            var con_wid = document.getElementById(divid).offsetWidth;
+            var del_star = document.getElementById(del_star_id);
+            console.log(con_wid);
+
+            //透明星星移动的像素
+            var del_move = (n * con_wid) / 10;
+
+            del_star.style.backgroundPosition = -del_move + "px 0px";
+            del_star.style.left = del_move + "px";
         }
 
     </script>

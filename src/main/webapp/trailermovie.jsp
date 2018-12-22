@@ -38,6 +38,9 @@
     <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
     <script src="/static_resources/toastr/toastr.min.js"></script>
 
+
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
     <style type="text/css">
         .m {
             margin-left: -15px;
@@ -62,6 +65,9 @@
     </style>
 </head>
 <body>
+<script>
+    alert($.cookie("id"));
+</script>
 
 <!--导航栏-->
 <nav class="navbar navbar-inverse">
@@ -195,7 +201,7 @@
 
 
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                               href="#s${trailercomment.id}${status.count}">回复</a>
+                                                               href="#div${trailercomment.id}${status.count}">回复</a>
 
                                                         </div>
                                                     </c:when>
@@ -204,7 +210,7 @@
 
                                                             <a class="btn btn-sm">举报</a>
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                               href="#s${trailercomment.id}${status.count}">回复</a>
+                                                               href="#div${trailercomment.id}${status.count}">回复</a>
 
                                                         </div>
                                                     </c:otherwise>
@@ -212,13 +218,13 @@
 
 
                                             </div>
-                                            <div id="s${trailercomment.id}${status.count}" class="panel-collapse collapse">
+                                            <div id="div${trailercomment.id}${status.count}" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="form-group col-md-8">
                                                         <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
 
                                                     </div>
-                                                    <input onclick="replyComment2('s${reply.id}',${trailercomment.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                    <input onclick="replyComment2(s${reply.id},${trailercomment.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                                 </div>
 
                                             </div>
@@ -233,6 +239,48 @@
                 <hr>
             </c:forEach>
         </ul>
+    </div>
+
+
+    <%--模态框--%>
+    <div class="modal fade" id="delcfmModel2">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="replyidtodel"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button onclick="deletereplyDo()" class="btn btn-info" data-dismiss="modal">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="delcfmModel1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="commentidtodel"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a onclick="deletetrailercommentDo()" class="btn btn-info" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
     </div>
 
     <script>
@@ -261,6 +309,13 @@
             var commentId=commentId;
             var to_userId=to_userId;
             var userId=userId;
+
+            $(contentId).empty();
+            if(content==""){
+                toastr.warning("输入不能为空");
+                return;
+            }
+
             $.ajax({
                 type:"post",
                 url:"${basepath}/rtrailerreplycommentinsertReplyComment",
@@ -292,6 +347,11 @@
             var to_userId=to_userId;
             var userId=userId;
             var to_id=to_id;
+            $(contentId).val("");
+            if(content==""){
+                toastr.warning("输入不能为空");
+                return;
+            }
             $.ajax({
                 type:"post",
                 url:"${basepath}/rtrailerreplycommentinsertReplyComment",
@@ -320,12 +380,16 @@
 
 
         function deletecomment(commentId){
-            var id=commentId;
+            $("#commentidtodel").val(commentId);
+            $("#delcfmModel1").modal();
+        }
+
+        function deletetrailercommentDo() {
             $.ajax({
                 url:"${basepath}/trailercommentdelete",
                 type:"post",
                 data:{
-                    "commentId":id
+                    "commentId":$("#commentidtodel").val()
                 },
                 beforeSend: function (XMLHttpRequest) {
                     $("#loading").show(); //在后台返回success之前显示loading图标
@@ -342,6 +406,14 @@
             })
         }
         function deletereplycomment(id){
+            $("#replyidtodel").val(id);
+            console.log(id);
+            $("#delcfmModel2").modal();
+        }
+
+        function deletereplyDo() {
+
+            var id=$("#replyidtodel").val();
             $.ajax({
                 url:"${basepath}/rtrailerreplycommentdeleteReplyComment",
                 type:"post",
@@ -361,6 +433,7 @@
                     setTimeout("window.location.reload()",3000);
                 }
             })
+
         }
 
     </script>
@@ -400,6 +473,11 @@
             var userId=document.getElementById("userId").value;
             var trailerId=document.getElementById("trailerId").value;
             var content=document.getElementById("content").value;
+            if(content==""){
+                toastr.warning("输入不能为空");
+                return;
+            }
+            $(content).val("");
             $.ajax({
                 type:"post",
                 url:"${basepath}/trailercommentinsertComment",
@@ -447,7 +525,7 @@
 
             $.ajax({
                 type:'post',
-                url:'${basepath}/getMovieCommentsBypage',
+                url:'${basepath}/getCommentsBypage',
                 data:{
                     "currPage":1,
                     "trailerId":id
@@ -616,17 +694,17 @@
                                                           appendhtml+='<div class="row col-md-offset-10">'+
                                                                        '<a class="btn btn-sm" onclick="deletereplycomment('+replycomments[j].id+')">删除</a>'+
                                                                        '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
-                                                                       'href="#s'+comments[i].id+j+'">回复</a>'+
+                                                                       'href="#div'+comments[i].id+j+'">回复</a>'+
                                                                        '</div>';
                                                       }else{
                                                           appendhtml+='<div class="row col-md-offset-10">'+
                                                               '<a class="btn btn-sm">举报</a>'+
                                                               '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
-                                                              'href="#s'+comments[i].id+j+'">回复</a>'+
+                                                              'href="#div'+comments[i].id+j+'">回复</a>'+
                                                               '</div>';
                                                       }
                                                       appendhtml+='</div>'+
-                                                                   '<div id="s'+comments[i].id+j+'" class="panel-collapse collapse">'+
+                                                                   '<div id="div'+comments[i].id+j+'" class="panel-collapse collapse">'+
                                                                    '<div class="panel-body">'+
                                                                    '<div class="form-group col-md-8">'+
                                                                    '<input id="s'+replycomments[j].id+'" class="form-control" type="text" placeholder="@'+replycomments[j].username+':">'+

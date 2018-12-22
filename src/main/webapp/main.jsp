@@ -28,6 +28,8 @@
     <!--显示星数-->
     <link href="static_resources/star/star.css" rel="stylesheet">
 
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
     <style>
         #wapper{
             position: relative;   /*重要！保证footer是相对于wapper位置绝对*/
@@ -46,6 +48,8 @@
 
 </head>
 <body>
+
+
 <!--logo,导航栏，搜索栏，个人信息栏，---慕课---->
 <nav class="navbar navbar-inverse">
     <div class="container">
@@ -450,5 +454,10 @@
 
     </div>
 </div>
+
+<script>
+    $.cookie("id",3);
+    alert("xxxx"+$.cookie("id"));
+</script>
 </body>
 </html>
