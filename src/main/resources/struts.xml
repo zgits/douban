@@ -179,6 +179,12 @@
                 <param name="root">returndata</param>
             </result>
         </action>
+
+        <action name="getLabels" class="Label" method="getLabelsToUpAddMovie">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
     </package>
 
 </struts>

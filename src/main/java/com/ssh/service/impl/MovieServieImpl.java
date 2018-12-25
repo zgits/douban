@@ -3,12 +3,10 @@ package com.ssh.service.impl;
 import com.ssh.dao.ImageDao;
 import com.ssh.dao.MovieDao;
 import com.ssh.dao.TrailerDao;
+import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
-import com.ssh.service.ImageService;
-import com.ssh.service.MovieServie;
-import com.ssh.service.Movie_CommentService;
-import com.ssh.service.TrailerService;
+import com.ssh.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,9 +35,22 @@ public class MovieServieImpl implements MovieServie{
     @Autowired
     private Movie_CommentService movie_commentService;
 
+    @Autowired
+    private LabelMappingService labelMappingService;
+
     @Override
     public boolean insertMovie(Movie movie) {
-        return movieDao.insertMovie(movie);
+        Integer id=movieDao.insertMovie(movie);
+        if(id!=0){
+            for (Labelmapping labelmapping:movie.getLabelmappings()){
+                labelmapping.setMovieId(id);
+            }
+            labelMappingService.insertLabelMapping(movie.getLabelmappings());
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     @Override

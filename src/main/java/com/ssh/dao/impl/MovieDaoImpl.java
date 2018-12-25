@@ -26,12 +26,13 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     }
 
     @Override
-    public boolean insertMovie(Movie movie) {
+    public Integer insertMovie(Movie movie) {
         try{
             this.getSessionFactory().getCurrentSession().save(movie);
-            return true;
+            Integer id=movie.getId();
+            return id;
         }catch (Exception e){
-            return false;
+            return 0;
         }
     }
 

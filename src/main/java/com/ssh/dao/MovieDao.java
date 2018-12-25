@@ -16,7 +16,7 @@ public interface MovieDao {
      * @param movie
      * @return
      */
-    public boolean insertMovie(Movie movie);
+    public Integer insertMovie(Movie movie);
 
     /**
      * 删除电影信息

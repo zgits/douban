@@ -5,10 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.ssh.model.Image;
-import com.ssh.model.Movie;
-import com.ssh.model.PageBean;
-import com.ssh.model.Trailer;
+import com.ssh.model.*;
 import com.ssh.service.MovieServie;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -68,12 +65,27 @@ public class MovieAction extends ActionSupport{
     /*********end************/
 
     /*********增加电影信息***********/
+    private Integer[] labelids;
+
+    public Integer[] getLabelids() {
+        return labelids;
+    }
+
+    public void setLabelids(Integer[] labelids) {
+        this.labelids = labelids;
+    }
+
     public void addMovie() throws IOException {
         System.out.println(movie);
-
-
         String flag ="";
+        List<Labelmapping> labelmappings=new ArrayList<>();
         try{
+            for(Integer id:labelids){
+                Labelmapping labelmapping=new Labelmapping();
+                labelmapping.setLabelId(id);
+                labelmappings.add(labelmapping);
+            }
+            movie.setLabelmappings(labelmappings);
             movieServie.insertMovie(movie);
             flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
         }catch (Exception e){

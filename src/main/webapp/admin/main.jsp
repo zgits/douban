@@ -129,7 +129,7 @@
     <%--电影新增--%>
     <div id="toolbar1" class="btn-group">
         <button id="btn_add1" type="button" class="btn btn-success" data-toggle="modal"
-                data-target="#add_movie_modal">
+                data-target="#add_movie_modal" onclick="getAddLabel()">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
         </button>
         <button id="btn_delete1" type="button" class="btn btn-default" onclick="deleteMovies()">
@@ -385,6 +385,24 @@
                                     </div>
                                     <!--语言选择end-->
 
+
+                                    <%--分类选择--%>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">分类</label>
+                                        <div class="col-sm-9" id="add_movie_label">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="inlineCheckbox1" value="option1"> 选项 1
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="inlineCheckbox2" value="option2"> 选项 2
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="inlineCheckbox3" value="option3"> 选项 3
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <%--分类选择end--%>
+
                                     <!--上映时间-->
                                     <div class="form-group">
                                         <label for="add_movie_time" class="col-sm-3 control-label">上映时间</label>
@@ -425,6 +443,32 @@
                     </div><!-- /.modal -->
                 </div>
             </div>
+
+
+            <script>
+                function getAddLabel() {
+
+                    $.ajax({
+                        url:"${bathpath}/getLabels",
+                        type:'post',
+                        dataType:'json',
+                        success:function (data) {
+                            $("#add_movie_label").empty();
+                            var appendlabel='';
+                            var json=data.data;
+                            for(var i=0;i<json.length;i++){
+                                appendlabel+='<label class="checkbox-inline">'+
+                                             '<input type="checkbox" name="checklabel" id="inlineCheckbox'+(i+1)+'" value="'+json[i].id+'">'+json[i].name+
+                                             '</label>';
+                            }
+                            $("#add_movie_label").append(appendlabel);
+
+
+                        }
+                    })
+
+                }
+            </script>
 
 
             <div class="form-horizontal" role="form" id="show_movie"
@@ -866,6 +910,15 @@
                 var length = $.trim($("#add_movie_length").val());
                 var plot = $.trim($("#add_movie_plot").val());
                 var release_region = $.trim($("#add_movie_release_region").val());//上映地区/国家
+                var temp=document.getElementsByName("checklabel");
+
+                var labelids=[];
+                for(var i=0;i<temp.length;i++){
+                    if(temp[i].checked){
+                        alert(temp[i]);
+                        labelids.push(temp[i].value);
+                    }
+                }
 
                 var messageOpts = {
                     "closeButton": true,//是否显示关闭按钮
@@ -887,6 +940,7 @@
                     type: "post",
                     url: "${basepath}/movie_addMovie",
                     async: true,
+                    traditional: true,
                     data: {
                         "movie.moviename": moviename,
                         "movie.plot_introduction": plot,
@@ -896,7 +950,9 @@
                         "movie.language": language,
                         "movie.region": country,
                         "movie.release_time": date,
-                        "movie.release_region": release_region
+                        "movie.release_region": release_region,
+                        "labelids":labelids
+
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
@@ -997,7 +1053,7 @@
                             align: 'center',
                             formatter: function (value, row, index) {
                                 var e = '<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_info(' + row.id + ') "data-target="#addUserModal">编辑 </button> ';  //row.id为每行的id
-                                var d = '<button class="btn btn-info" data-toggle="modal" onclick="return get_show_info(' + row.id + ') "data-target="#show_movie_modal">查看</button>';
+                                var d = '<a class="btn btn-info"  href="/movie_getMovieById?id=' + row.id + '">查看</a>';
                                 var c = '<button class="btn btn-danger" onClick="delcfm1(' + row.id + ')">删除</button>';
                                 return e + d + c;
                             }
