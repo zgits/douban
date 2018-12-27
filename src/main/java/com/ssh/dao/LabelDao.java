@@ -16,4 +16,12 @@ public interface LabelDao {
      */
     public List<Label> getAllLabels_2();
 
+
+    /**
+     * 根据id获得分类的名字
+     * @param id
+     * @return
+     */
+    public String getLabelNameById(Integer id);
+
 }

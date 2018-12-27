@@ -26,4 +26,9 @@ public class LabelDaoImpl implements LabelDao{
         Query query=sessionFactory.getCurrentSession().createQuery("from Label where level=2");
         return query.list();
     }
+
+    @Override
+    public String getLabelNameById(Integer id) {
+        return (String)sessionFactory.getCurrentSession().createQuery(" select name from Label where id=?").setParameter(0,id).uniqueResult();
+    }
 }

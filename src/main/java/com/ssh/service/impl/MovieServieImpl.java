@@ -38,12 +38,16 @@ public class MovieServieImpl implements MovieServie{
     @Autowired
     private LabelMappingService labelMappingService;
 
+    @Autowired
+    private LabelService labelService;
+
     @Override
     public boolean insertMovie(Movie movie) {
         Integer id=movieDao.insertMovie(movie);
         if(id!=0){
             for (Labelmapping labelmapping:movie.getLabelmappings()){
                 labelmapping.setMovieId(id);
+                labelmapping.setLabelName(labelService.getLabelNameById(labelmapping.getLabelId()));
             }
             labelMappingService.insertLabelMapping(movie.getLabelmappings());
             return true;
