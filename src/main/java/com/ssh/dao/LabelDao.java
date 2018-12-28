@@ -40,4 +40,12 @@ public interface LabelDao {
      * 根据id获取标签
      */
     public Label getLabelById(int id);
+
+    /**
+     * 根据id获得分类的名字
+     * @param id
+     * @return
+     */
+    public String getLabelNameById(Integer id);
+
 }

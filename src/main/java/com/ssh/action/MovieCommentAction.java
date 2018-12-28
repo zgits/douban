@@ -149,6 +149,5 @@ public class MovieCommentAction extends ActionSupport{
     }
 
     /**********插入评论end**********/
-    /*******刷新问题没解决*********/
 
 }

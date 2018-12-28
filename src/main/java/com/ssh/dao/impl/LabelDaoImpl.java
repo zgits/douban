@@ -90,4 +90,9 @@ public class LabelDaoImpl implements LabelDao{
         label=(Label)query.list();
         return label;
     }
+
+    @Override
+    public String getLabelNameById(Integer id) {
+        return (String)sessionFactory.getCurrentSession().createQuery(" select name from Label where id=?").setParameter(0,id).uniqueResult();
+    }
 }

@@ -15,7 +15,7 @@ public interface LabelService {
      * 得到分类为添加电影所用
      * @return
      */
-    public Map<Integer,String> getAllLabelsToAddMovie();
+    //public Map<Integer,String> getAllLabelsToAddMovie();
 
     /**
      * 得到所有标签
@@ -41,4 +41,13 @@ public interface LabelService {
      * 根据id查询标签
      */
     public Label getLabelById(int id);
+    public List<Label> getAllLabelsToAddMovie();
+
+
+    /**
+     * 根据id获取分类的名字
+     * @param id
+     * @return
+     */
+    public String getLabelNameById(Integer id);
 }

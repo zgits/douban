@@ -6,9 +6,9 @@ import com.opensymphony.xwork2.interceptor.MethodFilterInterceptor;
 import org.apache.struts2.ServletActionContext;
 
 /**
- * Created by 幻夜~星辰 on 2018/12/17.
+ * Created by 幻夜~星辰 on 2018/12/27.
  */
-public class Interceptor extends MethodFilterInterceptor{
+public class UserInterceptor extends MethodFilterInterceptor {
 
 
     /**
@@ -20,16 +20,17 @@ public class Interceptor extends MethodFilterInterceptor{
     @Override
     protected String doIntercept(ActionInvocation actionInvocation) throws Exception {
 
-        //获取在session中的管理员名字，登录之后就有，没有登录就没有
-        String admin= (String) ServletActionContext.getRequest().getSession().getAttribute("adminname");
+        //获取在session中的用户名字，登录之后就有，没有登录就没有
+        String username= (String) ServletActionContext.getRequest().getSession().getAttribute("username");
 
-        if(admin!=null){
+        if(username!=null){
             return actionInvocation.invoke();
         }else{
             ActionSupport actionSupport= (ActionSupport) actionInvocation.getAction();
             actionSupport.addActionError("请先登录");
-            System.out.println("后台执行了登录拦截");
+            System.out.println("前台执行了登录拦截");
             return ActionSupport.LOGIN;
         }
     }
 }
+

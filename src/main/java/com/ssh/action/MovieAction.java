@@ -204,23 +204,6 @@ public class MovieAction extends ActionSupport{
     //点击页面时所用，即全部
     public String getAllMovies() throws IOException {
 
-//        String pagebean="";
-//        try{
-//            PageBean<Movie> moviePageBean=movieServie.seleceMovie(currPage);
-//            pagebean = JSON.toJSONString(moviePageBean);//使用fastjson将数据转换成json格式
-//        }catch (Exception e){
-////            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
-//        }
-
-
-//        System.out.println("------------查看所有的软件信息------------");
-        HttpServletRequest request = ServletActionContext.getRequest();
-//        HttpSession session = request.getSession();
-//        int id=(int) session.getAttribute("id");// 登录厂商
-//        //获取一页显示的个数
-        //String limit1=request.getParameter("limit");
-
-        //获取数据库中所有的数据
         List<Movie> movies=new ArrayList<>();
         try{
             PageBean<Movie> moviePageBean=movieServie.seleceMovie(currPage);
@@ -228,13 +211,11 @@ public class MovieAction extends ActionSupport{
         }catch (Exception e){
 
         }
-//      session.setAttribute("allsoft", allsoft);
         if(movies!=null){
             System.out.println("成功取得"+movies.size()+"条数据...");
         }else{
             System.out.println("查询失败...");
         }
-//      System.out.println("softInfo"+allsoft);
         JSONArray arr=new JSONArray();
         //判定最大的读取个数
         //读取数据

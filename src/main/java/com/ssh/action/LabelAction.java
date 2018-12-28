@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Label;
 import com.ssh.model.Trailer;
+import com.ssh.model.Label;
 import com.ssh.service.LabelService;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +30,21 @@ public class LabelAction extends ActionSupport {
 
     public String getLabelsToUpAddMovie() {
         try {
-            Map<Integer, String> id_name = labelService.getAllLabelsToAddMovie();
+            List<Label> lists = labelService.getAllLabelsToAddMovie();
 
-            if (id_name != null) {
-                System.out.println("成功取得" + id_name.size() + "条数据...");
+            if (lists != null) {
+                System.out.println("成功取得" + lists.size() + "条数据...");
             } else {
                 System.out.println("查询失败...");
             }
             JSONArray arr = new JSONArray();
             //读取数据
-            for (Map.Entry<Integer, String> entry : id_name.entrySet()) {
+            for (Label label:lists) {
                 JSONObject ob = new JSONObject();
                 //将单独的数据装进json数据
-                System.out.println("key值：" + entry.getKey() + " value值：" + entry.getValue());
-                ob.put("id", entry.getKey());
-                ob.put("name", entry.getValue());
+                ob.put("id", label.getId());
+                ob.put("name", label.getName());
+                ob.put("parentId",label.getParentId());
                 //装进数组
                 arr.add(ob);
             }

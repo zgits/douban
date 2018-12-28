@@ -20,14 +20,15 @@ public class LabelServiceImpl implements LabelService{
     private LabelDao labelDao;
 
     @Override
-    public Map<Integer, String> getAllLabelsToAddMovie() {
+    public List<Label> getAllLabelsToAddMovie() {
 
-        List<Label> labels=labelDao.getAllLabels_2();
-        Map<Integer,String> id_name=new HashMap<>();
-        for(Label label:labels){
-            id_name.put(label.getId(),label.getName());
-        }
-        return id_name;
+        return labelDao.getAllLabels_2();
+
+    }
+
+    @Override
+    public String getLabelNameById(Integer id) {
+        return labelDao.getLabelNameById(id);
     }
 
     @Override

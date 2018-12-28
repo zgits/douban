@@ -20,12 +20,17 @@ public class Labelmapping {
     @Column(name="labelId",columnDefinition="integer(5) COMMENT '对应的标签id'")
     private Integer labelId;//对应的标签id
 
+
+    @Column(name="labelName",columnDefinition = "varchar(255) COMMENT '对应的标签名字'")
+    private String labelName;//对应的标签名字
+
     @Override
     public String toString() {
         return "Labelmapping{" +
                 "id=" + id +
                 ", movieId=" + movieId +
                 ", labelId=" + labelId +
+                ", labelName='" + labelName + '\'' +
                 '}';
     }
 
@@ -51,5 +56,13 @@ public class Labelmapping {
 
     public void setLabelId(Integer labelId) {
         this.labelId = labelId;
+    }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
     }
 }
