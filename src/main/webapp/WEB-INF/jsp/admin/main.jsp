@@ -1337,6 +1337,7 @@
             </div><!-- /.modal -->
         </div>
 
+            <input type="hidden" id="trailername" value="test">
         <script>
 
             fodderType1 = function () {
@@ -1360,6 +1361,7 @@
                     uploadExtraData: function (previewId, index) {  //传递参数
                         var obj = {};
                         obj.movieId = fodderType1();
+                        obj.name=$("#trailername").val();
                         console.log(obj);
                         return obj;
                     }
