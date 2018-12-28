@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Trailer_Replycomment;
 import com.ssh.service.Trailer_ReplyCommentService;
+import com.ssh.util.ConfirmToken;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,15 @@ public class TrailerReplyCommentAction extends ActionSupport{
     @Autowired
     private Trailer_ReplyCommentService trailer_replyCommentService;
 
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     /****增加回复***/
     private Trailer_Replycomment trailer_replycomment;
@@ -34,13 +44,17 @@ public class TrailerReplyCommentAction extends ActionSupport{
     }
 
     public void insertReplyComment() throws IOException {
-        System.out.println(trailer_replycomment.getComment_id()+
-                trailer_replycomment.getContent());
 
         String flag ="";
         try{
-            trailer_replyCommentService.insertReplyComment(trailer_replycomment);
-            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            if(ConfirmToken.confirmtoken(token)){
+                trailer_replyCommentService.insertReplyComment(trailer_replycomment);
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            }else{
+                flag = JSON.toJSONString(3);//使用fastjson将数据转换成json格式,3代表未登录
+
+            }
+
         }catch (Exception e){
             flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }

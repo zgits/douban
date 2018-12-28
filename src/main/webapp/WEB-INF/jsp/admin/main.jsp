@@ -1356,6 +1356,7 @@
                     previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
                     uploadAsync: true,//默认异步上传
 
+
                     uploadExtraData: function (previewId, index) {  //传递参数
                         var obj = {};
                         obj.movieId = fodderType1();
@@ -2286,7 +2287,7 @@
 
             $(function () {
                 $('#labelTable').bootstrapTable({
-                    url: '${basepath}/getAllLabelTable', // 请求后台的URL（*）
+                    url: '${basepath}/getAllTrailerTable', // 请求后台的URL（*）
                     dataType: "json",
                     pagination: true, //前端处理分页
                     singleSelect: false,//是否只能单选
@@ -2317,26 +2318,26 @@
 
 
                         {
-                            field: 'name',
-                            title: '标签名',
+                            field: 'trailername',
+                            title: '预告片名',
                             align: 'center'
                         },
 
                         {
-                            field: 'parent',
-                            title: '上级标签',
+                            field: 'moviename',
+                            title: '所属电影',
                             align: 'center'
                         },
 
-                        // {
-                        //     field: 'time',
-                        //     title: '上传时间',
-                        //     align: 'center',
-                        //     formatter: function (value, row, index) {
-                        //
-                        //         return changeDateFormat1(value);
-                        //     }
-                        // },
+                        {
+                            field: 'time',
+                            title: '上传时间',
+                            align: 'center',
+                            formatter: function (value, row, index) {
+
+                                return changeDateFormat1(value);
+                            }
+                        },
 
                         {
                             title: '操作',

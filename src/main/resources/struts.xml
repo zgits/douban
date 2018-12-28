@@ -7,11 +7,9 @@
     <constant name="struts.devMode" value="false"/>
     <constant name="struts.objectFactory" value="spring" />
 
-    <constant name="struts.multipart.maxSize" value="50000000"></constant>
+    <constant name="struts.multipart.maxSize" value="500000000"></constant>
 
     <constant name="struts.multipart.saveDir" value="d:/datetemp"/>
-
-
 
 
     <package name="user" namespace="/" extends="struts-default">
@@ -20,22 +18,17 @@
 
         <interceptors>
             <interceptor name="Interceptor" class="com.ssh.action.interceptor.Interceptor"/>
-            <interceptor name="UserInterceptor" class="com.ssh.action.interceptor.UserInterceptor"/>
         </interceptors>
 
 
         <action name="manageruser*" class="ManagerUser" method="{1}">
 
-            <result name="findAll">/admin/user.jsp</result>
+
         </action>
 
         <action name="trailercomment*" class="TrailerComment" method="{1}">
 
-            <result name="login">/login.html</result>
-            <interceptor-ref name="UserInterceptor">
-                <param name="includeMethods">delete,insertComment</param>
-            </interceptor-ref>
-            <interceptor-ref name="defaultStack"></interceptor-ref>
+
         </action>
 
         <action name="trailer*" class="Trailer" method="{1}">
@@ -45,41 +38,14 @@
 
         <action name="rtrailerreplycomment*" class="TrailerReplyComment" method="{1}">
 
-
-            <result name="login">/login.html</result>
-            <interceptor-ref name="UserInterceptor">
-                <param name="includeMethods">insertReplyComment,deleteReplyComment</param>
-            </interceptor-ref>
-            <interceptor-ref name="defaultStack"></interceptor-ref>
         </action>
 
         <action name="rmoviereplycomment*" class="MovieReplyComment" method="{1}">
 
-            <result name="login">/login.html</result>
-            <interceptor-ref name="UserInterceptor">
-                <param name="includeMethods">insertReplyComment,deleteReplyComment</param>
-            </interceptor-ref>
-            <interceptor-ref name="defaultStack"></interceptor-ref>
         </action>
         
         <action name="movie_*" class="MovieAction" method="{1}">
 
-
-
-            <!--&lt;!&ndash; 使用自定义拦截器 &ndash;&gt;-->
-            <!--<interceptor-ref name="Interceptor">-->
-                <!--&lt;!&ndash; 配置action中某些方法不进行拦截-->
-                    <!--name属性值：excludeMethods-->
-                    <!--值：action不拦截的方法名称-->
-                    <!--<param name="excludeMethods">login</param>-->
-                 <!--&ndash;&gt;-->
-                <!--<param name="includeMethods">-->
-                    <!--addMovie,updateMovie,deleteMovie-->
-                <!--</param>-->
-
-            <!--</interceptor-ref>-->
-
-            <!--<result name="login" type="redirect">/login.html</result>-->
 
             <result name="moviedetail">/moviedetails.jsp</result>
 
@@ -87,11 +53,7 @@
 
         <action name="moviecomment_*" class="MovieComment" method="{1}">
 
-            <result name="login">/login.html</result>
-            <interceptor-ref name="UserInterceptor">
-                <param name="includeMethods">insertComment,delete</param>
-            </interceptor-ref>
-            <interceptor-ref name="defaultStack"></interceptor-ref>
+
 
         </action>
 
@@ -122,27 +84,6 @@
 
         <!--文件上传-->
         <action name="upload" class="Trailer" method="saveFile1">
-            <!--<interceptor-ref name="defaultStack">-->
-            <!--&lt;!&ndash;-->
-                <!--修改允许上传文件的大小(默认值是2M),-->
-                <!--将调用FileUploadInterceptor中的setMaximumSize(223434555)-->
-            <!--&ndash;&gt;-->
-            <!--<param name="fileUpload.maximumSize">223434555</param>-->
-            <!--&lt;!&ndash; 配置允许上传文件的类型,如果有多个类型用","隔开 &ndash;&gt;-->
-            <!--&lt;!&ndash;<param name="fileUpload.allowedTypes">application/vnd.ms-excel,text/plain</param>&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;配置允许上传文件的扩展名,如果有多个用","隔开  &ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;<param name="fileUpload.allowedExtensions">txt,excel,ppt</param>&ndash;&gt;-->
-        <!--</interceptor-ref>-->
-            <!-- 限制允许上传的文件的类型 -->
-            <!--<interceptor-ref name="defaultStack">-->
-
-                <!--&lt;!&ndash; 限制允许的文件的扩展名【推荐使用】 &ndash;&gt;-->
-                <!--<param name="fileUpload.allowedExtensions">txt,jpg,jar</param>-->
-                <!--&lt;!&ndash; 限制允许的类型【一般不与上面的同时是使用。如果同时使用，取交集！！】-->
-                <!--<param name="fileUpload.allowedTypes">text/plain</param>-->
-                 <!--&ndash;&gt;-->
-
-            <!--</interceptor-ref>-->
 
             <result name="success"></result>
 
@@ -164,7 +105,7 @@
 
 
         <action name="bgmain" class="background" method="goToBackground">
-            <result name="success">/jsp/admin/main.jsp</result>
+            <result name="success">/WEB-INF/jsp/admin/main.jsp</result>
             <!--<result name="login">/login.html</result>-->
             <!--<interceptor-ref name="Interceptor"></interceptor-ref>-->
             <!--<interceptor-ref name="defaultStack"></interceptor-ref>-->
@@ -224,6 +165,16 @@
             <result name="success" type="json">
                 <param name="root">returndata</param>
             </result>
+        </action>
+    </package>
+
+
+    <package name="user-login-register" namespace="/" extends="struts-default">
+        <action name="user_*" class="login" method="{1}">
+            <result name="adminmain">/WEB-INF/jsp/admin/main.jsp</result>
+            <result name="usermain">/main.jsp</result>
+            <result name="login">/login.html</result>
+            <result name="register">/register.html</result>
         </action>
     </package>
 

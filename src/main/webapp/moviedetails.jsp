@@ -726,8 +726,11 @@
                         $("#loading").hide();
                         if(data==1){
                             toastr.success('回复成功');
-                        }else{
+                        }else if(data==2){
                             toastr.error("回复失败");
+                        }else if(data==3){
+                            toastr.warning("请先登录");
+                            setTimeout("window.location='login.html'",2000);
                         }
                         setTimeout("window.location.reload()",3000);
                     }
@@ -764,8 +767,11 @@
                         $("#loading").hide();
                         if(data==1){
                             toastr.success('回复成功');
-                        }else{
+                        }else if(data==2){
                             toastr.error("回复失败");
+                        }else if(data==3){
+                            toastr.warning("请先登录");
+                            setTimeout("window.location='login.html'",2000);
                         }
                         setTimeout("window.location.reload()",3000);
                     }
@@ -990,8 +996,11 @@
                     $("#loading").hide();
                     if(data==1){
                         toastr.success('评论成功');
-                    }else{
+                    }else if(data==2){
                         toastr.error("评论失败");
+                    }else if(data==3){
+                        toastr.warning("请先登录");
+                        setTimeout("window.location='login.html'",2000);
                     }
                     $("#content").val("");
                     setTimeout("window.location.reload()",3000);
