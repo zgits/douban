@@ -71,6 +71,7 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="${basepath}/image/logo.PNG"
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
@@ -89,14 +90,14 @@
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
                     <li><a href="register.html">注册</a></li>
                     <li>
-                        <a href="tips_message.html">
+                        <a href="tips_message.jsp">
                             <span class="badge pull-right">3</span>消息
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="${basepath}/image/test.jpg"
-                                                                                        class="img-circle img-responsive"
-                                                                                        style="width: 40px;height: 40px;margin-top: -10px"></a>
+                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="${basepath}/image/test.jpg"
+                                                                                       class="img-circle img-responsive"
+                                                                                       style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
                 </ul>
             </div>

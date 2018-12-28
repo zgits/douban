@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +22,9 @@
     <link rel="stylesheet" type="text/css" href="static_resources/checkbox/css/build.css">
 
     <link rel="stylesheet" href="static_resources/dialog/css/dialog.css">
+
+    <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
+    <script src="/static_resources/toastr/toastr.min.js"></script>
 
     <style>
         * {
@@ -93,7 +100,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
             <form class="navbar-form navbar-left" role="search">
@@ -111,12 +118,12 @@
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
                     <li><a href="register.html">注册</a></li>
                     <li>
-                        <a href="tips_message.html">
+                        <a href="tips_message.jsp">
                             <span class="badge pull-right">3</span>消息
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
+                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
                 </ul>
             </div>
@@ -132,12 +139,12 @@
                 <input type="button" value="反选" class="btn" id="reverse">
             </div>
             <div class="col-md-5">
-                <a href="#">
+                <a href="#" onclick="update()">
                     标为已读
                     <span class="glyphicon glyphicon-envelope">
             </span>
                 </a>
-                <a onClick="javascript:$('body').dailog({type:'primary'})">
+                <a href="#" onclick="deleteMessage()">
                     &nbsp;&nbsp;&nbsp;删除<span class="glyphicon glyphicon-trash"></span>
                 </a>
             </div>
@@ -147,50 +154,22 @@
     <br>
     <div class="row">
         <!--注意里面的id，checkbox每个需要不同-->
+
         <ul class="list-group" id="owners">
+            <c:forEach items="${pagebeans.lists}" var="pagebean" >
             <li class="list-group-item">
                 <div class="checkbox checkbox-success">
-                    <input id="checkbox1" class="styled" type="checkbox">
-                    <label for="checkbox1">
-                        xxxxxxx提示信息
+                    <input id="${pagebean.userId}" class="styled" type="checkbox" name="message" value="${pagebean.id}">
+                    <label for="${pagebean.userId}">
+                       来自${pagebean.sender}的信息:${pagebean.message}
                         <br>
-                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
-                    </label>
-                </div>
-
-            </li>
-            <li class="list-group-item">
-                <div class="checkbox checkbox-success">
-                    <input id="checkbox2" class="styled" type="checkbox">
-                    <label for="checkbox2">
-                        xxxxxxx提示信息
-                        <br>
-                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
-                    </label>
-                </div>
-
-            </li>
-            <li class="list-group-item">
-                <div class="checkbox checkbox-success">
-                    <input id="checkbox3" class="styled" type="checkbox">
-                    <label for="checkbox3">
-                        xxxxxxx提示信息
-                        <br>
-                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                        <span style="color: rgb(91, 81, 191); font-size: 14px;">${pagebean.time}</span>
                     </label>
                 </div>
             </li>
-            <li class="list-group-item">
-                <div class="checkbox checkbox-success">
-                    <input id="checkbox4" class="styled" type="checkbox">
-                    <label for="checkbox4">
-                        xxxxxxx提示信息
-                        <br>
-                        <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
-                    </label>
-                </div>
-            </li>
+            </c:forEach>
         </ul>
+
     </div>
 
     <div class="container">
@@ -199,13 +178,12 @@
 
                 <div class="text-center">
                     <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
+                        <li><a href="getMessage?id=1&&currpage=1">&laquo;</a></li>
+                        <c:forEach var="count" begin="1" end="${pagebeans.totalPage}">
+                        <li><a href="getMessage?id=1&&currpage=${count}">${count}</a></li>
+                        </c:forEach>
+
+                        <li><a href="getMessage?id=1&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
                         <li>
                             <!--异步传输页数，返回数据得到结果-->
                             <form class="col-sm-3" role="form">
@@ -215,7 +193,7 @@
                                 </div>
                             </form>
                         </li>
-                        <li><a style="border: none">共6页</a></li>
+                        <li><a style="border: none">共${pagebeans.totalPage}页</a></li>
                     </ul>
                 </div>
 
@@ -223,6 +201,26 @@
 
         </div>
     </div>
+</div>
+<%--模态框--%>
+<div class="modal fade" id="delcfmModel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>您确认要删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="deletetodel"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button onclick="opreatedelete()" class="btn btn-info" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
 </div>
 <!--底部版权信息-->
 <div class="navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
@@ -236,6 +234,22 @@
 </div>
 <!--全选，单选-->
 <script>
+
+    var messageOpts = {
+        "closeButton": true,//是否显示关闭按钮
+        "debug": false,//是否使用debug模式
+        "positionClass": "toast-top-right",//弹出窗的位置
+        "onclick": null,
+        "showDuration": "3000",//显示的动画时间
+        "hideDuration": "1000",//消失的动画时间
+        "timeOut": "3000",//展现时间
+        "extendedTimeOut": "1000",//加长展示时间
+        "showEasing": "swing",//显示时的动画缓冲方式
+        "hideEasing": "linear",//消失时的动画缓冲方式
+        "showMethod": "fadeIn",//显示时的动画方式
+        "hideMethod": "fadeOut" //消失时的动画方式
+    };
+    toastr.options = messageOpts;
 $("#selectAll").click(function () {
 $("#owners input:checkbox").each(function () {
 $(this).prop('checked', true);//
@@ -252,6 +266,62 @@ $("#owners input:checkbox").each(function () {
 this.checked = !this.checked;
 });
 });
+function update() {
+    list=document.getElementsByName("message");
+     var check_val=[];
+    for(i in list){
+        if(list[i].checked){
+            check_val.push(list[i].value);
+        }
+    }
+    $.ajax({
+        type: "get",
+        url: "${basepath}/updateMessage",//后台更新的地址
+        async: true,
+        traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+        data: {
+            ids: check_val
+         }
+        }
+    )
+    window.location.href="getMessage?id=1"
+}
+
+function deleteMessage(){
+
+    $("#delcfmModel").modal();
+}
+function opreatedelete(){
+    list=document.getElementsByName("message");
+    var check_val=[];
+    for(i in list){
+        if(list[i].checked){
+            check_val.push(list[i].value);
+        }
+    }
+    $.ajax({
+            type: "post",
+            url: "${basepath}/deleteMessage",//后台删除的地址
+            async: true,
+            traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+            data: {
+                ids: check_val
+            },
+            success:function (flag) {
+            if(flag==1){
+                toastr.success('删除成功');
+            }else{
+                toastr.error("删除失败");
+            }
+            setTimeout("window.location.reload()",1000);
+        }
+        }
+    )
+
+    //window.location.href="getMessage?id=1"
+}
+
+
 
 </script>
 

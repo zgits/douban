@@ -2,6 +2,8 @@ package com.ssh.dao;
 
 import com.ssh.model.Tips_message;
 
+import java.util.List;
+
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
  *
@@ -15,4 +17,29 @@ public interface Tips_messageDao {
      * @return
      */
     public boolean insertMessage(Tips_message tips_message);
+
+/**
+ * 查看在线消息
+ */
+public List<Tips_message> getMessage(int id);
+
+/**
+ * 删除信息
+ */
+public int deleteMessage(Integer[] ids);
+
+/**
+ * 分页信息数量
+ */
+public Integer getCountMessage(int userId,int status);
+
+/**
+ * 查询分页的消息
+ */
+
+public List<Tips_message> findMessage(Integer userId, int status,int begin, int pageSize);
+/**
+ * 更改消息状态
+ */
+public int  updateStatus(Integer[] ids);
 }

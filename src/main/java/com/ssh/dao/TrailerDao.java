@@ -55,6 +55,14 @@ public interface TrailerDao {
      */
     public Trailer getMovieTrailer(Integer id);
 
+    /**
+     * 获取全部预告片信息
+     */
+    public List<Trailer> getAllTrailer();
+    /**
+     * 获取影片上映时间
+     */
+
 
     /**
      * 后台管理媒体信息时所用，得到全部的预告片

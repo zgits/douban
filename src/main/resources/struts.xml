@@ -57,6 +57,23 @@
 
         </action>
 
+        <action name="getMoving" class="MovieAction" method="getMoving">
+            <result name="getMoving">/main.jsp</result>
+        </action>
+
+        <action name="getAllTrailer" class="Trailer" method="getAllTrailer">
+            <result name="success">trailer.jsp</result>
+        </action>
+
+        <action name="getMessage" class="getMessage" method="getMessages">
+            <result name="success">tips_message.jsp</result>
+        </action>
+        <action name="userMessage" class="getMessage" method="UserMessage">
+            <result name="success">personInfo.jsp</result>
+        </action>
+        <action name="updateMessage" class="getMessage" method="updateMessage"/>
+
+        <action name="deleteMessage" class="getMessage" method="deleteMessage"/>
 
         <action name="image_*" class="Image" method="{1}">
 
@@ -112,6 +129,14 @@
                 <param name="root">returndata</param>
             </result>
         </action>
+
+        <action name="getAllLabelTable" class="Label" method="getAllLabels">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        
+        
         <action name="getAllMovieName" class="MovieAction" method="getAllMovieName">
             <result name="success" type="json">
                 <param name="root">returndata</param>

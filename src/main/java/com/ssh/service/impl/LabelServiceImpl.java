@@ -30,4 +30,33 @@ public class LabelServiceImpl implements LabelService{
     public String getLabelNameById(Integer id) {
         return labelDao.getLabelNameById(id);
     }
+
+    @Override
+    public List<Label> getAllLabels() {
+        List<Label> labels=labelDao.getAllLabels();
+        return labels;
+    }
+
+
+    @Override
+    public int deleteLabels(Integer[] ids) {
+        int count=labelDao.deleteLabels(ids);
+        return count;
+    }
+
+    @Override
+    public Label updateLabel(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean addLabel(Label label) {
+        return false;
+    }
+
+    @Override
+    public Label getLabelById(int id) {
+        Label label=labelDao.getLabelById(id);
+        return label;
+    }
 }

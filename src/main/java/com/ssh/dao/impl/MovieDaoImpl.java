@@ -119,6 +119,12 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         return query.list();
     }
 
+    public List<Movie> selectMoving() {
+        String hql="select new Movie(id,moviename,filmscore,release_time) from Movie";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        return query.list();
+    }
+
     @Override
     public String getMovieNameById(Integer movieId) {
 

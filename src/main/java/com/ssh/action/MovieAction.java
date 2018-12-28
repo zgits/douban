@@ -277,6 +277,12 @@ public class MovieAction extends ActionSupport{
         movieServie.selectMovieByName(movieName,currPage);
     }
 
+    //主页面显示正在热映影片
+    public String getMoving(){
+        List<Movie> movies=movieServie.selectMoving();
+        ActionContext.getContext().put("movies",movies);
+        return "getMoving";
+    }
     /*********end************/
 
 

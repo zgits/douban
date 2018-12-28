@@ -77,6 +77,12 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
         return (Trailer) this.getSessionFactory().getCurrentSession().createQuery("from Trailer where id=?").setParameter(0,id).uniqueResult();
     }
 
+
+    @Override
+    public List<Trailer> getAllTrailer() {
+        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer");
+        return  query.list();
+    }
     @Override
     public List<Trailer> getAllTrailers() {
         Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer");

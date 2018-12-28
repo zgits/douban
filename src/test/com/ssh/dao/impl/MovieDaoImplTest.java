@@ -30,7 +30,51 @@ public class MovieDaoImplTest extends BaseTest{
     }
 
     @Test
-    public void selectAllMovie() throws Exception {
+    public void  selectMoving(){
+       System.out.println(movieDao.selectMoving());
     }
 
+    @Test
+    public void setSessionFactory0() {
+    }
+
+    @Test
+    public void insertMovie() {
+    }
+
+    @Test
+    public void deleteMovie() {
+    }
+
+    @Test
+    public void updateMovie() {
+    }
+
+    @Test
+    public void selectMovie() {
+    }
+
+    @Test
+    public void getMovieCount() {
+    }
+
+//    @Test
+//    public void selectMovieById() {
+//    }
+
+    @Test
+    public void selectMovieByName() {
+    }
+
+    @Test
+    public void getMovieCountByName() {
+    }
+
+    @Test
+    public void selectAllMovie() {
+    }
+
+    @Test
+    public void selectMoving1() {
+    }
 }

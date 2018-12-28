@@ -1,3 +1,6 @@
+<%@ page import="com.ssh.model.Movie" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -7,6 +10,10 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
+%>
+<%
+    List<Movie> movies=(List<Movie>) session.getAttribute("oneMovie");
+    session.removeAttribute("oneMovie");
 %>
 <c:set var="basepath" value="<%=basePath%>" />
 
@@ -174,7 +181,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
             <form class="navbar-form navbar-left" role="search">
@@ -192,12 +199,12 @@
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
                     <li><a href="register.html">注册</a></li>
                     <li>
-                        <a href="tips_message.html">
+                        <a href="tips_message.jsp">
                             <span class="badge pull-right">3</span>消息
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
+                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
                 </ul>
             </div>
@@ -219,34 +226,51 @@
             <div>
                 <ul class="list-group">
                     <li class="list-group-item" style="border: none">
-                        导演: 拉斯·霍尔斯道姆 / 乔·庄斯顿
+                        导演: ${oneMovie.director}
                     </li>
-                    <li class="list-group-item" style="border: none">
-                        编剧: 阿什利·鲍威尔 / 汤姆·麦卡锡 / E·T·A·霍夫曼
-                    </li>
-                    <li class="list-group-item" style="border: none">
-                        主演: 麦肯吉·弗依 / 摩根·弗里曼 / 凯拉·奈特莉 / 马修·麦克费登 / 海伦·米伦
+                    <%--<li class="list-group-item" style="border: none">--%>
+                        <%--编剧: 阿什利·鲍威尔 / 汤姆·麦卡锡 / E·T·A·霍夫曼--%>
+                    <%--</li>--%>
+                    <c:choose>
+                        <c:when test="${fn:length(fn:split(oneMovie.actor,'/' ))<=5}">
+                        <li class="list-group-item" style="border: none">
+                        主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor">
+                            ${actor}/
+                    </c:forEach>
                         <a data-toggle="collapse"
-                           href="#collapse">更多</a>
-                        <div id="collapse" class="panel-collapse collapse">
-                            / 艾丽·巴姆博 / 米兰达·哈特 / 欧赫尼奥·德尔维斯 / 杰克·怀特霍尔 / 理查德·E·格兰特 / 谢尔盖·波卢宁 / 欧米德·吉亚李利 / 梅拉·沙尔 / 尼克·穆罕默德 /
-                            杰茜·维宁 / 汤姆·斯威特 / 马里安·洛伦西克 / 芙洛·费拉科 / 丽塔-麦克唐纳丹帕 / 查尔斯·斯特里特
-                        </div>
-                    </li>
+                           href="#collapse"></a>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="list-group-item" style="border: none">
+                            主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="0" end="4">
+                            ${actor}/
+                        </c:forEach>
+                            <a data-toggle="collapse"
+                               href="#collapse">更多</a>
+                            <div id="collapse" class="panel-collapse collapse">
+                               <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="5" >
+                                    ${actor}/
+                               </c:forEach>
+                                <%--/ 艾丽·巴姆博 / 米兰达·哈特 / 欧赫尼奥·德尔维斯 / 杰克·怀特霍尔 / 理查德·E·格兰特 / 谢尔盖·波卢宁 / 欧米德·吉亚李利 / 梅拉·沙尔 / 尼克·穆罕默德 /&ndash;%&gt;--%>
+                                <%--杰茜·维宁 / 汤姆·斯威特 / 马里安·洛伦西克 / 芙洛·费拉科 / 丽塔-麦克唐纳丹帕 / 查尔斯·斯特里特--%>
+                            </div>
+                            </li>
+                    </c:otherwise>
+                    </c:choose>
                     <li class="list-group-item" style="border: none">
                         类型: 奇幻 / 冒险
                     </li>
                     <li class="list-group-item" style="border: none">
-                        制片国家/地区: 美国
+                        制片国家/地区: ${oneMovie.region}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        语言: 英语
+                        语言: ${oneMovie.language}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        上映日期: 2018-11-02(中国大陆/美国)
+                        上映日期: <fmt:formatDate value="${oneMovie.release_time}" pattern="yyyy-MM-dd"/>(${oneMovie.release_region}/美国)
                     </li>
                     <li class="list-group-item" style="border: none">
-                        片长: 99分钟
+                        片长:${oneMovie.length}分钟
                     </li>
                 </ul>
             </div>
@@ -261,21 +285,21 @@
 
 
                     <div class="col-sm-2">
-                        <span style="font-weight: bold;font-size: 15px">7.4</span>
+                        <span style="font-weight: bold;font-size: 15px">${oneMovie.filmscore}</span>
                     </div>
                     <div class="col-sm-5">
-                        <div id="star_con" class="star-vote">
-                            <span id="add_star" class="add-star"></span>
-                            <span id="del_star" class="del-star"></span>
+                        <div id="star_con_movie${oneMovie.id}" class="star-vote">
+                            <span id="add_star_movie${oneMovie.id}" class="add-star"></span>
+                            <span id="del_star_movie${oneMovie.id}" class="del-star"></span>
                         </div>
                         24500人评价
                         <script>
-                            window.onload = showStar(7.8);
+                            window.onload = showStar(${oneMovie.filmscore});
 
                             //n表示后台获取的星数
                             function showStar(n) {
-                                var con_wid = document.getElementById("star_con").offsetWidth;
-                                var del_star = document.getElementById("del_star");
+                                var con_wid = document.getElementById("star_con_movie${oneMovie.id}").offsetWidth;
+                                var del_star = document.getElementById("del_star_movie${oneMovie.id}");
                                 console.log(con_wid);
 
                                 //透明星星移动的像素
@@ -404,12 +428,10 @@
     <div class="row">
         <div class="col-md-8">
             <h4 style="color: #2f904d">
-                xxxxxxx电影剧情简介
+                ${oneMovie.moviename}电影剧情简介
             </h4>
             <div>
-                克拉拉一直在寻找一把钥匙——这把与众不同的钥匙将可以开启已故母亲装有无价之宝的盒子。在教父德罗塞尔梅耶举办的一次节日聚会上，
-                一根金线指引着她找到了这把梦寐以求的钥匙，却在瞬间消失进入一个陌生而神秘的平行世界。在平行世界里，克拉拉结识了士兵菲利普、一群老鼠、
-                以及分别掌管雪花王国、鲜花王国、糖果王国的三位国王。克拉拉和菲利普必须勇敢地接受第四位国王——暴君姜母的考验，才能够找回钥匙、并将和平重新带回这个摇摇欲坠的平行世界。
+               ${oneMovie.plot_introduction }
             </div>
         </div>
 
@@ -420,7 +442,7 @@
     <!--暂时显示3个预告片，更多稍后添加-->
     <div class="row">
         <h4 style="color: #2f904d">
-            xxxxxxx电影相关预告片
+            ${oneMovie.moviename}电影相关预告片
         </h4>
         <ul class="list-inline">
             <li>
@@ -459,6 +481,7 @@
     <!--评论显示界面-->
     <div class="row">
         <h4 style="color: #2f904d">
+            ${oneMovie.moviename}电影的短评(共1252条)
             xxxx电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
         </h4>
         <!--Ajax异步得到-->

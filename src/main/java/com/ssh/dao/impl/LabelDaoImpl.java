@@ -27,6 +27,70 @@ public class LabelDaoImpl implements LabelDao{
         return query.list();
     }
 
+    /**
+     * 获取全部标签
+     * @return
+     */
+    @Override
+    public List<Label> getAllLabels() {
+        String hql="from Label";
+        Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
+        return(query.list());
+    }
+
+    /**
+     * 添加新标签
+     * @param label
+     * @return
+     */
+    @Override
+    public boolean addLabel(Label label) {
+        return false;
+    }
+
+    /**
+     * 删除标签
+     * @param ids
+     * @return
+     */
+
+    @Override
+    public int deleteLabels(Integer[] ids) {
+        int count=0;
+        String hql="delete from Label where id in (:ids)";
+        Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
+        query.setParameterList("ids",ids);
+        count=query.executeUpdate();
+        return count;
+    }
+
+    /**
+     * 修改标签
+     * @param id
+     * @return
+     */
+
+    @Override
+    public Label updateLabel(int id) {
+        return null;
+    }
+
+
+    /**
+     * 查询指定标签
+     * @param id
+     * @return
+     */
+    @Override
+    public Label getLabelById(int id) {
+        Label label=new Label();
+        String hql="from Label as label where label.id=:id";
+        Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
+        query.setInteger("id",id);
+        label=(Label)query.list();
+        return label;
+    }
+
     @Override
     public String getLabelNameById(Integer id) {
         return (String)sessionFactory.getCurrentSession().createQuery(" select name from Label where id=?").setParameter(0,id).uniqueResult();

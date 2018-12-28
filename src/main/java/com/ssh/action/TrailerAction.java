@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.ssh.model.Image;
+import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
 import com.ssh.model.Trailer;
 import com.ssh.service.MovieServie;
@@ -13,6 +15,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -29,9 +34,10 @@ public class TrailerAction extends ActionSupport {
 
     @Autowired
     private TrailerService trailerService;
-
     @Autowired
     private MovieServie movieServie;
+
+
 
     /**
      * 根据id获取预告片信息，包括评论，我（zjf）的主要是评论
@@ -54,6 +60,18 @@ public class TrailerAction extends ActionSupport {
         return "success";
     }
     /************根据id获取预告片及评论end**************/
+
+    /**
+     * 预告片
+     * @return
+     */
+    public String getAllTrailer(){
+        List<Trailer> trailers =trailerService.getAllTrailer();
+        List<Movie> movies=movieServie.selectMoving();
+        ActionContext.getContext().put("trailers",trailers);
+        ActionContext.getContext().put("movies",movies);
+        return "success";
+    }
 
 
     /*************后台得到所有预告片start**************/
