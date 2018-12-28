@@ -38,6 +38,9 @@
     <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
     <script src="/static_resources/toastr/toastr.min.js"></script>
 
+
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
     <style type="text/css">
         .m {
             margin-left: -15px;
@@ -62,11 +65,15 @@
     </style>
 </head>
 <body>
+<script>
+    alert($.cookie("id"));
+</script>
 
 <!--导航栏-->
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
+            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="${basepath}/image/logo.PNG"
             <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
@@ -86,14 +93,14 @@
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
                     <li><a href="register.html">注册</a></li>
                     <li>
-                        <a href="tips_message.html">
+                        <a href="tips_message.jsp">
                             <span class="badge pull-right">3</span>消息
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg"
-                                                                                        class="img-circle img-responsive"
-                                                                                        style="width: 40px;height: 40px;margin-top: -10px"></a>
+                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="${basepath}/image/test.jpg"
+                                                                                       class="img-circle img-responsive"
+                                                                                       style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
                 </ul>
             </div>
@@ -119,7 +126,7 @@
 
 <div id="loading" style="display: block">
     <div class="loading show">
-        <img src='/image/loading1.gif' />
+        <img src='${basepath}/image/loading1.gif' />
     </div>
 </div>
 
@@ -127,12 +134,12 @@
 <div class="container">
 
     <div class="row">
-        <ul class="list-group" style="width: 800px">
+        <ul id="showcomment" class="list-group" style="width: 800px">
             <c:forEach items="${OneTrailer.trailerComments}" var="trailercomment" varStatus="status">
                 <li class="list-group-item" style="border: none">
                     <!--显示个人信息以及评论时间-->
                     <div class="row">
-                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
                         <span>${trailercomment.username}</span>
                         &nbsp;&nbsp;
                         <fmt:formatDate value="${trailercomment.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
@@ -179,7 +186,7 @@
                                 <ul class="list-group">
                                     <c:forEach items="${trailercomment.trailerReplycomments}" var="reply" varStatus="status">
                                         <li class="list-group-item">
-                                            <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span>${reply.username}</span>
                                             &nbsp;&nbsp;<fmt:formatDate value="${reply.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
 
@@ -195,7 +202,7 @@
 
 
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                               href="#s${trailercomment.id}${status.count}">回复</a>
+                                                               href="#div${trailercomment.id}${status.count}">回复</a>
 
                                                         </div>
                                                     </c:when>
@@ -204,7 +211,7 @@
 
                                                             <a class="btn btn-sm">举报</a>
                                                             <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
-                                                               href="#s${trailercomment.id}${status.count}">回复</a>
+                                                               href="#div${trailercomment.id}${status.count}">回复</a>
 
                                                         </div>
                                                     </c:otherwise>
@@ -212,13 +219,13 @@
 
 
                                             </div>
-                                            <div id="s${trailercomment.id}${status.count}" class="panel-collapse collapse">
+                                            <div id="div${trailercomment.id}${status.count}" class="panel-collapse collapse">
                                                 <div class="panel-body">
                                                     <div class="form-group col-md-8">
                                                         <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
 
                                                     </div>
-                                                    <input onclick="replyComment2('s${reply.id}',${trailercomment.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                    <input onclick="replyComment2(s${reply.id},${trailercomment.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                                 </div>
 
                                             </div>
@@ -233,6 +240,48 @@
                 <hr>
             </c:forEach>
         </ul>
+    </div>
+
+
+    <%--模态框--%>
+    <div class="modal fade" id="delcfmModel2">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="replyidtodel"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button onclick="deletereplyDo()" class="btn btn-info" data-dismiss="modal">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="delcfmModel1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content message_align">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">提示信息</h4>
+                </div>
+                <div class="modal-body">
+                    <p>您确认要删除吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="commentidtodel"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <a onclick="deletetrailercommentDo()" class="btn btn-info" data-dismiss="modal">确定</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
     </div>
 
     <script>
@@ -261,6 +310,13 @@
             var commentId=commentId;
             var to_userId=to_userId;
             var userId=userId;
+
+            $(contentId).empty();
+            if(content==""){
+                toastr.warning("输入不能为空");
+                return;
+            }
+
             $.ajax({
                 type:"post",
                 url:"${basepath}/rtrailerreplycommentinsertReplyComment",
@@ -287,11 +343,16 @@
         }
 
         function replyComment2(contentId,commentId,to_id,to_userId,userId,type) {
-            var content=document.getElementById(contentId).value;
+            var content=$(contentId).val();
             var commentId=commentId;
             var to_userId=to_userId;
             var userId=userId;
             var to_id=to_id;
+            $(contentId).val("");
+            if(content==""){
+                toastr.warning("输入不能为空");
+                return;
+            }
             $.ajax({
                 type:"post",
                 url:"${basepath}/rtrailerreplycommentinsertReplyComment",
@@ -320,12 +381,16 @@
 
 
         function deletecomment(commentId){
-            var id=commentId;
+            $("#commentidtodel").val(commentId);
+            $("#delcfmModel1").modal();
+        }
+
+        function deletetrailercommentDo() {
             $.ajax({
                 url:"${basepath}/trailercommentdelete",
                 type:"post",
                 data:{
-                    "commentId":id
+                    "commentId":$("#commentidtodel").val()
                 },
                 beforeSend: function (XMLHttpRequest) {
                     $("#loading").show(); //在后台返回success之前显示loading图标
@@ -342,6 +407,14 @@
             })
         }
         function deletereplycomment(id){
+            $("#replyidtodel").val(id);
+            console.log(id);
+            $("#delcfmModel2").modal();
+        }
+
+        function deletereplyDo() {
+
+            var id=$("#replyidtodel").val();
             $.ajax({
                 url:"${basepath}/rtrailerreplycommentdeleteReplyComment",
                 type:"post",
@@ -361,6 +434,7 @@
                     setTimeout("window.location.reload()",3000);
                 }
             })
+
         }
 
     </script>
@@ -400,6 +474,11 @@
             var userId=document.getElementById("userId").value;
             var trailerId=document.getElementById("trailerId").value;
             var content=document.getElementById("content").value;
+            if(content==""){
+                toastr.warning("输入不能为空");
+                return;
+            }
+            $(content).val("");
             $.ajax({
                 type:"post",
                 url:"${basepath}/trailercommentinsertComment",
@@ -418,6 +497,7 @@
                     }else{
                         toastr.error("评论失败");
                     }
+                    $("#content").val("");
                     setTimeout("window.location.reload()",3000);
                 }
             })
@@ -430,32 +510,293 @@
         <div class="inner clearfix">
             <section id="main-content">
 
-                <div class="text-center">
-                    <ul class="pagination">
-                        <li><a href="#">&laquo;</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                        <li>
-                            <!--异步传输页数，返回数据得到结果-->
-                            <form class="col-sm-3" role="form">
-                                <div class="input-group">
-                                    <input type="text" class="form-control">
-                                    <span onclick="test()" class="input-group-addon">go</span>
-                                </div>
-                            </form>
-                        </li>
-                        <li><a style="border: none">共6页</a></li>
-                    </ul>
-                </div>
-
             </section>
 
         </div>
     </div>
+
+    <script>
+
+
+        var totalpagenow=0;
+
+        $(document).ready(function(){
+            var id=${OneTrailer.id};
+            $("#main-content").empty();
+
+            $.ajax({
+                type:'post',
+                url:'${basepath}/getCommentsBypage',
+                data:{
+                    "currPage":1,
+                    "trailerId":id
+                },
+                success:function (data) {
+                    var obj=JSON.parse(data);
+                    var appendpage="";
+                    console.log(obj);
+                    var totalPage=obj.totalPage;
+                    var currPage=obj.currPage;
+                    totalpagenow=obj.totalPage;
+                    console.log(totalPage);
+                    console.log(currPage);
+                    console.log(totalPage-currPage);
+
+                    if(totalPage>0){
+                        appendpage+='<div class="text-center">'+
+                                    '<ul class="pagination">'+
+                                    '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>'+
+                                    '<li id="front" value="1" onclick="topage(front)"><a style="cursor: pointer">上一页</a></li>';
+                        if(totalPage<=5){
+                            for(var i=1;i<=totalPage;i++){
+                                if(i==1){
+                                    appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                }else{
+                                    appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                }
+                            }
+                        }else{
+                            for(var i=1;i<=5;i++){
+                                if(i==1){
+                                    appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                }else{
+                                    appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                }
+                            }
+                        }
+                        appendpage+='<li id="next" value="2" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>'+
+                                    '<li id="last" value="'+obj.totalPage+'"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>'+
+                                    '<li>'+
+                                    '<div class="col-sm-3" role="form">'+
+                                    '<div class="input-group">'+
+                                    '<input id="page" type="text" class="form-control">'+
+                                    '<span onclick="topage(page)" class="input-group-addon">go</span>'+
+                                    '</div>'+
+                                    '</div>'+
+                                    '</li>'+
+                                    '<li><a style="border: none">共'+obj.totalPage+'页</a></li>'+
+                                    '</ul>'+
+                                    '</div>';
+                        $("#main-content").append(appendpage);
+                    }
+
+
+                }
+            });
+
+
+        })
+
+        function changeDateFormat(cellval) {
+            var dateVal = cellval + "";
+            if (cellval != null) {
+                var date = new Date(parseInt(dateVal.replace("/Date(", "").replace(")/", ""), 10));
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+
+                return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
+            }
+        }
+
+        function topage(id) {
+            var page=$(id).val();
+            if(page>totalpagenow){
+                page=totalpagenow;
+            }
+            $.ajax({
+                type:'post',
+                url:'${basepath}/getCommentsBypage',
+                data:{
+                    "currPage":page,
+                    "trailerId":${OneTrailer.id}
+                },
+                success:function (data) {
+                    var obj=JSON.parse(data);
+
+                    console.log(obj);
+
+                    var totalPage=obj.totalPage;
+
+                    totalpagenow=obj.totalPage;
+
+
+                    var currPage=obj.currPage;
+
+
+                    $("#showcomment").empty();
+
+                    $("#main-content").empty();
+
+                    var comments=obj.lists;
+
+                    var appendhtml="";//要添加的显示内容
+
+                    var appendpage="";//分页的更改
+
+
+                    for(var i=0;i<comments.length;i++){
+                         appendhtml+=' <li class="list-group-item" style="border: none">'+
+                            '<div class="row">'+
+                            '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
+                             '<span>'+comments[i].username+'</span>'+
+                             '&nbsp;&nbsp;'+changeDateFormat(comments[i].time)+
+                             '</div>'+
+                             '<br>'+
+                             '<div class="row">'+
+                             '&nbsp;&nbsp;'+
+                               comments[i].content+
+                              '</div>';
+                          if(comments[i].userId==1) {
+                              appendhtml+='<div class="row col-md-offset-10">'+
+                                  '<a class="btn btn-sm" onclick="deletecomment('+comments[i].id+')">删除</a>'+
+                                  '<a data-toggle="collapse" data-parent="#accordion"'+
+                                  'href="#'+comments[i].userId+i+'" class="btn btn-sm">回复</a>'+
+                                  '</div>';
+                          }
+                          else {
+                              appendhtml+='<div class="row col-md-offset-10">'+
+
+                                  '<a class="btn btn-sm">举报</a>'+
+                                  '<a data-toggle="collapse" data-parent="#accordion"'+
+                                  'href="#'+comments[i].userId+i+'" class="btn btn-sm">回复</a>'+
+                                  '</div>';
+                          }
+                          appendhtml+='<div id="'+comments[i].userId+i+'" class="panel-collapse collapse">'+
+                                       '<div class="panel-body">'+
+                                       '<div class="row">'+
+                                       '<div class="form-horizontal">'+
+                                       '<div class="form-group col-md-8">'+
+                                       '<input id="'+i+'" class="form-control" type="text" placeholder="@'+comments[i].username+':">'+
+                                       '</div>'+
+                                       '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment('+i+','+comments[i].id+','+comments[i].userId+','+1+',1)" value="回复">'+
+                                       '</div>'+
+                                       '</div>'+
+                                       '<div class="row">'+
+                                       '<ul class="list-group">';
+
+                              var replycomments=comments[i].trailerReplycomments;
+                              console.log(replycomments);
+
+                                     for(var j=0;j<replycomments.length;j++){
+                                         appendhtml+='<li class="list-group-item">'+
+                                                      '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
+                                                      '<span>'+replycomments[j].username+'</span>'+
+                                                      '&nbsp;&nbsp;'+changeDateFormat(replycomments[j].time)+
+                                                      '<br>'+
+                                                      '<div class="row">'+
+                                                      '<span class="col-md-offset-1">回复@'+replycomments[j].to_userIdusername+':'+replycomments[j].content+'</span>';
+                                                      if(replycomments[j].userId==1){
+                                                          appendhtml+='<div class="row col-md-offset-10">'+
+                                                                       '<a class="btn btn-sm" onclick="deletereplycomment('+replycomments[j].id+')">删除</a>'+
+                                                                       '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
+                                                                       'href="#div'+comments[i].id+j+'">回复</a>'+
+                                                                       '</div>';
+                                                      }else{
+                                                          appendhtml+='<div class="row col-md-offset-10">'+
+                                                              '<a class="btn btn-sm">举报</a>'+
+                                                              '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
+                                                              'href="#div'+comments[i].id+j+'">回复</a>'+
+                                                              '</div>';
+                                                      }
+                                                      appendhtml+='</div>'+
+                                                                   '<div id="div'+comments[i].id+j+'" class="panel-collapse collapse">'+
+                                                                   '<div class="panel-body">'+
+                                                                   '<div class="form-group col-md-8">'+
+                                                                   '<input id="s'+replycomments[j].id+'" class="form-control" type="text" placeholder="@'+replycomments[j].username+':">'+
+                                                                   '</div>'+
+                                                                   '<input onclick="replyComment2(s'+replycomments[j].id+','+comments[i].id+','+replycomments[j].id+','+replycomments[j].userId+',1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">'+
+                                                                   '</div>'+
+                                                                   '</div>'+
+                                                                   '</li>';
+
+                                     }
+
+                                     appendhtml+='</ul></div> </div> </div> </li> <hr>';
+
+
+                    }
+
+                    if(totalPage>0){
+                        var front=currPage-1;
+                        if(front<=0){
+                            front=1;
+                        }
+                        var next=currPage+1;
+                        if(next>totalPage){
+                            next=totalPage;
+                        }
+                        appendpage+='<div class="text-center">'+
+                            '<ul class="pagination">'+
+                            '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>'+
+                            '<li id="front" value="'+front+'" onclick="topage(front)"><a style="cursor: pointer">上一页</a></li>';
+
+                            if(totalPage<=5){
+                                for(var i=1;i<=totalPage;i++){
+                                    if(i==currPage){
+                                        appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                    }else{
+                                        appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                    }
+                                }
+                            }
+                            else{
+                                var test1=currPage;
+                                var test2=totalPage;
+                                if(totalPage-currPage>=5){
+                                    for(var i=currPage;i<=currPage+4;i++){
+                                        if(i==currPage){
+                                            appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                        }else{
+                                            appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                        }
+                                    }
+                                }
+                                else{
+                                    for(var i=totalPage-4;i<=totalPage;i++){
+                                        if(i==currPage){
+                                            appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                                        }else{
+                                            appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+
+                                        }
+                                    }
+                                }
+
+                            }
+                            appendpage+='<li id="next" value="'+next+'" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>'+
+                                        '<li id="last" value="'+totalPage+'"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>'+
+                                        '<li>'+
+                                        '<div class="col-sm-3" role="form">'+
+                                        '<div class="input-group">'+
+                                        '<input id="page" type="text" class="form-control">'+
+                                        '<span onclick="topage(page)" class="input-group-addon" style="cursor: pointer">go</span>'+
+                                        '</div>'+
+                                        '</div>'+
+                                        '</li>'+
+                                        '<li><a style="border: none">共'+totalPage+'页</a></li>'+
+                                        '</ul>'+
+                                        '</div>';
+
+
+                    }
+
+
+                    $("#showcomment").append(appendhtml);
+                    $("#main-content").append(appendpage);
+
+                }
+            });
+        }
+
+    </script>
 </div>
 <!--底部版权信息-->
 <div style="font:12px Tahoma;color: white;text-align:center;">

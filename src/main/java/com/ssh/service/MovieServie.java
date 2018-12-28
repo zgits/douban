@@ -4,6 +4,7 @@ import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
@@ -67,4 +68,36 @@ public interface MovieServie {
      * @return
      */
     public List<Movie> selectMoving();
+
+    /**
+     * 更新时所用
+     * @param id
+     * @return
+     */
+    public Movie ToUpdateselctMovieById(Integer id);
+
+
+    /**
+     * 根据电影id得到电影名，用于后台管理预告片时所用
+     * @param movieId
+     * @return
+     */
+    public String getMovieNameById(Integer movieId);
+
+
+    /**
+     * 得到全部的电影名字，转成map
+     * @return
+     */
+    public Map<Integer,String> getAllMovieName();
+
+
+    /**
+     * 批量删除电影信息
+     * @param ids
+     * @return
+     */
+    public boolean deleteMovies(Integer[] ids);
+
+
 }

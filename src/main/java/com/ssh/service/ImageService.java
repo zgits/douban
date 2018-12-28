@@ -44,4 +44,14 @@ public interface ImageService {
     /**
      * end针对后台管理电影时对预告片的方法
      */
+
+    public List<Image> getAllImage();
+
+
+    /**
+     * 根据id批量删除图片
+     * @param ids
+     * @return
+     */
+    public boolean deleteImages(Integer[] ids);
 }

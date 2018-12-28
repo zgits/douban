@@ -3,6 +3,7 @@ package com.ssh.action;
 import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Movie_Comment;
+import com.ssh.model.PageBean;
 import com.ssh.service.Movie_CommentService;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,38 @@ public class MovieCommentAction extends ActionSupport{
     }
 
     /********异步刷新评论数据************/
-    public void getComments(){
-        movie_commentService.findComment(movieId,currPage);
+    public String getComments(){
+
+        PageBean<Movie_Comment> pageBean;
+        String jsonPageBean;
+        try{
+            pageBean=movie_commentService.findComment(movieId,currPage);
+
+            jsonPageBean= JSON.toJSONString(pageBean);
+            if(pageBean!=null){
+                System.out.println("成功取得第"+currPage+"页的数据,数据为：\r\n"+pageBean);
+            }else{
+                System.out.println("查询失败...");
+            }
+
+            ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+
+            PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+            System.out.println(jsonPageBean);
+
+            writer.write(jsonPageBean);
+
+            System.out.println("成功");
+
+            writer.flush();
+
+            writer.close();
+
+        }catch (Exception e){
+
+        }
+        return SUCCESS;
     }
 
     /**********异步刷新评论数据end**********/

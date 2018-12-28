@@ -26,12 +26,13 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     }
 
     @Override
-    public boolean insertMovie(Movie movie) {
+    public Integer insertMovie(Movie movie) {
         try{
             this.getSessionFactory().getCurrentSession().save(movie);
-            return true;
+            Integer id=movie.getId();
+            return id;
         }catch (Exception e){
-            return false;
+            return 0;
         }
     }
 
@@ -57,12 +58,18 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         }
     }
 
+    /**
+     * int begin, int pageSize
+     * @return
+     */
     @Override
-    public List<Movie> selectMovie(int begin, int pageSize) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Movie.class);
-        // 查询分页数据
-        List<Movie> list = (List<Movie>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
-        return list;
+    public List<Movie> selectMovie() {
+//        DetachedCriteria criteria = DetachedCriteria.forClass(Movie.class);
+//        // 查询分页数据
+//        List<Movie> list = (List<Movie>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
+        String hql="from Movie";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        return query.list();
     }
 
     @Override
@@ -78,7 +85,11 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
 
     @Override
     public Movie selectMovieById(Integer id) {
-        return (Movie)this.getSessionFactory().getCurrentSession().createQuery("from Movie where id=?").setParameter(0,id).uniqueResult();
+        System.out.println("dao查询");
+        String hql="from Movie as movie where movie.id=:id";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setInteger("id",id);
+        return (Movie)query.list().get(0);
 
     }
 
@@ -93,14 +104,14 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     }
 
     @Override
-   public Integer getMovieCountByName(String moviename) {
-//        String hql="select count(*) from Movie where moviename like %"+moviename+"%";
-//        List<Long> list= (List<Long>) this.getHibernateTemplate().find(hql);
-//        if (list.size()>0){
-//            return list.get(0).intValue();
-//        }
-      return 0;
-   }
+    public Integer getMovieCountByName(String moviename) {
+        String hql="select count(*) from Movie where moviename like %"+moviename+"%";
+        List<Long> list= (List<Long>) this.getHibernateTemplate().find(hql);
+        if (list.size()>0){
+            return list.get(0).intValue();
+        }
+        return 0;
+    }
 
     @Override
     public List<Movie> selectAllMovie() {
@@ -113,4 +124,42 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
         return query.list();
     }
+
+    @Override
+    public String getMovieNameById(Integer movieId) {
+
+        return (String)this.getSessionFactory().getCurrentSession().createQuery(" select moviename from Movie where id=?").setParameter(0,movieId).uniqueResult();
+
+    }
+
+    @Override
+    public List<Object[]> getAllMovieName() {
+        String hql = " select id,moviename from Movie";
+
+        Query query = this.getSessionFactory().getCurrentSession().createQuery(hql);
+
+        //默认查询出来的list里存放的是一个Object数组
+
+        return query.list();
+    }
+
+    @Override
+    public boolean deleteMovies(Integer[] ids) {
+        String hql="delete from Movie where id in (:ids)";
+        int ret=0;
+        try{
+            Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(hql);
+            query.setParameterList("ids", ids);
+            ret = query.executeUpdate();
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }

@@ -133,12 +133,12 @@
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
                     <li><a href="register.html">注册</a></li>
                     <li>
-                        <a href="tips_message.html">
+                        <a href="tips_message.jsp">
                             <span class="badge pull-right">3</span>消息
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
+                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
                 </ul>
             </div>
@@ -218,7 +218,7 @@
                         <img src="${trailer.images[0].path}" class="img-rounded" style="width: 150px;height: 130px">
                         <div class="box-content">
                             <ul class="icon">
-                                <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play" ></span></a></li>
+                                <li><a href="trailergetTrailer?id=1"><span class="glyphicon glyphicon-play" ></span></a></li>
                             </ul>
                         </div>
                     </div>

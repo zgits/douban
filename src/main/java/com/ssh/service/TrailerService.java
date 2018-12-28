@@ -58,4 +58,18 @@ public interface TrailerService {
      * 获取全部预告片
      */
     public List<Trailer> getAllTrailer();
+
+
+    /**
+     * 得到所有的预告片，用于后台管理预告片所用
+     * @return
+     */
+    public List<Trailer> getAllTrailers();
+
+    /**
+     * 批量删除预告片
+     * @param ids
+     * @return
+     */
+    public boolean deleteTrailers(Integer[] ids);
 }

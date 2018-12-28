@@ -1,7 +1,10 @@
 package com.ssh.action;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionSupport;
+import com.ssh.model.PageBean;
 import com.ssh.model.Trailer;
 import com.ssh.model.Trailer_Comment;
 import com.ssh.service.Trailer_CommentService;
@@ -40,9 +43,43 @@ public class TrailerCommentAction extends ActionSupport{
         this.currPage = currPage;
     }
 
+    public Integer getCurrPage() {
+        return currPage;
+    }
+
     /********异步刷新评论数据************/
-    public void getComments(){
-        trailer_commentService.findComment(trailerId,currPage);
+    public String getComments(){
+        PageBean<Trailer_Comment> pageBean;
+        String jsonPageBean;
+        try{
+            pageBean=trailer_commentService.findComment(trailerId,currPage);
+
+            jsonPageBean= JSON.toJSONString(pageBean);
+            if(pageBean!=null){
+                System.out.println("成功取得第"+currPage+"页的数据,数据为：\r\n"+pageBean);
+            }else{
+                System.out.println("查询失败...");
+            }
+
+            ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+
+            PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+            System.out.println(jsonPageBean);
+
+            writer.write(jsonPageBean);
+
+            System.out.println("成功");
+
+            writer.flush();
+
+            writer.close();
+
+        }catch (Exception e){
+
+        }
+        return SUCCESS;
+
     }
 
     /**********异步刷新评论数据end**********/

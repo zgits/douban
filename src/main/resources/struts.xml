@@ -11,9 +11,17 @@
 
     <constant name="struts.multipart.saveDir" value="d:/datetemp"/>
 
+
+
+
     <package name="user" namespace="/" extends="struts-default">
 
+        <!--<interceptors>-->
+            <!--<interceptor name="Interceptor" class="com.ssh.action.interceptor.Interceptor"/>-->
+        <!--</interceptors>-->
+
         <action name="manageruser*" class="ManagerUser" method="{1}">
+
             <result name="findAll">/admin/user.jsp</result>
         </action>
 
@@ -37,10 +45,41 @@
         
         <action name="movie_*" class="MovieAction" method="{1}">
 
+
+
+            <!--&lt;!&ndash; 使用自定义拦截器 &ndash;&gt;-->
+            <!--<interceptor-ref name="Interceptor">-->
+                <!--&lt;!&ndash; 配置action中某些方法不进行拦截-->
+                    <!--name属性值：excludeMethods-->
+                    <!--值：action不拦截的方法名称-->
+                    <!--<param name="excludeMethods">login</param>-->
+                 <!--&ndash;&gt;-->
+                <!--<param name="includeMethods">-->
+                    <!--addMovie,updateMovie,deleteMovie-->
+                <!--</param>-->
+
+            <!--</interceptor-ref>-->
+
+            <!--<result name="login" type="redirect">/login.html</result>-->
+
             <result name="moviedetail">/moviedetails.jsp</result>
+
+            <interceptor-ref name="defaultStack"></interceptor-ref>
         </action>
 
         <action name="moviecomment_*" class="MovieComment" method="{1}">
+
+            <!--&lt;!&ndash; 使用自定义拦截器 &ndash;&gt;-->
+            <!--<interceptor-ref name="Interceptor">-->
+                <!--&lt;!&ndash; 配置action中某些方法不进行拦截-->
+                    <!--name属性值：excludeMethods-->
+                    <!--值：action不拦截的方法名称-->
+                    <!--<param name="excludeMethods">login</param>-->
+                 <!--&ndash;&gt;-->
+
+            <!--</interceptor-ref>-->
+
+            <!--<interceptor-ref name="defaultStack"></interceptor-ref>-->
 
         </action>
 
@@ -52,8 +91,25 @@
             <result name="success">trailer.jsp</result>
         </action>
 
+        <action name="getMessage" class="getMessage" method="getMessages">
+            <result name="success">tips_message.jsp</result>
+        </action>
+        <action name="userMessage" class="getMessage" method="UserMessage">
+            <result name="success">personInfo.jsp</result>
+        </action>
+        <action name="updateMessage" class="getMessage" method="updateMessage"/>
+
+        <action name="deleteMessage" class="getMessage" method="deleteMessage"/>
+
+        <action name="image_*" class="Image" method="{1}">
+
+        </action>
+
+
+
+
         <!--文件上传-->
-        <action name="upload" class="MovieAction" method="saveFile">
+        <action name="upload" class="Trailer" method="saveFile1">
             <!--<interceptor-ref name="defaultStack">-->
             <!--&lt;!&ndash;-->
                 <!--修改允许上传文件的大小(默认值是2M),-->
@@ -76,14 +132,84 @@
 
             <!--</interceptor-ref>-->
 
-            <result name="success">/success.jsp</result>
+            <result name="success"></result>
 
             <!-- 配置错误视图 -->
-            <result name="input">/main.html</result>
+            <result name="input"></result>
 
         </action>
         <!--文件上传end-->
 
+
+        <!--image图片上传-->
+
+        <action name="imageupload" class="Image" method="saveFile">
+            <result name="success"></result>
+
+            <!-- 配置错误视图 -->
+            <result name="input"></result>
+        </action>
+
+
+        <action name="bgmain" class="background" method="goToBackground">
+            <result name="success">/admin/main.jsp</result>
+        </action>
+
+    </package>
+
+    <package name="firm-table" extends="json-default"  namespace="/" >
+        <action name="getMovieTable" method="getAllMovies" class="MovieAction">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <action name="getAllUserToTable" class="ManagerUser" method="findAll">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        <action name="getAllTrailerTable" class="Trailer" method="getAllTrailers">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getAllLabelTable" class="Label" method="getAllLabels">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+        
+        
+        <action name="getAllMovieName" class="MovieAction" method="getAllMovieName">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getAllImageTable" class="Image" method="gerAllImage">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getCommentsBypage" class="TrailerComment" method="getComments">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getMovieCommentsBypage" class="MovieComment" method="getComments">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getLabels" class="Label" method="getLabelsToUpAddMovie">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
     </package>
 
 </struts>

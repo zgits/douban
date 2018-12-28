@@ -64,4 +64,12 @@ public interface ManagerUserService {
     public String getUsername(Integer id);
 
 
+    /**
+     * 根据id批量删除用户
+     * @param ids
+     * @return
+     */
+    public boolean deleteUsers(Integer[] ids);
+
+
 }

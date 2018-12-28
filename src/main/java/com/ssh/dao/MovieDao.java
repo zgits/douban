@@ -16,7 +16,7 @@ public interface MovieDao {
      * @param movie
      * @return
      */
-    public boolean insertMovie(Movie movie);
+    public Integer insertMovie(Movie movie);
 
     /**
      * 删除电影信息
@@ -34,9 +34,10 @@ public interface MovieDao {
 
     /**
      * 查询电影信息
+     * int begin,int pageSize
      * @return
      */
-    public List<Movie> selectMovie(int begin,int pageSize);
+    public List<Movie> selectMovie();
 
     /**
      * 获得电影的数量
@@ -79,4 +80,27 @@ public interface MovieDao {
      * 得到正在上映的电影信息
      */
     public List<Movie> selectMoving();
+
+    /**
+     * 根据id获取电影名
+     * @param movieId
+     * @return
+     */
+    public String getMovieNameById(Integer movieId);
+
+
+    /**
+     * 得到一个展示电影名的
+     * @return
+     */
+    public List<Object[]> getAllMovieName();
+
+
+    /**
+     * 批量删除电影
+     * @param ids
+     * @return
+     */
+    public boolean deleteMovies(Integer[] ids);
+
 }

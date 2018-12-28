@@ -3,16 +3,16 @@ package com.ssh.service.impl;
 import com.ssh.dao.ImageDao;
 import com.ssh.dao.MovieDao;
 import com.ssh.dao.TrailerDao;
+import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
-import com.ssh.service.ImageService;
-import com.ssh.service.MovieServie;
-import com.ssh.service.Movie_CommentService;
-import com.ssh.service.TrailerService;
+import com.ssh.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
@@ -35,9 +35,22 @@ public class MovieServieImpl implements MovieServie{
     @Autowired
     private Movie_CommentService movie_commentService;
 
+    @Autowired
+    private LabelMappingService labelMappingService;
+
     @Override
     public boolean insertMovie(Movie movie) {
-        return movieDao.insertMovie(movie);
+        Integer id=movieDao.insertMovie(movie);
+        if(id!=0){
+            for (Labelmapping labelmapping:movie.getLabelmappings()){
+                labelmapping.setMovieId(id);
+            }
+            labelMappingService.insertLabelMapping(movie.getLabelmappings());
+            return true;
+        }else{
+            return false;
+        }
+
     }
 
     @Override
@@ -71,12 +84,12 @@ public class MovieServieImpl implements MovieServie{
         pageBean.setTotalPage(totalPage);
         // 封装当前页记录
         int begin= (currPage - 1)*pageSize;
-        List<Movie> list = movieDao.selectMovie(begin, pageSize);
-        for (Movie movie:list){
-            movie.setImages(imageService.getMovieImages(movie.getId()));
-            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-           // movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
-        }
+        List<Movie> list = movieDao.selectMovie();
+//        for (Movie movie:list){
+//            movie.setImages(imageService.getMovieImages(movie.getId()));
+//            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
+//           // movie.setMovieComments(movie_commentService.findComment(movie.getId(),1));
+//        }
 
         pageBean.setLists(list);
         return pageBean;
@@ -147,5 +160,34 @@ public class MovieServieImpl implements MovieServie{
             movie.setImages(imageService.getMovieImages(movie.getId()));
         }
         return movies;
+    }
+
+    @Override
+    public Movie ToUpdateselctMovieById(Integer id) {
+
+        System.out.println("service查询");
+        return  movieDao.selectMovieById(id);
+    }
+
+    @Override
+    public String getMovieNameById(Integer movieId) {
+        return movieDao.getMovieNameById(movieId);
+    }
+
+    @Override
+    public Map<Integer, String> getAllMovieName() {
+        Map<Integer, String> id_name=new HashMap<>();
+        List<Object[]> list=movieDao.getAllMovieName();
+        for (Object[] object:list){
+            for(int i=0;i<object.length;i+=2){
+                id_name.put((Integer) object[i],(String)object[i+1]);
+            }
+        }
+        return id_name;
+    }
+
+    @Override
+    public boolean deleteMovies(Integer[] ids) {
+        return movieDao.deleteMovies(ids);
     }
 }

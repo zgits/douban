@@ -32,10 +32,10 @@
             msgInvalidFileExtension: 'Invalid extension for file "{name}". Only "{extensions}" files are supported.',
             msgValidationError: 'File Upload Error',
             msgLoading: 'Loading file {index} of {files} &hellip;',
-            msgProgress: 'Loading file {index} of {files} - {name} - {percent}% completed.',
+            msgProgress: '加载第 {index} 文件 共 {files} - {name} - {percent}% 完成.',
             msgSelected: '选中{n}个文件',
-            msgFoldersNotAllowed: 'Drag & drop files only! {n} folder(s) dropped were skipped.',
-            dropZoneTitle: 'Drag & drop files here &hellip;'
+            msgFoldersNotAllowed: '只支持拖拽文件! 跳过 {n} 拖拽的文件夹.',
+            dropZoneTitle: '拖拽文件到这里 &hellip;<br>支持多文件同时上传;'
     };
 
     $.extend($.fn.fileinput.defaults, $.fn.fileinput.locales.es);

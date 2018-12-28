@@ -1,6 +1,8 @@
 package com.ssh.action;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
@@ -42,9 +46,57 @@ public class ManagerUserAction extends ActionSupport {
      * @return
      */
     public String findAll(){
-        PageBean<User> pageBean = managerUserService.getUsers(currPage);
-        ActionContext.getContext().put("pageBean",pageBean);
-        return "findAll";
+
+        System.out.println("已经进来了...");
+
+        List<User> users=new ArrayList<>();
+        try{
+            PageBean<User> pageBean = managerUserService.getUsers(currPage);
+            users=pageBean.getLists();
+        }catch (Exception e){
+
+        }
+        if(users!=null){
+            System.out.println("成功取得"+users.size()+"条数据...");
+        }else{
+            System.out.println("查询失败...");
+        }
+        JSONArray arr=new JSONArray();
+
+        //读取数据
+        for(User user:users){
+            JSONObject ob=new JSONObject();
+            //将单独的数据装进json数据
+            ob.put("id", user.getId());
+            ob.put("username", user.getUsername());
+            ob.put("email", user.getEmail());
+            ob.put("password",user.getPassword());
+            ob.put("endtime",user.getEndTime());
+            ob.put("last_login",user.getLast_login());
+            //装进数组
+            arr.add(ob);
+        }
+        JSONObject ob=new JSONObject();
+        //放置数据
+        ob.put("rows", arr);
+        //放置所有的数据个数
+        ob.put("total", users.size());
+        String returndata=ob.toString();
+        System.out.println("成功转换"+returndata.length()+"大小的数据...");
+        System.out.println(arr);
+        System.out.println(returndata);
+        //转换编码
+        ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+        PrintWriter out;
+        try {
+            out=ServletActionContext.getResponse().getWriter();
+            out.println(returndata);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "success";
     }
 
     /*********禁言用户start***********/
@@ -168,5 +220,40 @@ public class ManagerUserAction extends ActionSupport {
     /*******通过用户名查找用户end*********/
 
 
+    /**
+     *批量删除用户
+     */
+    private Integer[] ids;
 
+    public Integer[] getIds() {
+        return ids;
+    }
+
+    public void setIds(Integer[] ids) {
+        this.ids = ids;
+    }
+
+    public void deleteUsers() throws IOException {
+        String flag ="";
+        try{
+            if(managerUserService.deleteUsers(ids)){
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }
+
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
+    }
 }

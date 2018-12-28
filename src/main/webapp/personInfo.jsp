@@ -1,3 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,12 +92,12 @@
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
                     <li><a href="register.html">注册</a></li>
                     <li>
-                        <a href="tips_message.html">
+                        <a href="tips_message.jsp">
                             <span class="badge pull-right">3</span>消息
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg"
+                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"
                                                                                         class="img-circle img-responsive"
                                                                                         style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
@@ -139,7 +143,7 @@
             </div>
         </div>
 
-
+<!-- 历史消息-->
         <div class="row" id="history">
             <div class="row">
                 <div class="row">
@@ -158,48 +162,19 @@
             <div class="row">
                 <!--注意里面的id，checkbox每个需要不同-->
                 <ul class="list-group" id="owners">
+                    <c:forEach items="${pagebeans.lists}" var="pagebean" >
                     <li class="list-group-item">
                         <div class="checkbox checkbox-success">
-                            <input id="checkbox1" class="styled" type="checkbox">
-                            <label for="checkbox1">
-                                xxxxxxx提示信息
+                            <input id="${pagebean.userId}" class="styled" type="checkbox">
+                            <label for="${pagebean.userId}">
+                                来自${pagebean.sender}的信息:${pagebean.message}
                                 <br>
-                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
+                                <span style="color: rgb(91, 81, 191); font-size: 14px;">${pagebean.time}</span>
                             </label>
                         </div>
 
                     </li>
-                    <li class="list-group-item">
-                        <div class="checkbox checkbox-success">
-                            <input id="checkbox2" class="styled" type="checkbox">
-                            <label for="checkbox2">
-                                xxxxxxx提示信息
-                                <br>
-                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
-                            </label>
-                        </div>
-
-                    </li>
-                    <li class="list-group-item">
-                        <div class="checkbox checkbox-success">
-                            <input id="checkbox3" class="styled" type="checkbox">
-                            <label for="checkbox3">
-                                xxxxxxx提示信息
-                                <br>
-                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
-                            </label>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="checkbox checkbox-success">
-                            <input id="checkbox4" class="styled" type="checkbox">
-                            <label for="checkbox4">
-                                xxxxxxx提示信息
-                                <br>
-                                <span style="color: rgb(91, 81, 191); font-size: 14px;">2018-11-20 14:06:52</span>
-                            </label>
-                        </div>
-                    </li>
+                    </c:forEach>
                 </ul>
             </div>
 
@@ -209,13 +184,12 @@
 
                         <div class="text-center">
                             <ul class="pagination">
-                                <li><a href="#">&laquo;</a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">5</a></li>
-                                <li><a href="#">&raquo;</a></li>
+                                <li><a href="userMessage?id=1&&currpage=1">&laquo;</a></li>
+                                <c:forEach var="count" begin="1" end="${pagebeans.totalPage}">
+                                    <li><a href="userMessage?id=1&&currpage=${count}">${count}</a></li>
+                                </c:forEach>
+
+                                <li><a href="userMessage?id=1&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
                                 <li>
                                     <!--异步传输页数，返回数据得到结果-->
                                     <form class="col-sm-3" role="form">
@@ -225,7 +199,7 @@
                                         </div>
                                     </form>
                                 </li>
-                                <li><a style="border: none">共6页</a></li>
+                                <li><a style="border: none">共${pagebeans.totalPage}页</a></li>
                             </ul>
                         </div>
 
@@ -234,7 +208,7 @@
                 </div>
             </div>
         </div>
-
+<!--/历史消息-->
 
         <div class="row" id="set_up" style="margin-top: 50px">
             <form class="form-horizontal" role="form">

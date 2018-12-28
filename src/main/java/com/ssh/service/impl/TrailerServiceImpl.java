@@ -88,4 +88,14 @@ public class TrailerServiceImpl implements TrailerService{
         return trailers;
 
     }
+
+    @Override
+    public List<Trailer> getAllTrailers() {
+        return trailerDao.getAllTrailers();
+    }
+
+    @Override
+    public boolean deleteTrailers(Integer[] ids) {
+        return trailerDao.deleteTrailers(ids);
+    }
 }

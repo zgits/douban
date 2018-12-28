@@ -68,7 +68,7 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
 
     @Override
     public List<Trailer> getMovieTrailers(Integer movieId) {
-        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer");
+        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer where movieId=?").setParameter(0,movieId);
         return query.list();
     }
 
@@ -83,4 +83,31 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
         Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer");
         return  query.list();
     }
+    @Override
+    public List<Trailer> getAllTrailers() {
+        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer");
+        return query.list();
+    }
+
+    @Override
+    public boolean deleteTrailers(Integer[] ids) {
+        String hql="delete from Trailer where id in (:ids)";
+        int ret=0;
+        try{
+            Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(hql);
+            query.setParameterList("ids", ids);
+            ret = query.executeUpdate();
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 结束针对后台管理电影时对预告片的方法
+     */
 }

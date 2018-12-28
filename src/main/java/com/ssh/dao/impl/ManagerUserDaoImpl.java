@@ -44,12 +44,20 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
     }
 
 
+    /**
+     * 2018-12-18，取消了后台的分页，改为了前台，对于管理员管理用户使用
+     * int begin, int pageSize
+     * @return
+     */
     @Override
-    public List<User> getAllUser(int begin, int pageSize) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
-        // 查询分页数据
-        List<User> list = (List<User>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
-        return list;
+    public List<User> getAllUser() {
+//        DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
+//        // 查询分页数据
+//        List<User> list = (List<User>) this.getHibernateTemplate().findByCriteria(criteria,begin,pageSize);
+
+        String hql="from User";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        return query.list();
     }
 
 
@@ -146,6 +154,24 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
             return list.get(0).intValue();
         }
         return 0;
+    }
+
+    @Override
+    public boolean deleteUsers(Integer[] ids) {
+        String hql="delete from User where id in (:ids)";
+        int ret=0;
+        try{
+            Query query = this.getSessionFactory().getCurrentSession().createSQLQuery(hql);
+            query.setParameterList("ids", ids);
+            ret = query.executeUpdate();
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

@@ -30,6 +30,8 @@
     <!--显示星数-->
     <link href="static_resources/star/star.css" rel="stylesheet">
 
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
     <style>
         #wapper{
             position: relative;   /*重要！保证footer是相对于wapper位置绝对*/
@@ -48,6 +50,8 @@
 
 </head>
 <body>
+
+
 <!--logo,导航栏，搜索栏，个人信息栏，---慕课---->
 <nav class="navbar navbar-inverse">
     <div class="container">
@@ -75,14 +79,14 @@
                     <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
                     <li><a href="register.html">注册</a></li>
                     <li>
-                        <a href="tips_message.html">
+                        <a href="getMessage?id=1">
                             <span class="badge pull-right">3</span>消息
                         </a>
                     </li>
                     <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.html"><img src="/image/test.jpg"
-                                                                                        class="img-circle img-responsive"
-                                                                                        style="width: 40px;height: 40px;margin-top: -10px"></a>
+                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"
+                                                                                       class="img-circle img-responsive"
+                                                                                       style="width: 40px;height: 40px;margin-top: -10px"></a>
                     </li>
                 </ul>
             </div>
@@ -219,5 +223,10 @@
 
     </div>
 </div>
+
+<script>
+    $.cookie("id",3);
+    alert("xxxx"+$.cookie("id"));
+</script>
 </body>
 </html>

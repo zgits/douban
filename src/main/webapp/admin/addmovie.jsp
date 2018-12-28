@@ -193,9 +193,9 @@
             success:function (data) {
                 $("#loading").hide();
                 if(data==1){
-                    toastr.success('回复成功');
+                    toastr.success('添加成功');
                 }else{
-                    toastr.error("回复失败");
+                    toastr.error("添加失败");
                 }
                 setTimeout("window.location.reload()",3000);
             }

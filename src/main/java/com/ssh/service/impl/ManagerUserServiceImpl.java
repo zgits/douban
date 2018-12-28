@@ -53,7 +53,10 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         pageBean.setTotalPage(totalPage);
         // 封装当前页记录
         int begin= (currPage - 1)*pageSize;
-        List<User> list = managerUserDao.getAllUser(begin, pageSize);
+
+        //后台取消了分页，改为前端使用分页，对于管理员管理用户，
+        //原参数：begin, pageSize
+        List<User> list = managerUserDao.getAllUser();
 
         pageBean.setLists(list);
         return pageBean;
@@ -128,6 +131,12 @@ public class ManagerUserServiceImpl implements ManagerUserService{
     @Override
     public String getUsername(Integer id) {
         return managerUserDao.getUserName(id);
+    }
+
+    @Override
+    public boolean deleteUsers(Integer[] ids) {
+        System.out.println("批量删除用户中的ids"+ids);
+        return managerUserDao.deleteUsers(ids);
     }
 
 

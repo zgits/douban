@@ -62,4 +62,19 @@ public interface TrailerDao {
     /**
      * 获取影片上映时间
      */
+
+
+    /**
+     * 后台管理媒体信息时所用，得到全部的预告片
+     * @return
+     */
+    public List<Trailer> getAllTrailers();
+
+
+    /**
+     * 批量删除预告片
+     * @param ids
+     * @return
+     */
+    public boolean deleteTrailers(Integer[] ids);
 }

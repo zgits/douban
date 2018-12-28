@@ -34,7 +34,7 @@
 <body >
 
 
-<div>
+<div style="height:650px">
     <table class="table table-bordered" id="table_user">
         <caption class="text-center" style="color: #2f904d;font-size: 25px">用户信息表</caption>
         <thead>

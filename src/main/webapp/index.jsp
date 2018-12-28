@@ -1,7 +1,7 @@
 <html>
 <body>
 <h2>
-    <form action="form_test">
+    <form action="main.jsp">
         <input type="text" name="username">
         <input type="text" name="password">
         <input type="submit">

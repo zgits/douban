@@ -12,6 +12,10 @@ import static org.junit.Assert.*;
  * Created by 幻夜~星辰 on 2018/11/28.
  */
 public class MovieServieImplTest extends BaseTest{
+    @Test
+    public void getAllMovieName() throws Exception {
+        System.out.println(movieServie.getAllMovieName().get(3));
+    }
 
     @Autowired
     private MovieServie movieServie;
