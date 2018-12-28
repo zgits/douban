@@ -12,6 +12,11 @@ import static org.junit.Assert.*;
  */
 public class MovieDaoImplTest extends BaseTest{
     @Test
+    public void selectMovieById() throws Exception {
+
+    }
+
+    @Test
     public void getAllMovieName() throws Exception {
         System.out.println(movieDao.getAllMovieName().get(0)[1]);
     }

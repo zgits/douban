@@ -65,9 +65,6 @@
     </style>
 </head>
 <body>
-<script>
-    alert($.cookie("id"));
-</script>
 
 <!--导航栏-->
 <nav class="navbar navbar-inverse">
@@ -113,7 +110,7 @@
         <div class="m" style="margin-top: -20px;">
             <h1>${OneTrailer.name}</h1>
             <video poster="vs.png" controls>
-                <%--<source src="https://video.pc6.com/v/1809/dyjxxz3.mp4" type="video/mp4">--%>
+                <source src="https://video.pc6.com/v/1809/dyjxxz3.mp4" type="video/mp4">
                 <!-- <source src="path/to/video.webm" type="video/webm">-->
                 <!-- Captions are optional -->
             </video>
@@ -333,8 +330,11 @@
                     $("#loading").hide();
                     if(data==1){
                         toastr.success('回复成功');
-                    }else{
+                    }else if(data==2){
                         toastr.error("回复失败");
+                    }else if(data==3){
+                        toastr.warning("请先登录");
+                        setTimeout("window.location='login.html'",2000);
                     }
                     setTimeout("window.location.reload()",3000);
                 }
@@ -370,8 +370,12 @@
                     $("#loading").hide();
                     if(data==1){
                         toastr.success('回复成功');
-                    }else{
+                    }else if(data==2){
                         toastr.error("回复失败");
+                    }else if(data==3){
+                        toastr.warning("请先登录");
+
+                        setTimeout("window.location='login.html'",2000);
                     }
                     setTimeout("window.location.reload()",3000);
                 }
@@ -398,8 +402,11 @@
                     $("#loading").hide();
                     if(data==1){
                         toastr.success('删除成功');
-                    }else{
+                    }else if(data==2){
                         toastr.error("删除失败");
+                    }else{
+                        toastr.warning(data);
+
                     }
                     setTimeout("window.location.reload()",3000);
                 }
@@ -427,7 +434,7 @@
                     $("#loading").hide();
                     if(data==1){
                         toastr.success('删除成功');
-                    }else{
+                    }else if(data==2){
                         toastr.error("删除失败");
                     }
                     setTimeout("window.location.reload()",3000);
@@ -493,8 +500,11 @@
                     $("#loading").hide();
                     if(data==1){
                         toastr.success('评论成功');
-                    }else{
+                    }else if(data==2){
                         toastr.error("评论失败");
+                    }else if(data==3){
+                        toastr.warning("请先登录");
+                        setTimeout("window.location='login.html'",2000);
                     }
                     $("#content").val("");
                     setTimeout("window.location.reload()",3000);

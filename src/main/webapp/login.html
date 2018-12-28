@@ -1,3 +1,106 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="zh-CN">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
+<!--<meta charset="UTF-8">-->
+<!--<title>登录页面</title>-->
+
+<!--<link rel="stylesheet" href="/static_resources/login-register/css/style.css">-->
+<!--<link rel="stylesheet" href="/static_resources/confirm/css/jquery.slider.css" />-->
+
+<!--<script type="text/javascript" src="/static_resources/confirm/js/jquery.min.js"></script>-->
+<!--<script type="text/javascript" src="/static_resources/confirm/js/jquery.slider.min.js"></script>-->
+
+<!--<body>-->
+
+<!--<div class="login-container">-->
+    <!--<h1>登录</h1>-->
+
+    <!--<div class="connect">-->
+        <!--<p>doubansshshow</p>-->
+    <!--</div>-->
+
+    <!--<form action="main.jsp" method="post" id="loginForm">-->
+        <!--<div>-->
+            <!--<input type="text" name="email" class="email" placeholder="邮箱" autocomplete="off"/>-->
+        <!--</div>-->
+        <!--<div>-->
+            <!--<input type="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />-->
+        <!--</div>-->
+
+        <!--<div class="container" style="margin-top: 10px">-->
+            <!--<div >-->
+                <!--<div id="slider2" class="slider"></div>-->
+                <!--<span style="display: none" id="result2">false</span>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<button id="submit" type="submit" onclick="return cc()">登录</button>-->
+    <!--</form>-->
+
+
+    <!--<script>-->
+        <!--function cc() {-->
+            <!--var e=document.getElementById("result2").innerHTML;-->
+            <!--if(e=="true"){-->
+                <!--return true;-->
+            <!--}else{-->
+                <!--return false;-->
+            <!--}-->
+        <!--}-->
+    <!--</script>-->
+    <!--<script>-->
+
+        <!--$("#slider2").slider({-->
+            <!--width: 300, // width-->
+            <!--height: 40, // height-->
+            <!--sliderBg: "rgb(134, 134, 131)", // 滑块背景颜色-->
+            <!--color: "#fff", // 文字颜色-->
+            <!--fontSize: 14, // 文字大小-->
+            <!--bgColor: "#33CC00", // 背景颜色-->
+            <!--textMsg: "按住滑块，拖拽验证", // 提示文字-->
+            <!--successMsg: "验证通过", // 验证成功提示文字-->
+            <!--successColor: "red", // 滑块验证成功提示文字颜色-->
+            <!--time: 400, // 返回时间-->
+            <!--callback: function (result) { // 回调函数，true(成功),false(失败)-->
+                <!--$("#result2").text(result);-->
+            <!--}-->
+        <!--});-->
+
+    <!--</script>-->
+
+    <!--&lt;!&ndash;忘记密码，暂时去掉，对于作业的实际意义不大&ndash;&gt;-->
+    <!--&lt;!&ndash;<button type="button" class="register-tis">忘记密码？</button>&ndash;&gt;-->
+
+    <!--<a href="register.html">-->
+        <!--<button type="button" class="register-tis">还没有账号？立即注册</button>-->
+    <!--</a>-->
+
+<!--</div>-->
+<!--&lt;!&ndash;验证start&ndash;&gt;-->
+
+<!--&lt;!&ndash;验证模块end&ndash;&gt;-->
+<!--<script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>-->
+<!--<script src="/static_resources/login-register/js/common.js"></script>-->
+<!--&lt;!&ndash;轮播背景图&ndash;&gt;-->
+<!--<script src="/static_resources/login-register/js/supersized.3.2.7.min.js"></script>-->
+<!--<script src="/static_resources/login-register/js/supersized-init.js"></script>-->
+<!--&lt;!&ndash;&ndash;&gt;-->
+<!--<script src="/static_resources/login-register/js/jquery.validate.min.js?var1.14.0"></script>-->
+<!--&lt;!&ndash;底部版权信息&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="font:12px Tahoma;color: white; margin:0px auto; text-align:center;">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div style="background-color: #0f0f0f">&ndash;&gt;-->
+        <!--&lt;!&ndash;<hr/>&ndash;&gt;-->
+        <!--&lt;!&ndash;Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;&ndash;&gt;-->
+        <!--&lt;!&ndash;xxx小组 ALL RIGHT RESERVED<br/>&ndash;&gt;-->
+        <!--&lt;!&ndash;联系方式：xxxx@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;意见反馈<br/><br/>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -5,7 +108,7 @@
 <title>登录页面</title>
 
 <link rel="stylesheet" href="/static_resources/login-register/css/style.css">
-<link rel="stylesheet" href="/static_resources/confirm/css/jquery.slider.css" />
+<link rel="stylesheet" href="/static_resources/confirm/css/jquery.slider.css"/>
 
 <script type="text/javascript" src="/static_resources/confirm/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static_resources/confirm/js/jquery.slider.min.js"></script>
@@ -18,32 +121,30 @@
     <div class="connect">
         <p>doubansshshow</p>
     </div>
-
-    <form action="main.jsp" method="post" id="loginForm">
+    <form action="" method="post" id="loginForm">
         <div>
-            <input type="text" name="email" class="email" placeholder="邮箱" autocomplete="off"/>
+            <input type="text" id="email" name="email" class="email" placeholder="邮箱" autocomplete="off"/>
         </div>
         <div>
-            <input type="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
+            <input type="password" id="password" name="password" class="password" placeholder="密码"
+                   oncontextmenu="return false" onpaste="return false"/>
         </div>
 
         <div class="container" style="margin-top: 10px">
-            <div >
+            <div>
                 <div id="slider2" class="slider"></div>
                 <span style="display: none" id="result2">false</span>
             </div>
         </div>
-
-        <button id="submit" type="submit" onclick="return cc()">登录</button>
+        <button id="submit" type="button" onclick="login()">登录</button>
     </form>
-
 
     <script>
         function cc() {
-            var e=document.getElementById("result2").innerHTML;
-            if(e=="true"){
+            var e = document.getElementById("result2").innerHTML;
+            if (e == "true") {
                 return true;
-            }else{
+            } else {
                 return false;
             }
         }
@@ -86,15 +187,44 @@
 <script src="/static_resources/login-register/js/supersized-init.js"></script>
 <!---->
 <script src="/static_resources/login-register/js/jquery.validate.min.js?var1.14.0"></script>
+<script>
+    function login() {
+        var email = $("#email").val(),
+            password = $("#password").val(),
+            flag = true;
+        if (flag = true) {
+            $.ajax({
+                url: "http://localhost:8090/user_login",
+                type: 'GET',
+                async: false,
+                data: {"email": email, "password": password},
+                success: function (data) {
+                    if (data.username != "" && data.username != undefined) {
+                        alert("登录成功！")
+                        if (data.username == "admin") {
+                            window.location.href = "http://localhost:8090/user_bgmainjsp";
+                        } else {
+                            sessionStorage.setItem("username",data.username);
+                            window.location.href = "http://localhost:8090/user_mainjsp";
+                        }
+                    }else {
+                        alert("密码错误");
+                    }
+                },
+                dataType: "json"
+            });
+        }
+    }
+</script>
 <!--底部版权信息-->
 <!--<div style="font:12px Tahoma;color: white; margin:0px auto; text-align:center;">-->
-    <!--<div style="background-color: #0f0f0f">-->
-        <!--<hr/>-->
-        <!--Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;-->
-        <!--xxx小组 ALL RIGHT RESERVED<br/>-->
-        <!--联系方式：xxxx@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;意见反馈<br/><br/>-->
+<!--<div style="background-color: #0f0f0f">-->
+<!--<hr/>-->
+<!--Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;-->
+<!--xxx小组 ALL RIGHT RESERVED<br/>-->
+<!--联系方式：xxxx@gmail.com&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;意见反馈<br/><br/>-->
 
-    <!--</div>-->
+<!--</div>-->
 <!--</div>-->
 </body>
 </html>

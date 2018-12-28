@@ -1356,6 +1356,7 @@
                     previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
                     uploadAsync: true,//默认异步上传
 
+
                     uploadExtraData: function (previewId, index) {  //传递参数
                         var obj = {};
                         obj.movieId = fodderType1();
@@ -1667,6 +1668,7 @@
                     maxFileSize: 9999999,
                     previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
                     uploadAsync: true,//默认异步上传
+                    allowedFileTypes: ['image'],
 
                     uploadExtraData: function (previewId, index) {  //传递参数
                         var obj = {};
@@ -2318,7 +2320,7 @@
 
                         {
                             field: 'trailername',
-                            title: '预告片名',
+                            title: 'mingzi',
                             align: 'center'
                         },
 

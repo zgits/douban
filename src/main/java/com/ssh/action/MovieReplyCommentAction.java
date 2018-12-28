@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Movie_Replycomment;
 import com.ssh.service.Movie_ReplyCommentService;
+import com.ssh.util.ConfirmToken;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,17 @@ public class MovieReplyCommentAction extends ActionSupport{
 
     @Autowired
     private Movie_ReplyCommentService movie_replyCommentService;
+
+    //token
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     /****增加回复***/
     private Movie_Replycomment movie_replycomment;
@@ -36,9 +48,14 @@ public class MovieReplyCommentAction extends ActionSupport{
         System.out.println(movie_replycomment.getComment_id()+movie_replycomment.getContent());
         String flag ="";
         try{
-            movie_replyCommentService.insertReplyComment(movie_replycomment);
 
-            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            if(ConfirmToken.confirmtoken(token)){
+                movie_replyCommentService.insertReplyComment(movie_replycomment);
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            }else{
+                flag = JSON.toJSONString(3);//使用fastjson将数据转换成json格式,3代表未登录
+
+            }
         }catch (Exception e){
             flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }

@@ -5,6 +5,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.Movie_Comment;
 import com.ssh.model.PageBean;
 import com.ssh.service.Movie_CommentService;
+import com.ssh.util.ConfirmToken;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,16 @@ public class MovieCommentAction extends ActionSupport{
 
     @Autowired
     private Movie_CommentService movie_commentService;
+
+    private String token="";
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     //根据movieId得到评论
     private Integer movieId;
@@ -129,8 +140,14 @@ public class MovieCommentAction extends ActionSupport{
 
         String flag ="";
         try{
-            movie_commentService.insertComment(movie_comment);
-            flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            if(ConfirmToken.confirmtoken(token)){
+                movie_commentService.insertComment(movie_comment);
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            }else{
+                flag = JSON.toJSONString(3);//使用fastjson将数据转换成json格式,3代表未登录
+
+            }
+
         }catch (Exception e){
             flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
