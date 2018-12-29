@@ -31,6 +31,11 @@ public class loginServiceImpl implements loginService {
         return logindao.checkPhone(phone);
     }
 
+    @Override
+    public boolean register(String phone, String username, String password) {
+        return logindao.register(phone,username,password);
+    }
+
 
 //    @Override
 //    public int register(String email, String password, String userName) {

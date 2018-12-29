@@ -114,6 +114,33 @@ public class loginAction extends ActionSupport  {
 
     }
 
+    String phone="";
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void register() throws IOException {
+        String data="";
+
+
+        if(loginservice.checkUsername(username)){
+
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(data);
+
+        writer.flush();
+
+        writer.close();
+    }
+
     //implements ModelDriven<UserLogin>
 
 //    public String loginhtml() {

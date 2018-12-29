@@ -34,4 +34,14 @@ public interface loginService {
      * @return
      */
     public boolean checkPhone(String phone);
+
+
+    /**
+     * 注册用户
+     * @param phone
+     * @param username
+     * @param password
+     * @return
+     */
+    public boolean register(String phone,String username,String password);
 }

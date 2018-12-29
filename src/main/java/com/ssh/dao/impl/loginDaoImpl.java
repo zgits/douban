@@ -104,12 +104,14 @@ public class loginDaoImpl extends HibernateDaoSupport implements loginDao {
             user.setPhone(phone);
             Serializable save = this.getSessionFactory().getCurrentSession().save(user);
 
-            System.out.println(save);
-            return true;
+            if((int)save>0){
+                return true;
+            }else{
+                return false;
+            }
         }catch (Exception e){
             return false;
         }
-
 
     }
 
