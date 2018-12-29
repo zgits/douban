@@ -25,12 +25,12 @@ public interface LabelService {
     /**
      * 删除标签
      */
-    public int deleteLabels(Integer[] ids);
+    public boolean deleteLabels(int id);
 
     /**
      * 修改标签
      */
-    public Label updateLabel(int id);
+    public boolean updateLabel(Label label);
 
     /**
      * 添加标签
@@ -41,6 +41,9 @@ public interface LabelService {
      * 根据id查询标签
      */
     public Label getLabelById(int id);
+
+
+
     public List<Label> getAllLabelsToAddMovie();
 
 
@@ -50,4 +53,11 @@ public interface LabelService {
      * @return
      */
     public String getLabelNameById(Integer id);
+
+
+    /**
+     * 得到父类标签的信息
+     * @return
+     */
+    public Map<Integer,String> getLableName();
 }

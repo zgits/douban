@@ -53,8 +53,6 @@
 
         <action name="moviecomment_*" class="MovieComment" method="{1}">
 
-
-
         </action>
 
         <action name="getMoving" class="MovieAction" method="getMoving">
@@ -74,7 +72,12 @@
         <action name="updateMessage" class="getMessage" method="updateMessage"/>
 
         <action name="deleteMessage" class="getMessage" method="deleteMessage"/>
-
+        <!--标签管理-->
+        <action name="addLable" class="Label" method="addLable"/>
+        <action name="ToUpdateLabel" class="Label" method="ToUpdateLableById"/>
+        <action name="UpdateLabel" class="Label" method="UpdateLabel"/>
+        <action name="deleteLabel" class="Label" method="deleteLabel"/>
+        <!--结束-->
         <action name="image_*" class="Image" method="{1}">
 
         </action>
@@ -142,6 +145,12 @@
                 <param name="root">returndata</param>
             </result>
         </action>
+
+       <action name="getLabelName" class="Label" method="getLabelName">
+           <result name="success" type="json">
+               <param name="root">returndata</param>
+           </result>
+       </action>
 
         <action name="getAllImageTable" class="Image" method="gerAllImage">
             <result name="success" type="json">

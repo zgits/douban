@@ -44,35 +44,41 @@ public class LabelDaoImpl implements LabelDao{
      * @return
      */
     @Override
-    public boolean addLabel(Label label) {
-        return false;
+    public int addLabel(Label label) {
+       this.sessionFactory.getCurrentSession().save(label);
+        return 1;
     }
 
     /**
      * 删除标签
-     * @param ids
+     * @param id
      * @return
      */
 
     @Override
-    public int deleteLabels(Integer[] ids) {
+    public int deleteLabels(int id) {
         int count=0;
-        String hql="delete from Label where id in (:ids)";
+        String hql="delete from Label where id=:id";
         Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
-        query.setParameterList("ids",ids);
+        query.setInteger("id",id);
         count=query.executeUpdate();
         return count;
     }
 
     /**
      * 修改标签
-     * @param id
+     * @param
      * @return
      */
 
     @Override
-    public Label updateLabel(int id) {
-        return null;
+    public int updateLabel(Label label) {
+        try{
+            this.sessionFactory.getCurrentSession().update(label);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
     }
 
 
@@ -87,12 +93,19 @@ public class LabelDaoImpl implements LabelDao{
         String hql="from Label as label where label.id=:id";
         Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
         query.setInteger("id",id);
-        label=(Label)query.list();
+        label=(Label)query.list().get(0);
         return label;
     }
 
     @Override
     public String getLabelNameById(Integer id) {
         return (String)sessionFactory.getCurrentSession().createQuery(" select name from Label where id=?").setParameter(0,id).uniqueResult();
+    }
+
+    @Override
+    public List<Object[]> getLabelName(){
+        String hql="select id,name from Label where id=1 or id=2";
+        Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
+        return (query.list());
     }
 }

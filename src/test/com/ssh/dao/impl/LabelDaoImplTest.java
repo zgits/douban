@@ -16,7 +16,7 @@ public class LabelDaoImplTest extends BaseTest{
     private LabelDao labelDao;
     @Test
     public void getAllLabels() throws Exception {
-        System.out.println(labelDao.getAllLabels());
+        System.out.println(labelDao.getLabelName());
     }
 
 

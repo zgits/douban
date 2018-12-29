@@ -205,7 +205,7 @@ public class Movie {
     public Movie(){
 
     }
-    public Movie(Integer id,String moviename,float filmscore,Date release_time){
+    public Movie(Integer id,String moviename,Float filmscore,Date release_time){
         super();
         this.id=id;
         this.moviename=moviename;

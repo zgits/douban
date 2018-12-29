@@ -35,10 +35,10 @@ public class Trailer {
     @Column(name="time",columnDefinition="datetime COMMENT '预告片上传时间'")
     private Date time;//预告片上传时间
 
-    @Column(name="release_time",columnDefinition="datetime COMMENT '上映时间'")
+    @Transient
     private Date release_time;//上映时间
 
-    @OneToMany(targetEntity = Image.class,mappedBy = "movieId")
+    @Transient
     private List<Image> Images;//电影的海报，图片之类的
 
 

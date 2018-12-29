@@ -2346,7 +2346,7 @@
                             field: 'id',
                             align: 'center',
                             formatter: function (value, row, index) {
-                                var d = '<a class="btn btn-info" href="trailergetTrailer?id=' + row.id + '">查看</a>';
+                                var d= '<button class="btn btn-warning" data-toggle="modal" onclick="return get_edit_label(' + row.id + ') "data-target="#edit_label_modal">编辑 </button> ';
                                 var c = '<button class="btn btn-danger" onClick="deleteLabel(' + row.id + ')">删除</button>';
                                 return d + c;
 
@@ -2357,6 +2357,8 @@
                 });
             });
         </script>
+
+
 
         <%--批量删除的模态框--%>
         <div class="modal fade" id="deleteLabelsModal">
@@ -2505,7 +2507,6 @@
                 var name=$("#label").val();
                 var parentId=$("#parentname").val();
 
-                alert(name);
 
                 var messageOpts = {
                     "closeButton": true,//是否显示关闭按钮
@@ -2525,10 +2526,10 @@
 
                 $.ajax({
                     type:'post',
-                    url:'#',//后台的url地址
+                    url:'${basepath}/addLable',//后台的url地址
                     data:{
-                        "name":name,
-                        "parentId":parentId
+                        "label.name":name,
+                        "label.parentId":parentId
                     },
                     success: function (flag) {
                         $("#loading").empty();
@@ -2547,23 +2548,9 @@
             function getParentLabelName() {
 
                 $("#parentname").empty();
-
-                json1={
-                    "data":[
-                        {"id":1,"name":"名侦探沙雕李"},
-                        {"id":2,"name":"yyy"},
-                        {"id":5,"name":"test"},
-                        {"id":6,"name":"水电费555"}
-                        ]
-                };
-                var json = json1.data;
-                for (var i = 0; i < json.length; i++) {
-                    $("#parentname").append("<option value='" + json[i].id + "'>" + json[i].name + "</option>");
-                }
-
                 $.ajax({
                     type: 'post',
-                    url: '#',//后台获取名字的url，格式参照获取电影名的格式,只获取parentId为0的分类，大分类
+                    url: '${basepath}/getLabelName',//后台获取名字的url，格式参照获取电影名的格式,只获取parentId为0的分类，大分类
                     dataType: 'json',
                     success: function (data) {
                         var json = data.data;
@@ -2575,6 +2562,163 @@
             }
         </script>
 
+        <%--编辑分类模态框--%>
+        <div class="modal fade" id="edit_label_modal" tabindex="-1" role="dialog" aria-labelledby="add_label_modal"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 400px">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            ×
+                        </button>
+                        <h4 class="modal-title" id="edit_label_title">
+                            编辑分类
+                        </h4>
+                    </div>
+                    <div id="edit_label_div">
+                        <label for="parentname" class="col-sm-3 control-label">所属分类</label>
+                        <div class="col-sm-9">
+                            <select id="parentnames" class="form-control">
+                                <option>sdfasd</option>
+                                <option>sdfasd</option>
+                                <option>sd士大夫d</option>
+                            </select>
+
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <label for="label" class="col-sm-3 control-label">分类名字</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" id="lables" name="label"/>
+                        </div>
+
+                        <br>
+                        <br>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                            </button>
+                            <button type="button" onclick="edit_label()" data-dismiss="modal" class="btn btn-primary">
+                                提交
+                            </button>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+<script>
+    var Labelid;
+    // 得到要编辑的信息
+    function get_edit_label(id) {
+
+        Labelid = id;
+        var messageOpts = {
+            "closeButton": true,//是否显示关闭按钮
+            "debug": false,//是否使用debug模式
+            "positionClass": "toast-top-right",//弹出窗的位置
+            "onclick": null,
+            "showDuration": "3000",//显示的动画时间
+            "hideDuration": "1000",//消失的动画时间
+            "timeOut": "3000",//展现时间
+            "extendedTimeOut": "1000",//加长展示时间
+            "showEasing": "swing",//显示时的动画缓冲方式
+            "hideEasing": "linear",//消失时的动画缓冲方式
+            "showMethod": "fadeIn",//显示时的动画方式
+            "hideMethod": "fadeOut" //消失时的动画方式
+        };
+        toastr.options = messageOpts;
+        if (!id) {
+            alert('Error！');
+            return false;
+        }
+        $("#parentnames").empty();
+        $.ajax(
+            {
+                url: "ToUpdateLabel",//后台请求接口地址
+                data: {"id": id},
+                type: "post",
+                beforeSend: function () {
+                    // $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                    return true;
+                },
+                success: function (data) {
+                    if (data != 2) {
+
+                        // 解析json数据
+                        var data = data;
+                        console.log(data);
+                        var data_obj = eval("(" + data + ")");
+                        // 赋值
+                        $("#lables").val(data_obj.name);
+                        //$("#parentnames").val(data_obj.parentId);
+
+                    } else {
+                        toastr.error('获取失败');
+                    }
+
+                },
+            })
+
+        $.ajax({
+            type: 'post',
+            url: '${basepath}/getLabelName',//后台获取名字的url，格式参照获取电影名的格式,只获取parentId为0的分类，大分类
+            dataType: 'json',
+            success: function (data) {
+                var json = data.data;
+                for (var i = 0; i < json.length; i++) {
+                    $("#parentnames").append("<option value='" + json[i].id + "'>" + json[i].name + "</option>");
+                }
+            }
+        })
+    }
+    function edit_label() {
+        var name=$("#lables").val();
+        var parentId=$("#parentnames").val();
+
+
+        var messageOpts = {
+            "closeButton": true,//是否显示关闭按钮
+            "debug": false,//是否使用debug模式
+            "positionClass": "toast-top-right",//弹出窗的位置
+            "onclick": null,
+            "showDuration": "3000",//显示的动画时间
+            "hideDuration": "1000",//消失的动画时间
+            "timeOut": "3000",//展现时间
+            "extendedTimeOut": "1000",//加长展示时间
+            "showEasing": "swing",//显示时的动画缓冲方式
+            "hideEasing": "linear",//消失时的动画缓冲方式
+            "showMethod": "fadeIn",//显示时的动画方式
+            "hideMethod": "fadeOut" //消失时的动画方式
+        };
+        toastr.options = messageOpts;
+
+        $.ajax({
+            type:'post',
+            url:'${basepath}/UpdateLabel',//后台的url地址
+            data:{
+                "label.id":Labelid,
+                "label.name":name,
+                "label.parentId":parentId
+
+            },
+            success: function (flag) {
+                $("#loading").empty();
+                if (flag == 1) {
+                    toastr.success('修改成功');
+                } else {
+
+                    toastr.error('修改失败');
+                }
+                setTimeout("window.location.reload()", 3000);
+
+            }
+        })
+    }
+
+
+</script>
 
         <script>
             function deleteLabel(id) {
@@ -2601,10 +2745,10 @@
 
                 $.ajax({
                     type: "get",
-                    url: "#",//删除的地址
+                    url: "deleteLabel",//删除的地址
                     async: true,
                     data: {
-                        id: id
+                        "id": id
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标

@@ -24,17 +24,17 @@ public interface LabelDao {
     /**
      * 删除标签
      */
-    public int deleteLabels(Integer[] ids);
+    public int deleteLabels(int id);
 
     /**
      * 修改标签
      */
-    public Label updateLabel(int id);
+    public int updateLabel(Label label );
 
     /**
      * 添加标签
      */
-    public boolean addLabel(Label label);
+    public int  addLabel(Label label);
 
     /**
      * 根据id获取标签
@@ -47,5 +47,11 @@ public interface LabelDao {
      * @return
      */
     public String getLabelNameById(Integer id);
+
+    /**
+     * 获取父类标签的名字和id
+     */
+    public List<Object[]> getLabelName();
+
 
 }

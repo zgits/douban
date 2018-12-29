@@ -18,5 +18,6 @@ public class LabelServiceImplTest extends BaseTest {
 
     @Test
     public void getLabelById() {
+        System.out.println(labelService.getLabelById(1));
     }
 }

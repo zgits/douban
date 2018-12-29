@@ -39,24 +39,62 @@ public class LabelServiceImpl implements LabelService{
 
 
     @Override
-    public int deleteLabels(Integer[] ids) {
-        int count=labelDao.deleteLabels(ids);
-        return count;
+    public boolean deleteLabels(int id) {
+        int count=labelDao.deleteLabels(id);
+       if(count!=0){
+           return true;
+       }else {
+           return  false;
+       }
     }
 
     @Override
-    public Label updateLabel(int id) {
-        return null;
+    public boolean updateLabel(Label label) {
+        try {
+            if (label.getParentId() == 0) {
+                label.setLevel(1);
+            } else {
+                label.setLevel(2);
+            }
+            labelDao.updateLabel(label);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 
     @Override
     public boolean addLabel(Label label) {
-        return false;
+       try {
+           if (label.getParentId() == 0) {
+               label.setLevel(1);
+           } else {
+               label.setLevel(2);
+           }
+           labelDao.addLabel(label);
+           return true;
+       }catch (Exception e){
+           return false;
+       }
     }
 
     @Override
     public Label getLabelById(int id) {
         Label label=labelDao.getLabelById(id);
         return label;
+    }
+
+    @Override
+    public Map<Integer, String> getLableName() {
+        Map<Integer, String> id_name=new HashMap<>();
+        List<Object[]> list=labelDao.getLabelName();
+        for (Object[] object:list){
+            for(int i=0;i<object.length;i+=2){
+                id_name.put((Integer) object[i],(String)object[i+1]);
+            }
+        }
+        return id_name;
+
     }
 }
