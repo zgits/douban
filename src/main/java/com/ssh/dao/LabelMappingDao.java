@@ -17,4 +17,20 @@ public interface LabelMappingDao {
     public boolean insertLabelMapping(List<Labelmapping> labelmappings);
 
 
+    /**
+     * 根据电影id得到电影的分类
+     * @param movieId
+     * @return
+     */
+    public List<Labelmapping> selectLabelMappings(Integer movieId);
+
+
+    /**
+     * 更新电影的分类
+     * @param labelmappings
+     * @return
+     */
+    public boolean updateLabelMapping(List<Labelmapping> labelmappings);
+
+
 }

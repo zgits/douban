@@ -16,18 +16,39 @@ public class loginServiceImpl implements loginService {
     @Resource
     private loginDao logindao;
 
-
     @Override
-    public User login(String email, String password) {
-        return logindao.login(email,password);
+    public int login(String username, String password) {
+        return logindao.login(username,password);
     }
 
     @Override
-    public int register(String email, String password, String userName) {
-        int flag = logindao.findByEmail(email);
-        if (flag == -1) {
-            flag = logindao.register(email,password,userName);
-        }
-        return flag;
+    public boolean checkUsername(String username) {
+        return logindao.checkUsername(username);
     }
+
+    @Override
+    public boolean checkPhone(String phone) {
+        return logindao.checkPhone(phone);
+    }
+
+
+//    @Override
+//    public int register(String email, String password, String userName) {
+//        return 0;
+//    }
+
+
+//    @Override
+//    public User login(String email, String password) {
+//        return logindao.login(email,password);
+//    }
+//
+//    @Override
+//    public int register(String email, String password, String userName) {
+//        int flag = logindao.findByEmail(email);
+//        if (flag == -1) {
+//            flag = logindao.register(email,password,userName);
+//        }
+//        return flag;
+//    }
 }

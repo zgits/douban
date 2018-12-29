@@ -134,16 +134,24 @@ public class MovieAction extends ActionSupport{
     public void updateMovie() throws IOException {
         String flag ="";
         System.out.println("修改的信息"+movie);
+        List<Labelmapping> labelmappings=new ArrayList<>();
         try{
+            for(Integer id:labelids){
+                Labelmapping labelmapping=new Labelmapping();
+                labelmapping.setLabelId(id);
+                labelmappings.add(labelmapping);
+                System.out.println("修改的分类的id"+id);
+            }
+            movie.setLabelmappings(labelmappings);
             if(movieServie.updateMovie(movie)){
                 flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
             }else{
                 flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
             }
         }catch (Exception e){
+            e.printStackTrace();
             flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
-
 
 
         PrintWriter writer = ServletActionContext.getResponse().getWriter();
@@ -232,7 +240,7 @@ public class MovieAction extends ActionSupport{
             System.out.println("预告片名字合集"+trailername);
             String imageName="";
             for(Image image:movie.getImages()){
-                imageName+=image.getImageName()+"<br>";
+                imageName+=image.getName()+"<br>";
             }
             ob.put("trailer",trailername);
             ob.put("image",imageName);

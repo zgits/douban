@@ -69,7 +69,7 @@ public class ManagerUserAction extends ActionSupport {
             //将单独的数据装进json数据
             ob.put("id", user.getId());
             ob.put("username", user.getUsername());
-            ob.put("email", user.getEmail());
+            ob.put("phone", user.getPhone());
             ob.put("password",user.getPassword());
             ob.put("endtime",user.getEndTime());
             ob.put("last_login",user.getLast_login());

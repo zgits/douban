@@ -45,7 +45,7 @@ body {
 }
 
 .register-container {
-    margin: 6% auto 0 auto
+    margin: 10% auto 0 auto
 }
 
 @media (min-width: 670px) {
@@ -329,7 +329,7 @@ label.error {
     -webkit-transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     border-radius: 0px 0px 5px 5px;
-    width: 270px;
+    width: 300px;
     height: 34px;
     border: 1px solid rgba(255, 255, 255, .15);
     line-height: 31px;

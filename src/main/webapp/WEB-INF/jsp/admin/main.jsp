@@ -248,6 +248,23 @@
                                     </div>
                                     <!--语言选择end-->
 
+                                    <%--分类选择--%>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">分类</label>
+                                        <div class="col-sm-9" id="edit_movie_label">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="einlineCheckbox1" value="option1"> 选项 1
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="einlineCheckbox2" value="option2"> 选项 2
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" id="einlineCheckbox3" value="option3"> 选项 3
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <%--分类选择end--%>
+
                                     <!--上映时间-->
                                     <div class="form-group">
                                         <label for="edit_time" class="col-sm-3 control-label">上映时间</label>
@@ -289,6 +306,31 @@
                     </div><!-- /.modal -->
                 </div>
             </div>
+
+            <script>
+                function getAddLabelToUpdate() {
+
+                    $.ajax({
+                        url:"${bathpath}/getLabels",
+                        type:'post',
+                        dataType:'json',
+                        success:function (data) {
+                            $("#edit_movie_label").empty();
+                            var appendlabel='';
+                            var json=data.data;
+                            for(var i=0;i<json.length;i++){
+                                appendlabel+='<label class="checkbox-inline">'+
+                                    '<input type="checkbox" name="checklabel" id="inlineCheckbox'+(i+1)+'" value="'+json[i].id+'">'+json[i].name+
+                                    '</label>';
+                            }
+                            $("#edit_movie_label").append(appendlabel);
+
+
+                        }
+                    })
+
+                }
+            </script>
 
 
             <div class="form-horizontal" role="form" id="add_movie"
@@ -680,6 +722,8 @@
 
             var movieId;
 
+
+
             function changeDateFormat1(cellval) {
                 var dateVal = cellval + "";
                 if (cellval != null) {
@@ -717,11 +761,15 @@
                     alert('Error！');
                     return false;
                 }
+
+
+
                 $.ajax(
                     {
                         url: "movie_getMovieToUpdate",//后台请求接口地址
                         data: {"id": id},
                         type: "post",
+
                         beforeSend: function () {
                             // $("#tip").html("<span style='color:blue'>正在处理...</span>");
                             return true;
@@ -745,8 +793,38 @@
                                 $("#edit_length").val(data_obj.length);
                                 $("#edit_plot").val(data_obj.plot_introduction);
                                 $("#edit_release_region").val(data_obj.release_region);
+                                var labelmapping=data_obj.labelmappings;
                                 $("#act").val("edit");
 
+                                $.ajax({
+                                    url:"${bathpath}/getLabels",
+                                    type:'post',
+                                    dataType:'json',
+                                    success:function (data) {
+                                        $("#edit_movie_label").empty();
+                                        var appendlabel='';
+                                        var json=data.data;
+                                        var tempids=[];
+                                        for(var j=0;j<labelmapping.length;j++){
+                                            tempids[j]=labelmapping[j].labelId;
+                                        }
+                                        for(var i=0;i<json.length;i++){
+                                            if($.inArray(json[i].id,tempids)>=0){
+                                                appendlabel+='<label class="checkbox-inline">'+
+                                                    '<input type="checkbox" checked name="checklabelupdate" id="inlineCheckbox'+(i+1)+'" value="'+json[i].id+'">'+json[i].name+
+                                                    '</label>';
+                                            }else{
+                                                appendlabel+='<label class="checkbox-inline">'+
+                                                    '<input type="checkbox" name="checklabelupdate" id="inlineCheckbox'+(i+1)+'" value="'+json[i].id+'">'+json[i].name+
+                                                    '</label>';
+                                            }
+
+                                        }
+                                        $("#edit_movie_label").append(appendlabel);
+
+
+                                    }
+                                })
 
                             } else {
                                 toastr.error('获取失败');
@@ -754,6 +832,9 @@
 
                         },
                     });
+
+
+
 
                 return false;
             }
@@ -834,7 +915,15 @@
                 var plot = $.trim($("#edit_plot").val());
                 var release_region = $.trim($("#edit_release_region").val());//上映地区/国家
 
-                alert(release_region);
+                var temp=document.getElementsByName("checklabelupdate");
+
+                var labelids=[];
+                for(var i=0;i<temp.length;i++){
+                    if(temp[i].checked){
+                        alert(temp[i]);
+                        labelids.push(temp[i].value);
+                    }
+                }
                 var messageOpts = {
                     "closeButton": true,//是否显示关闭按钮
                     "debug": false,//是否使用debug模式
@@ -850,12 +939,13 @@
                     "hideMethod": "fadeOut" //消失时的动画方式
                 };
                 toastr.options = messageOpts;
-                alert(movieId);
+
 
                 $.ajax({
                     type: "post",
                     url: "${basepath}/movie_updateMovie",
                     async: true,
+                    traditional: true,
                     data: {
                         "movie.id": movieId,
                         "movie.moviename": moviename,
@@ -866,7 +956,8 @@
                         "movie.language": language,
                         "movie.region": country,
                         "movie.release_time": date,
-                        "movie.release_region": release_region
+                        "movie.release_region": release_region,
+                        "labelids":labelids
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
@@ -885,16 +976,6 @@
                     }
                 })
 
-//                var opt = {
-//                    url: "getMovieTable.action",
-//                    silent: true,
-////                    query:{
-////                        type:1,
-////                        level:2
-////                    }
-//                };
-//
-//                $("#reportTableDiv").bootstrapTable('refresh', opt);
             }
 
 
@@ -1308,21 +1389,38 @@
                             ×
                         </button>
                         <h4 class="modal-title" id="add_trailer">
-                            新增电影信息
+                            新增预告片
                         </h4>
                     </div>
                     <div id="add_trailer_info">
-
                         <!--复选框end-->
-                        <div class="form-group" id="fileinput">
-                            <label for="moviename" class="col-sm-3 control-label">所属电影</label>
-                            <div class="col-sm-9">
-                                <select id="moviename" class="form-control">
-                                </select>
-                                <input id="file-1" type="file" name="upload">
+                        <div class="form-horizontal" role="form">
 
-
+                            <div class="form-group">
+                                <label for="moviename" class="col-sm-3 control-label">所属电影</label>
+                                <div class="col-sm-9">
+                                    <select id="moviename" class="form-control">
+                                    </select>
+                                </div>
                             </div>
+
+
+                            <div class="form-group">
+                                <label for="trailername" class="col-sm-3 control-label">预告片名字</label>
+                                <div class="col-sm-9">
+
+                                    <input id="trailername" class="form-control" type="text" name="name" placeholder="请输入预告片的名字">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="file-1" class="col-sm-3 control-label">选择文件</label>
+                                <div class="col-sm-9">
+                                    <input id="file-1" type="file" name="upload">
+                                </div>
+                            </div>
+
 
                         </div>
                         <div class="modal-footer">
@@ -1337,7 +1435,6 @@
             </div><!-- /.modal -->
         </div>
 
-            <input type="hidden" id="trailername" value="test">
         <script>
 
             fodderType1 = function () {
@@ -1544,7 +1641,7 @@
 
 
                         {
-                            field: 'imagename',
+                            field: 'name',
                             title: '图片片名',
                             align: 'center'
                         },
@@ -1558,10 +1655,10 @@
 
                         {
                             title: '操作',
-                            field: 'path',
+                            field: 'imagename',
                             align: 'center',
                             formatter: function (value, row, index) {
-                                var d = '<a class="btn btn-info" href="' + value + '">查看</a>';
+                                var d = '<a class="btn btn-info" href="/image//' + value + '">查看</a>';
                                 var c = '<button class="btn btn-danger" onClick="deleteImage(' + row.id + ')">删除</button>';
                                 return d + c;
 
@@ -1613,15 +1710,34 @@
                     <div id="add_image_info">
 
                         <!--复选框end-->
-                        <div class="form-group" id="fileinputimage">
-                            <label for="movienameimage" class="col-sm-3 control-label">所属电影</label>
-                            <div class="col-sm-9">
-                                <select id="movienameimage" class="form-control">
-                                </select>
-                                <input id="file-2" type="file" name="upload">
 
+                        <div class="form-horizontal" role="form">
 
+                            <div class="form-group">
+                                <label for="movienameimage" class="col-sm-3 control-label">所属电影</label>
+                                <div class="col-sm-9">
+                                    <select id="movienameimage" class="form-control">
+                                    </select>
+                                </div>
                             </div>
+
+
+                            <div class="form-group">
+                                <label for="trailername" class="col-sm-3 control-label">图片名字</label>
+                                <div class="col-sm-9">
+
+                                    <input id="imagename" class="form-control" type="text" name="name" placeholder="请输入图片的名字">
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="file-2" class="col-sm-3 control-label">选择文件</label>
+                                <div class="col-sm-9">
+                                    <input id="file-2" type="file" name="upload">
+                                </div>
+                            </div>
+
 
                         </div>
                         <div class="modal-footer">
@@ -1674,6 +1790,7 @@
                     uploadExtraData: function (previewId, index) {  //传递参数
                         var obj = {};
                         obj.movieId = fodderType();
+                        obj.name=$("#imagename").val();
                         console.log(obj);
                         return obj;
                     }
@@ -1967,8 +2084,8 @@
                             },
 
                             {
-                                field: 'email',
-                                title: '邮箱',
+                                field: 'phone',
+                                title: '手机号',
                                 align: 'center'
                             },
 

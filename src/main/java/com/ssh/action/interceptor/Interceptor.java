@@ -22,6 +22,7 @@ public class Interceptor extends MethodFilterInterceptor{
 
         //获取在session中的管理员名字，登录之后就有，没有登录就没有
         String admin= (String) ServletActionContext.getRequest().getSession().getAttribute("adminname");
+        System.out.println(admin);
 
         if(admin!=null){
             return actionInvocation.invoke();

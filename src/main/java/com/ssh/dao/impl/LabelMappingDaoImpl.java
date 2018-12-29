@@ -2,6 +2,7 @@ package com.ssh.dao.impl;
 
 import com.ssh.dao.LabelMappingDao;
 import com.ssh.model.Labelmapping;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,34 @@ public class LabelMappingDaoImpl implements LabelMappingDao{
             }
             return true;
         }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    @Override
+    public List<Labelmapping> selectLabelMappings(Integer movieId) {
+        String hql="from Labelmapping  where movieId=:movieId";
+        Query query=sessionFactory.getCurrentSession().createQuery(hql);
+        query.setInteger("movieId",movieId);
+        return query.list();
+    }
+
+    @Override
+    public boolean updateLabelMapping(List<Labelmapping> labelmappings) {
+        String hql="delete from Labelmapping where movieId=:movieId";
+        int ret=0;
+        try{
+            Query query = sessionFactory.getCurrentSession().createSQLQuery(hql);
+            query.setInteger("movieId", labelmappings.get(0).getMovieId());
+            ret = query.executeUpdate();
+            insertLabelMapping(labelmappings);
+        }catch (Exception e){
+
+        }
+        if (ret > 0) {
+            return true;
+        } else {
             return false;
         }
 

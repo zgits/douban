@@ -64,7 +64,21 @@ public class MovieServieImpl implements MovieServie{
 
     @Override
     public boolean updateMovie(Movie movie) {
-        return movieDao.updateMovie(movie);
+
+        boolean flag1=movieDao.updateMovie(movie);
+
+        Integer movieId=movie.getId();
+
+        for (Labelmapping labelmapping:movie.getLabelmappings()){
+            labelmapping.setMovieId(movieId);
+            labelmapping.setLabelName(labelService.getLabelNameById(labelmapping.getLabelId()));
+        }
+        boolean flag2=labelMappingService.updateLabelMapping(movie.getLabelmappings());
+        if(flag1&&flag2){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override

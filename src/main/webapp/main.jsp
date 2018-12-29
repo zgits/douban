@@ -50,7 +50,10 @@
 
 </head>
 <body>
-
+<script>
+    alert($.cookie("id"));
+    alert($.cookie("token"));
+</script>
 
 <!--logo,导航栏，搜索栏，个人信息栏，---慕课---->
 <nav class="navbar navbar-inverse">
@@ -74,25 +77,57 @@
             </form>
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
-                <ul class="nav navbar-nav">
-                    <li><a href="login.html"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
-                    <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
-                    <li><a href="register.html">注册</a></li>
-                    <li>
-                        <a href="getMessage?id=1">
-                            <span class="badge pull-right">3</span>消息
-                        </a>
-                    </li>
-                    <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"
-                                                                                       class="img-circle img-responsive"
-                                                                                       style="width: 40px;height: 40px;margin-top: -10px"></a>
-                    </li>
+                <ul class="nav navbar-nav" id="navuser">
+                    <%--<li><a href="login.jsp"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>--%>
+                    <%--<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>--%>
+                    <%--<li><a href="register.jsp">注册</a></li>--%>
+                    <%--<li>--%>
+                        <%--<a href="getMessage?id=1">--%>
+                            <%--<span class="badge pull-right">3</span>消息--%>
+                        <%--</a>--%>
+                    <%--</li>--%>
+                    <%--<li>--%>
+                        <%--<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"--%>
+                                                                                       <%--class="img-circle img-responsive"--%>
+                                                                                       <%--style="width: 40px;height: 40px;margin-top: -10px"></a>--%>
+                    <%--</li>--%>
                 </ul>
             </div>
         </div>
     </div>
 </nav>
+
+<script>
+    $(document).ready(function () {
+        $("#navuser").empty();
+        var appendhtml="";
+        var id=$.cookie("id");
+        if($.cookie("id")!='null'){
+            appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+            appendhtml+='<li>'+
+                        '<a href=getMessage?id='+id+'>'+
+                        '<span class="badge pull-right">3</span>消息'+
+                        '</a>'+
+                        '</li>';
+            appendhtml+='<li>'+
+                        '<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"'+
+                        'class="img-circle img-responsive"'+
+                        'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                        '</li>';
+        }else{
+            appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+                         '<li><a href="register.jsp">注册</a></li>';
+        }
+        $("#navuser").append(appendhtml);
+
+
+    })
+
+    function login_out() {
+        $.cookie("id",null);
+        $.cookie("token",null);
+    }
+</script>
 <!--热点内容-->
 <div class="container">
 
@@ -225,8 +260,6 @@
 </div>
 
 <script>
-    $.cookie("id",3);
-    alert("xxxx"+$.cookie("id"));
 </script>
 </body>
 </html>

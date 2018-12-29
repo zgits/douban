@@ -21,4 +21,14 @@ public class LabelMappingServiceImpl implements LabelMappingService{
     public boolean insertLabelMapping(List<Labelmapping> labelmappings) {
         return labelMappingDao.insertLabelMapping(labelmappings);
     }
+
+    @Override
+    public List<Labelmapping> selectLabelMappings(Integer movieId) {
+        return labelMappingDao.selectLabelMappings(movieId);
+    }
+
+    @Override
+    public boolean updateLabelMapping(List<Labelmapping> labelmappings) {
+        return labelMappingDao.updateLabelMapping(labelmappings);
+    }
 }

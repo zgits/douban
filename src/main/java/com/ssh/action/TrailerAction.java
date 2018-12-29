@@ -16,6 +16,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class TrailerAction extends ActionSupport {
 
         }
         if (trailers != null) {
-            System.out.println("成功取得" + trailers.size() + "条数据...");
+            System.out.println("成功取得" + trailers+ "数据...");
         } else {
             System.out.println("查询失败...");
         }
@@ -222,9 +223,15 @@ public class TrailerAction extends ActionSupport {
         //String path = realPath+"webapp\\video\\"+uploadFileName;
 
         String flag ="";
+//        String[] temp=uploadFileName.split(".");
+//        System.out.println(temp[0]+temp[1]+"tempname");
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//        String newuploadFileName=sdf.format(date)+".mp4";
+//        System.out.println(newuploadFileName);
         //创建目标文件对象
         try{
-            File destFile = new File(path,uploadFileName);
+            File destFile = new File(path,sdf.format(date)+uploadFileName);
             //把上传的文件，拷贝到目标文件中
             FileUtils.copyFile(upload, destFile);
 
@@ -236,7 +243,7 @@ public class TrailerAction extends ActionSupport {
             trailer.setTime(new Date());
             trailer.setMovieId(movieId);
             trailer.setName(name);
-            trailer.setFilename(uploadFileName);
+            trailer.setFilename(sdf.format(date)+uploadFileName);
             trailer.setPath(path);
             trailers.add(trailer);
             trailerService.insertTrailer(trailers);
