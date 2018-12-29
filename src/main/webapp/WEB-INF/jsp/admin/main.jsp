@@ -2525,7 +2525,7 @@
 
                 $.ajax({
                     type: "get",
-                    url: "#",//后台删除的地址
+                    url: "",//后台删除的地址
                     async: true,
                     traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
                     data: {
