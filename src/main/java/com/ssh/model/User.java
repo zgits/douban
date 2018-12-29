@@ -24,8 +24,8 @@ public class User {
     @Column(name="password",columnDefinition="varchar(255) COMMENT '密码'")
     private String password;//密码
 
-    @Column(name="email",columnDefinition="varchar(255) COMMENT '用户邮箱'")
-    private String email;//用户邮箱
+    @Column(name="phone",columnDefinition="varchar(255) COMMENT '用户手机号'")
+    private String phone;//用户邮箱
 
     @Column(name="head_image",columnDefinition="varchar(255) COMMENT '头像地址'")
     private String head_image;//头像地址
@@ -58,7 +58,7 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
                 ", head_image='" + head_image + '\'' +
                 ", person_profile='" + person_profile + '\'' +
                 ", last_login=" + last_login +
@@ -144,12 +144,12 @@ public class User {
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getHead_image() {

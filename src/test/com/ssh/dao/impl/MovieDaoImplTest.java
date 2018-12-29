@@ -12,6 +12,11 @@ import static org.junit.Assert.*;
  */
 public class MovieDaoImplTest extends BaseTest{
     @Test
+    public void selectMoving2() throws Exception {
+        System.out.println(movieDao.selectMoving());
+    }
+
+    @Test
     public void selectMovieById() throws Exception {
 
     }

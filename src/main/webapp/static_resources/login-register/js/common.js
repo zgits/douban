@@ -8,9 +8,8 @@ $(document).ready(function(){
 	//登陆表单验证
 	$("#loginForm").validate({
 		rules:{
-            email:{
+            username:{
                 required:true,
-                email:true,
             },
 			password:{
 				required:true,
@@ -21,9 +20,8 @@ $(document).ready(function(){
 		},
 		//错误信息提示
 		messages:{
-            email:{
-                required:"请输入邮箱地址",
-                email: "请输入正确的email地址"
+            username:{
+                required:"请输入用户名",
             },
 			// username:{
 			// 	required:"必须填写用户名",

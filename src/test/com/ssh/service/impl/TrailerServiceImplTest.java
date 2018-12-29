@@ -34,6 +34,6 @@ public class TrailerServiceImplTest extends BaseTest {
 
     @Test
     public void getAllTrailer() {
-        System.out.println(trailerService.getAllTrailer());
+        System.out.println(trailerService.getAllTrailers());
     }
 }

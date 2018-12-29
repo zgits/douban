@@ -15,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,8 +52,9 @@ public class ImageAction extends ActionSupport{
             JSONObject ob = new JSONObject();
             //将单独的数据装进json数据
             ob.put("id", image.getId());
-            ob.put("imagename", image.getImageName());
+            ob.put("name", image.getName());
             ob.put("path",image.getPath());
+            ob.put("imagename",image.getImageName());
             ob.put("moviename", movieServie.getMovieNameById(image.getMovieId()));
             //装进数组
             arr.add(ob);
@@ -116,6 +119,15 @@ public class ImageAction extends ActionSupport{
     private String uploadContentType;  //上传的文件类型
     private String uploadFileName;   //上传文件的名称
     private Integer movieId;//所属的电影id
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Integer getMovieId() {
         return movieId;
@@ -155,12 +167,14 @@ public class ImageAction extends ActionSupport{
         /**
          * 把文件上传到upload目录
          */
-        String path="D:\\date\\"+String.valueOf(movieId);
-
+        String path="D:\\maventest\\doubanssh\\src\\main\\webapp\\image";
         String flag ="";
+
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         //创建目标文件对象
         try{
-            File destFile = new File(path,uploadFileName);
+            File destFile = new File(path,sdf.format(date)+uploadFileName);
             //把上传的文件，拷贝到目标文件中
             FileUtils.copyFile(upload, destFile);
 
@@ -170,8 +184,9 @@ public class ImageAction extends ActionSupport{
 
             Image image=new Image();
             image.setMovieId(movieId);
-            image.setImageName(uploadFileName);
-            image.setPath(path+"\\"+uploadFileName);
+            image.setImageName(sdf.format(date)+uploadFileName);
+            image.setName(name);
+            image.setPath(path);
             images.add(image);
             imageService.insertImage(images);
             flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式

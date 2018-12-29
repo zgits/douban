@@ -194,10 +194,10 @@
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
                 <ul class="nav navbar-nav">
-                    <li><a href="login.html"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
-                    <li><a href="login.html" class="a globalLoginBtn"><span
+                    <li><a href="login.jsp"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
+                    <li><a href="login.jsp" class="a globalLoginBtn"><span
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
-                    <li><a href="register.html">注册</a></li>
+                    <li><a href="register.jsp">注册</a></li>
                     <li>
                         <a href="tips_message.jsp">
                             <span class="badge pull-right">3</span>消息
@@ -730,7 +730,7 @@
                             toastr.error("回复失败");
                         }else if(data==3){
                             toastr.warning("请先登录");
-                            setTimeout("window.location='login.html'",2000);
+                            setTimeout("window.location='login.jsp'",2000);
                         }
                         setTimeout("window.location.reload()",3000);
                     }
@@ -771,7 +771,7 @@
                             toastr.error("回复失败");
                         }else if(data==3){
                             toastr.warning("请先登录");
-                            setTimeout("window.location='login.html'",2000);
+                            setTimeout("window.location='login.jsp'",2000);
                         }
                         setTimeout("window.location.reload()",3000);
                     }
@@ -1000,7 +1000,7 @@
                         toastr.error("评论失败");
                     }else if(data==3){
                         toastr.warning("请先登录");
-                        setTimeout("window.location='login.html'",2000);
+                        setTimeout("window.location='login.jsp'",2000);
                     }
                     $("#content").val("");
                     setTimeout("window.location.reload()",3000);
