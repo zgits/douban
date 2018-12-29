@@ -62,7 +62,7 @@
         <action name="getAllTrailer" class="Trailer" method="getAllTrailer">
             <result name="success">trailer.jsp</result>
         </action>
-
+        <!--消息管理-->
         <action name="getMessage" class="getMessage" method="getMessages">
             <result name="success">tips_message.jsp</result>
         </action>
@@ -70,7 +70,7 @@
             <result name="success">personInfo.jsp</result>
         </action>
         <action name="updateMessage" class="getMessage" method="updateMessage"/>
-
+        <action name="getCountMessage" class="getMessage" method="getCountMessages"/>
         <action name="deleteMessage" class="getMessage" method="deleteMessage"/>
         <!--标签管理-->
         <action name="addLable" class="Label" method="addLable"/>

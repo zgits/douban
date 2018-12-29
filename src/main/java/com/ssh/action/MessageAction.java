@@ -71,6 +71,30 @@ public class MessageAction {
         ActionContext.getContext().put("pagebeans",pageBean);
         return "success";
     }
+    public String getCountMessages() throws IOException{
+        String flag="";
+        int status=1;
+        try {
+            PageBean pageBean = message_service.findMessage(id, status, currpage);
+            int count = pageBean.getTotalCount();
+            System.out.println("count="+count);
+            flag = JSON.toJSONString(count);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            System.out.println("获取消息数量失败");
+        }
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
+        return "success";
+    }
+
+
     /**
      * 分页显示已阅读信息
      */

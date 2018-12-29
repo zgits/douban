@@ -102,11 +102,26 @@
         $("#navuser").empty();
         var appendhtml="";
         var id=$.cookie("id");
+        $.ajax({
+            type:"get",
+            url:"getCountMessage",
+            async: true,
+            data:{
+                id:id
+            },
+            success:function (flag) {
+                if (flag!=null){
+                    $("#count").append(flag);
+                }
+
+            }
+
+        })
         if($.cookie("id")!='null'){
             appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
             appendhtml+='<li>'+
                         '<a href=getMessage?id='+id+'>'+
-                        '<span class="badge pull-right">3</span>消息'+
+                        '<span class="badge pull-right"><div id="count"/></span>消息'+
                         '</a>'+
                         '</li>';
             appendhtml+='<li>'+

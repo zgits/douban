@@ -384,6 +384,7 @@
             $("#history").fadeIn();
             $("#set_up").hide();
             $("#info").hide();
+
         });
         $("#update_pwd_p").click(function () {
             $("#update_pwd").fadeIn();
@@ -397,7 +398,8 @@
             $("#set_up").fadeIn();
             $("#info").hide();
         });
-    });
+    }
+    );
 </script>
 
 <!--版权栏-->
