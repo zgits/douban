@@ -70,7 +70,6 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="${basepath}/image/logo.PNG"
             <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
@@ -111,7 +110,7 @@
         <div class="m" style="margin-top: -20px;">
             <h1>${OneTrailer.name}</h1>
             <video poster="vs.png" controls>
-                <source src="https://video.pc6.com/v/1809/dyjxxz3.mp4" type="video/mp4">
+                <source src="${basepath}/video/${OneTrailer.filename}" type="video/mp4">
                 <!-- <source src="path/to/video.webm" type="video/webm">-->
                 <!-- Captions are optional -->
             </video>

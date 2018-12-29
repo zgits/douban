@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.util.ArrayList;
@@ -159,6 +160,15 @@ public class TrailerAction extends ActionSupport {
     private String uploadContentType;  //上传的文件类型
     private String uploadFileName;   //上传文件的名称
     private Integer movieId;//所属的电影id
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Integer getMovieId() {
         return movieId;
@@ -198,7 +208,18 @@ public class TrailerAction extends ActionSupport {
         /**
          * 把文件上传到upload目录
          */
-        String path="D:/date";
+        String path="D:\\maventest\\doubanssh\\src\\main\\webapp\\video";
+
+//        ActionContext ac = ActionContext.getContext();
+//        ServletContext sc = (ServletContext) ac.get(ServletActionContext.SERVLET_CONTEXT);
+//        String path = sc.getRealPath("/");
+//
+//        String realPath = "";
+//        System.out.println(path);
+        //获取webapps之前的字符串
+       // realPath=realPath.substring(0, realPath.indexOf("webapp"));
+        //创建带文件名的真实路径
+        //String path = realPath+"webapp\\video\\"+uploadFileName;
 
         String flag ="";
         //创建目标文件对象
@@ -214,8 +235,9 @@ public class TrailerAction extends ActionSupport {
             Trailer trailer=new Trailer();
             trailer.setTime(new Date());
             trailer.setMovieId(movieId);
-            trailer.setName(uploadFileName);
-            trailer.setPath(path+"/"+uploadFileName);
+            trailer.setName(name);
+            trailer.setFilename(uploadFileName);
+            trailer.setPath(path);
             trailers.add(trailer);
             trailerService.insertTrailer(trailers);
             flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式

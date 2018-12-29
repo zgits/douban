@@ -26,6 +26,9 @@ public class Trailer {
     @Column(name="name",columnDefinition="varchar(255) COMMENT '预告片的名字'")
     private String name;//预告片的名字
 
+    @Column(name="filename",columnDefinition="varchar(255) COMMENT '文件名'")
+    private String filename;
+
     @Column(name="number",columnDefinition="integer(5) COMMENT '预告片的播放量，用来判断预告片的排名所用'")
     private Integer number;//预告片的播放量，用来判断预告片的排名所用
 
@@ -37,6 +40,7 @@ public class Trailer {
 
     @OneToMany(targetEntity = Image.class,mappedBy = "movieId")
     private List<Image> Images;//电影的海报，图片之类的
+
 
     /**
      * 为了查看方便，直接就封装了分页
@@ -56,6 +60,7 @@ public class Trailer {
                 ", movieId=" + movieId +
                 ", path='" + path + '\'' +
                 ", name='" + name + '\'' +
+                ", filename='" + filename + '\'' +
                 ", number=" + number +
                 ", time=" + time +
                 ", release_time=" + release_time +
@@ -63,7 +68,6 @@ public class Trailer {
                 ", trailerComments=" + trailerComments +
                 '}';
     }
-
 //    public List<Image> getImages() {
 //        return Images;
 //    }
@@ -71,6 +75,15 @@ public class Trailer {
 //    public void setImages(List<Image> Images) {
 //        this.Images = Images;
 //    }
+
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
     public List<Trailer_Comment> getTrailerComments() {
         return trailerComments;
