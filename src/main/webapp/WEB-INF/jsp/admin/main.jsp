@@ -2406,7 +2406,7 @@
 
             $(function () {
                 $('#labelTable').bootstrapTable({
-                    url: '${basepath}/getAllTrailerTable', // 请求后台的URL（*）
+                    url: '${basepath}/getAllLabelTable', // 请求后台的URL（*）
                     dataType: "json",
                     pagination: true, //前端处理分页
                     singleSelect: false,//是否只能单选
@@ -2437,26 +2437,26 @@
 
 
                         {
-                            field: 'trailername',
-                            title: '预告片名',
+                            field: 'name',
+                            title: '标签名',
                             align: 'center'
                         },
 
                         {
-                            field: 'moviename',
-                            title: '所属电影',
+                            field: 'parent',
+                            title: '上级标签',
                             align: 'center'
                         },
 
-                        {
-                            field: 'time',
-                            title: '上传时间',
-                            align: 'center',
-                            formatter: function (value, row, index) {
-
-                                return changeDateFormat1(value);
-                            }
-                        },
+                        // {
+                        //     field: 'time',
+                        //     title: '上传时间',
+                        //     align: 'center',
+                        //     formatter: function (value, row, index) {
+                        //
+                        //         return changeDateFormat1(value);
+                        //     }
+                        // },
 
                         {
                             title: '操作',
