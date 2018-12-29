@@ -124,8 +124,8 @@
     })
 
     function login_out() {
-        $.cookie("id",null);
-        $.cookie("token",null);
+        $.cookie("id",-1);
+        $.cookie("token",-1);
     }
 </script>
 <!--热点内容-->

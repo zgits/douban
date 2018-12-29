@@ -26,6 +26,10 @@
 
 <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
 
+
+<style>
+
+</style>
 <body>
 
 <div class="login-container">
@@ -34,7 +38,7 @@
     <div class="connect">
         <p>doubansshshow</p>
     </div>
-    <div id="loginForm">
+    <form id="loginForm">
         <div>
             <input type="text" id="username" name="username" class="username" placeholder="用户名" autocomplete="off"/>
         </div>
@@ -43,14 +47,14 @@
                    oncontextmenu="return false" onpaste="return false"/>
         </div>
 
-        <div class="container" style="margin-top: 10px;margin-left: 520px">
+        <div class="container" style="margin-top: 10px;">
             <div>
                 <div id="slider2" class="slider"></div>
                 <span style="display: none" id="result2">false</span>
             </div>
         </div>
-        <button id="submit" type="submit" onclick="login()">登录</button>
-    </div>
+        <button id="submit" type="submit" class="buttontest">登录</button>
+    </form>
 
     <script>
         var messageOpts = {
@@ -60,7 +64,7 @@
             "onclick": null,
             "showDuration": "3000",//显示的动画时间
             "hideDuration": "1000",//消失的动画时间
-            "timeOut": "3000",//展现时间
+            "timeOut": "300000000",//展现时间
             "extendedTimeOut": "1000",//加长展示时间
             "showEasing": "swing",//显示时的动画缓冲方式
             "hideEasing": "linear",//消失时的动画缓冲方式
@@ -69,42 +73,6 @@
         };
         toastr.options = messageOpts;
 
-        function login() {
-            var e = document.getElementById("result2").innerHTML;
-            if (e == "true") {
-
-                $.ajax({
-                    url:"${basepath}/login_login",
-                    type:"post",
-                    data:{
-                        "username":$("#username").val(),
-                        "password":$("#password").val()
-                    },
-                    success:function (data) {
-
-                        if(data.length!=1){
-                            var data_obj=$.parseJSON(data);
-                            var json=data_obj.data[0];
-                            $.cookie('id', json.id);
-                            $.cookie('token', json.token);
-                            window.location.href="${basepath}/getMoving";
-                        }
-                        if(data==0){
-                            window.location.href="${basepath}bgmain";
-                        } else if(data==2){
-                            toastr.error("用户名或密码错误");
-                        }else if(data==3){
-                            toastr.warning("用户名不存在");
-                        }
-                    }
-
-                })
-                return true;
-            } else {
-                toastr.warning("请先验证");
-                return false;
-            }
-        }
     </script>
     <script>
 
@@ -128,7 +96,7 @@
 
 
     <a href="register.jsp">
-        <button type="button" class="register-tis">还没有账号？立即注册</button>
+        <button type="button" class="register-tis buttontest2">还没有账号？立即注册</button>
     </a>
 
 </div>

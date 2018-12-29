@@ -37,6 +37,8 @@
     <link href="/static_resources/pinglun/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="/static_resources/pinglun/js/star-rating.js" type="text/javascript"></script>
 
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
     <style type="text/css">
 
         .loading {
@@ -481,8 +483,7 @@
     <!--评论显示界面-->
     <div class="row">
         <h4 style="color: #2f904d">
-            ${oneMovie.moviename}电影的短评(共1252条)
-            xxxx电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
+            ${oneMovie.moviename}电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
         </h4>
         <!--Ajax异步得到-->
         <div class="row">
@@ -547,7 +548,7 @@
 
                                 <div class="row col-md-offset-10">
                                     <c:choose>
-                                        <c:when test="${moviecomments.userId==1}">
+                                        <c:when test="${moviecomments.userId eq cookie['id'].value || cookie['id'].value==0}">
                                             <a class="btn btn-sm" onclick="deletecomment(${moviecomments.id})">删除</a>
 
                                         </c:when>
@@ -567,7 +568,7 @@
                                                     <input id="tor${moviecomments.id}" class="form-control" type="text" placeholder="@${moviecomments.username}:">
                                                 </div>
 
-                                                <input onclick="replyComment(tor${moviecomments.id},'${moviecomments.id}','${moviecomments.userId}',1,1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                <input onclick="replyComment(tor${moviecomments.id},'${moviecomments.id}','${moviecomments.userId}',${cookie['id'].value},1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -583,7 +584,7 @@
                                                             <span class="col-md-offset-1">回复@${reply.to_userIdusername}:${reply.content}</span>
 
                                                             <c:choose>
-                                                                <c:when test="${reply.userId==1}">
+                                                                <c:when test="${reply.userId eq cookie['id'].value || cookie['id'].value==0}">
                                                                     <a class="btn btn-sm col-md-offset-10" onclick="deletecomment2(${reply.id})">删除</a>
 
                                                                 </c:when>
@@ -601,7 +602,7 @@
                                                                     <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
 
                                                                 </div>
-                                                                <input onclick="replyComment2(s${reply.id},${moviecomments.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                                <input onclick="replyComment2(s${reply.id},${moviecomments.id},${reply.id},${reply.userId},${cookie['id'].value},2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                                             </div>
 
                                                         </div>
@@ -717,7 +718,8 @@
                         "movie_replycomment.comment_id":commentId,
                         "movie_replycomment.to_userId":to_userId,
                         "movie_replycomment.userId":userId,
-                        "movie_replycomment.reply_type":type
+                        "movie_replycomment.reply_type":type,
+                        "token":$.cookie("token")
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
@@ -758,7 +760,8 @@
                         "movie_replycomment.to_userId":to_userId,
                         "movie_replycomment.userId":userId,
                         "movie_replycomment.reply_type":type,
-                        "movie_replycomment.reply_id":to_id
+                        "movie_replycomment.reply_id":to_id,
+                        "token":$.cookie("token")
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
@@ -945,7 +948,7 @@
         <div role="form col-md-8">
 
             <%--登录后可以获取id--%>
-            <input id="userId" type="hidden" name="movie_comment.userId" value="1">
+            <input id="userId" type="hidden" name="movie_comment.userId" value="${cookie['id'].value}">
             <input id="movieId" type="hidden" name="movie_comment.movieId" value="${oneMovie.id}">
             <div class="form-group" style="width: 800px ">
                 <textarea id="content" name="movie_comment.content" class="form-control" rows="3"></textarea>
@@ -987,7 +990,8 @@
                 data:{
                     "movie_comment.userId":userId,
                     "movie_comment.movieId":movieId,
-                    "movie_comment.content":content
+                    "movie_comment.content":content,
+                    "token":$.cookie("token")
                 },
                 beforeSend: function (XMLHttpRequest) {
                     $("#loading").show(); //在后台返回success之前显示loading图标
@@ -1171,7 +1175,7 @@
                                     '&nbsp;&nbsp;'+
                                     comments[i].content+
                                     '</div>';
-                        if(comments[i].userId==1) {
+                        if(comments[i].userId==$.cookie("id") || ${cookie['id'].value}==0) {
                             appendhtml+='<div class="row col-md-offset-10">'+
                                 '<a class="btn btn-sm" onclick="deletecomment('+comments[i].id+')">删除</a>'+
                                 '<a data-toggle="collapse" data-parent="#accordion"'+
@@ -1193,7 +1197,7 @@
                             '<div class="form-group col-md-8">'+
                             '<input id="tor'+comments[i].id+'" class="form-control" type="text" placeholder="@'+comments[i].username+':">'+
                             '</div>'+
-                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment(tor'+comments[i].id+','+comments[i].id+','+comments[i].userId+','+1+',1)" value="回复">'+
+                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment(tor'+comments[i].id+','+comments[i].id+','+comments[i].userId+','+$.cookie("id")+',1)" value="回复">'+
                             '</div>'+
                             '</div>'+
                             '<div class="row">'+
@@ -1210,7 +1214,7 @@
                                         '<br>'+
                                         '<div class="row">'+
                                         '<span class="col-md-offset-1">回复@'+replycomments[j].to_userIdusername+':'+replycomments[j].content+'</span>';
-                            if(replycomments[j].userId==1){
+                            if(replycomments[j].userId==$.cookie("id") || ${cookie['id'].value}==0){
                                 appendhtml+='<div class="row col-md-offset-10">'+
                                     '<a class="btn btn-sm" onclick="deletecomment2('+replycomments[j].id+')">删除</a>'+
                                     '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
@@ -1229,7 +1233,7 @@
                                 '<div class="form-group col-md-8">'+
                                 '<input id="s'+replycomments[j].id+'" class="form-control" type="text" placeholder="@'+replycomments[j].username+':">'+
                                 '</div>'+
-                                '<input onclick="replyComment2(s'+replycomments[j].id+','+comments[i].id+','+replycomments[j].id+','+replycomments[j].userId+',1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">'+
+                                '<input onclick="replyComment2(s'+replycomments[j].id+','+comments[i].id+','+replycomments[j].id+','+replycomments[j].userId+','+$.cookie("id")+',2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">'+
                                 '</div>'+
                                 '</div>'+
                                 '</li>';

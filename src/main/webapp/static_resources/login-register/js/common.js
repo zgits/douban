@@ -10,6 +10,8 @@ $(document).ready(function(){
 		rules:{
             username:{
                 required:true,
+                minlength:3,
+                maxlength:32,
             },
 			password:{
 				required:true,
@@ -22,6 +24,8 @@ $(document).ready(function(){
 		messages:{
             username:{
                 required:"请输入用户名",
+                minlength:"用户名至少为3个字符",
+                maxlength:"用户名至多为32个字符",
             },
 			// username:{
 			// 	required:"必须填写用户名",
@@ -36,6 +40,47 @@ $(document).ready(function(){
 			},
 		},
 
+        submitHandler:function () {
+            var e = document.getElementById("result2").innerHTML;
+            if (e == "true") {
+                $.ajax({
+                    url:'login_login',
+                    type:"post",
+                    data:{
+                        "username":$("#username").val(),
+                        "password":$("#password").val()
+                    },
+                    success:function (data) {
+
+                        if(data.length!=1){
+                            var data_obj=$.parseJSON(data);
+                            var json=data_obj.data[0];
+                            $.cookie('id', json.id);
+                            $.cookie('token', json.token);
+                            window.location.href='getMoving';
+                        }
+                        if(data==0){
+                        	$.cookie('id',0);
+                            window.location.href='bgmain';
+                        } else if(data==2){
+                            toastr.error("用户名或密码错误");
+                        }else if(data==3){
+                            toastr.warning("用户名不存在");
+                        }
+                    }
+
+                })
+
+            } else {
+                toastr.warning("请先验证");
+
+            }
+        },
+        invalidHandler: function(form, validator) {  //不通过回调
+            return false;
+        }
+
+
 	});
 	//注册表单验证
 	$("#registerForm").validate({
@@ -45,18 +90,20 @@ $(document).ready(function(){
 				minlength:3, //最少6个字符
 				maxlength:32,//最多20个字符
 				remote:{
-					url:"127.0.0.1:",//用户名重复检查，别跨域调用，填写检查所用的用户名是否重复的地址
+					url:"login_checkUsername",//用户名重复检查，别跨域调用，填写检查所用的用户名是否重复的地址
 					type:"post",
+					data:{
+						username:function () {
+							return $("#username").val();
+                        },
+
+					}
 				},
 			},
 			password:{
 				required:true,
 				minlength:3, 
 				maxlength:32,
-			},
-			email:{
-				required:true,
-				email:true,
 			},
 			confirm_password:{
 				required:true,
@@ -65,12 +112,22 @@ $(document).ready(function(){
 			},
 			code:{
 				required:true,
+			},
+			phone:{
+				required:true,
+				phone:true,//自定义的规则
+				digits:true,//整数
+                remote:{
+                    url:"login_checkPhone",//用户名重复检查，别跨域调用，填写检查所用的用户名是否重复的地址
+                    type:"post",
+                    data:{
+                        phone:function () {
+                            return $("#phone").val();
+                        },
+
+                    }
+                },
 			}
-			// phone_number:{
-			// 	required:true,
-			// 	phone_number:true,//自定义的规则
-			// 	digits:true,//整数
-			// }
 		},
 		//错误信息提示
 		messages:{
@@ -85,10 +142,6 @@ $(document).ready(function(){
 				minlength:"密码至少为3个字符",
 				maxlength:"密码至多为32个字符",
 			},
-			email:{
-				required:"请输入邮箱地址",
-				email: "请输入正确的email地址"
-			},
 			confirm_password:{
 				required: "请再次输入密码",
 				minlength: "确认密码不能少于3个字符",
@@ -97,60 +150,42 @@ $(document).ready(function(){
 			code:{
                 required:"必须填写验证码",
 			},
-			// phone_number:{
-			// 	required:"请输入手机号码",
-			// 	digits:"请输入正确的手机号码",
-			// },
+			phone:{
+				required:"请输入手机号码",
+				digits:"请输入正确的手机号码",
+                remote: "手机号已注册",
+			},
 		
 		},
-	});
 
-	$("#update_password").validate({
-        rules:{
-            old_pwd:{
-                required:true,//必填
-                minlength:6, //最少6个字符
-                maxlength:20,//最多20个字符
-                remote:{
-                    url:"127.0.0.1:",//异步验证密码是否和原密码相同
-                    type:"post",
+        submitHandler:function () {
+            $.ajax({
+                url:'login_register',
+                type:"post",
+                data:{
+                    "username":$("#username").val(),
+                    "password":$("#password").val(),
+                    "phone":$("#phone").val(),
                 },
-            },
-            pwd:{
-                required:true,
-                minlength:6,
-                maxlength:20,
-            },
-            confirm_pwd:{
-                required:true,
-                minlength:3,
-                equalTo:'.pwd'
-            },
+                success:function (data) {
+                    if(data==3){
+                        toastr.success("注册成功");
+                        setTimeout("window.location.href='login.jsp';",3000);
+                    }else{
+                        toastr.warning("注册失败");
+                    }
+                }
+            })
         },
-        //错误信息提示
-        messages:{
-            old_pwd:{
-                required:"请填写原密码",
-                minlength:"密码长度至少为6个字符",
-                maxlength:"密码长度最多为12个字符",
-                remote: "密码错误",
-            },
-            pwd:{
-                required:"必须填写密码",
-                minlength:"密码至少为6个字符",
-                maxlength:"密码至多为20个字符",
-            },
-            confirm_pwd:{
-                required: "请再次输入密码",
-                minlength: "确认密码不能少于6个字符",
-                equalTo: "两次输入密码不一致",//与另一个元素相同
-            },
-        },
-		});
-	//添加自定义验证规则
-	// jQuery.validator.addMethod("phone_number", function(value, element) {
-	// 	var length = value.length;
-	// 	var phone_number = /^(((13[0-9]{1})|(15[0-9]{1}))+\d{8})$/
-	// 	return this.optional(element) || (length == 11 && phone_number.test(value));
-	// }, "手机号码格式错误");
+        invalidHandler: function(form, validator) {  //不通过回调
+            return false;
+        }
+    });
+
+	// 添加自定义验证规则
+	jQuery.validator.addMethod("phone", function(value, element) {
+		var length = value.length;
+		var phone_number = /^1[34578]\d{9}$/;
+		return this.optional(element) || (length == 11 && phone_number.test(value));
+	}, "手机号码格式错误");
 });

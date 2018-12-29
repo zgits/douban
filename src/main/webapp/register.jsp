@@ -23,6 +23,10 @@
 <link rel="stylesheet" href="/static_resources/login-register/css/style.css">
 
 
+<link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
+<script src="/static_resources/toastr/toastr.min.js"></script>
+
+
 <body>
 
 <div class="register-container" style="width: 340px">
@@ -32,19 +36,19 @@
         <p>doubansshshow</p>
     </div>
 
-    <form id="registerForm" style="width: 340px">
+    <form id="registerForm">
 
         <div>
-            <input type="email" name="email" class="email" placeholder="邮箱地址" oncontextmenu="return false" onpaste="return false" />
+            <input type="text" name="phone" id="phone" class="phone" placeholder="手机号码" oncontextmenu="return false" onpaste="return false" />
         </div>
         <div>
-            <input type="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
+            <input type="password" id="password" name="password" class="password" placeholder="密码" oncontextmenu="return false" onpaste="return false" />
         </div>
         <div>
-            <input type="password" name="confirm_password" class="confirm_password" placeholder="确认密码" oncontextmenu="return false" onpaste="return false" />
+            <input type="password" id="confirm_password" name="confirm_password" class="confirm_password" placeholder="确认密码" oncontextmenu="return false" onpaste="return false" />
         </div>
         <div>
-            <input type="text" name="username" class="username" placeholder="设置用户名" autocomplete="off"/>
+            <input type="text" id="username" name="username" class="username" placeholder="设置用户名" autocomplete="off"/>
         </div>
         <div>
             <input type="text" id="code" name="code" class="code" placeholder="请输入验证码" autocomplete="off"/>
@@ -54,8 +58,6 @@
 
                 <a style="width:270px;height:40px;margin-top: 5px" class="btn btn-success" id="moBtn" href="javascript:;" onclick="sendMsgCode()">获取验证码</a>
                 <a style="width:270px;margin-top: 5px;display:none" class="btn" disabled="disabled" id="secondShow" href="javascript:;"></a>
-
-
 
 
 
@@ -108,11 +110,52 @@
             </script>
         </div>
 
-        <button id="submit" type="submit">注册</button>
+        <button id="submit" type="submit" class="buttontest">注册</button>
     </form>
     <a href="login.jsp">
-        <button type="button" class="register-tis">已有账号？登录</button>
+        <button type="button" class="register-tis buttontest2">已有账号？登录</button>
     </a>
+
+
+    <script>
+
+        var messageOpts = {
+            "closeButton": true,//是否显示关闭按钮
+            "debug": false,//是否使用debug模式
+            "positionClass": "toast-top-right",//弹出窗的位置
+            "onclick": null,
+            "showDuration": "3000",//显示的动画时间
+            "hideDuration": "1000",//消失的动画时间
+            "timeOut": "3000",//展现时间
+            "extendedTimeOut": "1000",//加长展示时间
+            "showEasing": "swing",//显示时的动画缓冲方式
+            "hideEasing": "linear",//消失时的动画缓冲方式
+            "showMethod": "fadeIn",//显示时的动画方式
+            "hideMethod": "fadeOut" //消失时的动画方式
+        };
+        toastr.options = messageOpts;
+
+        function register() {
+            $.ajax({
+                url:'login_register',
+                type:"post",
+                data:{
+                    "username":$("#username").val(),
+                    "password":$("#password").val(),
+                    "phone":$("#phone").val(),
+                },
+                success:function (data) {
+                    if(data==3){
+                        toastr.success("注册成功");
+                        setTimeout("window.location.href='login.jsp';",3000);
+                    }else{
+                        toastr.warning("注册失败");
+                    }
+                }
+            })
+        }
+
+    </script>
 
 </div>
 
@@ -127,7 +170,6 @@
     <!--</div>-->
 <!--</div>-->
 </body>
-<script src="/static_resources/bootstrap/jquery/jquery.min.js"></script>
 <script src="static_resources/login-register/js/common.js"></script>
 <!--背景轮播-->
 <script src="static_resources/login-register/js/supersized.3.2.7.min.js"></script>
