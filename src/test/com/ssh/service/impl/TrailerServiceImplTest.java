@@ -14,6 +14,7 @@ public class TrailerServiceImplTest extends BaseTest {
 
     @Test
     public void insertTrailer() {
+        System.out.println(trailerService.addTrailerNum(5));
     }
 
     @Test

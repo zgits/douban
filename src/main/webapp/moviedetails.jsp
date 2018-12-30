@@ -11,10 +11,7 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 %>
-<%
-    List<Movie> movies=(List<Movie>) session.getAttribute("oneMovie");
-    session.removeAttribute("oneMovie");
-%>
+
 <c:set var="basepath" value="<%=basePath%>" />
 
 <!DOCTYPE html>
@@ -218,7 +215,7 @@
     <div class="row">
         <!--电影海报页-->
         <div class="col-xs-2">
-            <img src="image/kenan.png" style="width: 140px;height: 150px">
+            <img src="${oneMovie.images[0].path}" style="width: 140px;height: 150px">
 
         </div>
         <!--电影基本信息页-->
@@ -258,7 +255,9 @@
                     </c:otherwise>
                     </c:choose>
                     <li class="list-group-item" style="border: none">
-                        类型: 奇幻 / 冒险
+                        类型: <c:forEach items="${labels}" var="label">
+                        ${label.labelName}/
+                    </c:forEach>
                     </li>
                     <li class="list-group-item" style="border: none">
                         制片国家/地区: ${oneMovie.region}
@@ -292,7 +291,7 @@
                             <span id="add_star_movie${oneMovie.id}" class="add-star"></span>
                             <span id="del_star_movie${oneMovie.id}" class="del-star"></span>
                         </div>
-                        24500人评价
+                        ${Counts}人评价
                         <script>
                             window.onload = showStar(${oneMovie.filmscore});
 
@@ -322,12 +321,21 @@
                             </div>
                             <div class="col-md-4" style="margin-left: -20px;height: 20px">
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 5%;">
+                                    <c:set var="num" value="${0}"/>
+                                    <c:set var="count" value="${0}"/>
+                                    <c:forEach items="${scores}" var="score">
+                                        <c:set var="count" value="${count+1}"/>
+                                        <c:if test="${80<score&&score<=100}">
+                                            <c:set var="num" value="${num+1}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
+                                    <div class="progress-bar" style="width:${result*100}%;">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                5%
+                                ${result*100}%
                             </div>
 
                         </div>
@@ -340,12 +348,21 @@
                             </div>
                             <div class="col-md-4" style="margin-left: -20px;height: 20px">
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 60%;">
+                                    <c:set var="num" value="${0}"/>
+                                    <c:set var="count" value="${0}"/>
+                                    <c:forEach items="${scores}" var="score">
+                                        <c:set var="count" value="${count+1}"/>
+                                        <c:if test="${60<score&&score<=80}">
+                                            <c:set var="num" value="${num+1}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
+                                    <div class="progress-bar" style="width: ${result*100}%;">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                60%
+                                ${result*100}%
                             </div>
 
                         </div>
@@ -357,12 +374,22 @@
                             </div>
                             <div class="col-md-4" style="margin-left: -20px;height: 20px">
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 25%;">
+                                    <c:set var="num" value="${0}"/>
+                                    <c:set var="count" value="${0}"/>
+                                    <c:forEach items="${scores}" var="score">
+                                        <c:set var="count" value="${count+1}"/>
+                                        <c:if test="${40<score&&score<=60}">
+                                            <c:set var="num" value="${num+1}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0" />
+
+                                    <div class="progress-bar" style="width: ${result*100}%;">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                25%
+                                ${result*100}%
                             </div>
 
                         </div>
@@ -374,12 +401,22 @@
                             </div>
                             <div class="col-md-4" style="margin-left: -20px;height: 20px">
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 7%;">
+                                    <c:set var="num" value="${0}"/>
+                                    <c:set var="count" value="${0}"/>
+                                    <c:forEach items="${scores}" var="score">
+                                        <c:set var="count" value="${count+1}"/>
+                                        <c:if test="${20<score&&score<=40}">
+                                            <c:set var="num" value="${num+1}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
+
+                                    <div class="progress-bar" style="width: ${result*100}%;">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                7%
+                                ${result*100}%
                             </div>
 
                         </div>
@@ -391,12 +428,22 @@
                             </div>
                             <div class="col-md-4" style="margin-left: -20px;height: 20px">
                                 <div class="progress">
-                                    <div class="progress-bar" style="width: 3%;">
+                                    <c:set var="num" value="${0}"/>
+                                    <c:set var="count" value="${0}"/>
+                                    <c:forEach items="${scores}" var="score">
+                                        <c:set var="count" value="${count+1}"/>
+                                        <c:if test="${0<score&&score<=20}">
+                                            <c:set var="num" value="${num+1}"/>
+                                        </c:if>
+                                    </c:forEach>
+                                    <fmt:formatNumber value="${num/count}" var="result" maxFractionDigits="2" />
+
+                                    <div class="progress-bar" style="width: ${result*100}%;">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                3%
+                                ${result*100}%
                             </div>
 
                         </div>
@@ -445,9 +492,10 @@
             ${oneMovie.moviename}电影相关预告片
         </h4>
         <ul class="list-inline">
+            <c:forEach items="${oneMovie.images}" var="image" begin="0" end="2">
             <li>
                 <div class="box">
-                    <img src="/image/test.jpg" class="img-rounded" style="width: 150px;height: 130px">
+                    <img src="${image.path}" class="img-rounded" style="width: 150px;height: 130px">
                     <div class="box-content">
                         <ul class="icon">
                             <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play"></span></a></li>
@@ -455,26 +503,7 @@
                     </div>
                 </div>
             </li>
-            <li>
-                <div class="box">
-                    <img src="/image/test.jpg" class="img-rounded" style="width: 150px;height: 130px">
-                    <div class="box-content">
-                        <ul class="icon">
-                            <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="box">
-                    <img src="/image/test.jpg" class="img-rounded" style="width: 150px;height: 130px">
-                    <div class="box-content">
-                        <ul class="icon">
-                            <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
+            </c:forEach>
         </ul>
     </div>
 
@@ -482,7 +511,7 @@
     <div class="row">
         <h4 style="color: #2f904d">
             ${oneMovie.moviename}电影的短评(共1252条)
-            xxxx电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
+                ${oneMovie.moviename}电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
         </h4>
         <!--Ajax异步得到-->
         <div class="row">

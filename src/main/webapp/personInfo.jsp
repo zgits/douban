@@ -21,7 +21,8 @@
     <link rel="stylesheet" type="text/css" href="static_resources/font-awesome/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="static_resources/checkbox/css/build.css">
-
+    <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
+    <script src="/static_resources/toastr/toastr.min.js"></script>
 
     <link rel="stylesheet" href="/static_resources/dist/sidebar-menu.css">
     <style type="text/css">
@@ -152,7 +153,7 @@
                         <input type="button" value="反选" class="btn" id="reverse">
                     </div>
                     <div class="col-md-5">
-                        <a>
+                        <a href="#" onclick="deleteMessage()">
                             &nbsp;&nbsp;&nbsp;删除<span class="glyphicon glyphicon-trash"></span>
                         </a>
                     </div>
@@ -165,7 +166,7 @@
                     <c:forEach items="${pagebeans.lists}" var="pagebean" >
                     <li class="list-group-item">
                         <div class="checkbox checkbox-success">
-                            <input id="${pagebean.userId}" class="styled" type="checkbox">
+                            <input id="${pagebean.userId}" class="styled" name="message" value="${pagebean.id}" type="checkbox">
                             <label for="${pagebean.userId}">
                                 来自${pagebean.sender}的信息:${pagebean.message}
                                 <br>
@@ -334,7 +335,92 @@
 
 </div>
 
+<div class="modal fade" id="delcfmModel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content message_align">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">提示信息</h4>
+            </div>
+            <div class="modal-body">
+                <p>您确认要删除吗？</p>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" id="deletetodel"/>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button onclick="opreatedelete()" class="btn btn-info" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<script>
+    var messageOpts = {
+        "closeButton": true,//是否显示关闭按钮
+        "debug": false,//是否使用debug模式
+        "positionClass": "toast-top-right",//弹出窗的位置
+        "onclick": null,
+        "showDuration": "3000",//显示的动画时间
+        "hideDuration": "1000",//消失的动画时间
+        "timeOut": "3000",//展现时间
+        "extendedTimeOut": "1000",//加长展示时间
+        "showEasing": "swing",//显示时的动画缓冲方式
+        "hideEasing": "linear",//消失时的动画缓冲方式
+        "showMethod": "fadeIn",//显示时的动画方式
+        "hideMethod": "fadeOut" //消失时的动画方式
+    };
+    toastr.options = messageOpts;
+    $("#selectAll").click(function () {
+        $("#owners input:checkbox").each(function () {
+            $(this).prop('checked', true);//
 
+        });
+    });
+
+    $("#unSelect").click(function () {
+        $("#owners input:checkbox").removeAttr("checked");
+    });
+
+    $("#reverse").click(function () {
+        $("#owners input:checkbox").each(function () {
+            this.checked = !this.checked;
+        });
+    });
+
+    function deleteMessage(){
+
+        $("#delcfmModel").modal();
+    }
+    function opreatedelete(){
+        list=document.getElementsByName("message");
+        var check_val=[];
+        for(i in list){
+            if(list[i].checked){
+                check_val.push(list[i].value);
+            }
+        }
+        $.ajax({
+                type: "post",
+                url: "${basepath}/deleteMessage",//后台删除的地址
+                async: true,
+                traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                data: {
+                    ids: check_val
+                },
+                success:function (flag) {
+                    if(flag==1){
+                        toastr.success('删除成功');
+                    }else{
+                        toastr.error("删除失败");
+                    }
+                    setTimeout("window.location.reload()",1000);
+                }
+            }
+        )
+
+        //window.location.href="getMessage?id=1"
+    }
+</script>
 <script src="/static_resources/dist/sidebar-menu.js"></script>
 
 
@@ -378,12 +464,14 @@
             $("#history").hide();
             $("#set_up").hide();
             $("#info").fadeIn();
+
         });
         $("#history_p").click(function () {
             $("#update_pwd").hide();
             $("#history").fadeIn();
             $("#set_up").hide();
             $("#info").hide();
+
 
         });
         $("#update_pwd_p").click(function () {

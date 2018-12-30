@@ -18,7 +18,7 @@ public class MovieDaoImplTest extends BaseTest{
 
     @Test
     public void selectMovieById() throws Exception {
-
+     System.out.println(movieDao.getCommentScore(1));
     }
 
     @Test

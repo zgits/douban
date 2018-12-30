@@ -107,7 +107,13 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
         }
     }
 
-    /**
-     * 结束针对后台管理电影时对预告片的方法
-     */
+
+    public int addTrailerNum(Trailer trailer){
+        try{
+            this.getSessionFactory().getCurrentSession().update(trailer);
+            return 1;
+        }catch (Exception e){
+            return 0;
+        }
+    }
 }

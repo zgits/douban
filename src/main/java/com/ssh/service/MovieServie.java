@@ -1,5 +1,6 @@
 package com.ssh.service;
 
+import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
 
@@ -99,5 +100,13 @@ public interface MovieServie {
      */
     public boolean deleteMovies(Integer[] ids);
 
+/**
+ * 获取某电影观众评分
+ */
+public List<Integer> getCommentScore(int id);
 
+/**
+ * 获取某电影标签
+ */
+public List<Labelmapping> getLabels(int movieId);
 }

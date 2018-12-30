@@ -52,9 +52,16 @@ public class MovieAction extends ActionSupport{
 
     /********通过id获取电影信息,用于单击超链接时用*************/
     public String getMovieById(){
+        int count=0;
         try{
             Movie movie=movieServie.selctMovieById(id);
+            List<Integer> scores=movieServie.getCommentScore(id);
+            List<Labelmapping> labels=movieServie.getLabels(id);
+            count=scores.size();
             ActionContext.getContext().put("oneMovie",movie);
+            ActionContext.getContext().put("scores",scores);
+            ActionContext.getContext().put("Counts",count);
+            ActionContext.getContext().put("labels",labels);
             return "moviedetail";
         }catch (Exception e){
             return null;

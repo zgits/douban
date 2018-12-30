@@ -1,5 +1,6 @@
 package com.ssh.dao;
 
+import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 
 import java.util.List;
@@ -102,5 +103,10 @@ public interface MovieDao {
      * @return
      */
     public boolean deleteMovies(Integer[] ids);
+/**
+ * 获取一个电影的观众评分进行筛选
+ */
+public List<Integer> getCommentScore(int id);
 
+public List<Labelmapping> getLabels(int movieId);
 }

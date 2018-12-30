@@ -72,4 +72,9 @@ public interface TrailerService {
      * @return
      */
     public boolean deleteTrailers(Integer[] ids);
+
+    /**
+     * 增加预告片播放量
+     */
+    public int addTrailerNum(int id);
 }
