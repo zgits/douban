@@ -77,4 +77,9 @@ public interface TrailerDao {
      * @return
      */
     public boolean deleteTrailers(Integer[] ids);
+
+    /**
+     * 更新预告片播放量
+     */
+    public int addTrailerNum(Trailer trailer);
 }

@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class MovieServieImplTest extends BaseTest{
     @Test
     public void getAllMovieName() throws Exception {
-        System.out.println(movieServie.getAllMovieName().get(3));
+        System.out.println(movieServie.getCommentScore(5));
     }
 
     @Autowired
@@ -45,7 +45,7 @@ public class MovieServieImplTest extends BaseTest{
 
     @Test
     public void selectAllMovies() throws Exception {
-        System.out.println(movieServie.selectAllMovies());
+        System.out.println(movieServie.selctMovieById(5));
     }
 
 

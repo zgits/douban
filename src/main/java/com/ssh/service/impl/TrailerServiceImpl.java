@@ -98,4 +98,10 @@ public class TrailerServiceImpl implements TrailerService{
     public boolean deleteTrailers(Integer[] ids) {
         return trailerDao.deleteTrailers(ids);
     }
+    @Override
+    public int addTrailerNum(int id){
+        Trailer trailer=trailerDao.getMovieTrailer(id);
+        trailer.setNumber(trailer.getNumber()+1);
+        return trailer.getNumber();
+    }
 }

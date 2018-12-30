@@ -1,6 +1,8 @@
 package com.ssh.dao.impl;
 
+import com.ssh.dao.LabelMappingDao;
 import com.ssh.dao.MovieDao;
+import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -162,6 +164,14 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     }
 
     @Override
+    public List<Integer> getCommentScore(int id) {
+        String hql="select score from Movie_Comment where movieId=:id";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setInteger("id",id);
+        List<Integer> scores=(List<Integer>) query.list();
+        return scores;
+    }
+    @Override
     public boolean updateMovieScore(Float filmscore, Integer movieId) {
         String hql="update Movie set filmscore=? where id=?";
         Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
@@ -175,4 +185,11 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
     }
 
 
+    public List<Labelmapping> getLabels(int movieId){
+        String hql="from Labelmapping where movieId=:movieId";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setInteger("movieId",movieId);
+        List<Labelmapping> labels=(List<Labelmapping>)query.list();
+        return labels;
+    }
 }

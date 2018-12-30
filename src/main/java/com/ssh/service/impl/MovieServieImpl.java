@@ -208,4 +208,13 @@ public class MovieServieImpl implements MovieServie{
     public boolean deleteMovies(Integer[] ids) {
         return movieDao.deleteMovies(ids);
     }
+     @Override
+    public List<Integer> getCommentScore(int id){
+        return movieDao.getCommentScore(id);
+    }
+
+
+    public List<Labelmapping> getLabels(int movieId){
+        return(movieDao.getLabels(movieId));
+    }
 }

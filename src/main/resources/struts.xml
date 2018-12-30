@@ -166,6 +166,12 @@
         <action name="getCommentsBypage" class="TrailerComment" method="getComments">
             <result name="success" type="json">
                 <param  name="root">returndata</param>
+    </result>
+        </action>
+
+        <action name="UserMessage" class="getMessage" method="UserMessage">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
             </result>
         </action>
 
