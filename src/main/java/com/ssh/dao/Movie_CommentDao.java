@@ -34,6 +34,30 @@ public interface Movie_CommentDao {
      */
     public Integer getCountComment(Integer movieId);
 
+
+    /**
+     * 根据电影的id计算评论中的平均分，用于更新电影的评分
+     * @param movieId
+     * @return
+     */
+    public Float getAvgScore(Integer movieId);
+
+
+    /**
+     * 根据id得到该条评论对应的电影id
+     * @param id
+     * @return
+     */
+    public Integer getMovieIdById(Integer id);
+
+
+    /**
+     * 根据userId查询对应的评论
+     * @param userId
+     * @return
+     */
+    public List<Movie_Comment> alreadyRated(Integer userId,Integer movieId);
+
     /**
      * 根据id删除某个用户的评论
      * @param id

@@ -50,8 +50,12 @@ public class MovieReplyCommentAction extends ActionSupport{
         try{
 
             if(ConfirmToken.confirmtoken(token)){
-                movie_replyCommentService.insertReplyComment(movie_replycomment);
-                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+
+                if(movie_replyCommentService.insertReplyComment(movie_replycomment)){
+                    flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                }else{
+                    flag = JSON.toJSONString(2);
+                }
             }else{
                 flag = JSON.toJSONString(3);//使用fastjson将数据转换成json格式,3代表未登录
 

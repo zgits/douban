@@ -161,5 +161,18 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         }
     }
 
+    @Override
+    public boolean updateMovieScore(Float filmscore, Integer movieId) {
+        String hql="update Movie set filmscore=? where id=?";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setParameter(0,filmscore);
+        query.setParameter(1,movieId);
+        if (query.executeUpdate()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
 }

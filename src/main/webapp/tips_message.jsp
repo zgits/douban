@@ -26,6 +26,8 @@
     <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
     <script src="/static_resources/toastr/toastr.min.js"></script>
 
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
     <style>
         * {
             margin: 0;

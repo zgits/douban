@@ -176,6 +176,8 @@
     <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
     <script src="/static_resources/toastr/toastr.min.js"></script>
 
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
 
 </head>
 <body>
@@ -195,7 +197,7 @@
             </form>
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" id="navuser">
                     <li><a href="login.jsp"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
                     <li><a href="login.jsp" class="a globalLoginBtn"><span
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
@@ -213,6 +215,53 @@
         </div>
     </div>
 </nav>
+
+<script>
+    $(document).ready(function () {
+        $("#navuser").empty();
+        var appendhtml="";
+        var id=$.cookie("id");
+        $.ajax({
+            type:"get",
+            url:"getCountMessage",
+            async: true,
+            data:{
+                id:id
+            },
+            success:function (flag) {
+                if (flag!=null){
+                    $("#count").append(flag);
+                }
+
+            }
+
+        })
+        if($.cookie("id")!='null'){
+            appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+            appendhtml+='<li>'+
+                '<a href=getMessage?id='+id+'>'+
+                '<span class="badge pull-right"><div id="count"/></span>消息'+
+                '</a>'+
+                '</li>';
+            appendhtml+='<li>'+
+                '<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"'+
+                'class="img-circle img-responsive"'+
+                'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                '</li>';
+        }else{
+            appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+                '<li><a href="register.jsp">注册</a></li>';
+        }
+        $("#navuser").append(appendhtml);
+
+
+    })
+
+    function login_out() {
+        $.cookie("id",-1);
+        $.cookie("token",-1);
+    }
+</script>
 <!--电影详情介绍-->
 <div class="container">
     <h1>${oneMovie.moviename}</h1>
@@ -223,6 +272,7 @@
             <img src="image/kenan.png" style="width: 140px;height: 150px">
 
         </div>
+        <input id="hiddenmovieId" type="hidden" value="${oneMovie.id}">
         <!--电影基本信息页-->
         <div class="col-md-6">
             <div>
@@ -412,16 +462,26 @@
 
     <!--评分项-->
     <div class="row">
-        <form method="post">
-            <input id="input-21e" name="score" value="0" type="number" class="rating globalLoginBtn" min=0 max=5 step=1
-                   data-size="xs">
-        </form>
+        <div id="div_input_score" hidden>
+            <input id="input-21e" name="score" value="0" type="number" class="rating globalLoginBtn" min=0 max=5 step=1 data-size="xs">
+        </div>
         <script>
-            function read() {
-                alert($(" input[ name='score' ] ").val());
-            }
             jQuery(document).ready(function () {
-                $(".rating-kv").rating();
+                $.ajax({
+                    url:"moviecomment_alreadyRated",
+                    type:"post",
+                    data:{
+                        "userId":$.cookie("id"),
+                        "movieId":${oneMovie.id}
+                    },
+                    success:function (data) {
+                        if(data==1){
+                            $("#div_input_score").show();
+                            $(".rating-kv").rating();
+                        }
+                    }
+                })
+
             });
         </script>
     </div>
@@ -977,39 +1037,93 @@
         toastr.options = messageOpts;
         function moviecomment() {
 
+            var filmscore=null;
             var userId=document.getElementById("userId").value;
             var movieId=document.getElementById("movieId").value;
             var content=document.getElementById("content").value;
-            if(content==""){
-                toastr.warning("评论不能为空");
-                return;
-            }
             $.ajax({
+                url:"moviecomment_alreadyRated",
                 type:"post",
-                url:"${basepath}/moviecomment_insertComment",
                 data:{
-                    "movie_comment.userId":userId,
-                    "movie_comment.movieId":movieId,
-                    "movie_comment.content":content,
-                    "token":$.cookie("token")
-                },
-                beforeSend: function (XMLHttpRequest) {
-                    $("#loading").show(); //在后台返回success之前显示loading图标
+                    "userId":$.cookie("id"),
+                    "movieId":$("#hiddenmovieId").val(),
                 },
                 success:function (data) {
-                    $("#loading").hide();
                     if(data==1){
-                        toastr.success('评论成功');
-                    }else if(data==2){
-                        toastr.error("评论失败");
-                    }else if(data==3){
-                        toastr.warning("请先登录");
-                        setTimeout("window.location='login.jsp'",2000);
+                        alert("ssdfasdf");
+                        filmscore=$("#input-21e").val();
+                        filmscore=filmscore*2;
                     }
-                    $("#content").val("");
-                    setTimeout("window.location.reload()",3000);
                 }
             })
+            alert(filmscore);
+            if(filmscore!=null){
+                if(content==""||filmscore==0){
+                    toastr.warning("评论或评分不能为空");
+                    return;
+                }
+                $.ajax({
+                    type:"post",
+                    url:"${basepath}/moviecomment_insertComment",
+                    data:{
+                        "movie_comment.userId":userId,
+                        "movie_comment.movieId":movieId,
+                        "movie_comment.content":content,
+                        "token":$.cookie("token"),
+                        "movie_comment.score":filmscore
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('评论成功');
+                        }else if(data==2){
+                            toastr.error("评论失败");
+                        }else if(data==3){
+                            toastr.warning("请先登录");
+                            setTimeout("window.location='login.jsp'",2000);
+                        }
+                        $("#content").val("");
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }else if(filmscore==null){
+                if(content==""){
+                    toastr.warning("评论不能为空");
+                    return;
+                }
+
+                $.ajax({
+                    type:"post",
+                    url:"${basepath}/moviecomment_insertComment",
+                    data:{
+                        "movie_comment.userId":userId,
+                        "movie_comment.movieId":movieId,
+                        "movie_comment.content":content,
+                        "token":$.cookie("token")
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('评论成功');
+                        }else if(data==2){
+                            toastr.error("评论失败");
+                        }else if(data==3){
+                            toastr.warning("请先登录");
+                            setTimeout("window.location='login.jsp'",2000);
+                        }
+                        $("#content").val("");
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+
 
         }
     </script>

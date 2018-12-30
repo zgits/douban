@@ -145,8 +145,11 @@ public class TrailerCommentAction extends ActionSupport{
         String flag ="";
         try{
             if(ConfirmToken.confirmtoken(token)){
-                trailer_commentService.insertComment(trailer_comment);
-                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                if(trailer_commentService.insertComment(trailer_comment)){
+                    flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                }else{
+                    flag = JSON.toJSONString(2);
+                }
             }else{
                 flag = JSON.toJSONString(3);//使用fastjson将数据转换成json格式,3代表未登录
 

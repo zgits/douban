@@ -49,8 +49,11 @@ public class TrailerReplyCommentAction extends ActionSupport{
         try{
             System.out.println(token);
             if(ConfirmToken.confirmtoken(token)){
-                trailer_replyCommentService.insertReplyComment(trailer_replycomment);
-                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                if(trailer_replyCommentService.insertReplyComment(trailer_replycomment)){
+                    flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                }else{
+                    flag = JSON.toJSONString(2);
+                }
             }else{
                 flag = JSON.toJSONString(3);//使用fastjson将数据转换成json格式,3代表未登录
 

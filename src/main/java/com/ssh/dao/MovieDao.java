@@ -103,4 +103,13 @@ public interface MovieDao {
      */
     public boolean deleteMovies(Integer[] ids);
 
+
+    /**
+     * 更新电影的评分
+     * @param filmscore
+     * @param movieId
+     * @return
+     */
+    public boolean updateMovieScore(Float filmscore,Integer movieId);
+
 }

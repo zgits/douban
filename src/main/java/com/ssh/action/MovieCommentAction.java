@@ -17,12 +17,12 @@ import java.io.PrintWriter;
  * Created by 幻夜~星辰 on 2018/12/5.
  */
 @Controller("MovieComment")
-public class MovieCommentAction extends ActionSupport{
+public class MovieCommentAction extends ActionSupport {
 
     @Autowired
     private Movie_CommentService movie_commentService;
 
-    private String token="";
+    private String token = "";
 
     public String getToken() {
         return token;
@@ -35,7 +35,7 @@ public class MovieCommentAction extends ActionSupport{
     //根据movieId得到评论
     private Integer movieId;
 
-    private Integer currPage=1;
+    private Integer currPage = 1;
 
     public Integer getMovieId() {
         return movieId;
@@ -54,17 +54,17 @@ public class MovieCommentAction extends ActionSupport{
     }
 
     /********异步刷新评论数据************/
-    public String getComments(){
+    public String getComments() {
 
         PageBean<Movie_Comment> pageBean;
         String jsonPageBean;
-        try{
-            pageBean=movie_commentService.findComment(movieId,currPage);
+        try {
+            pageBean = movie_commentService.findComment(movieId, currPage);
 
-            jsonPageBean= JSON.toJSONString(pageBean);
-            if(pageBean!=null){
-                System.out.println("成功取得第"+currPage+"页的数据,数据为：\r\n"+pageBean);
-            }else{
+            jsonPageBean = JSON.toJSONString(pageBean);
+            if (pageBean != null) {
+                System.out.println("成功取得第" + currPage + "页的数据,数据为：\r\n" + pageBean);
+            } else {
                 System.out.println("查询失败...");
             }
 
@@ -82,7 +82,7 @@ public class MovieCommentAction extends ActionSupport{
 
             writer.close();
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return SUCCESS;
@@ -104,12 +104,12 @@ public class MovieCommentAction extends ActionSupport{
     public void delete() throws IOException {
 
 
-        String flag ="";
-        try{
+        String flag = "";
+        try {
             movie_commentService.deleteComment(id);
             flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
-        }catch (Exception e){
-            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        } catch (Exception e) {
+            flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
         PrintWriter writer = ServletActionContext.getResponse().getWriter();
@@ -138,18 +138,22 @@ public class MovieCommentAction extends ActionSupport{
 
     public void insertComment() throws IOException {
 
-        String flag ="";
-        try{
-            if(ConfirmToken.confirmtoken(token)){
-                movie_commentService.insertComment(movie_comment);
-                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
-            }else{
+        String flag = "";
+        try {
+            if (ConfirmToken.confirmtoken(token)) {
+                if (movie_commentService.insertComment(movie_comment)) {
+                    flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+                } else {
+                    flag = JSON.toJSONString(2);
+                }
+
+            } else {
                 flag = JSON.toJSONString(3);//使用fastjson将数据转换成json格式,3代表未登录
 
             }
 
-        }catch (Exception e){
-            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        } catch (Exception e) {
+            flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
         PrintWriter writer = ServletActionContext.getResponse().getWriter();
@@ -163,6 +167,43 @@ public class MovieCommentAction extends ActionSupport{
         writer.close();
 
 
+    }
+
+
+    Integer userId;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public void alreadyRated() throws IOException {
+        String flag = "";
+        try {
+
+            if (movie_commentService.alreadyRated(userId,movieId)) {
+                flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
+            } else {
+                flag = JSON.toJSONString(2);
+            }
+
+
+        } catch (Exception e) {
+            flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
     }
 
     /**********插入评论end**********/
