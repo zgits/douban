@@ -109,4 +109,13 @@ public interface MovieDao {
 public List<Integer> getCommentScore(int id);
 
 public List<Labelmapping> getLabels(int movieId);
+
+    /**
+     * 更新电影的评分
+     * @param filmscore
+     * @param movieId
+     * @return
+     */
+    public boolean updateMovieScore(Float filmscore,Integer movieId);
+
 }

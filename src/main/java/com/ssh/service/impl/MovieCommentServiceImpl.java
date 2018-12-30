@@ -1,6 +1,7 @@
 package com.ssh.service.impl;
 
 import com.ssh.dao.ManagerUserDao;
+import com.ssh.dao.MovieDao;
 import com.ssh.dao.Movie_CommentDao;
 import com.ssh.dao.Movie_ReplyCommentDao;
 import com.ssh.model.Movie_Comment;
@@ -29,10 +30,15 @@ public class MovieCommentServiceImpl implements Movie_CommentService {
     @Autowired
     private ManagerUserService managerUserService;
 
+    @Autowired
+    private MovieDao movieDao;
+
     @Override
     public boolean insertComment(Movie_Comment movieComment) {
 
         Date date=managerUserService.selectEndTime(movieComment.getUserId());
+
+
         movieComment.setTime(new Date());
         movieComment.setUsername(managerUserService.getUsername(movieComment.getUserId()));
         //判断禁言是否结束
@@ -45,7 +51,13 @@ public class MovieCommentServiceImpl implements Movie_CommentService {
             flag=false;
         }
         if (flag){
-            return movieCommentDao.insertComment(movieComment);
+            boolean flag1=movieCommentDao.insertComment(movieComment);
+            //做电影评分的计算
+            if(flag1){
+                Float filmsocre=movieCommentDao.getAvgScore(movieComment.getMovieId());
+                flag1=movieDao.updateMovieScore(filmsocre,movieComment.getMovieId());
+            }
+            return flag1;
         }else{
             return false;
         }
@@ -85,6 +97,26 @@ public class MovieCommentServiceImpl implements Movie_CommentService {
 
     @Override
     public boolean deleteComment(int id) {
-        return movieCommentDao.deleteComment(id);
+        Integer movieId=movieCommentDao.getMovieIdById(id);
+        boolean flag=movieCommentDao.deleteComment(id);
+        if(flag){
+            boolean flag2=movieDao.updateMovieScore(movieCommentDao.getAvgScore(movieId),movieId);
+            return flag2;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public boolean alreadyRated(Integer userId,Integer movieId) {
+        boolean flag=true;
+        List<Movie_Comment> movie_comments=movieCommentDao.alreadyRated(userId,movieId);
+        for(Movie_Comment movie_comment:movie_comments){
+            if(movie_comment.getScore()!=null){
+                flag=false;
+                break;
+            }
+        }
+        return flag;
     }
 }

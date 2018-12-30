@@ -12,6 +12,11 @@ import static org.junit.Assert.*;
  */
 public class MovieDaoImplTest extends BaseTest{
     @Test
+    public void updateMovieScore() throws Exception {
+        System.out.print(movieDao.updateMovieScore((Float.parseFloat("6.3")),2));
+    }
+
+    @Test
     public void selectMoving2() throws Exception {
         System.out.println(movieDao.selectMoving());
     }

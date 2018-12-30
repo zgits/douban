@@ -114,7 +114,7 @@
         <action name="bgmain" class="background" method="goToBackground">
             <result name="success">/WEB-INF/jsp/admin/main.jsp</result>
             <result name="login">/login.jsp</result>
-            <result name="input">/login.jsp</result>
+            <!--<result name="input">/login.jsp</result>-->
             <interceptor-ref name="Interceptor"></interceptor-ref>
             <interceptor-ref name="defaultStack"></interceptor-ref>
         </action>

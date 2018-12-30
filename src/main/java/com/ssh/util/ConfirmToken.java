@@ -6,7 +6,7 @@ package com.ssh.util;
 public class ConfirmToken {
 
     public static boolean confirmtoken(String token){
-        if(JWT.unsign(token,String.class)!=null){
+        if(JWT.unsign(token,Integer.class)!=null){
             return true;
         }else{
             return false;

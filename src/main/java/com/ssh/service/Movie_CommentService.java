@@ -30,4 +30,14 @@ public interface Movie_CommentService {
      * @return
      */
     public boolean deleteComment(int id);
+
+
+    /**
+     * 根据userId，和movieId判断是否已经打过分
+     * @param userId
+     * @return
+     */
+    public boolean alreadyRated(Integer userId,Integer movieId);
+
+
 }

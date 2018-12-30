@@ -171,6 +171,19 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         List<Integer> scores=(List<Integer>) query.list();
         return scores;
     }
+    @Override
+    public boolean updateMovieScore(Float filmscore, Integer movieId) {
+        String hql="update Movie set filmscore=? where id=?";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setParameter(0,filmscore);
+        query.setParameter(1,movieId);
+        if (query.executeUpdate()>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 
     public List<Labelmapping> getLabels(int movieId){
         String hql="from Labelmapping where movieId=:movieId";

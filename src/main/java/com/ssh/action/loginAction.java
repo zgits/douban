@@ -124,13 +124,54 @@ public class loginAction extends ActionSupport  {
         this.phone = phone;
     }
 
+    public void checkUsername() throws IOException {
+        boolean data=true;
+        //用户名存在，checkUsername为true
+        if(loginservice.checkUsername(username)) {
+            System.out.println(username);
+
+            data =false;//代表用户名存在
+            System.out.println("用户名已存在");
+        }
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(JSON.toJSONString(data));
+
+        writer.flush();
+
+        writer.close();
+    }
+
+    public void checkPhone() throws IOException {
+        boolean data=true;
+        if(loginservice.checkPhone(phone)) {
+
+            data =false;//代表手机号已存在
+
+        }
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(JSON.toJSONString(data));
+
+        writer.flush();
+
+        writer.close();
+    }
+
     public void register() throws IOException {
         String data="";
 
 
-        if(loginservice.checkUsername(username)){
-
+        if(!phone.equals("")&&!username.equals("")&&!password.equals("")){
+            if (loginservice.register(phone, username, password)) {
+                data = JSON.toJSONString(3);//代表注册成功
+            } else {
+                data = JSON.toJSONString(4);//代表注册失败
+            }
+        }else{
+            data = JSON.toJSONString(4);//代表注册失败
         }
+
 
         PrintWriter writer = ServletActionContext.getResponse().getWriter();
 

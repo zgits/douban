@@ -11,7 +11,10 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
 %>
-
+<%
+    List<Movie> movies=(List<Movie>) session.getAttribute("oneMovie");
+    session.removeAttribute("oneMovie");
+%>
 <c:set var="basepath" value="<%=basePath%>" />
 
 <!DOCTYPE html>
@@ -33,6 +36,8 @@
 
     <link href="/static_resources/pinglun/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
     <script src="/static_resources/pinglun/js/star-rating.js" type="text/javascript"></script>
+
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
 
     <style type="text/css">
 
@@ -171,6 +176,8 @@
     <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
     <script src="/static_resources/toastr/toastr.min.js"></script>
 
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
 
 </head>
 <body>
@@ -190,7 +197,7 @@
             </form>
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" id="navuser">
                     <li><a href="login.jsp"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
                     <li><a href="login.jsp" class="a globalLoginBtn"><span
                             class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
@@ -208,6 +215,53 @@
         </div>
     </div>
 </nav>
+
+<script>
+    $(document).ready(function () {
+        $("#navuser").empty();
+        var appendhtml="";
+        var id=$.cookie("id");
+        $.ajax({
+            type:"get",
+            url:"getCountMessage",
+            async: true,
+            data:{
+                id:id
+            },
+            success:function (flag) {
+                if (flag!=null){
+                    $("#count").append(flag);
+                }
+
+            }
+
+        })
+        if($.cookie("id")!='null'){
+            appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+            appendhtml+='<li>'+
+                '<a href=getMessage?id='+id+'>'+
+                '<span class="badge pull-right"><div id="count"/></span>消息'+
+                '</a>'+
+                '</li>';
+            appendhtml+='<li>'+
+                '<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"'+
+                'class="img-circle img-responsive"'+
+                'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                '</li>';
+        }else{
+            appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+                '<li><a href="register.jsp">注册</a></li>';
+        }
+        $("#navuser").append(appendhtml);
+
+
+    })
+
+    function login_out() {
+        $.cookie("id",-1);
+        $.cookie("token",-1);
+    }
+</script>
 <!--电影详情介绍-->
 <div class="container">
     <h1>${oneMovie.moviename}</h1>
@@ -218,6 +272,7 @@
             <img src="${oneMovie.images[0].path}" style="width: 140px;height: 150px">
 
         </div>
+        <input id="hiddenmovieId" type="hidden" value="${oneMovie.id}">
         <!--电影基本信息页-->
         <div class="col-md-6">
             <div>
@@ -325,7 +380,7 @@
                                     <c:set var="count" value="${0}"/>
                                     <c:forEach items="${scores}" var="score">
                                         <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${80<score&&score<=100}">
+                                        <c:if test="${8<score&&score<=10}">
                                             <c:set var="num" value="${num+1}"/>
                                         </c:if>
                                     </c:forEach>
@@ -352,7 +407,7 @@
                                     <c:set var="count" value="${0}"/>
                                     <c:forEach items="${scores}" var="score">
                                         <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${60<score&&score<=80}">
+                                        <c:if test="${6<score&&score<=8}">
                                             <c:set var="num" value="${num+1}"/>
                                         </c:if>
                                     </c:forEach>
@@ -378,7 +433,7 @@
                                     <c:set var="count" value="${0}"/>
                                     <c:forEach items="${scores}" var="score">
                                         <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${40<score&&score<=60}">
+                                        <c:if test="${4<score&&score<=6}">
                                             <c:set var="num" value="${num+1}"/>
                                         </c:if>
                                     </c:forEach>
@@ -405,7 +460,7 @@
                                     <c:set var="count" value="${0}"/>
                                     <c:forEach items="${scores}" var="score">
                                         <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${20<score&&score<=40}">
+                                        <c:if test="${2<score&&score<=4}">
                                             <c:set var="num" value="${num+1}"/>
                                         </c:if>
                                     </c:forEach>
@@ -432,7 +487,7 @@
                                     <c:set var="count" value="${0}"/>
                                     <c:forEach items="${scores}" var="score">
                                         <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${0<score&&score<=20}">
+                                        <c:if test="${0<score&&score<=2}">
                                             <c:set var="num" value="${num+1}"/>
                                         </c:if>
                                     </c:forEach>
@@ -457,16 +512,26 @@
 
     <!--评分项-->
     <div class="row">
-        <form method="post">
-            <input id="input-21e" name="score" value="0" type="number" class="rating globalLoginBtn" min=0 max=5 step=1
-                   data-size="xs">
-        </form>
+        <div id="div_input_score" hidden>
+            <input id="input-21e" name="score" value="0" type="number" class="rating globalLoginBtn" min=0 max=5 step=1 data-size="xs">
+        </div>
         <script>
-            function read() {
-                alert($(" input[ name='score' ] ").val());
-            }
             jQuery(document).ready(function () {
-                $(".rating-kv").rating();
+                $.ajax({
+                    url:"moviecomment_alreadyRated",
+                    type:"post",
+                    data:{
+                        "userId":$.cookie("id"),
+                        "movieId":${oneMovie.id}
+                    },
+                    success:function (data) {
+                        if(data==1){
+                            $("#div_input_score").show();
+                            $(".rating-kv").rating();
+                        }
+                    }
+                })
+
             });
         </script>
     </div>
@@ -510,8 +575,7 @@
     <!--评论显示界面-->
     <div class="row">
         <h4 style="color: #2f904d">
-            ${oneMovie.moviename}电影的短评(共1252条)
-                ${oneMovie.moviename}电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
+            ${oneMovie.moviename}电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
         </h4>
         <!--Ajax异步得到-->
         <div class="row">
@@ -576,7 +640,7 @@
 
                                 <div class="row col-md-offset-10">
                                     <c:choose>
-                                        <c:when test="${moviecomments.userId==1}">
+                                        <c:when test="${moviecomments.userId eq cookie['id'].value || cookie['id'].value==0}">
                                             <a class="btn btn-sm" onclick="deletecomment(${moviecomments.id})">删除</a>
 
                                         </c:when>
@@ -596,7 +660,7 @@
                                                     <input id="tor${moviecomments.id}" class="form-control" type="text" placeholder="@${moviecomments.username}:">
                                                 </div>
 
-                                                <input onclick="replyComment(tor${moviecomments.id},'${moviecomments.id}','${moviecomments.userId}',1,1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                <input onclick="replyComment(tor${moviecomments.id},'${moviecomments.id}','${moviecomments.userId}',${cookie['id'].value},1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -612,7 +676,7 @@
                                                             <span class="col-md-offset-1">回复@${reply.to_userIdusername}:${reply.content}</span>
 
                                                             <c:choose>
-                                                                <c:when test="${reply.userId==1}">
+                                                                <c:when test="${reply.userId eq cookie['id'].value || cookie['id'].value==0}">
                                                                     <a class="btn btn-sm col-md-offset-10" onclick="deletecomment2(${reply.id})">删除</a>
 
                                                                 </c:when>
@@ -630,7 +694,7 @@
                                                                     <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
 
                                                                 </div>
-                                                                <input onclick="replyComment2(s${reply.id},${moviecomments.id},${reply.id},${reply.userId},1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                                <input onclick="replyComment2(s${reply.id},${moviecomments.id},${reply.id},${reply.userId},${cookie['id'].value},2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                                             </div>
 
                                                         </div>
@@ -746,7 +810,8 @@
                         "movie_replycomment.comment_id":commentId,
                         "movie_replycomment.to_userId":to_userId,
                         "movie_replycomment.userId":userId,
-                        "movie_replycomment.reply_type":type
+                        "movie_replycomment.reply_type":type,
+                        "token":$.cookie("token")
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
@@ -787,7 +852,8 @@
                         "movie_replycomment.to_userId":to_userId,
                         "movie_replycomment.userId":userId,
                         "movie_replycomment.reply_type":type,
-                        "movie_replycomment.reply_id":to_id
+                        "movie_replycomment.reply_id":to_id,
+                        "token":$.cookie("token")
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
@@ -974,7 +1040,7 @@
         <div role="form col-md-8">
 
             <%--登录后可以获取id--%>
-            <input id="userId" type="hidden" name="movie_comment.userId" value="1">
+            <input id="userId" type="hidden" name="movie_comment.userId" value="${cookie['id'].value}">
             <input id="movieId" type="hidden" name="movie_comment.movieId" value="${oneMovie.id}">
             <div class="form-group" style="width: 800px ">
                 <textarea id="content" name="movie_comment.content" class="form-control" rows="3"></textarea>
@@ -1003,38 +1069,93 @@
         toastr.options = messageOpts;
         function moviecomment() {
 
+            var filmscore=null;
             var userId=document.getElementById("userId").value;
             var movieId=document.getElementById("movieId").value;
             var content=document.getElementById("content").value;
-            if(content==""){
-                toastr.warning("评论不能为空");
-                return;
-            }
             $.ajax({
+                url:"moviecomment_alreadyRated",
                 type:"post",
-                url:"${basepath}/moviecomment_insertComment",
                 data:{
-                    "movie_comment.userId":userId,
-                    "movie_comment.movieId":movieId,
-                    "movie_comment.content":content
-                },
-                beforeSend: function (XMLHttpRequest) {
-                    $("#loading").show(); //在后台返回success之前显示loading图标
+                    "userId":$.cookie("id"),
+                    "movieId":$("#hiddenmovieId").val(),
                 },
                 success:function (data) {
-                    $("#loading").hide();
                     if(data==1){
-                        toastr.success('评论成功');
-                    }else if(data==2){
-                        toastr.error("评论失败");
-                    }else if(data==3){
-                        toastr.warning("请先登录");
-                        setTimeout("window.location='login.jsp'",2000);
+                        alert("ssdfasdf");
+                        filmscore=$("#input-21e").val();
+                        filmscore=filmscore*2;
                     }
-                    $("#content").val("");
-                    setTimeout("window.location.reload()",3000);
                 }
             })
+            alert(filmscore);
+            if(filmscore!=null){
+                if(content==""||filmscore==0){
+                    toastr.warning("评论或评分不能为空");
+                    return;
+                }
+                $.ajax({
+                    type:"post",
+                    url:"${basepath}/moviecomment_insertComment",
+                    data:{
+                        "movie_comment.userId":userId,
+                        "movie_comment.movieId":movieId,
+                        "movie_comment.content":content,
+                        "token":$.cookie("token"),
+                        "movie_comment.score":filmscore
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('评论成功');
+                        }else if(data==2){
+                            toastr.error("评论失败");
+                        }else if(data==3){
+                            toastr.warning("请先登录");
+                            setTimeout("window.location='login.jsp'",2000);
+                        }
+                        $("#content").val("");
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }else if(filmscore==null){
+                if(content==""){
+                    toastr.warning("评论不能为空");
+                    return;
+                }
+
+                $.ajax({
+                    type:"post",
+                    url:"${basepath}/moviecomment_insertComment",
+                    data:{
+                        "movie_comment.userId":userId,
+                        "movie_comment.movieId":movieId,
+                        "movie_comment.content":content,
+                        "token":$.cookie("token")
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                        $("#loading").show(); //在后台返回success之前显示loading图标
+                    },
+                    success:function (data) {
+                        $("#loading").hide();
+                        if(data==1){
+                            toastr.success('评论成功');
+                        }else if(data==2){
+                            toastr.error("评论失败");
+                        }else if(data==3){
+                            toastr.warning("请先登录");
+                            setTimeout("window.location='login.jsp'",2000);
+                        }
+                        $("#content").val("");
+                        setTimeout("window.location.reload()",3000);
+                    }
+                })
+            }
+
+
 
         }
     </script>
@@ -1200,7 +1321,7 @@
                                     '&nbsp;&nbsp;'+
                                     comments[i].content+
                                     '</div>';
-                        if(comments[i].userId==1) {
+                        if(comments[i].userId==$.cookie("id") || ${cookie['id'].value}==0) {
                             appendhtml+='<div class="row col-md-offset-10">'+
                                 '<a class="btn btn-sm" onclick="deletecomment('+comments[i].id+')">删除</a>'+
                                 '<a data-toggle="collapse" data-parent="#accordion"'+
@@ -1222,7 +1343,7 @@
                             '<div class="form-group col-md-8">'+
                             '<input id="tor'+comments[i].id+'" class="form-control" type="text" placeholder="@'+comments[i].username+':">'+
                             '</div>'+
-                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment(tor'+comments[i].id+','+comments[i].id+','+comments[i].userId+','+1+',1)" value="回复">'+
+                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment(tor'+comments[i].id+','+comments[i].id+','+comments[i].userId+','+$.cookie("id")+',1)" value="回复">'+
                             '</div>'+
                             '</div>'+
                             '<div class="row">'+
@@ -1239,7 +1360,7 @@
                                         '<br>'+
                                         '<div class="row">'+
                                         '<span class="col-md-offset-1">回复@'+replycomments[j].to_userIdusername+':'+replycomments[j].content+'</span>';
-                            if(replycomments[j].userId==1){
+                            if(replycomments[j].userId==$.cookie("id") || ${cookie['id'].value}==0){
                                 appendhtml+='<div class="row col-md-offset-10">'+
                                     '<a class="btn btn-sm" onclick="deletecomment2('+replycomments[j].id+')">删除</a>'+
                                     '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
@@ -1258,7 +1379,7 @@
                                 '<div class="form-group col-md-8">'+
                                 '<input id="s'+replycomments[j].id+'" class="form-control" type="text" placeholder="@'+replycomments[j].username+':">'+
                                 '</div>'+
-                                '<input onclick="replyComment2(s'+replycomments[j].id+','+comments[i].id+','+replycomments[j].id+','+replycomments[j].userId+',1,2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">'+
+                                '<input onclick="replyComment2(s'+replycomments[j].id+','+comments[i].id+','+replycomments[j].id+','+replycomments[j].userId+','+$.cookie("id")+',2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">'+
                                 '</div>'+
                                 '</div>'+
                                 '</li>';
