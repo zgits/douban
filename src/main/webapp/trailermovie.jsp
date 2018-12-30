@@ -124,7 +124,7 @@
             }
 
         })
-        if($.cookie("id")!='null'){
+        if($.cookie("id")!=-1){
             appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
             appendhtml+='<li>'+
                 '<a href=getMessage?id='+id+'>'+
@@ -132,7 +132,7 @@
                 '</a>'+
                 '</li>';
             appendhtml+='<li>'+
-                '<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"'+
+                '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
                 'class="img-circle img-responsive"'+
                 'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
                 '</li>';

@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class TrailerDaoImplTest extends BaseTest{
     @Test
     public void getAllTrailers() throws Exception {
-        System.out.println(trailerDao.getAllTrailers());
+        System.out.println(trailerDao.getAllTrailer());
     }
 
     @Autowired

@@ -236,7 +236,7 @@
             }
 
         })
-        if($.cookie("id")!='null'){
+        if($.cookie("id")!=-1){
             appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
             appendhtml+='<li>'+
                 '<a href=getMessage?id='+id+'>'+
@@ -244,7 +244,7 @@
                 '</a>'+
                 '</li>';
             appendhtml+='<li>'+
-                '<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"'+
+                '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
                 'class="img-circle img-responsive"'+
                 'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
                 '</li>';
@@ -346,7 +346,14 @@
                             <span id="add_star_movie${oneMovie.id}" class="add-star"></span>
                             <span id="del_star_movie${oneMovie.id}" class="del-star"></span>
                         </div>
+                        <c:choose>
+                            <c:when test="${Counts>0}">
                         ${Counts}人评价
+                        </c:when>
+                            <c:otherwise>
+                                暂无评价
+                            </c:otherwise>
+                        </c:choose>
                         <script>
                             window.onload = showStar(${oneMovie.filmscore});
 
@@ -366,7 +373,8 @@
                     </div>
                 </div>
             </div>
-
+            <c:choose>
+                <c:when test="${Counts>0}">
             <div class="row">
                 <ul class="list-group">
                     <li class="list-group-item" style="border: none">
@@ -505,6 +513,8 @@
                     </li>
                 </ul>
             </div>
+            </c:when>
+            </c:choose>
 
         </div>
 
