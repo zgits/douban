@@ -6,10 +6,12 @@ import com.ssh.dao.TrailerDao;
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
+import com.ssh.model.Trailer;
 import com.ssh.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,11 +212,33 @@ public class MovieServieImpl implements MovieServie{
     }
      @Override
     public List<Integer> getCommentScore(int id){
-        return movieDao.getCommentScore(id);
+        List<Integer> list=movieDao.getCommentScore(id);
+        List<Integer> scores=new ArrayList<>();
+        for(Integer score:list){
+            if(score!=null){
+                scores.add(score);
+            }
+        }
+        return scores;
     }
 
 
     public List<Labelmapping> getLabels(int movieId){
         return(movieDao.getLabels(movieId));
+    }
+
+    /**
+     * 根据电影id获取对应预告片id
+     */
+    public List<Trailer> getTrailerBymId(int movieid){
+        List<Trailer> list=movieDao.getTrailerBymId(movieid);
+        List<Trailer> trailers=new ArrayList<>();
+        for(Trailer trailer:list){
+            if(trailer.getPath()!=null){
+                trailer.setImages(imageService.getMovieImages(movieid));
+                trailers.add(trailer);
+            }
+        }
+        return trailers;
     }
 }

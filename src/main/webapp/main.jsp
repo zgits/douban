@@ -172,7 +172,14 @@
                         <c:when test="${date>=0&&date<=30&&num<=7}">
                             <c:set value="${num+1}" var="num"/>
                 <li>
-                    <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
+                    <c:choose>
+                        <c:when test="${movie.images[0]!=null}">
+                      <img src="${basepath}/image/${movie.images[0].imageName}" class="img-responsive" style="width: 132px;height: 150px;">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${basepath}/image/noimage.png" class="img-responsive" style="width: 132px;height: 150px;">
+                        </c:otherwise>
+                    </c:choose>
                     <div class="caption">
                         <h6>${movie.moviename}</h6>
                         <div class="text-center">

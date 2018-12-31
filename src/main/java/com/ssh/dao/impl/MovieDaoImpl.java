@@ -4,6 +4,7 @@ import com.ssh.dao.LabelMappingDao;
 import com.ssh.dao.MovieDao;
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
+import com.ssh.model.Trailer;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.DetachedCriteria;
@@ -191,5 +192,13 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         query.setInteger("movieId",movieId);
         List<Labelmapping> labels=(List<Labelmapping>)query.list();
         return labels;
+    }
+
+    public List<Trailer> getTrailerBymId(int movieid){
+        String hql="from Trailer where movieId=:movieid";
+        Query query=this.getSessionFactory().getCurrentSession().createQuery(hql);
+        query.setInteger("movieid",movieid);
+        return (List<Trailer>)query.list();
+
     }
 }

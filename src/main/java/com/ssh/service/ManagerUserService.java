@@ -71,5 +71,8 @@ public interface ManagerUserService {
      */
     public boolean deleteUsers(Integer[] ids);
 
-
+    /**
+     * 根据id获取用户信息
+     */
+    public User getUser(int id);
 }

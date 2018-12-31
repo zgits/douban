@@ -3,6 +3,7 @@ package com.ssh.service;
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
+import com.ssh.model.Trailer;
 
 import java.util.List;
 import java.util.Map;
@@ -109,4 +110,9 @@ public List<Integer> getCommentScore(int id);
  * 获取某电影标签
  */
 public List<Labelmapping> getLabels(int movieId);
+
+    /**
+     * 根据电影id获取对应预告片id
+     */
+    public List<Trailer> getTrailerBymId(int movieid);
 }

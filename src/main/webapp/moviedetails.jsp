@@ -269,8 +269,14 @@
     <div class="row">
         <!--电影海报页-->
         <div class="col-xs-2">
-            <img src="${oneMovie.images[0].path}" style="width: 140px;height: 150px">
-
+            <c:choose>
+             <c:when test="${oneMovie.images[0]!=null}">
+            <img src="${basepath}/image/${oneMovie.images[0].imageName}" style="width: 140px;height: 150px">
+             </c:when>
+                <c:otherwise>
+                    <img src="${basepath}/image/noimage.png" style="width: 140px;height: 150px">
+                </c:otherwise>
+            </c:choose>
         </div>
         <input id="hiddenmovieId" type="hidden" value="${oneMovie.id}">
         <!--电影基本信息页-->
@@ -567,18 +573,37 @@
             ${oneMovie.moviename}电影相关预告片
         </h4>
         <ul class="list-inline">
-            <c:forEach items="${oneMovie.images}" var="image" begin="0" end="2">
+            <c:choose>
+                <c:when test="${Trailers!=null}">
+            <c:forEach items="${Trailers}" var="trailer" begin="0" end="2" varStatus="status">
             <li>
                 <div class="box">
-                    <img src="${image.path}" class="img-rounded" style="width: 150px;height: 130px">
+                    <%--<c:choose>--%>
+                        <%--<c:when test="${trailer.images!=null}">--%>
+                    /<img src="${basepath}/image/${trailer.images[status.index].imageName}" class="img-rounded" style="width: 150px;height: 130px">
+                        <%--</c:when>--%>
+                    <%--</c:choose>--%>
+                        <%--<img src="${basepath}/image/duye.png" class="img-rounded" style="width: 150px;height: 130px">--%>
                     <div class="box-content">
                         <ul class="icon">
-                            <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play"></span></a></li>
+                            <li><a href="trailergetTrailer?id=${trailer.id}"><span class="glyphicon glyphicon-play"></span></a></li>
                         </ul>
                     </div>
+
                 </div>
             </li>
             </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <li>
+                        <div class="box">
+                            <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+                            <div class="box-content">
+                            </div>
+                        </div>
+                    </li>
+                </c:otherwise>
+            </c:choose>
         </ul>
     </div>
 

@@ -2,6 +2,7 @@ package com.ssh.dao;
 
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
+import com.ssh.model.Trailer;
 
 import java.util.List;
 
@@ -118,4 +119,8 @@ public List<Labelmapping> getLabels(int movieId);
      */
     public boolean updateMovieScore(Float filmscore,Integer movieId);
 
+    /**
+     * 根据电影id获取对应预告片id
+     */
+   public List<Trailer> getTrailerBymId(int movieid);
 }

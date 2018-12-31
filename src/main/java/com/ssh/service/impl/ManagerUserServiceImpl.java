@@ -139,5 +139,9 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         return managerUserDao.deleteUsers(ids);
     }
 
-
+    @Override
+    public User getUser(int id) {
+        User user=managerUserDao.getUserById(id);
+        return user;
+    }
 }

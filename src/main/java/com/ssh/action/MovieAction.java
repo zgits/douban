@@ -57,11 +57,14 @@ public class MovieAction extends ActionSupport{
             Movie movie=movieServie.selctMovieById(id);
             List<Integer> scores=movieServie.getCommentScore(id);
             List<Labelmapping> labels=movieServie.getLabels(id);
+            List<Trailer> trailers=movieServie.getTrailerBymId(id);
             count=scores.size();
             ActionContext.getContext().put("oneMovie",movie);
             ActionContext.getContext().put("scores",scores);
             ActionContext.getContext().put("Counts",count);
             ActionContext.getContext().put("labels",labels);
+            ActionContext.getContext().put("Trailers",trailers);
+            System.out.println(trailers+"....");
             return "moviedetail";
         }catch (Exception e){
             return null;
