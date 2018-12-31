@@ -138,6 +138,10 @@ public class MovieCommentAction extends ActionSupport {
 
     public void insertComment() throws IOException {
 
+        System.out.println("评论"+movie_comment);
+        if(!movie_commentService.alreadyRated(movie_comment.getUserId(),movie_comment.getMovieId())){
+            movie_comment.setScore(null);
+        }
         String flag = "";
         try {
             if (ConfirmToken.confirmtoken(token)) {

@@ -143,7 +143,6 @@
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
-
         $("#navuser").append(appendhtml);
 
 

@@ -80,7 +80,7 @@ public class TrailerDaoImpl extends HibernateDaoSupport implements TrailerDao{
 
     @Override
     public List<Trailer> getAllTrailer() {
-        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer");
+        Query query=this.getSessionFactory().getCurrentSession().createQuery("from Trailer order by number desc");
         return  query.list();
     }
     @Override

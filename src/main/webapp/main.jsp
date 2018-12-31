@@ -120,7 +120,6 @@
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
-
         $("#navuser").append(appendhtml);
 
 
@@ -146,7 +145,7 @@
                 <li class="active"><a href="movie_getMovieByScore">排行榜</a></li>
                 <li><a href="getAllTrailer">预告片</a></li>
                 <!--<li><a href="#">影评</a></li>-->
-                <li><a href="sort.jsp">分类</a></li>
+                <li><a href="sort.html">分类</a></li>
             </ul>
         </div>
         <div class="col-md-7">
@@ -232,7 +231,7 @@
                         <c:when test="${date>=0&&date<=30&&num<=4}">
                         <c:set value="${num+1}" var="num"/>
                         <li>
-                            <a href="${basepath}/movie_getMovieById?id=${movie.id}">${num}.${movie.moviename}</a>
+                            <a href="movie_getMovieById?id=${movie.id}">${num}.${movie.moviename}</a>
                         </li>
                         </c:when>
                         </c:choose>

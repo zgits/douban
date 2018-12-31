@@ -187,7 +187,6 @@
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
-
         $("#navuser").append(appendhtml);
 
 
@@ -210,36 +209,30 @@
         <!-- 轮播（Carousel）项目 -->
         <div class="carousel-inner">
             <div class="item active">
-                <img style="width: 70%;height: 20%" src="http://img.mukewang.com/5412ad7c0001d2eb10880541.jpg"  alt="First slide">
+            <c:forEach items="${trailers}" var="trailer" begin="0" end="0">
+                <img src="${trailer.images[0].path}"  alt="First slide">
                 <div class="carousel-caption">
                     <h1>
-                        <a href="trailermovie.jsp">
+                        <a href="trailergetTrailer?id=${trailer.id}">
                             <span class="glyphicon glyphicon-play"></span>
                         </a>
                     </h1>
                 </div>
+            </c:forEach>
             </div>
+            <c:forEach items="${trailers}" var="trailer" begin="1" end="2">
             <div class="item">
-                <img src="http://img.mukewang.com/5412ad7c0001d2eb10880541.jpg"  alt="Second slide">
+                <img src="${trailer.images[0].path}"  alt="Second slide">
                 <div class="carousel-caption">
                     <h1>
-                        <a href="trailermovie.jsp">
+                        <a href="trailergetTrailer?id=${trailer.id}">
                             <span class="glyphicon glyphicon-play"></span>
                         </a>
                     </h1>
                 </div>
             </div>
-            <div class="item">
-                <img src="http://img.mukewang.com/5412ad7c0001d2eb10880541.jpg"  alt="Third slide">
-                <div class="carousel-caption">
-                    <h1>
-                        <a href="trailermovie.jsp">
-                            <span class="glyphicon glyphicon-play"></span>
-                        </a>
-                    </h1>
-                </div>
-            </div>
-        </div>
+            </c:forEach>
+
         <!-- 轮播（Carousel）导航 -->
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>

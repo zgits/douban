@@ -22,9 +22,12 @@
 
 <link rel="stylesheet" href="/static_resources/login-register/css/style.css">
 
+<link rel="stylesheet" href="/static_resources/confirm/css/jquery.slider.css"/>
 
 <link href="/static_resources/toastr/toastr.css" rel="stylesheet"/>
 <script src="/static_resources/toastr/toastr.min.js"></script>
+
+<script type="text/javascript" src="/static_resources/confirm/js/jquery.slider.min.js"></script>
 
 
 <body>
@@ -50,64 +53,12 @@
         <div>
             <input type="text" id="username" name="username" class="username" placeholder="设置用户名" autocomplete="off"/>
         </div>
-        <div>
-            <input type="text" id="code" name="code" class="code" placeholder="请输入验证码" autocomplete="off"/>
-            <div id="test">
+
+        <div class="container" style="margin-top: 10px;">
+            <div>
+                <div id="slider2" class="slider"></div>
+                <span style="display: none" id="result2">false</span>
             </div>
-            <!--验证码js在/login-register/js/common.js下，可以去掉，如果不行的话-->
-
-                <a style="width:270px;height:40px;margin-top: 5px" class="btn btn-success" id="moBtn" href="javascript:;" onclick="sendMsgCode()">获取验证码</a>
-                <a style="width:270px;margin-top: 5px;display:none" class="btn" disabled="disabled" id="secondShow" href="javascript:;"></a>
-
-
-
-            <script>
-                var countdown=30;  // 时长 s
-                // 获取验证码按钮点击事件
-                function sendMsgCode() {
-                    //异步验证验证码
-                    var varcode= $("#code"); // 这里获取输入的注册码
-                    var  tipsmsg=  $("#msg")  // 提示框对象
-                    var s="<label id='code-error' class='error' for='code'>验证码错误</label>"
-                    $.ajax({
-                        url: "后台验证地址",
-                        async:false, // 关闭异步
-
-                        success:function (data){ 用回调函数检查服务器返回的结果
-                            if (data=="0"){  未通过//返回的结果自己更改，以及判断条件
-                                document.getElementById("test").innerHTML += s;
-                                return false;
-                            }else{ //通过
-                                tipsmsg.html('成功');
-                                return true;
-                            }
-
-                        }
-                    });
-                    //end
-                    $("#secondShow").css('display','inline-block');
-                    $("#secondShow").css('background-color','#5cb85c');
-                    $("#secondShow").css('color','#fff');
-                    $("#secondShow").css('border-color','#4cae4c');
-                    $("#secondShow").css('height','40px');
-                    $("#moBtn").css('display','none');
-                    $("#secondShow").html('重新发送('+countdown+'s)');
-                    var timer = setInterval(function () {
-                        if (countdown == 0) {
-                            clearInterval(timer);
-                            $("#secondShow").css('display','none');
-                            $("#moBtn").css('display','inline-block');
-                            $("#moBtn").css('border-color','#4cae4c');
-                            $("#moBtn").css('width','270px');
-                            $("#moBtn").css('height','40px');
-                            countdown = 30;
-                            console.log(countdown);
-                        }
-                        $("#secondShow").html('重新发送('+(countdown-1)+'s)');
-                        countdown--;
-                    }, 1000);
-                };
-            </script>
         </div>
 
         <button id="submit" type="submit" class="buttontest">注册</button>
@@ -118,6 +69,25 @@
 
 
     <script>
+
+
+
+        $("#slider2").slider({
+            width: 300, // width
+            height: 40, // height
+            sliderBg: "rgb(134, 134, 131)", // 滑块背景颜色
+            color: "#fff", // 文字颜色
+            fontSize: 14, // 文字大小
+            bgColor: "#33CC00", // 背景颜色
+            textMsg: "按住滑块，拖拽验证", // 提示文字
+            successMsg: "验证通过", // 验证成功提示文字
+            successColor: "red", // 滑块验证成功提示文字颜色
+            time: 400, // 返回时间
+            callback: function (result) { // 回调函数，true(成功),false(失败)
+                $("#result2").text(result);
+            }
+        });
+
 
         var messageOpts = {
             "closeButton": true,//是否显示关闭按钮

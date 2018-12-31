@@ -138,13 +138,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="col-md-2">
                             <c:choose>
                                 <c:when test="${movie.images!=null&& fn:length(movie.images)>0}">
-                                    <script>
-                                        alert("${movie.images[0].imageName}");
-                                    </script>
                                     <img src="${basepath}/image//${movie.images[0].imageName}" style="width: 120px;height: 150px">
                                 </c:when>
                                 <c:otherwise>
-                                    <img src="${basepath}/image/test.jpg" style="width: 120px;height: 150px">
+                                    <img src="${basepath}/image/noimage.png" style="width: 120px;height: 150px">
                                 </c:otherwise>
                             </c:choose>
                         </div>

@@ -920,7 +920,7 @@
                 var labelids=[];
                 for(var i=0;i<temp.length;i++){
                     if(temp[i].checked){
-                        alert(temp[i]);
+
                         labelids.push(temp[i].value);
                     }
                 }
@@ -996,7 +996,7 @@
                 var labelids=[];
                 for(var i=0;i<temp.length;i++){
                     if(temp[i].checked){
-                        alert(temp[i]);
+
                         labelids.push(temp[i].value);
                     }
                 }
@@ -2254,7 +2254,7 @@
 
                     // $('input[name=username]').removeAttr("readonly");//去除input元素的readonly属性
                     var obj2 = eval(value2);
-                    // alert(obj2);
+
 
                     // 赋值
                     $("#user_id").val(obj2.user_id);
@@ -2287,7 +2287,7 @@
                     toastr.options = messageOpts;
                     var form_data = $("#form_data3").serialize();
 
-                    alert(form_data);
+
                     $.ajax({
                         type: "get",
                         url: "${basepath}/manageruserinsertForbidden",
@@ -2297,7 +2297,7 @@
                             $("#loading").html("<img src='/image/loading1.gif' />"); //在后台返回success之前显示loading图标
                         },
                         success: function (flag) {
-                            alert(flag);
+
                             $("#loading").empty();
                             if (flag == 1) {
                                 toastr.success('禁言成功');
