@@ -32,6 +32,8 @@
 
     <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
 
+    <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
+
     <style>
         #wapper{
             position: relative;   /*重要！保证footer是相对于wapper位置绝对*/

@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 
-    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.devMode" value="false"/>
     <constant name="struts.objectFactory" value="spring" />
 
     <constant name="struts.multipart.maxSize" value="500000000"></constant>

@@ -58,6 +58,7 @@ public class TrailerAction extends ActionSupport {
     public String getTrailer() {
 
         Trailer trailer = trailerService.getMovieTrailer(id);
+        System.out.println(trailer);
         trailerService.addTrailerNum(id);
         ActionContext.getContext().put("OneTrailer", trailer);
         return "success";

@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="/static_resources/dist/sidebar-menu.css">
 
     <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
+    <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
     <style type="text/css">
         .main-sidebar {
             position: absolute;
@@ -175,22 +177,16 @@
                 <div>
                     <img src="/image/test.jpg" class="img-circle img-responsive" style="width: 100px;height:100px">
                 </div>
-                <div style="margin-top: -50px;margin-left: 100px;">
-                    <!--选择异步方式更改头像，，-->
-                    <a href="javascript:;" class="file">选择头像
-                        <input type="file" name="" id="">
-                    </a>
-                </div>
                 <br>
                 <div class="row">
                     <p>
-                        <span style="font-size: 15px;font-family: '等线 Light';font-weight: bold">昵称：</span>xxxxxx<br>
+                        <span id="usernametoshow" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">昵称：</span><br>
                         <br>
                         <br>
-                        <span style="font-size: 15px;font-family: '等线 Light';font-weight: bold">邮箱：</span>xxxxx@xxx.com<br>
+                        <span id="phone" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">手机号：</span><br>
                         <br>
                         <br>
-                        <span style="font-size: 15px;font-family: '等线 Light';font-weight: bold">个人介绍：</span>这个家伙很懒，什么都没有留下
+                        <span id="intr" style="font-size: 15px;font-family: '等线 Light';font-weight: bold">个人介绍：</span>
                     </p>
                 </div>
             </div>
@@ -264,9 +260,9 @@
 <!--/历史消息-->
 
         <div class="row" id="set_up" style="margin-top: 50px">
-            <form class="form-horizontal" role="form">
+            <div  class="form-horizontal" role="form">
                 <div class="form-group">
-                    <label for="username" class="col-sm-2 control-label">昵称</label>
+                    <label for="username" class="col-sm-2 control-label">昵称:</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control" id="username"
                                value="原来的昵称">
@@ -274,43 +270,13 @@
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="email" class="col-sm-2 control-label">邮箱</label>
+                    <label for="u_phone" class="col-sm-2 control-label">手机号：</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="email"
-                               value="原来的邮箱">
+                        <input type="text" class="form-control" id="u_phone"
+                               value="原来的手机号">
                     </div>
                 </div>
                 <br>
-                <div class="form-group">
-                    <label for="confirm_code" class="col-sm-2 control-label">验证码</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="confirm_code">
-                    </div>
-                    <div class="col-md-2">
-                        <a class="btn btn-success" id="moBtn" href="javascript:;" onclick="sendMsgCode()">获取验证码</a>
-                        <a class="btn" disabled="disabled" id="secondShow" href="javascript:;"></a>
-                    </div>
-                </div>
-                <script>
-                    var countdown=30;  // 时长 s
-                    // 获取验证码按钮点击事件
-                    function sendMsgCode() {
-                        $("#secondShow").css('display','block');
-                        $("#moBtn").css('display','none');
-                        $("#secondShow").html('重新发送('+countdown+'s)');
-                        var timer = setInterval(function () {
-                            if (countdown == 0) {
-                                clearInterval(timer);
-                                $("#secondShow").css('display','none');
-                                $("#moBtn").css('display','block');
-                                countdown = 30;
-                                console.log(countdown);
-                            }
-                            $("#secondShow").html('重新发送('+(countdown-1)+'s)');
-                            countdown--;
-                        }, 1000);
-                    };
-                </script>
                 <br>
                 <div class="form-group">
                     <label for="person_profile" class="col-sm-2 control-label">个人介绍</label>
@@ -320,12 +286,12 @@
                     </div>
                 </div>
 
-                <button style="margin-top: 5px;margin-left: 200px" type="submit" class="btn btn-info">修改</button>
-            </form>
+                <button onclick="update()" style="margin-top: 5px;margin-left: 200px" type="submit" class="btn btn-info">修改</button>
+            </div>
         </div>
 
         <div class="row" id="update_pwd" style="margin-top: 50px">
-            <form class="form-horizontal" role="form">
+            <div class="form-horizontal" role="form">
                 <div class="form-group">
                     <label for="password" class="col-sm-2 control-label">原密码</label>
                     <div class="col-sm-5">
@@ -346,8 +312,8 @@
                         <input type="password" class="form-control" id="confirm_pwd" name="confirm_pwd">
                     </div>
                 </div>
-                <button type="submit" style="margin-top: 5px;margin-left: 200px" class="btn btn btn-info">修改</button>
-            </form>
+                <button  onclick="updatepwd()" type="submit" style="margin-top: 5px;margin-left: 200px" class="btn btn btn-info">修改</button>
+            </div>
         </div>
     </div>
     <div class="main-sidebar">
@@ -428,6 +394,63 @@
 
         });
     });
+
+    function updatepwd() {
+        var oldpassword=$("#password").val();
+        var pwd=$("#pwd").val();
+        var con_pwd=$("#confirm_pwd").val();
+        if(pwd!=con_pwd){
+            toastr.warning("两次密码不一致");
+            return;
+        }
+        $.ajax({
+            url:"manageruserupwd",
+            type:"post",
+            data:{
+                "id":$.cookie("id"),
+                "oldpassword":oldpassword,
+                "password":pwd
+            },
+            success:function (data) {
+                if(data==1){
+                    toastr.error("密码错误");
+                }else if(data==2){
+                    toastr.success("修改成功");
+                    $("#password").val("");
+                    $("#pwd").val("");
+                    $("#confirm_pwd").val("");
+                }else{
+                    toastr.error("修改失败");
+                }
+            }
+        })
+
+    }
+    function update() {
+
+        $.ajax({
+            url:"manageruserupdateUser",
+            type:"post",
+            data:{
+                "user.username":$("#username").val(),
+                "user.id":$.cookie("id"),
+                "user.phone":$("#u_phone").val(),
+                "user.person_profile":$("#person_profile").val()
+            },
+            success:function (data) {
+                if(data==1){
+                    toastr.warning("用户名已存在");
+                }else if(data==2){
+                    toastr.warning("手机号已注册");
+                }else if(data==3){
+                    toastr.success("修改成功");
+                }else{
+                    toastr.error("修改失败");
+                }
+            }
+        })
+        
+    }
 
     $("#unSelect").click(function () {
         $("#owners input:checkbox").removeAttr("checked");
@@ -511,11 +534,36 @@
         $("#history").hide();
         $("#set_up").hide();
         $("#info").fadeIn();
+            $.ajax({
+                type:"post",
+                url:"managerusergetUserByIdTopersonInfo",
+                data:{
+                    "id":$.cookie("id")
+                },
+                success:function (data) {
+                    console.log(data);
+                    var json=JSON.parse(data);
+                    $("#usernametoshow").text("名称:"+json.username);
+                    $("#phone").text("手机号:"+json.phone);
+                    console.log(json.person_profile);
+                    if(json.person_profile==null){
+                        $("#intr").text("个人介绍:这个家伙很懒，什么都没有留下");
+                    }else{
+                        $("#intr").text("个人介绍:"+json.person_profile);
+                    }
+
+                    $("#u_phone").val(json.phone);
+                    $("#username").val(json.username);
+                    $("#person_profile").val(json.person_profile);
+                }
+            })
         $("#info_p").click(function () {
             $("#update_pwd").hide();
             $("#history").hide();
             $("#set_up").hide();
             $("#info").fadeIn();
+
+
 
         });
         $("#history_p").click(function () {

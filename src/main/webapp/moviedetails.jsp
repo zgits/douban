@@ -163,8 +163,6 @@
 
     <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
 
-    <!--点赞-->
-    <link type="text/css" rel="stylesheet" href="/static_resources/likes/dianzan/Css/demo.css">
 
     <!--显示星数-->
     <link href="static_resources/star/star.css" rel="stylesheet">
@@ -629,14 +627,6 @@
                                         <!--星数展示end-->
                                     </c:if>
 
-                                    <!--点赞start-->
-                                    <div class="praise">
-                            <span id="praise1"><img src="/static_resources/likes/dianzan/Images/zan.png"
-                                                    id="praise1-img" style="width: 20px;height:20px"/></span>
-                                        <span id="praise-txt1" style="margin-top: -40px;margin-left: 30px">1455</span>
-                                        <span id="add-num1"><em>+1</em></span>
-                                    </div>
-                                    <!--点赞end-->
                                 </div>
                                 <br>
                                 <div class="row">

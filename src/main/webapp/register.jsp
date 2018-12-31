@@ -29,6 +29,8 @@
 
 <script type="text/javascript" src="/static_resources/confirm/js/jquery.slider.min.js"></script>
 
+<link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
+
 
 <body>
 

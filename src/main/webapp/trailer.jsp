@@ -19,6 +19,8 @@
 
     <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
 
+    <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
+
     <style type="text/css">
         .demo{padding: 2em 0;}
         .box{

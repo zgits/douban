@@ -174,5 +174,52 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
         }
     }
 
+    @Override
+    public User getUserByIdToPerson(Integer id) {
+        return (User)this.getSessionFactory().getCurrentSession().createQuery("from User where id=?").setParameter(0,id).uniqueResult();
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        try{
+            String hql="update User u set u.username=?,u.phone=?,u.person_profile=? where u.id=?";
+
+            Query query  = this.getSessionFactory().getCurrentSession().createQuery(hql);
+
+            query.setParameter(0,user.getUsername());
+
+            query.setParameter(1,user.getPhone());
+
+            query.setParameter(2,user.getPerson_profile());
+
+            query.setParameter(3,user.getId());
+
+            query.executeUpdate();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updatePassword(Integer id, String password) {
+        try{
+            String hql="update User u set u.password=? where u.id=?";
+
+            Query query  = this.getSessionFactory().getCurrentSession().createQuery(hql);
+
+            query.setParameter(0,password);
+
+            query.setParameter(1,id);
+
+            query.executeUpdate();
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

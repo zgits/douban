@@ -41,6 +41,8 @@
 
     <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
 
+    <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
+
     <style type="text/css">
         .m {
             margin-left: -15px;
