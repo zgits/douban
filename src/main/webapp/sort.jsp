@@ -1,10 +1,18 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+
+%>
+<c:set var="basepath" value="<%=basePath%>" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>分类页面</title>
-
-
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link href="/static_resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -26,7 +34,7 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="main.jsp"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
             <form class="navbar-form navbar-left" role="search">
@@ -64,37 +72,41 @@
         $("#navuser").empty();
         var appendhtml="";
         var id=$.cookie("id");
-        $.ajax({
-            type:"get",
-            url:"getCountMessage",
-            async: true,
-            data:{
-                id:id
-            },
-            success:function (flag) {
-                if (flag!=null){
-                    $("#count").append(flag);
-                }
+        if($.cookie("id")!=0){
+            if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
+                appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+                appendhtml+='<li>'+
+                    '<a href=getMessage?id='+id+'>'+
+                    '<span class="badge pull-right"><div id="count"/></span>消息'+
+                    '</a>'+
+                    '</li>';
+                appendhtml+='<li>'+
+                    '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
+                    'class="img-circle img-responsive"'+
+                    'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                    '</li>';
+                $.ajax({
+                    type:"get",
+                    url:"getCountMessage",
+                    async: true,
+                    data:{
+                        id:id
+                    },
+                    success:function (flag) {
+                        if (flag!=null){
+                            $("#count").append(flag);
+                        }
 
+                    }
+
+                })
             }
-
-        })
-        if($.cookie("id")!='null'){
-            appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
-            appendhtml+='<li>'+
-                '<a href=getMessage?id='+id+'>'+
-                '<span class="badge pull-right"><div id="count"/></span>消息'+
-                '</a>'+
-                '</li>';
-            appendhtml+='<li>'+
-                '<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"'+
-                'class="img-circle img-responsive"'+
-                'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
-                '</li>';
-        }else{
-            appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
-                '<li><a href="register.jsp">注册</a></li>';
+            else{
+                appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+                    '<li><a href="register.jsp">注册</a></li>';
+            }
         }
+
         $("#navuser").append(appendhtml);
 
 
@@ -105,49 +117,12 @@
         $.cookie("token",-1);
     }
 </script>
-<!--背景start-->
-<!--<div class="container" style="width: 100%;height:100%">-->
-    <!--<header>-->
-        <!--<div class="bg">-->
-            <!--<canvas id="display"></canvas>-->
-            <!--<div id="blachole"></div>-->
-
-            <!--<script type="text/javascript" src="static_resources/backgroud/js/constellation.js"></script>-->
-            <!--&lt;!&ndash;背景end&ndash;&gt;-->
-            <!---->
-        <!--</div>-->
-    <!--</header>-->
-<!--</div>-->
 
 <!--分类标签-->
 <div class="container">
     <!--设置样式-->
-    <div class="col-md-8">
-        <!--<div class="">-->
-        <!--<ul class="list-inline">-->
-        <!--<li>-->
-        <!--<button class="btn btn-primary btn-md active" style="border: none">全部形式</button>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<button class="btn btn-default btn-md" style="border: none">电影</button>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<button class="btn btn-default btn-md" style="border: none">电视剧</button>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<button class="btn btn-default btn-md" style="border: none">综艺</button>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<button class="btn btn-default btn-md" style="border: none">动漫</button>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<button class="btn btn-default btn-md" style="border: none">纪录片</button>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<button class="btn btn-default btn-md" style="border: none">短片</button>-->
-        <!--</li>-->
-        <!--</ul>-->
-        <!--</div>-->
+    <div class="col-md-8" id="sort">
+
         <ul class="list-inline">
             <li>
                 <button class="btn btn-primary btn-md active" style="border: none">全部类型</button>
@@ -470,8 +445,87 @@
 </body>
 </html>
 <script>
-    function test() {
-        alert("test");
+
+    var tags=[];
+    $(document).ready(function () {
+        $("#sort").empty();
+        $.ajax({
+            url:"getAllLabelsToShow",
+            type:"post",
+            success:function (data) {
+                var level1=[];
+                var level2=[];
+                var appendthml="";
+                var data=JSON.parse(data);
+                for(var i=0;i<data.length;i++){
+                    if(data[i].level==1){
+                        level1.push(data[i]);
+                        tags.push(data[i])
+                    }
+                    if(data[i].level==2){
+                        level2.push(data[i]);
+                    }
+                }
+                for(var i=0;i<level1.length;i++){
+                    var id=level1[i].id;
+                    var level=level1[i].level;
+                    var name=level1[i].name;
+                    var parentId=level1[i].parentId;
+                    appendthml+='<ul id="'+level1[i].id+'" class="list-inline">'+
+                                '<li>'+
+                                '<button onclick="getResult('+level1[i].id+')" class="btn btn-primary btn-md active" style="border: none">'+level1[i].name+'</button>'+
+                                '</li>';
+                    for(var j=0;j<level2.length;j++){
+                        if(level2[j].parentId==level1[i].id){
+                            var id=level2[j].id;
+                            var level=level2[j].level;
+                            var name=level2[j].name;
+                            var parentId=level2[j].parentId;
+                            appendthml+='<li>'+
+                                        '<button onclick="getResult('+id+','+level+',\''+name+'\','+parentId+')" class="btn btn-default btn-md" style="border: none">'+level2[j].name+'</button>'+
+                                        '</li>';
+                        }
+                    }
+                    appendthml+='</ul>';
+                }
+                $("#sort").append(appendthml);
+
+            }
+        })
+    })
+    
+    
+    function getResult(id) {
+
+
+        console.log(id);
+
+//        var tagstemp=tags;
+//        console.log(tagstemp);
+//        var obj={
+//            "id":id,
+//            "level":level,
+//            "name":name,
+//            "parentId":parentId
+//        }
+//        tagstemp.push(obj);
+//        $.ajax({
+//            dataType: "json",
+//            url:"movie_getMoviesByLabel",
+//            data:{
+//                "labels":JSON.stringify(tagstemp)
+//            },
+//            type:"post",
+//            traditional : true,
+//            success:function (data) {
+//                console.log(data);
+//            }
+//        })
+
     }
+
+
+
+
 </script>
 

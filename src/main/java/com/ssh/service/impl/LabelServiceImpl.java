@@ -27,6 +27,11 @@ public class LabelServiceImpl implements LabelService{
     }
 
     @Override
+    public List<Label> getAllLabels_1() {
+        return labelDao.getAllLabels_1();
+    }
+
+    @Override
     public String getLabelNameById(Integer id) {
         return labelDao.getLabelNameById(id);
     }

@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="movie")
-public class Movie {
+public class Movie implements Comparable<Movie>{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -211,5 +211,16 @@ public class Movie {
         this.moviename=moviename;
         this.filmscore=filmscore;
         this.release_time=release_time;
+    }
+
+    @Override
+    public int compareTo(Movie o) {
+        int i=0;
+        if(this.getFilmscore()-o.getFilmscore()>0){
+            i=-1;
+        }else{
+            i=1;
+        }
+        return i;
     }
 }

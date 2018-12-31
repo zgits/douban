@@ -60,4 +60,12 @@ public class LabelMappingDaoImpl implements LabelMappingDao{
         }
 
     }
+
+    @Override
+    public List<Labelmapping> getLabelMappingByLabelId(Integer labelId) {
+        String hql="from Labelmapping  where labelId=:labelId";
+        Query query=sessionFactory.getCurrentSession().createQuery(hql);
+        query.setInteger("labelId",labelId);
+        return query.list();
+    }
 }

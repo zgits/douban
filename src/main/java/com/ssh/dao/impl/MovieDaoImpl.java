@@ -184,6 +184,12 @@ public class MovieDaoImpl extends HibernateDaoSupport implements MovieDao{
         }
     }
 
+    @Override
+    public List<Movie> movieSortByDate() {
+        String hql="from Movie order by release_time desc";
+        return (List<Movie>) this.getSessionFactory().getCurrentSession().createQuery(hql).list();
+    }
+
 
     public List<Labelmapping> getLabels(int movieId){
         String hql="from Labelmapping where movieId=:movieId";

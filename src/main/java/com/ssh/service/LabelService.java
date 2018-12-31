@@ -43,8 +43,18 @@ public interface LabelService {
     public Label getLabelById(int id);
 
 
-
+    /**
+     * 得到等级为2的
+     * @return
+     */
     public List<Label> getAllLabelsToAddMovie();
+
+
+    /**
+     * 得到等级为1的分类
+     * @return
+     */
+    public List<Label> getAllLabels_1();
 
 
     /**

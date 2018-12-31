@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
 
-    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.devMode" value="true"/>
     <constant name="struts.objectFactory" value="spring" />
 
     <constant name="struts.multipart.maxSize" value="500000000"></constant>
@@ -48,6 +48,8 @@
 
 
             <result name="moviedetail">/moviedetails.jsp</result>
+            <result name="rankingScore">ranking_list.jsp</result>
+            <result name="rankingDate">ranking_list.jsp</result>
 
         </action>
 
@@ -114,7 +116,7 @@
         <action name="bgmain" class="background" method="goToBackground">
             <result name="success">/WEB-INF/jsp/admin/main.jsp</result>
             <result name="login">/login.jsp</result>
-            <!--<result name="input">/login.jsp</result>-->
+            <result name="input">/WEB-INF/jsp/admin/main.jsp</result>
             <interceptor-ref name="Interceptor"></interceptor-ref>
             <interceptor-ref name="defaultStack"></interceptor-ref>
         </action>
@@ -182,6 +184,12 @@
         </action>
 
         <action name="getLabels" class="Label" method="getLabelsToUpAddMovie">
+            <result name="success" type="json">
+                <param name="root">returndata</param>
+            </result>
+        </action>
+
+        <action name="getAllLabelsToShow" class="Label" method="getAllLabelsToShow">
             <result name="success" type="json">
                 <param name="root">returndata</param>
             </result>

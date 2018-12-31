@@ -153,37 +153,41 @@
         $("#navuser").empty();
         var appendhtml="";
         var id=$.cookie("id");
-        $.ajax({
-            type:"get",
-            url:"getCountMessage",
-            async: true,
-            data:{
-                id:id
-            },
-            success:function (flag) {
-                if (flag!=null){
-                    $("#count").append(flag);
-                }
+        if($.cookie("id")!=0){
+            if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
+                appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+                appendhtml+='<li>'+
+                    '<a href=getMessage?id='+id+'>'+
+                    '<span class="badge pull-right"><div id="count"/></span>消息'+
+                    '</a>'+
+                    '</li>';
+                appendhtml+='<li>'+
+                    '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
+                    'class="img-circle img-responsive"'+
+                    'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                    '</li>';
+                $.ajax({
+                    type:"get",
+                    url:"getCountMessage",
+                    async: true,
+                    data:{
+                        id:id
+                    },
+                    success:function (flag) {
+                        if (flag!=null){
+                            $("#count").append(flag);
+                        }
 
+                    }
+
+                })
             }
-
-        })
-        if($.cookie("id")!='null'){
-            appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
-            appendhtml+='<li>'+
-                '<a href=getMessage?id='+id+'>'+
-                '<span class="badge pull-right"><div id="count"/></span>消息'+
-                '</a>'+
-                '</li>';
-            appendhtml+='<li>'+
-                '<a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"'+
-                'class="img-circle img-responsive"'+
-                'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
-                '</li>';
-        }else{
-            appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
-                '<li><a href="register.jsp">注册</a></li>';
+            else{
+                appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+                    '<li><a href="register.jsp">注册</a></li>';
+            }
         }
+
         $("#navuser").append(appendhtml);
 
 
@@ -206,7 +210,7 @@
         <!-- 轮播（Carousel）项目 -->
         <div class="carousel-inner">
             <div class="item active">
-                <img src="http://img.mukewang.com/5412ad7c0001d2eb10880541.jpg"  alt="First slide">
+                <img style="width: 70%;height: 20%" src="http://img.mukewang.com/5412ad7c0001d2eb10880541.jpg"  alt="First slide">
                 <div class="carousel-caption">
                     <h1>
                         <a href="trailermovie.jsp">

@@ -22,9 +22,10 @@ public class Interceptor extends MethodFilterInterceptor{
 
         //获取在session中的管理员名字，登录之后就有，没有登录就没有
         String admin= (String) ServletActionContext.getRequest().getSession().getAttribute("adminname");
-        System.out.println(admin);
+        System.out.println("拦截器："+admin);
 
         if(admin!=null){
+            System.out.println("拦截器放行");
             return actionInvocation.invoke();
         }else{
             ActionSupport actionSupport= (ActionSupport) actionInvocation.getAction();

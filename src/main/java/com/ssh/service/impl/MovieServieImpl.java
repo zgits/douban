@@ -3,16 +3,16 @@ package com.ssh.service.impl;
 import com.ssh.dao.ImageDao;
 import com.ssh.dao.MovieDao;
 import com.ssh.dao.TrailerDao;
+import com.ssh.model.Label;
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
 import com.ssh.service.*;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
@@ -216,5 +216,58 @@ public class MovieServieImpl implements MovieServie{
 
     public List<Labelmapping> getLabels(int movieId){
         return(movieDao.getLabels(movieId));
+    }
+
+    @Override
+    public List<Movie> movieSortByDate() {
+        return movieDao.movieSortByDate();
+    }
+
+    @Override
+    public List<Movie> getMoviesByLabel(List<Label> labels) {
+
+        /**
+         *对传递的映射进行处理
+         */
+        List<Label> level1=labelService.getAllLabels_1();//等级为1的分类
+
+
+        List<Label> labelResult=new ArrayList<>();
+        Label lastlabel=labels.get(labels.size()-1);
+
+        for(int i=labels.size()-2;i>=0;i--){
+            if(labels.get(i).getId()!=lastlabel.getId()
+                    &&labels.get(i).getId()!=lastlabel.getParentId()
+                    &&lastlabel.getParentId()!=labels.get(i).getParentId()){
+
+            }
+        }
+
+
+        for(Label label:labelResult){
+            System.out.println("处理后分类"+label);
+
+        }
+
+        List<Movie> movies=new ArrayList<>();
+        for(Label label:labelResult){
+            List<Labelmapping> labelmappings1=labelMappingService.getLabelMappingByLabelId(label.getId());
+            for(Labelmapping labelmapping1:labelmappings1){
+                System.out.println("根据labelId查询出来的labelmapping"+labelmapping1);
+                movies.add(movieDao.selectMovieById(labelmapping1.getMovieId()));
+            }
+        }
+        return movies;
+
+    }
+
+    private List<Label> getLabelsTo(Integer id,List<Label> labels){
+        List<Label> labels1=new ArrayList<>();
+        for(Label label:labels){
+            if(label.getId()==id||label.getParentId()==id){
+                labels1.add(label);
+            }
+        }
+        return labels1;
     }
 }

@@ -33,4 +33,12 @@ public interface LabelMappingDao {
     public boolean updateLabelMapping(List<Labelmapping> labelmappings);
 
 
+    /**
+     * 根据labelid得到存在的映射
+     * @param labelId
+     * @return
+     */
+    public List<Labelmapping> getLabelMappingByLabelId(Integer labelId);
+
+
 }

@@ -297,4 +297,26 @@ public class LabelAction extends ActionSupport {
         writer.close();
         return "success";
     }
+
+    public String getAllLabelsToShow(){
+        List<Label> labels=labelService.getAllLabels();
+
+        //放置所有的数据个数
+        String returndata=JSON.toJSONString(labels);
+        System.out.println("成功转换"+returndata.length()+"大小的数据...");
+        System.out.println(returndata);
+        //转换编码
+        ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+        PrintWriter out;
+        try {
+            out=ServletActionContext.getResponse().getWriter();
+            out.write(returndata);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "success";
+    }
 }
