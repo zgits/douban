@@ -26,8 +26,6 @@ public class Movie_Comment {
     @Column(name="score",columnDefinition="integer(2) COMMENT '用户评论的分数'")
     private Integer score;//用户评论的分数
 
-    @Column(name="number",columnDefinition="integer(5) COMMENT '该条评论的赞数'")
-    private Integer number;//该条评论的赞数
 
     @Column(name="movieId",columnDefinition="integer(5) COMMENT '对应的电影id'")
     private Integer movieId;//对应的电影id
@@ -48,7 +46,6 @@ public class Movie_Comment {
                 ", userId=" + userId +
                 ", username='" + username + '\'' +
                 ", score=" + score +
-                ", number=" + number +
                 ", movieId=" + movieId +
                 ", content='" + content + '\'' +
                 ", time=" + time +
@@ -115,13 +112,6 @@ public class Movie_Comment {
         this.content = content;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
 
     public Integer getMovieId() {
         return movieId;

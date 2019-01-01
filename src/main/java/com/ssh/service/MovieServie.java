@@ -1,5 +1,6 @@
 package com.ssh.service;
 
+import com.ssh.model.Label;
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
@@ -16,6 +17,7 @@ public interface MovieServie {
 
     /**
      * 新增电影信息
+     *
      * @param movie
      * @return
      */
@@ -24,6 +26,7 @@ public interface MovieServie {
 
     /**
      * 通过id删除电影信息
+     *
      * @param id
      * @return
      */
@@ -32,6 +35,7 @@ public interface MovieServie {
 
     /**
      * 更新电影信息
+     *
      * @param movie
      * @return
      */
@@ -40,6 +44,7 @@ public interface MovieServie {
 
     /**
      * 获得全部电影信息
+     *
      * @return
      */
     public PageBean<Movie> seleceMovie(Integer currPage);
@@ -47,6 +52,7 @@ public interface MovieServie {
 
     /**
      * 根据id查询电影信息
+     *
      * @param id
      * @return
      */
@@ -54,25 +60,29 @@ public interface MovieServie {
 
     /**
      * 根据电影名进行模糊查询
+     *
      * @param moviename
      * @return
      */
-    public PageBean<Movie> selectMovieByName(String moviename,Integer currPage);
+    public PageBean<Movie> selectMovieByName(String moviename, Integer currPage);
 
     /**
      * 得到全部的电影信息，用于上传用
+     *
      * @return
      */
     public List<Movie> selectAllMovies();
 
     /**
      * 得到正在热映的电影
+     *
      * @return
      */
     public List<Movie> selectMoving();
 
     /**
      * 更新时所用
+     *
      * @param id
      * @return
      */
@@ -81,6 +91,7 @@ public interface MovieServie {
 
     /**
      * 根据电影id得到电影名，用于后台管理预告片时所用
+     *
      * @param movieId
      * @return
      */
@@ -89,30 +100,46 @@ public interface MovieServie {
 
     /**
      * 得到全部的电影名字，转成map
+     *
      * @return
      */
-    public Map<Integer,String> getAllMovieName();
+    public Map<Integer, String> getAllMovieName();
 
 
     /**
      * 批量删除电影信息
+     *
      * @param ids
      * @return
      */
     public boolean deleteMovies(Integer[] ids);
 
-/**
- * 获取某电影观众评分
- */
-public List<Integer> getCommentScore(int id);
+    /**
+     * 获取某电影观众评分
+     */
+    public List<Integer> getCommentScore(int id);
 
-/**
- * 获取某电影标签
- */
-public List<Labelmapping> getLabels(int movieId);
 
     /**
      * 根据电影id获取对应预告片id
      */
     public List<Trailer> getTrailerBymId(int movieid);
+    /**
+     * 获取某电影标签
+     */
+    public List<Labelmapping> getLabels(int movieId);
+
+    /**
+     * 根据日期进行排序
+     * @return
+     */
+    public List<Movie> movieSortByDate();
+
+
+    /**
+     * 根据标签集合查询电影
+     * @param labels
+     * @return
+     */
+    public List<Movie> getMoviesByLabel(List<Label> labels);
 }

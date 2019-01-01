@@ -159,23 +159,28 @@ $(document).ready(function(){
 		},
 
         submitHandler:function () {
-            $.ajax({
-                url:'login_register',
-                type:"post",
-                data:{
-                    "username":$("#username").val(),
-                    "password":$("#password").val(),
-                    "phone":$("#phone").val(),
-                },
-                success:function (data) {
-                    if(data==3){
-                        toastr.success("注册成功");
-                        setTimeout("window.location.href='login.jsp';",3000);
-                    }else{
-                        toastr.warning("注册失败");
+            var e = document.getElementById("result2").innerHTML;
+            if (e == "true") {
+                $.ajax({
+                    url: 'login_register',
+                    type: "post",
+                    data: {
+                        "username": $("#username").val(),
+                        "password": $("#password").val(),
+                        "phone": $("#phone").val(),
+                    },
+                    success: function (data) {
+                        if (data == 3) {
+                            toastr.success("注册成功");
+                            setTimeout("window.location.href='login.jsp';", 3000);
+                        } else {
+                            toastr.warning("注册失败");
+                        }
                     }
-                }
-            })
+                })
+            }else{
+            	toastr.warning("请先验证");
+			}
         },
         invalidHandler: function(form, validator) {  //不通过回调
             return false;

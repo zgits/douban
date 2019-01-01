@@ -32,4 +32,25 @@ public interface LabelMappingService {
      */
     public boolean updateLabelMapping(List<Labelmapping> labelmappings);
 
+
+    /**
+     * 根据labelid得到存在的映射
+     * @param labelId
+     * @return
+     */
+    public List<Labelmapping> getLabelMappingByLabelId(Integer labelId);
+
+    /**
+     * 得到所有
+     * @return
+     */
+    public List<Labelmapping> getAllLabels();
+
+
+    /**
+     * 得到不同电影的
+     * @return
+     */
+    public List<Labelmapping> getMovieLabelmapping();
+
 }

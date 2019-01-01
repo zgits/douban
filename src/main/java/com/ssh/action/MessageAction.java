@@ -68,6 +68,7 @@ public class MessageAction {
         }else{
             System.out.println("查询失败...");
         }
+        System.out.println(pageBean);
         ActionContext.getContext().put("pagebeans",pageBean);
         return "success";
     }

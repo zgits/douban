@@ -90,4 +90,28 @@ public interface ManagerUserDao {
      * @return
      */
     public boolean deleteUsers(Integer[] ids);
+
+
+    /**
+     * 根据id得到用户的信息
+     * @param id
+     * @return
+     */
+    public User getUserByIdToPerson(Integer id);
+
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    public boolean updateUser(User user);
+
+    /**
+     * 修改密码
+     * @param id
+     * @param password
+     * @return
+     */
+    public boolean updatePassword(Integer id,String password);
 }

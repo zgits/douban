@@ -144,4 +144,20 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         User user=managerUserDao.getUserById(id);
         return user;
     }
+    @Override
+    public User getUserByIdToPersonInfo(Integer id) {
+        return managerUserDao.getUserByIdToPerson(id);
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        return managerUserDao.updateUser(user);
+    }
+
+    @Override
+    public boolean updatePassword(Integer id, String password) {
+        return managerUserDao.updatePassword(id,password);
+    }
+
+
 }

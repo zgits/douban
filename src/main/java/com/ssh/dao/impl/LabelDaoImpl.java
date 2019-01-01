@@ -27,6 +27,12 @@ public class LabelDaoImpl implements LabelDao{
         return query.list();
     }
 
+    @Override
+    public List<Label> getAllLabels_1() {
+        Query query=sessionFactory.getCurrentSession().createQuery("from Label where level=1");
+        return query.list();
+    }
+
     /**
      * 获取全部标签
      * @return

@@ -17,6 +17,12 @@ public interface LabelDao {
     public List<Label> getAllLabels_2();
 
     /**
+     * 得到等级为1的分类
+     * @return
+     */
+    public List<Label> getAllLabels_1();
+
+    /**
      * 得到所有标签
      */
    public List<Label> getAllLabels();

@@ -7,6 +7,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.ssh.model.*;
 import com.ssh.service.MovieServie;
+import com.ssh.util.MovieByDate;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,10 @@ import java.util.*;
  * Created by 幻夜~星辰 on 2018/11/29.
  */
 @Controller("MovieAction")
-public class MovieAction extends ActionSupport{
+public class MovieAction extends ActionSupport {
 
     @Autowired
     private MovieServie movieServie;
-
-
 
 
     private Integer id;
@@ -67,6 +66,7 @@ public class MovieAction extends ActionSupport{
             System.out.println(labels+"标签....");
             return "moviedetail";
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
 
@@ -87,19 +87,19 @@ public class MovieAction extends ActionSupport{
 
     public void addMovie() throws IOException {
         System.out.println(movie);
-        String flag ="";
-        List<Labelmapping> labelmappings=new ArrayList<>();
-        try{
-            for(Integer id:labelids){
-                Labelmapping labelmapping=new Labelmapping();
+        String flag = "";
+        List<Labelmapping> labelmappings = new ArrayList<>();
+        try {
+            for (Integer id : labelids) {
+                Labelmapping labelmapping = new Labelmapping();
                 labelmapping.setLabelId(id);
                 labelmappings.add(labelmapping);
             }
             movie.setLabelmappings(labelmappings);
             movieServie.insertMovie(movie);
             flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
-        }catch (Exception e){
-            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        } catch (Exception e) {
+            flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
         PrintWriter writer = ServletActionContext.getResponse().getWriter();
@@ -194,7 +194,6 @@ public class MovieAction extends ActionSupport{
         }
 
 
-
         PrintWriter writer = ServletActionContext.getResponse().getWriter();
 
         writer.write(flag);
@@ -270,7 +269,7 @@ public class MovieAction extends ActionSupport{
         ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
         PrintWriter out;
         try {
-            out=ServletActionContext.getResponse().getWriter();
+            out = ServletActionContext.getResponse().getWriter();
             out.println(returndata);
             out.flush();
             out.close();
@@ -280,6 +279,7 @@ public class MovieAction extends ActionSupport{
         return "success";
 
     }
+
     private String movieName;
 
     public String getMovieName() {
@@ -354,6 +354,7 @@ public class MovieAction extends ActionSupport{
         return "success";
 
     }
+
     /*************得到所有电影名end**************/
 
     private Integer[] ids;
@@ -383,6 +384,96 @@ public class MovieAction extends ActionSupport{
         PrintWriter writer = ServletActionContext.getResponse().getWriter();
 
         writer.write(flag);
+
+        writer.flush();
+
+        writer.close();
+
+    }
+
+    /**
+     * 根据分数排序
+     *
+     * @return
+     */
+    public String getMovieByScore() {
+
+        List<Movie> list = movieServie.selectAllMovies();
+        System.out.println("排序前");
+        for (Movie movie : list) {
+            System.out.println(movie.getFilmscore());
+            if (movie.getFilmscore() == null) {
+                movie.setFilmscore(Float.parseFloat("0"));
+            }
+        }
+        Collections.sort(list);
+        System.out.println("排序后");
+        for (Movie movie : list) {
+            System.out.println(movie.getFilmscore());
+        }
+        ActionContext.getContext().put("rankingmovie", list);
+        return "rankingScore";
+    }
+
+    /**
+     * @return
+     */
+    public String getMovieByDate() {
+        List<Movie> list = movieServie.movieSortByDate();
+        System.out.println("排序前");
+        for (Movie movie : list) {
+            System.out.println(movie.getFilmscore());
+            if (movie.getFilmscore() == null) {
+                movie.setFilmscore(Float.parseFloat("0"));
+            }
+        }
+        System.out.println("排序后");
+        for (Movie movie : list) {
+            System.out.println(movie.getFilmscore());
+        }
+        ActionContext.getContext().put("rankingmovie", list);
+        return "rankingDate";
+    }
+
+    private String labels;
+
+    public String getLabels() {
+        return labels;
+    }
+
+    public void setLabels(String labels) {
+        this.labels = labels;
+    }
+
+    public void getMoviesByLabel() throws IOException {
+
+
+        System.out.println("传递的参数"+labels);
+
+        List<Label> labels1=new ArrayList<>();
+        labels1 = JSONObject.parseArray(labels, Label.class);
+        for(Label label:labels1){
+            System.out.println("转换后的数据："+label.getId());
+        }
+
+
+
+        String data = "";
+        List<Movie> movies;
+
+        try{
+            movies=movieServie.getMoviesByLabel(labels1);
+            data=JSON.toJSONString(movies);
+        }catch (Exception e){
+
+        }
+
+        System.out.println("结果" + data);
+        ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(data);
 
         writer.flush();
 

@@ -8,13 +8,14 @@ import java.util.List;
 
 /**
  * Created by 幻夜~星辰 on 2018/11/28.
- *
+ * <p>
  * 对电影的增删改查
  */
 public interface MovieDao {
 
     /**
      * 添加电影信息
+     *
      * @param movie
      * @return
      */
@@ -22,6 +23,7 @@ public interface MovieDao {
 
     /**
      * 删除电影信息
+     *
      * @param id
      * @return
      */
@@ -29,6 +31,7 @@ public interface MovieDao {
 
     /**
      * 修改电影信息
+     *
      * @param movie
      * @return
      */
@@ -37,18 +40,21 @@ public interface MovieDao {
     /**
      * 查询电影信息
      * int begin,int pageSize
+     *
      * @return
      */
     public List<Movie> selectMovie();
 
     /**
      * 获得电影的数量
+     *
      * @return
      */
     public Integer getMovieCount();
 
     /**
      * 用于修改电影信息，获得单个电影信息
+     *
      * @param id
      * @return
      */
@@ -57,15 +63,17 @@ public interface MovieDao {
 
     /**
      * 根据电影名进行模糊查询
+     *
      * @param moviename
      * @param begin
      * @param pageSize
      * @return
      */
-    public List<Movie> selectMovieByName(String moviename,int begin,int pageSize);
+    public List<Movie> selectMovieByName(String moviename, int begin, int pageSize);
 
     /**
      * 根据搜索电影名，返回数量
+     *
      * @param moviename
      * @return
      */
@@ -74,6 +82,7 @@ public interface MovieDao {
 
     /**
      * 得到所有电影信息，用于在上传的时候展示名字
+     *
      * @return
      */
     public List<Movie> selectAllMovie();
@@ -85,6 +94,7 @@ public interface MovieDao {
 
     /**
      * 根据id获取电影名
+     *
      * @param movieId
      * @return
      */
@@ -93,6 +103,7 @@ public interface MovieDao {
 
     /**
      * 得到一个展示电影名的
+     *
      * @return
      */
     public List<Object[]> getAllMovieName();
@@ -100,24 +111,34 @@ public interface MovieDao {
 
     /**
      * 批量删除电影
+     *
      * @param ids
      * @return
      */
     public boolean deleteMovies(Integer[] ids);
-/**
- * 获取一个电影的观众评分进行筛选
- */
-public List<Integer> getCommentScore(int id);
 
-public List<Labelmapping> getLabels(int movieId);
+    /**
+     * 获取一个电影的观众评分进行筛选
+     */
+    public List<Integer> getCommentScore(int id);
+
+    public List<Labelmapping> getLabels(int movieId);
 
     /**
      * 更新电影的评分
+     *
      * @param filmscore
      * @param movieId
      * @return
      */
-    public boolean updateMovieScore(Float filmscore,Integer movieId);
+    public boolean updateMovieScore(Float filmscore, Integer movieId);
+
+
+    /**
+     * 根据日期进行排序
+     * @return
+     */
+    public List<Movie> movieSortByDate();
 
     /**
      * 根据电影id获取对应预告片id

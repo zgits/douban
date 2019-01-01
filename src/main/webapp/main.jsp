@@ -32,6 +32,8 @@
 
     <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
 
+    <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
+
     <style>
         #wapper{
             position: relative;   /*重要！保证footer是相对于wapper位置绝对*/
@@ -50,10 +52,6 @@
 
 </head>
 <body>
-<script>
-    alert($.cookie("id"));
-    alert($.cookie("token"));
-</script>
 
 <!--logo,导航栏，搜索栏，个人信息栏，---慕课---->
 <nav class="navbar navbar-inverse">
@@ -90,36 +88,39 @@
         $("#navuser").empty();
         var appendhtml="";
         var id=$.cookie("id");
-        $.ajax({
-            type:"get",
-            url:"getCountMessage",
-            async: true,
-            data:{
-                id:id
-            },
-            success:function (flag) {
-                if (flag!=null){
-                    $("#count").append(flag);
-                }
+        if($.cookie("id")!=0){
+            if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
+                appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+                appendhtml+='<li>'+
+                    '<a href=getMessage?id='+id+'>'+
+                    '<span class="badge pull-right"><div id="count"/></span>消息'+
+                    '</a>'+
+                    '</li>';
+                appendhtml+='<li>'+
+                    '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
+                    'class="img-circle img-responsive"'+
+                    'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                    '</li>';
+                $.ajax({
+                    type:"get",
+                    url:"getCountMessage",
+                    async: true,
+                    data:{
+                        id:id
+                    },
+                    success:function (flag) {
+                        if (flag!=null){
+                            $("#count").append(flag);
+                        }
 
+                    }
+
+                })
             }
-
-        })
-        if($.cookie("id")!=-1){
-            appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
-            appendhtml+='<li>'+
-                        '<a href=getMessage?id='+id+'>'+
-                        '<span class="badge pull-right"><div id="count"/></span>消息'+
-                        '</a>'+
-                        '</li>';
-            appendhtml+='<li>'+
-                        '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
-                        'class="img-circle img-responsive"'+
-                        'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
-                        '</li>';
-        }else{
-            appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
-                         '<li><a href="register.jsp">注册</a></li>';
+            else{
+                appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+                    '<li><a href="register.jsp">注册</a></li>';
+            }
         }
         $("#navuser").append(appendhtml);
 
@@ -143,10 +144,10 @@
             <h2>电影</h2>
             <!--针对电影的标签-->
             <ul class="nav nav-pills nav-stacked">
-                <li class="active"><a href="ranking_list.html">排行榜</a></li>
+                <li class="active"><a href="movie_getMovieByScore">排行榜</a></li>
                 <li><a href="getAllTrailer">预告片</a></li>
                 <!--<li><a href="#">影评</a></li>-->
-                <li><a href="sort.html">分类</a></li>
+                <li><a href="sort.jsp">分类</a></li>
             </ul>
         </div>
         <div class="col-md-7">
@@ -155,7 +156,7 @@
                     <a class="btn btn-default btn-lg">正在热映</a>
                 </li>
                 <li>
-                    <a href="ranking_list.html">更多</a>
+                    <a href="movie_getMovieByDate">更多</a>
                 </li>
             </ul>
             <ul class="list-inline">
@@ -225,7 +226,7 @@
             <div class="row">
 
                 <div class="col-md-10">
-                    近期热门(<a href="ranking_list.html">更多</a>)
+                    近期热门(<a href="movie_getMovieByDate">更多</a>)
                     <ul class="nav nav-pills nav-stacked">
                         <c:set var="today">
                             <fmt:formatDate value="<%=new Date()%>" type="date"/>
@@ -239,7 +240,7 @@
                         <c:when test="${date>=0&&date<=30&&num<=4}">
                         <c:set value="${num+1}" var="num"/>
                         <li>
-                            <a href="#">${num}.${movie.moviename}</a>
+                            <a href="movie_getMovieById?id=${movie.id}">${num}.${movie.moviename}</a>
                         </li>
                         </c:when>
                         </c:choose>
@@ -259,7 +260,7 @@
 <div style="height: 120px">
 
 </div>
-<div style="font:12px Tahoma;color: white;text-align:center;">
+<div class="footer navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

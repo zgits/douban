@@ -75,4 +75,29 @@ public interface ManagerUserService {
      * 根据id获取用户信息
      */
     public User getUser(int id);
+    /**
+     * 根据id获取用户
+     * @param id
+     * @return
+     */
+    public User getUserByIdToPersonInfo(Integer id);
+
+
+    /**
+     * 更新用户
+     * @param user
+     * @return
+     */
+    public boolean updateUser(User user);
+
+
+    /**
+     * 更新密码
+     * @param id
+     * @param password
+     * @return
+     */
+    public boolean updatePassword(Integer id,String password);
+
+
 }

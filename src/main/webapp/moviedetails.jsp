@@ -1,6 +1,3 @@
-<%@ page import="com.ssh.model.Movie" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -10,10 +7,6 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 
-%>
-<%
-    List<Movie> movies=(List<Movie>) session.getAttribute("oneMovie");
-    session.removeAttribute("oneMovie");
 %>
 <c:set var="basepath" value="<%=basePath%>" />
 
@@ -167,8 +160,6 @@
 
     <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
 
-    <!--点赞-->
-    <link type="text/css" rel="stylesheet" href="/static_resources/likes/dianzan/Css/demo.css">
 
     <!--显示星数-->
     <link href="static_resources/star/star.css" rel="stylesheet">
@@ -221,37 +212,41 @@
         $("#navuser").empty();
         var appendhtml="";
         var id=$.cookie("id");
-        $.ajax({
-            type:"get",
-            url:"getCountMessage",
-            async: true,
-            data:{
-                id:id
-            },
-            success:function (flag) {
-                if (flag!=null){
-                    $("#count").append(flag);
-                }
+        if($.cookie("id")!=0){
+            if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
+                appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+                appendhtml+='<li>'+
+                    '<a href=getMessage?id='+id+'>'+
+                    '<span class="badge pull-right"><div id="count"/></span>消息'+
+                    '</a>'+
+                    '</li>';
+                appendhtml+='<li>'+
+                    '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
+                    'class="img-circle img-responsive"'+
+                    'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                    '</li>';
+                $.ajax({
+                    type:"get",
+                    url:"getCountMessage",
+                    async: true,
+                    data:{
+                        id:id
+                    },
+                    success:function (flag) {
+                        if (flag!=null){
+                            $("#count").append(flag);
+                        }
 
+                    }
+
+                })
             }
-
-        })
-        if($.cookie("id")!=-1){
-            appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
-            appendhtml+='<li>'+
-                '<a href=getMessage?id='+id+'>'+
-                '<span class="badge pull-right"><div id="count"/></span>消息'+
-                '</a>'+
-                '</li>';
-            appendhtml+='<li>'+
-                '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
-                'class="img-circle img-responsive"'+
-                'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
-                '</li>';
-        }else{
-            appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
-                '<li><a href="register.jsp">注册</a></li>';
+            else{
+                appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+                    '<li><a href="register.jsp">注册</a></li>';
+            }
         }
+
         $("#navuser").append(appendhtml);
 
 
@@ -540,23 +535,25 @@
             <input id="input-21e" name="score" value="0" type="number" class="rating globalLoginBtn" min=0 max=5 step=1 data-size="xs">
         </div>
         <script>
-            jQuery(document).ready(function () {
-                $.ajax({
-                    url:"moviecomment_alreadyRated",
-                    type:"post",
-                    data:{
-                        "userId":$.cookie("id"),
-                        "movieId":${oneMovie.id}
-                    },
-                    success:function (data) {
-                        if(data==1){
-                            $("#div_input_score").show();
-                            $(".rating-kv").rating();
+            if($.cookie("id")>0){
+                jQuery(document).ready(function () {
+                    $.ajax({
+                        url:"moviecomment_alreadyRated",
+                        type:"post",
+                        data:{
+                            "userId":$.cookie("id"),
+                            "movieId":${oneMovie.id}
+                        },
+                        success:function (data) {
+                            if(data==1){
+                                $("#div_input_score").show();
+                                $(".rating-kv").rating();
+                            }
                         }
-                    }
-                })
+                    })
 
-            });
+                });
+            }
         </script>
     </div>
 
@@ -624,13 +621,6 @@
         <h4 style="color: #2f904d">
             ${oneMovie.moviename}电影的短评(共<span id="countcomments">${fn:length(oneMovie.movieComments)}</span>条)
         </h4>
-        <!--Ajax异步得到-->
-        <div class="row">
-            <ul class="nav navbar-nav">
-                <li><a href="#">热门</a></li>
-                <li><a href="#">最新</a></li>
-            </ul>
-        </div>
         <div class="row" id="showcomment">
             <ul class="list-group" style="width: 800px">
 
@@ -671,14 +661,6 @@
                                         <!--星数展示end-->
                                     </c:if>
 
-                                    <!--点赞start-->
-                                    <div class="praise">
-                            <span id="praise1"><img src="/static_resources/likes/dianzan/Images/zan.png"
-                                                    id="praise1-img" style="width: 20px;height:20px"/></span>
-                                        <span id="praise-txt1" style="margin-top: -40px;margin-left: 30px">1455</span>
-                                        <span id="add-num1"><em>+1</em></span>
-                                    </div>
-                                    <!--点赞end-->
                                 </div>
                                 <br>
                                 <div class="row">
@@ -968,122 +950,12 @@
 
         </script>
         <script>
-            /*
-             * 动态点赞
-             * 此效果包含css3，部分浏览器不兼容（如：IE10以下的版本）
-             */
-            $(function () {
-                $("#praise1").click(function () {
-                    var praise_img = $("#praise1-img");
-                    var text_box = $("#add-num1");
-                    var praise_txt = $("#praise-txt1");
-                    var num = parseInt(praise_txt.text());
-                    if (praise_img.attr("src") == ("/static_resources/likes/dianzan/Images/yizan.png")) {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/zan.png' id='praise1-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.removeClass("hover");
-                        text_box.show().html("<em class='add-animation'>-1</em>");
-                        $(".add-animation").removeClass("hover");
-                        num -= 1;
-                        praise_txt.text(num)
-                    } else {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/yizan.png' id='praise1-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.addClass("hover");
-                        text_box.show().html("<em class='add-animation'>+1</em>");
-                        $(".add-animation").addClass("hover");
-                        num += 1;
-                        praise_txt.text(num)
-                    }
-                });
-                $("#praise2").click(function () {
-                    var praise_img = $("#praise2-img");
-                    var text_box = $("#add-num2");
-                    var praise_txt = $("#praise-txt2");
-                    var num = parseInt(praise_txt.text());
-                    if (praise_img.attr("src") == ("/static_resources/likes/dianzan/Images/yizan.png")) {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/zan.png' id='praise2-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.removeClass("hover");
-                        text_box.show().html("<em class='add-animation'>-1</em>");
-                        $(".add-animation").removeClass("hover");
-                        num -= 1;
-                        praise_txt.text(num)
-                    } else {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/yizan.png' id='praise2-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.addClass("hover");
-                        text_box.show().html("<em class='add-animation'>+1</em>");
-                        $(".add-animation").addClass("hover");
-                        num += 1;
-                        praise_txt.text(num)
-                    }
-                });
-                $("#praise3").click(function () {
-                    var praise_img = $("#praise3-img");
-                    var text_box = $("#add-num3");
-                    var praise_txt = $("#praise-txt3");
-                    var num = parseInt(praise_txt.text());
-                    if (praise_img.attr("src") == ("/static_resources/likes/dianzan/Images/yizan.png")) {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/zan.png' id='praise3-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.removeClass("hover");
-                        text_box.show().html("<em class='add-animation'>-1</em>");
-                        $(".add-animation").removeClass("hover");
-                        num -= 1;
-                        praise_txt.text(num)
-                    } else {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/yizan.png' id='praise3-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.addClass("hover");
-                        text_box.show().html("<em class='add-animation'>+1</em>");
-                        $(".add-animation").addClass("hover");
-                        num += 1;
-                        praise_txt.text(num)
-                    }
-                });
-                $("#praise4").click(function () {
-                    var praise_img = $("#praise4-img");
-                    var text_box = $("#add-num4");
-                    var praise_txt = $("#praise-txt4");
-                    var num = parseInt(praise_txt.text());
-                    if (praise_img.attr("src") == ("/static_resources/likes/dianzan/Images/yizan.png")) {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/zan.png' id='praise4-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.removeClass("hover");
-                        text_box.show().html("<em class='add-animation'>-1</em>");
-                        $(".add-animation").removeClass("hover");
-                        num -= 1;
-                        praise_txt.text(num)
-                    } else {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/yizan.png' id='praise4-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.addClass("hover");
-                        text_box.show().html("<em class='add-animation'>+1</em>");
-                        $(".add-animation").addClass("hover");
-                        num += 1;
-                        praise_txt.text(num)
-                    }
-                });
-                $("#praise5").click(function () {
-                    var praise_img = $("#praise5-img");
-                    var text_box = $("#add-num5");
-                    var praise_txt = $("#praise-txt5");
-                    var num = parseInt(praise_txt.text());
-                    if (praise_img.attr("src") == ("/static_resources/likes/dianzan/Images/yizan.png")) {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/zan.png' id='praise5-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.removeClass("hover");
-                        text_box.show().html("<em class='add-animation'>-1</em>");
-                        $(".add-animation").removeClass("hover");
-                        num -= 1;
-                        praise_txt.text(num)
-                    } else {
-                        $(this).html("<img src='/static_resources/likes/dianzan/Images/yizan.png' id='praise5-img' class='animation' style='width: 20px;height:20px'/>");
-                        praise_txt.addClass("hover");
-                        text_box.show().html("<em class='add-animation'>+1</em>");
-                        $(".add-animation").addClass("hover");
-                        num += 1;
-                        praise_txt.text(num)
-                    }
-                });
-            })
+
         </script>
     </div>
 
     <!--自己评论界面-->
-    <div class="row ">
+    <div id="showcommenttoadmin" class="row ">
         <div role="form col-md-8">
 
             <%--登录后可以获取id--%>
@@ -1099,6 +971,11 @@
     </div>
 
     <script>
+        jQuery(document).ready(function (){
+            if($.cookie("id")==0){
+                $("#showcommenttoadmin").empty();
+            }
+        })
         var messageOpts = {
             "closeButton": true,//是否显示关闭按钮
             "debug": false,//是否使用debug模式
@@ -1120,69 +997,45 @@
             var userId=document.getElementById("userId").value;
             var movieId=document.getElementById("movieId").value;
             var content=document.getElementById("content").value;
-            $.ajax({
-                url:"moviecomment_alreadyRated",
-                type:"post",
-                data:{
-                    "userId":$.cookie("id"),
-                    "movieId":$("#hiddenmovieId").val(),
-                },
-                success:function (data) {
-                    if(data==1){
-                        alert("ssdfasdf");
-                        filmscore=$("#input-21e").val();
-                        filmscore=filmscore*2;
-                    }
+            var data;
+             if(!$("#div_input_score").is(":hidden")){
+                 filmscore=$("#input-21e").val();
+                 filmscore=filmscore*2;
+             }
+             if(filmscore==null){
+                 if (content == "") {
+                     toastr.warning("评论不能为空");
+                     return;
+                 }
+                 data={
+                     "movie_comment.userId":userId,
+                     "movie_comment.movieId":movieId,
+                     "movie_comment.content":content,
+                     "token":$.cookie("token"),
+                 }
+             }
+
+            if(filmscore!=null) {
+                data = {
+                    "movie_comment.userId": userId,
+                    "movie_comment.movieId": movieId,
+                    "movie_comment.content": content,
+                    "token": $.cookie("token"),
+                    "movie_comment.score": filmscore
                 }
-            })
-            alert(filmscore);
-            if(filmscore!=null){
-                if(content==""||filmscore==0){
-                    toastr.warning("评论或评分不能为空");
-                    return;
-                }
-                $.ajax({
-                    type:"post",
-                    url:"${basepath}/moviecomment_insertComment",
-                    data:{
-                        "movie_comment.userId":userId,
-                        "movie_comment.movieId":movieId,
-                        "movie_comment.content":content,
-                        "token":$.cookie("token"),
-                        "movie_comment.score":filmscore
-                    },
-                    beforeSend: function (XMLHttpRequest) {
-                        $("#loading").show(); //在后台返回success之前显示loading图标
-                    },
-                    success:function (data) {
-                        $("#loading").hide();
-                        if(data==1){
-                            toastr.success('评论成功');
-                        }else if(data==2){
-                            toastr.error("评论失败");
-                        }else if(data==3){
-                            toastr.warning("请先登录");
-                            setTimeout("window.location='login.jsp'",2000);
-                        }
-                        $("#content").val("");
-                        setTimeout("window.location.reload()",3000);
-                    }
-                })
-            }else if(filmscore==null){
-                if(content==""){
+                if (content == "") {
                     toastr.warning("评论不能为空");
                     return;
                 }
-
+                if (filmscore == 0) {
+                    toastr.warning("请为电影打分");
+                    return;
+                }
+            }
                 $.ajax({
                     type:"post",
                     url:"${basepath}/moviecomment_insertComment",
-                    data:{
-                        "movie_comment.userId":userId,
-                        "movie_comment.movieId":movieId,
-                        "movie_comment.content":content,
-                        "token":$.cookie("token")
-                    },
+                    data:data,
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
                     },
@@ -1200,7 +1053,6 @@
                         setTimeout("window.location.reload()",3000);
                     }
                 })
-            }
 
 
 
@@ -1541,7 +1393,7 @@
 </div>
 <!--底部版权信息-->
 <!--底部版权信息-->
-<div style="font:12px Tahoma;color: white;text-align:center;">
+<div  style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

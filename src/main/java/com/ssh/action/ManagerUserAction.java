@@ -9,6 +9,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.ssh.model.PageBean;
 import com.ssh.model.User;
 import com.ssh.service.ManagerUserService;
+import com.ssh.service.loginService;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,10 @@ public class ManagerUserAction extends ActionSupport {
 
     @Autowired
     private ManagerUserService managerUserService;
+
+
+    @Autowired
+    private loginService loginService;
 
     //当前页数
     private Integer currPage=1;
@@ -251,6 +256,114 @@ public class ManagerUserAction extends ActionSupport {
         writer.write(flag);
 
         System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
+    }
+
+    public void getUserByIdTopersonInfo() throws IOException {
+        String user="";
+
+        try{
+
+            user = JSON.toJSONString(managerUserService.getUserByIdToPersonInfo(id));//使用fastjson将数据转换成json格式
+
+
+        }catch (Exception e){
+
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(user);
+
+        System.out.println("成功");
+
+        writer.flush();
+
+        writer.close();
+
+    }
+
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void updateUser() throws IOException {
+        String flag ="";
+        try{
+            if(loginService.checkUsername(user.getUsername())){
+                flag= JSON.toJSONString(1);
+            }else if(loginService.checkPhone(user.getPhone())){
+                flag=JSON.toJSONString(2);
+            }else if(managerUserService.updateUser(user)) {
+                flag = JSON.toJSONString(3);
+            }else{
+                flag = JSON.toJSONString(4);
+            }
+
+        }catch (Exception e){
+            flag =JSON.toJSONString(4);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
+
+        writer.flush();
+
+        writer.close();
+    }
+
+    String oldpassword;
+
+    String password;
+
+    public String getOldpassword() {
+        return oldpassword;
+    }
+
+    public void setOldpassword(String oldpassword) {
+        this.oldpassword = oldpassword;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void upwd() throws IOException {
+
+        String flag ="";
+        try{
+            User user=managerUserService.getUserByIdToPersonInfo(id);
+            if(!user.getPassword().equals(oldpassword)){
+                flag= JSON.toJSONString(1);
+            }else if(managerUserService.updatePassword(id,password)){
+                flag= JSON.toJSONString(2);
+            }else{
+                flag = JSON.toJSONString(4);
+            }
+
+        }catch (Exception e){
+            flag =JSON.toJSONString(4);//使用fastjson将数据转换成json格式
+        }
+
+        PrintWriter writer = ServletActionContext.getResponse().getWriter();
+
+        writer.write(flag);
+
 
         writer.flush();
 

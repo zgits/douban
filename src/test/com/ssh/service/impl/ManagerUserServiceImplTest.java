@@ -35,7 +35,7 @@ public class ManagerUserServiceImplTest extends BaseTest{
     @Test
     public void getUsers() throws Exception {
 
-        managerUserService.getUsers(1);
+        System.out.println(managerUserService.getUserByIdToPersonInfo(1));
     }
 
     @Test

@@ -18,25 +18,25 @@ import java.util.List;
  */
 @Transactional
 @Service("TrailerService")
-public class TrailerServiceImpl implements TrailerService{
+public class TrailerServiceImpl implements TrailerService {
 
     @Autowired
     private TrailerDao trailerDao;
 
 
     @Autowired
-    private  Trailer_CommentService trailer_commentService;
+    private Trailer_CommentService trailer_commentService;
+
     @Autowired
     private ImageService imageService;
+
     @Autowired
     private MovieServie movieServie;
 
 
-
-
     @Override
     public boolean insertTrailer(List<Trailer> trailers) {
-        for (Trailer trailer:trailers){
+        for (Trailer trailer : trailers) {
             trailer.setTime(new Date());
         }
         return trailerDao.insertTrailer(trailers);
@@ -56,7 +56,7 @@ public class TrailerServiceImpl implements TrailerService{
 
     @Override
     public List<Trailer> getMovieTrailers(Integer movieId) {
-        List<Trailer> trailers=trailerDao.getMovieTrailers(movieId);
+        List<Trailer> trailers = trailerDao.getMovieTrailers(movieId);
         //后台查看预告片时，不加入评论等信息
 //        for (Trailer trailer:trailers){
 //
@@ -68,19 +68,19 @@ public class TrailerServiceImpl implements TrailerService{
 
     @Override
     public Trailer getMovieTrailer(Integer id) {
-        Trailer trailer=trailerDao.getMovieTrailer(id);
+        Trailer trailer = trailerDao.getMovieTrailer(id);
         /**
          * 最开始初始化的时候，默认第一页显示，之后要进行下一页刷新的时候，调用评论服务的接口进行刷新
          */
-        trailer.setTrailerComments(trailer_commentService.findComment(id,1).getLists());
+        trailer.setTrailerComments(trailer_commentService.findComment(id, 1).getLists());
         return trailer;
     }
 
     @Override
     public List<Trailer> getAllTrailer() {
-        List<Trailer> trailers=trailerDao.getAllTrailer();
+        List<Trailer> trailers = trailerDao.getAllTrailer();
 
-        for(Trailer trailer:trailers){
+        for (Trailer trailer : trailers) {
             trailer.setRelease_time(movieServie.selctMovieById(trailer.getMovieId()).getRelease_time());
             trailer.setImages(imageService.getMovieImages(trailer.getMovieId()));
 
@@ -98,10 +98,19 @@ public class TrailerServiceImpl implements TrailerService{
     public boolean deleteTrailers(Integer[] ids) {
         return trailerDao.deleteTrailers(ids);
     }
+
     @Override
-    public int addTrailerNum(int id){
-        Trailer trailer=trailerDao.getMovieTrailer(id);
-        trailer.setNumber(trailer.getNumber()+1);
+    public int addTrailerNum(int id) {
+
+        Trailer trailer = trailerDao.getMovieTrailer(id);
+        /**
+         * 更改过，判断是否为空再相加
+         */
+        if(trailer.getNumber()==null){
+            trailer.setNumber(1);
+        }else{
+            trailer.setNumber(trailer.getNumber() + 1);
+        }
         return trailer.getNumber();
     }
 }

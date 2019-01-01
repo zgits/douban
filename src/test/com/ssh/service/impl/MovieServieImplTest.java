@@ -3,8 +3,12 @@ package com.ssh.service.impl;
 import com.ssh.BaseTest;
 import com.ssh.model.Movie;
 import com.ssh.service.MovieServie;
+import com.ssh.util.MovieByDate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -45,7 +49,11 @@ public class MovieServieImplTest extends BaseTest{
 
     @Test
     public void selectAllMovies() throws Exception {
-        System.out.println(movieServie.selctMovieById(5));
+        List<Movie> list=movieServie.selectAllMovies();
+        for(Movie movie:list){
+            System.out.println(movie.getTrailers().size());
+        }
+
     }
 
 
@@ -55,34 +63,52 @@ public class MovieServieImplTest extends BaseTest{
 
     @Test
     public void deleteMovie() throws Exception {
-    }
+        List<Integer> list=new ArrayList<>();
+        for(int i=0;i<10;i++){
+            list.add(i);
+        }
+        List<Integer> list1=new ArrayList<>();
+        for(int i=5;i<10;i++){
+            list1.add(i);
+        }
+        System.out.println(list.containsAll(list1));
 
-    @Test
-    public void updateMovie() throws Exception {
-        Movie movie=new Movie();
-        movie.setId(1);
-        movie.setActor("测试更新");
-        System.out.println(movieServie.updateMovie(movie));
-    }
-
-    @Test
-    public void seleceMovie() throws Exception {
-
-        System.out.println(movieServie.selctMovieById(1));
-    }
-
-    @Test
-    public void selctMovieById() throws Exception {
-        System.out.println(movieServie.selctMovieById(1));
-    }
-
-    @Test
-    public void compareDate() throws Exception{
-
-    }
-    @Test
-    public void selectMoving() throws Exception{
-        System.out.println(movieServie.getTrailerBymId(10));
-    }
+   }
+//
+//    @Test
+//    public void compareDate() throws Exception{
+//
+//    }
+//    @Test
+//    public void selectMoving() throws Exception{
+//        System.out.println(movieServie.getTrailerBymId(10));
+//    }
+//    @Test
+//    public void updateMovie() throws Exception {
+//        Movie movie=new Movie();
+//        movie.setId(1);
+//        movie.setActor("测试更新");
+//        System.out.println(movieServie.updateMovie(movie));
+//    }
+//
+//    @Test
+//    public void seleceMovie() throws Exception {
+//
+//        System.out.println(movieServie.selctMovieById(1));
+//    }
+//
+//    @Test
+//    public void selctMovieById() throws Exception {
+//        System.out.println(movieServie.selctMovieById(1));
+//    }
+//
+//    @Test
+//    public void compareDate() throws Exception{
+//
+//    }
+//    @Test
+//    public void selectMoving() throws Exception{
+//        System.out.println(movieServie.selectMoving( ));
+//    }
 
 }
