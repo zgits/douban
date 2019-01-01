@@ -130,7 +130,9 @@
             }
 
         })
-        if($.cookie("id")!='-1'){
+        alert(id);
+        alert($.cookie(("id")));
+        if($.cookie("id")!=-1){
             appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
             appendhtml+='<li>'+
                 '<a href=getMessage?id='+id+'>'+
@@ -138,7 +140,7 @@
                 '</a>'+
                 '</li>';
             appendhtml+='<li>'+
-                '<a style="width: 40px;height: 40px" href="userMessage?id='+id+'"><img src="/image/test.jpg"'+
+                '<a style="width: 40px;height: 40px" href="userMessage?id='+$.cookie("id")+'"><img src="/image/test.jpg"'+
                 'class="img-circle img-responsive"'+
                 'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
                 '</li>';
@@ -236,10 +238,10 @@
                             <ul class="pagination">
                                 <li><a href="userMessage?id=1&&currpage=1">&laquo;</a></li>
                                 <c:forEach var="count" begin="1" end="${pagebeans.totalPage}">
-                                    <li><a href="userMessage?id=1&&currpage=${count}">${count}</a></li>
+                                    <li><a href="userMessage?id=${pagebeans.lists[0].userId}&&currpage=${count}">${count}</a></li>
                                 </c:forEach>
 
-                                <li><a href="userMessage?id=1&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
+                                <li><a href="userMessage?id=${pagebeans.lists[0].userId}&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
                                 <li>
                                     <!--异步传输页数，返回数据得到结果-->
                                     <form class="col-sm-3" role="form">
@@ -356,12 +358,7 @@
                         <i class="fa fa-address-card-o"></i> <span style="font-size: 15px;">个人信息</span>
                     </a>
                 </li>
-                <!--<li class="treeview">-->
-                <!--<a id="history_p">-->
-                <!--<i class="fa fa-files-o"></i>-->
-                <!--<span style="font-size: 25px;">历史记录</span>-->
-                <!--</a>-->
-                <!--</li>-->
+
                 <li>
                     <a id="set_up_p">
                         <i class="fa fa-cogs"></i>

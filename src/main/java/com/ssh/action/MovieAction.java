@@ -64,7 +64,7 @@ public class MovieAction extends ActionSupport{
             ActionContext.getContext().put("Counts",count);
             ActionContext.getContext().put("labels",labels);
             ActionContext.getContext().put("Trailers",trailers);
-            System.out.println(trailers+"....");
+            System.out.println(labels+"标签....");
             return "moviedetail";
         }catch (Exception e){
             return null;

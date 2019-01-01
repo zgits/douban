@@ -134,7 +134,6 @@
             },
             success:function (flag) {
                 if (flag!=null){
-                    alert(flag);
                     $("#count").append(flag);
                 }
 
@@ -214,21 +213,13 @@
 
                 <div class="text-center">
                     <ul class="pagination">
-                        <li><a href="getMessage?id=1&&currpage=1">&laquo;</a></li>
+                        <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=1">&laquo;</a></li>
                         <c:forEach var="count" begin="1" end="${pagebeans.totalPage}">
-                        <li><a href="getMessage?id=1&&currpage=${count}">${count}</a></li>
+                        <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=${count}">${count}</a></li>
                         </c:forEach>
 
-                        <li><a href="getMessage?id=1&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
-                        <li>
-                            <!--异步传输页数，返回数据得到结果-->
-                            <form class="col-sm-3" role="form">
-                                <div class="input-group">
-                                    <input type="text" class="form-control">
-                                    <span onclick="test()" class="input-group-addon">go</span>
-                                </div>
-                            </form>
-                        </li>
+                        <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
+
                         <li><a style="border: none">共${pagebeans.totalPage}页</a></li>
                     </ul>
                 </div>
@@ -320,7 +311,7 @@ function update() {
          }
         }
     )
-    window.location.href="getMessage?id=1"
+    setTimeout("window.location.reload()",2000);
 }
 
 function deleteMessage(){

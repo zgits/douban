@@ -286,9 +286,6 @@
                     <li class="list-group-item" style="border: none">
                         导演: ${oneMovie.director}
                     </li>
-                    <%--<li class="list-group-item" style="border: none">--%>
-                        <%--编剧: 阿什利·鲍威尔 / 汤姆·麦卡锡 / E·T·A·霍夫曼--%>
-                    <%--</li>--%>
                     <c:choose>
                         <c:when test="${fn:length(fn:split(oneMovie.actor,'/' ))<=5}">
                         <li class="list-group-item" style="border: none">
@@ -309,17 +306,28 @@
                                <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="5" >
                                     ${actor}/
                                </c:forEach>
-                                <%--/ 艾丽·巴姆博 / 米兰达·哈特 / 欧赫尼奥·德尔维斯 / 杰克·怀特霍尔 / 理查德·E·格兰特 / 谢尔盖·波卢宁 / 欧米德·吉亚李利 / 梅拉·沙尔 / 尼克·穆罕默德 /&ndash;%&gt;--%>
-                                <%--杰茜·维宁 / 汤姆·斯威特 / 马里安·洛伦西克 / 芙洛·费拉科 / 丽塔-麦克唐纳丹帕 / 查尔斯·斯特里特--%>
                             </div>
                             </li>
                     </c:otherwise>
                     </c:choose>
+
+                    <c:choose>
+                    <c:when test="${labels!=null}">
                     <li class="list-group-item" style="border: none">
-                        类型: <c:forEach items="${labels}" var="label">
+                        类型:
+                        <c:forEach items="${labels}" var="label">
                         ${label.labelName}/
                     </c:forEach>
                     </li>
+                    </c:when>
+                        <c:otherwise>
+                            <li class="list-group-item" style="border: none">
+                                类型: 全部分类
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+
+
                     <li class="list-group-item" style="border: none">
                         制片国家/地区: ${oneMovie.region}
                     </li>
@@ -327,7 +335,7 @@
                         语言: ${oneMovie.language}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        上映日期: <fmt:formatDate value="${oneMovie.release_time}" pattern="yyyy-MM-dd"/>(${oneMovie.release_region}/美国)
+                        上映日期: <fmt:formatDate value="${oneMovie.release_time}" pattern="yyyy-MM-dd"/>(${oneMovie.release_region})
                     </li>
                     <li class="list-group-item" style="border: none">
                         片长:${oneMovie.length}分钟
@@ -578,11 +586,15 @@
             <c:forEach items="${Trailers}" var="trailer" begin="0" end="2" varStatus="status">
             <li>
                 <div class="box">
-                    <%--<c:choose>--%>
-                        <%--<c:when test="${trailer.images!=null}">--%>
-                    /<img src="${basepath}/image/${trailer.images[status.index].imageName}" class="img-rounded" style="width: 150px;height: 130px">
-                        <%--</c:when>--%>
-                    <%--</c:choose>--%>
+                    <c:choose>
+                        <c:when test="${trailer.images[status.index]!=null}">
+                    <img src="${basepath}/image/${trailer.images[status.index].imageName}" class="img-rounded" style="width: 150px;height: 130px">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+
+                        </c:otherwise>
+                    </c:choose>
                         <%--<img src="${basepath}/image/duye.png" class="img-rounded" style="width: 150px;height: 130px">--%>
                     <div class="box-content">
                         <ul class="icon">
