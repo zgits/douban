@@ -221,5 +221,10 @@ public class ManagerUserDaoImpl extends HibernateDaoSupport implements ManagerUs
         }
     }
 
+    @Override
+    public String getPhoneById(Integer id) {
+        return (String)this.getSessionFactory().getCurrentSession().createQuery("select phone from User where id=?").setParameter(0,id).uniqueResult();
+    }
+
 
 }

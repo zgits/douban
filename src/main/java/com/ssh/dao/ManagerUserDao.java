@@ -114,4 +114,11 @@ public interface ManagerUserDao {
      * @return
      */
     public boolean updatePassword(Integer id,String password);
+
+    /**
+     * 根据id查询电话号码
+     * @param id
+     * @return
+     */
+    public String getPhoneById(Integer id);
 }

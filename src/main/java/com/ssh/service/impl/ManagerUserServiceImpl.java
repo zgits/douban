@@ -154,5 +154,10 @@ public class ManagerUserServiceImpl implements ManagerUserService{
         return managerUserDao.updatePassword(id,password);
     }
 
+    @Override
+    public String getPhoneById(Integer id) {
+        return managerUserDao.getPhoneById(id);
+    }
+
 
 }

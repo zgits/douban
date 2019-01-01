@@ -444,10 +444,12 @@
                     toastr.warning("手机号已注册");
                 }else if(data==3){
                     toastr.success("修改成功");
+
+                    setTimeout("window.location.reload()",3000);
                 }else{
                     toastr.error("修改失败");
                 }
-                setTimeout("window.location.reload()",3000);
+
             }
         })
         
