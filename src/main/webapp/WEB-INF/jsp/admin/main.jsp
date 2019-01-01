@@ -4036,14 +4036,9 @@
 
                         },
                         {
-                            title: "预告片",
-                            field: 'trailer',
+                            title: "评分",
+                            field: 'filmscore',
                             align: 'center'
-                        },
-                        {
-                            title: '图片',
-                            field: 'image',
-                            align: 'center',
                         },
                         {
                             title: '操作',
@@ -4370,7 +4365,7 @@
                     maxFileSize: 99999999,
                     previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
                     uploadAsync: true,//默认异步上传
-                    allowedFileExtensions: ['mp4','avi','rmvb'],
+                    allowedFileExtensions: ['mp4','avi','rmvb','flv'],
 
 
                     uploadExtraData: function (previewId, index) {  //传递参数

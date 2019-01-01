@@ -305,7 +305,7 @@
                                     </c:choose>
                                     <div class="box-content">
                                         <ul class="icon">
-                                            <li><a href="trailergetTrailer?id=1"><span
+                                            <li><a href="trailergetTrailer?id=${trailer.id}"><span
                                                     class="glyphicon glyphicon-play"></span></a></li>
                                         </ul>
                                     </div>

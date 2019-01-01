@@ -242,17 +242,18 @@ public class MovieAction extends ActionSupport {
             ob.put("id", movie.getId());
             ob.put("moviename", movie.getMoviename());
             ob.put("release_time", movie.getRelease_time());
+            ob.put("filmscore",movie.getFilmscore());
             String trailername="";
-            for(Trailer trailer:movie.getTrailers()){
-                trailername+=trailer.getName()+"<br>";
-            }
-            System.out.println("预告片名字合集"+trailername);
-            String imageName="";
-            for(Image image:movie.getImages()){
-                imageName+=image.getName()+"<br>";
-            }
-            ob.put("trailer",trailername);
-            ob.put("image",imageName);
+//            for(Trailer trailer:movie.getTrailers()){
+//                trailername+=trailer.getName()+"<br>";
+//            }
+//            System.out.println("预告片名字合集"+trailername);
+//            String imageName="";
+//            for(Image image:movie.getImages()){
+//                imageName+=image.getName()+"<br>";
+//            }
+//            ob.put("trailer",trailername);
+//            ob.put("image",imageName);
             //装进数组
             arr.add(ob);
         }
