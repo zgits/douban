@@ -22,13 +22,17 @@
     <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
 
     <style type="text/css">
-        .demo{padding: 2em 0;}
-        .box{
+        .demo {
+            padding: 2em 0;
+        }
+
+        .box {
             text-align: center;
             overflow: hidden;
             position: relative;
         }
-        .box:before{
+
+        .box:before {
             content: "";
             width: 0;
             height: 100%;
@@ -40,16 +44,19 @@
             opacity: 0;
             transition: all 500ms cubic-bezier(0.47, 0, 0.745, 0.715) 0s;
         }
-        .box:hover:before{
+
+        .box:hover:before {
             width: 100%;
             left: 0;
             opacity: 0.5;
         }
-        .box img{
+
+        .box img {
             width: 100%;
             height: auto;
         }
-        .box .box-content{
+
+        .box .box-content {
             width: 100%;
             padding: 14px 18px;
             color: #fff;
@@ -57,7 +64,8 @@
             top: 38%;
             left: 0;
         }
-        .box .title{
+
+        .box .title {
             font-size: 25px;
             font-weight: 600;
             line-height: 30px;
@@ -66,27 +74,32 @@
             opacity: 0;
             transition: all 0.5s ease 0s;
         }
-        .box .post{
+
+        .box .post {
             font-size: 15px;
             text-transform: capitalize;
             opacity: 0;
             transition: all 0.5s ease 0s;
         }
+
         .box:hover .title,
-        .box:hover .post{
+        .box:hover .post {
             opacity: 1;
             transition-delay: 0.7s;
         }
-        .box .icon{
+
+        .box .icon {
             padding: 0;
             margin: 0;
             list-style: none;
             margin-top: 15px;
         }
-        .box .icon li{
+
+        .box .icon li {
             display: inline-block;
         }
-        .box .icon li a{
+
+        .box .icon li a {
             display: block;
             width: 40px;
             height: 40px;
@@ -101,16 +114,21 @@
             transform: translateY(50px);
             transition: all 0.5s ease 0s;
         }
-        .box:hover .icon li a{
+
+        .box:hover .icon li a {
             opacity: 1;
             transform: translateY(0px);
             transition-delay: 0.5s;
         }
-        .box:hover .icon li:last-child a{
+
+        .box:hover .icon li:last-child a {
             transition-delay: 0.8s;
         }
-        @media only screen and (max-width:990px){
-            .box{ margin-bottom: 30px; }
+
+        @media only screen and (max-width: 990px) {
+            .box {
+                margin-bottom: 30px;
+            }
         }
     </style>
 </head>
@@ -126,7 +144,7 @@
         <div>
             <ul class="nav navbar-nav">
                 <li class="active"><a href="getMoving">电影</a></li>
-                <li ><a href="getAllTrailer">预告片</a></li>
+                <li><a href="getAllTrailer">预告片</a></li>
             </ul>
 
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
@@ -142,31 +160,31 @@
 <script>
     $(document).ready(function () {
         $("#navuser").empty();
-        var appendhtml="";
-        appendhtml+='<li><a href="bgmain"><span class="glyphicon glyphicon-cog"></span>管理入口</a></li>';
-        var id=$.cookie("id");
-        if($.cookie("id")!=0){
-            if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
-                appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
-                appendhtml+='<li>'+
-                    '<a href=getMessage?id='+id+'>'+
-                    '<span class="badge pull-right"><div id="count"/></span>消息'+
-                    '</a>'+
+        var appendhtml = "";
+        appendhtml += '<li><a href="bgmain"><span class="glyphicon glyphicon-cog"></span>管理入口</a></li>';
+        var id = $.cookie("id");
+        if ($.cookie("id") != 0) {
+            if ($.cookie("id") != -1 && $.cookie("id") != undefined) {
+                appendhtml += '<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+                appendhtml += '<li>' +
+                    '<a href=getMessage?id=' + id + '>' +
+                    '<span class="badge pull-right"><div id="count"/></span>消息' +
+                    '</a>' +
                     '</li>';
-                appendhtml+='<li>'+
-                    '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
-                    'class="img-circle img-responsive"'+
-                    'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                appendhtml += '<li>' +
+                    '<a style="width: 40px;height: 40px" href=userMessage?id=' + id + '><img src="/image/test.jpg"' +
+                    'class="img-circle img-responsive"' +
+                    'style="width: 40px;height: 40px;margin-top: -10px"></a>' +
                     '</li>';
                 $.ajax({
-                    type:"get",
-                    url:"getCountMessage",
+                    type: "get",
+                    url: "getCountMessage",
                     async: true,
-                    data:{
-                        id:id
+                    data: {
+                        id: id
                     },
-                    success:function (flag) {
-                        if (flag!=null){
+                    success: function (flag) {
+                        if (flag != null) {
                             $("#count").append(flag);
                         }
 
@@ -174,8 +192,8 @@
 
                 })
             }
-            else{
-                appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+            else {
+                appendhtml += '<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>' +
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
@@ -186,29 +204,32 @@
     })
 
     function login_out() {
-        $.cookie("id",-1);
-        $.cookie("token",-1);
+        $.cookie("id", -1);
+        $.cookie("token", -1);
     }
 </script>
 <!--最受关注电影预告片-->
+
+
 <div id="myCarousel" class="carousel slide  col-md-8 col-md-offset-2">
-        <!-- 轮播（Carousel）指标 -->
-        <h2>最受欢迎预告片</h2>
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
-        <!-- 轮播（Carousel）项目 -->
-        <div class="carousel-inner">
-            <div class="item active">
+    <!-- 轮播（Carousel）指标 -->
+    <h2>最受欢迎预告片</h2>
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        <div class="item active">
             <c:forEach items="${trailers}" var="trailer" begin="0" end="0">
                 <c:choose>
                     <c:when test="${trailer.images[0]!=null}">
-                <img style="width: 40% ;height: 100%" src="${basepath}/image/${trailer.images[0].imageName}"  alt="First slide">
+                        <img style="height:350px;width:1000px" src="${basepath}/image/${trailer.images[0].imageName}"
+                             alt="First slide">
                     </c:when>
                     <c:otherwise>
-                        <img style="width: 40% ;height: 100%" src="${basepath}/image/noimage.png"  alt="First slide">
+                        <img style="height:350px;width:1000px" src="${basepath}/image/noimage.png" alt="First slide">
                     </c:otherwise>
                 </c:choose>
                 <div class="carousel-caption">
@@ -219,15 +240,16 @@
                     </h1>
                 </div>
             </c:forEach>
-            </div>
-            <c:forEach items="${trailers}" var="trailer" begin="1" end="2">
+        </div>
+        <c:forEach items="${trailers}" var="trailer" begin="1" end="2">
             <div class="item">
                 <c:choose>
                     <c:when test="${trailer.images[0]!=null}">
-                <img style="width: 20% ;height: 30%"  src="${basepath}/image/${trailer.images[0].imageName}"  alt="Second slide">
+                        <img style="height:350px;width:1000px" src="${basepath}/image/${trailer.images[0].imageName}"
+                             alt="Second slide">
                     </c:when>
                     <c:otherwise>
-                        <img style="width: 20% ;height: 30%"  src="${basepath}/image/noimage.png"  alt="Second slide">
+                        <img style="height:350px;width:1000px" src="${basepath}/image/noimage.png" alt="Second slide">
                     </c:otherwise>
                 </c:choose>
                 <div class="carousel-caption">
@@ -238,18 +260,21 @@
                     </h1>
                 </div>
             </div>
-            </c:forEach>
-
-        <!-- 轮播（Carousel）导航 -->
-        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+        </c:forEach>
     </div>
+
+    <!-- 轮播（Carousel）导航 -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+
+
+</div>
 
 <!--即将上映，影院热映，最新上传，热门的预告片-->
 <div class="container">
@@ -259,36 +284,40 @@
             <h2 style="margin-left: 30px;">即将上映</h2>
             <ul class="list-inline">
 
-                    <c:set var="today">
-                        <fmt:formatDate type="date" value="<%=new Date()%>" pattern="yyyy-MM-dd"/>
-                    </c:set>
-            <c:forEach items="${trailers}" var="trailer" begin="0" end="7">
-                <c:choose>
-                <c:when test="${trailer.release_time>today}">
-                <li style="margin-left: 30px;">
-                    <!--此处的图片应为对应预告片的图片-->
-                    <div class="box">
-                        <c:choose>
-                            <c:when test="${trailer.images[0]!=null}">
-                        <img src="${basepath}/image/${trailer.images[0].imageName}" class="img-rounded" style="width: 150px;height: 130px">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
-                            </c:otherwise>
-                        </c:choose>
-                        <div class="box-content">
-                            <ul class="icon">
-                                <li><a href="trailergetTrailer?id=1"><span class="glyphicon glyphicon-play" ></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="caption">
-                        <a href="trailermovie.jsp">${trailer.name}</a>
-                        <p class="text-primary"><fmt:formatDate value="${trailer.release_time}" pattern="yyyy-MM-dd"/>上映</p>
-                    </div>
-                </li>
-                </c:when>
-                </c:choose>
+                <c:set var="today">
+                    <fmt:formatDate type="date" value="<%=new Date()%>" pattern="yyyy-MM-dd"/>
+                </c:set>
+                <c:forEach items="${trailers}" var="trailer" begin="0" end="7">
+                    <c:choose>
+                        <c:when test="${trailer.release_time>today}">
+                            <li style="margin-left: 30px;">
+                                <!--此处的图片应为对应预告片的图片-->
+                                <div class="box">
+                                    <c:choose>
+                                        <c:when test="${trailer.images[0]!=null}">
+                                            <img src="${basepath}/image/${trailer.images[0].imageName}"
+                                                 class="img-rounded" style="width: 150px;height: 130px">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="${basepath}/image/noimage.png" class="img-rounded"
+                                                 style="width: 150px;height: 130px">
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <div class="box-content">
+                                        <ul class="icon">
+                                            <li><a href="trailergetTrailer?id=1"><span
+                                                    class="glyphicon glyphicon-play"></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="caption">
+                                    <a href="trailermovie.jsp">${trailer.name}</a>
+                                    <p class="text-primary"><fmt:formatDate value="${trailer.release_time}"
+                                                                            pattern="yyyy-MM-dd"/>上映</p>
+                                </div>
+                            </li>
+                        </c:when>
+                    </c:choose>
                 </c:forEach>
             </ul>
         </div>
@@ -302,29 +331,32 @@
                 <c:forEach items="${trailers}" var="trailer" begin="0" end="7">
                     <c:choose>
                         <c:when test="${today>=trailer.release_time}">
-                <li style="margin-left: 30px;">
-                    <!--此处的图片应为对应预告片的图片-->
-                    <div class="box">
-                        <c:choose>
-                            <c:when test="${trailer.images[0]!=null}">
-                                <img src="${basepath}/image/${trailer.images[0].imageName}" class="img-rounded" style="width: 150px;height: 130px">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
-                            </c:otherwise>
-                        </c:choose>
-                        <div class="box-content">
-                            <ul class="icon">
-                                <li><a href="trailergetTrailer?id=${trailer.id}"><span class="glyphicon glyphicon-play" ></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="caption">
-                        <a href="#">${trailer.name}</a>
-                        <p class="text-primary">已上映</p>
-                    </div>
-                </li>
-                    </c:when>
+                            <li style="margin-left: 30px;">
+                                <!--此处的图片应为对应预告片的图片-->
+                                <div class="box">
+                                    <c:choose>
+                                        <c:when test="${trailer.images[0]!=null}">
+                                            <img src="${basepath}/image/${trailer.images[0].imageName}"
+                                                 class="img-rounded" style="width: 150px;height: 130px">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="${basepath}/image/noimage.png" class="img-rounded"
+                                                 style="width: 150px;height: 130px">
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <div class="box-content">
+                                        <ul class="icon">
+                                            <li><a href="trailergetTrailer?id=${trailer.id}"><span
+                                                    class="glyphicon glyphicon-play"></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="caption">
+                                    <a href="#">${trailer.name}</a>
+                                    <p class="text-primary">已上映</p>
+                                </div>
+                            </li>
+                        </c:when>
                     </c:choose>
                 </c:forEach>
 
@@ -345,32 +377,36 @@
                     <fmt:parseDate value="${today}" var="tod" pattern="yyyy-MM-dd"/>
                     <fmt:parseDate value="${trailer.time}" var="time" pattern="yyyy-MM-dd"/>
                     <fmt:formatNumber value="${(tod.getTime()-time.getTime())/1000/60/60/24}" pattern="#0" var="date"/>
-                <c:choose >
-                <c:when test="${date<=30&&date>=0}">
-                <li style="margin-left: 30px;">
-                    <!--此处的图片应为对应预告片的图片-->
-                    <div class="box">
-                        <c:choose>
-                            <c:when test="${trailer.images[0]!=null}">
-                                <img src="${basepath}/image/${trailer.images[0].imageName}" class="img-rounded" style="width: 150px;height: 130px">
-                            </c:when>
-                            <c:otherwise>
-                                <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
-                            </c:otherwise>
-                        </c:choose>
-                        <div class="box-content">
-                            <ul class="icon">
-                                <li><a href="trailergetTrailer?id=${trailer.id}"><span class="glyphicon glyphicon-play" ></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="caption">
-                        <a href="#">${trailer.name}</a>
-                        <p class="text-primary"><fmt:formatDate value="${trailer.time}" pattern="yyyy-MM-dd"/> 上传</p>
-                    </div>
-                </li>
-                </c:when>
-                </c:choose>
+                    <c:choose>
+                        <c:when test="${date<=30&&date>=0}">
+                            <li style="margin-left: 30px;">
+                                <!--此处的图片应为对应预告片的图片-->
+                                <div class="box">
+                                    <c:choose>
+                                        <c:when test="${trailer.images[0]!=null}">
+                                            <img src="${basepath}/image/${trailer.images[0].imageName}"
+                                                 class="img-rounded" style="width: 150px;height: 130px">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="${basepath}/image/noimage.png" class="img-rounded"
+                                                 style="width: 150px;height: 130px">
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <div class="box-content">
+                                        <ul class="icon">
+                                            <li><a href="trailergetTrailer?id=${trailer.id}"><span
+                                                    class="glyphicon glyphicon-play"></span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="caption">
+                                    <a href="#">${trailer.name}</a>
+                                    <p class="text-primary"><fmt:formatDate value="${trailer.time}"
+                                                                            pattern="yyyy-MM-dd"/> 上传</p>
+                                </div>
+                            </li>
+                        </c:when>
+                    </c:choose>
                 </c:forEach>
 
 
@@ -383,7 +419,7 @@
 </div>
 <!--底部版权信息-->
 <!--底部版权信息-->
-<div  style="font:12px Tahoma;color: white;text-align:center;">
+<div style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

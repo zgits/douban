@@ -626,7 +626,7 @@
                     <c:when test="${empty oneMoive.movieComments}">
                         <c:forEach items="${oneMovie.movieComments}" var="moviecomments" varStatus="status">
                             <li class="list-group-item" style="border: none">
-                                <!--显示个人信息以及评论时间，点赞数-->
+                                <!--显示个人信息以及评论时间-->
                                 <div class="row">
                                     <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span>${moviecomments.username}</span>
@@ -645,7 +645,7 @@
                                             window.onload = showStar${moviecomments.id}(${moviecomments.score});
 
                                             //n表示后台获取的星数
-                                            function showStar ${moviecomments.id}(n) {
+                                            function showStar${moviecomments.id}(n) {
                                                 var con_wid = document.getElementById("${moviecomments.id}").offsetWidth;
                                                 var del_star = document.getElementById("del_staruser${status.count}");
                                                 console.log(con_wid + del_star);
@@ -751,7 +751,7 @@
 
                     </c:when>
                     <c:otherwise>
-                        暂无评论信息
+                        <h4>虚位以待，等你来评论</h4>
                     </c:otherwise>
                 </c:choose>
             </ul>
