@@ -235,10 +235,10 @@
                             <ul class="pagination">
                                 <li><a href="userMessage?id=1&&currpage=1">&laquo;</a></li>
                                 <c:forEach var="count" begin="1" end="${pagebeans.totalPage}">
-                                    <li><a href="userMessage?id=1&&currpage=${count}">${count}</a></li>
+                                    <li><a href="userMessage?id=${pagebeans.lists[0].userId}&&currpage=${count}">${count}</a></li>
                                 </c:forEach>
 
-                                <li><a href="userMessage?id=1&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
+                                <li><a href="userMessage?id=${pagebeans.lists[0].userId}&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
                                 <li>
                                     <!--异步传输页数，返回数据得到结果-->
                                     <form class="col-sm-3" role="form">
@@ -325,12 +325,7 @@
                         <i class="fa fa-address-card-o"></i> <span style="font-size: 15px;">个人信息</span>
                     </a>
                 </li>
-                <!--<li class="treeview">-->
-                <!--<a id="history_p">-->
-                <!--<i class="fa fa-files-o"></i>-->
-                <!--<span style="font-size: 25px;">历史记录</span>-->
-                <!--</a>-->
-                <!--</li>-->
+
                 <li>
                     <a id="set_up_p">
                         <i class="fa fa-cogs"></i>
@@ -452,7 +447,7 @@
 
             }
         })
-        
+
     }
 
     $("#unSelect").click(function () {

@@ -7,11 +7,16 @@ import com.ssh.model.Label;
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
+import com.ssh.model.Trailer;
 import com.ssh.service.*;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.*;
 
 /**
@@ -209,15 +214,36 @@ public class MovieServieImpl implements MovieServie {
     public boolean deleteMovies(Integer[] ids) {
         return movieDao.deleteMovies(ids);
     }
-
-    @Override
-    public List<Integer> getCommentScore(int id) {
-        return movieDao.getCommentScore(id);
+     @Override
+    public List<Integer> getCommentScore(int id){
+        List<Integer> list=movieDao.getCommentScore(id);
+        List<Integer> scores=new ArrayList<>();
+        for(Integer score:list){
+            if(score!=null){
+                scores.add(score);
+            }
+        }
+        return scores;
     }
 
 
     public List<Labelmapping> getLabels(int movieId) {
         return (movieDao.getLabels(movieId));
+    }
+
+    /**
+     * 根据电影id获取对应预告片id
+     */
+    public List<Trailer> getTrailerBymId(int movieid){
+        List<Trailer> list=movieDao.getTrailerBymId(movieid);
+        List<Trailer> trailers=new ArrayList<>();
+        for(Trailer trailer:list){
+            if(trailer.getPath()!=null){
+                trailer.setImages(imageService.getMovieImages(movieid));
+                trailers.add(trailer);
+            }
+        }
+        return trailers;
     }
 
     @Override

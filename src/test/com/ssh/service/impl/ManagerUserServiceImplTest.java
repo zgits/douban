@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class ManagerUserServiceImplTest extends BaseTest{
     @Test
     public void selectEndTime() throws Exception {
-        System.out.println(managerUserService.selectEndTime(1));
+        System.out.println(managerUserService.getUser(1));
     }
 
 

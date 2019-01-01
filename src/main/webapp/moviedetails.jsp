@@ -1,6 +1,3 @@
-<%@ page import="com.ssh.model.Movie" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -267,8 +264,14 @@
     <div class="row">
         <!--电影海报页-->
         <div class="col-xs-2">
-            <img src="${oneMovie.images[0].path}" style="width: 140px;height: 150px">
-
+            <c:choose>
+             <c:when test="${oneMovie.images[0]!=null}">
+            <img src="${basepath}/image/${oneMovie.images[0].imageName}" style="width: 140px;height: 150px">
+             </c:when>
+                <c:otherwise>
+                    <img src="${basepath}/image/noimage.png" style="width: 140px;height: 150px">
+                </c:otherwise>
+            </c:choose>
         </div>
         <input id="hiddenmovieId" type="hidden" value="${oneMovie.id}">
         <!--电影基本信息页-->
@@ -278,9 +281,6 @@
                     <li class="list-group-item" style="border: none">
                         导演: ${oneMovie.director}
                     </li>
-                    <%--<li class="list-group-item" style="border: none">--%>
-                        <%--编剧: 阿什利·鲍威尔 / 汤姆·麦卡锡 / E·T·A·霍夫曼--%>
-                    <%--</li>--%>
                     <c:choose>
                         <c:when test="${fn:length(fn:split(oneMovie.actor,'/' ))<=5}">
                         <li class="list-group-item" style="border: none">
@@ -301,17 +301,28 @@
                                <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="5" >
                                     ${actor}/
                                </c:forEach>
-                                <%--/ 艾丽·巴姆博 / 米兰达·哈特 / 欧赫尼奥·德尔维斯 / 杰克·怀特霍尔 / 理查德·E·格兰特 / 谢尔盖·波卢宁 / 欧米德·吉亚李利 / 梅拉·沙尔 / 尼克·穆罕默德 /&ndash;%&gt;--%>
-                                <%--杰茜·维宁 / 汤姆·斯威特 / 马里安·洛伦西克 / 芙洛·费拉科 / 丽塔-麦克唐纳丹帕 / 查尔斯·斯特里特--%>
                             </div>
                             </li>
                     </c:otherwise>
                     </c:choose>
+
+                    <c:choose>
+                    <c:when test="${labels!=null}">
                     <li class="list-group-item" style="border: none">
-                        类型: <c:forEach items="${labels}" var="label">
+                        类型:
+                        <c:forEach items="${labels}" var="label">
                         ${label.labelName}/
                     </c:forEach>
                     </li>
+                    </c:when>
+                        <c:otherwise>
+                            <li class="list-group-item" style="border: none">
+                                类型: 全部分类
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+
+
                     <li class="list-group-item" style="border: none">
                         制片国家/地区: ${oneMovie.region}
                     </li>
@@ -319,7 +330,7 @@
                         语言: ${oneMovie.language}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        上映日期: <fmt:formatDate value="${oneMovie.release_time}" pattern="yyyy-MM-dd"/>(${oneMovie.release_region}/美国)
+                        上映日期: <fmt:formatDate value="${oneMovie.release_time}" pattern="yyyy-MM-dd"/>(${oneMovie.release_region})
                     </li>
                     <li class="list-group-item" style="border: none">
                         片长:${oneMovie.length}分钟
@@ -567,18 +578,41 @@
             ${oneMovie.moviename}电影相关预告片
         </h4>
         <ul class="list-inline">
-            <c:forEach items="${oneMovie.images}" var="image" begin="0" end="2">
+            <c:choose>
+                <c:when test="${Trailers!=null}">
+            <c:forEach items="${Trailers}" var="trailer" begin="0" end="2" varStatus="status">
             <li>
                 <div class="box">
-                    <img src="${image.path}" class="img-rounded" style="width: 150px;height: 130px">
+                    <c:choose>
+                        <c:when test="${trailer.images[status.index]!=null}">
+                    <img src="${basepath}/image/${trailer.images[status.index].imageName}" class="img-rounded" style="width: 150px;height: 130px">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+
+                        </c:otherwise>
+                    </c:choose>
+                        <%--<img src="${basepath}/image/duye.png" class="img-rounded" style="width: 150px;height: 130px">--%>
                     <div class="box-content">
                         <ul class="icon">
-                            <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play"></span></a></li>
+                            <li><a href="trailergetTrailer?id=${trailer.id}"><span class="glyphicon glyphicon-play"></span></a></li>
                         </ul>
                     </div>
+
                 </div>
             </li>
             </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <li>
+                        <div class="box">
+                            <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+                            <div class="box-content">
+                            </div>
+                        </div>
+                    </li>
+                </c:otherwise>
+            </c:choose>
         </ul>
     </div>
 
@@ -1359,7 +1393,7 @@
 </div>
 <!--底部版权信息-->
 <!--底部版权信息-->
-<div class="footer navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
+<div  style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

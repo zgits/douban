@@ -50,20 +50,23 @@ public class MovieAction extends ActionSupport {
     }
 
     /********通过id获取电影信息,用于单击超链接时用*************/
-    public String getMovieById() {
-        System.out.println(id);
-        int count = 0;
-        try {
-            Movie movie = movieServie.selctMovieById(id);
-            List<Integer> scores = movieServie.getCommentScore(id);
-            List<Labelmapping> labels = movieServie.getLabels(id);
-            count = scores.size();
-            ActionContext.getContext().put("oneMovie", movie);
-            ActionContext.getContext().put("scores", scores);
-            ActionContext.getContext().put("Counts", count);
-            ActionContext.getContext().put("labels", labels);
+    public String getMovieById(){
+        int count=0;
+        try{
+            Movie movie=movieServie.selctMovieById(id);
+            List<Integer> scores=movieServie.getCommentScore(id);
+            List<Labelmapping> labels=movieServie.getLabels(id);
+            List<Trailer> trailers=movieServie.getTrailerBymId(id);
+            count=scores.size();
+            ActionContext.getContext().put("oneMovie",movie);
+            ActionContext.getContext().put("scores",scores);
+            ActionContext.getContext().put("Counts",count);
+            ActionContext.getContext().put("labels",labels);
+            ActionContext.getContext().put("Trailers",trailers);
+            System.out.println(labels+"标签....");
             return "moviedetail";
-        } catch (Exception e) {
+        }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
 
@@ -115,12 +118,12 @@ public class MovieAction extends ActionSupport {
     //在修改电影信息时，先获取原来的电影信息，转成特定格式
     public void getMovieToUpdate() throws IOException {
 
-        String movie = "";
-        try {
+        String movie ="";
+        try{
             movie = JSON.toJSONString(movieServie.ToUpdateselctMovieById(id));//使用fastjson将数据转换成json格式
 
-        } catch (Exception e) {
-            movie = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            movie =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
         ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
@@ -139,25 +142,25 @@ public class MovieAction extends ActionSupport {
     }
 
     public void updateMovie() throws IOException {
-        String flag = "";
-        System.out.println("修改的信息" + movie);
-        List<Labelmapping> labelmappings = new ArrayList<>();
-        try {
-            for (Integer id : labelids) {
-                Labelmapping labelmapping = new Labelmapping();
+        String flag ="";
+        System.out.println("修改的信息"+movie);
+        List<Labelmapping> labelmappings=new ArrayList<>();
+        try{
+            for(Integer id:labelids){
+                Labelmapping labelmapping=new Labelmapping();
                 labelmapping.setLabelId(id);
                 labelmappings.add(labelmapping);
-                System.out.println("修改的分类的id" + id);
+                System.out.println("修改的分类的id"+id);
             }
             movie.setLabelmappings(labelmappings);
-            if (movieServie.updateMovie(movie)) {
+            if(movieServie.updateMovie(movie)){
                 flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
-            } else {
-                flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
-            flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
 
@@ -179,15 +182,15 @@ public class MovieAction extends ActionSupport {
 
 
     public void deleteMovie() throws IOException {
-        String flag = "";
-        try {
-            if (movieServie.deleteMovie(id)) {
+        String flag ="";
+        try{
+            if(movieServie.deleteMovie(id)){
                 flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
-            } else {
-                flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
             }
-        } catch (Exception e) {
-            flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
 
@@ -205,7 +208,7 @@ public class MovieAction extends ActionSupport {
 
     /*********查询电影信息************/
 
-    private Integer currPage = 1;
+    private Integer currPage=1;
 
     public Integer getCurrPage() {
         return currPage;
@@ -218,48 +221,48 @@ public class MovieAction extends ActionSupport {
     //点击页面时所用，即全部
     public String getAllMovies() throws IOException {
 
-        List<Movie> movies = new ArrayList<>();
-        try {
-            PageBean<Movie> moviePageBean = movieServie.seleceMovie(currPage);
-            movies = moviePageBean.getLists();
-        } catch (Exception e) {
+        List<Movie> movies=new ArrayList<>();
+        try{
+            PageBean<Movie> moviePageBean=movieServie.seleceMovie(currPage);
+            movies=moviePageBean.getLists();
+        }catch (Exception e){
 
         }
-        if (movies != null) {
-            System.out.println("成功取得" + movies.size() + "条数据...");
-        } else {
+        if(movies!=null){
+            System.out.println("成功取得"+movies.size()+"条数据...");
+        }else{
             System.out.println("查询失败...");
         }
-        JSONArray arr = new JSONArray();
+        JSONArray arr=new JSONArray();
         //判定最大的读取个数
         //读取数据
-        for (Movie movie : movies) {
-            JSONObject ob = new JSONObject();
+        for(Movie movie:movies){
+            JSONObject ob=new JSONObject();
             //将单独的数据装进json数据
             ob.put("id", movie.getId());
             ob.put("moviename", movie.getMoviename());
             ob.put("release_time", movie.getRelease_time());
-            String trailername = "";
-            for (Trailer trailer : movie.getTrailers()) {
-                trailername += trailer.getName() + "<br>";
+            String trailername="";
+            for(Trailer trailer:movie.getTrailers()){
+                trailername+=trailer.getName()+"<br>";
             }
-            System.out.println("预告片名字合集" + trailername);
-            String imageName = "";
-            for (Image image : movie.getImages()) {
-                imageName += image.getName() + "<br>";
+            System.out.println("预告片名字合集"+trailername);
+            String imageName="";
+            for(Image image:movie.getImages()){
+                imageName+=image.getName()+"<br>";
             }
-            ob.put("trailer", trailername);
-            ob.put("image", imageName);
+            ob.put("trailer",trailername);
+            ob.put("image",imageName);
             //装进数组
             arr.add(ob);
         }
-        JSONObject ob = new JSONObject();
+        JSONObject ob=new JSONObject();
         //放置数据
         ob.put("rows", arr);
         //放置所有的数据个数
         ob.put("total", movies.size());
-        String returndata = ob.toString();
-        System.out.println("成功转换" + returndata.length() + "大小的数据...");
+        String returndata=ob.toString();
+        System.out.println("成功转换"+returndata.length()+"大小的数据...");
         System.out.println(arr);
         System.out.println(returndata);
         //转换编码
@@ -288,60 +291,60 @@ public class MovieAction extends ActionSupport {
     }
 
     //通过搜索电影名查看电影信息
-    public void getMoviesByName() {
-        movieServie.selectMovieByName(movieName, currPage);
+    public void getMoviesByName(){
+        movieServie.selectMovieByName(movieName,currPage);
     }
 
     //主页面显示正在热映影片
-    public String getMoving() {
-        List<Movie> movies = movieServie.selectMoving();
-        ActionContext.getContext().put("movies", movies);
+    public String getMoving(){
+        List<Movie> movies=movieServie.selectMoving();
+        ActionContext.getContext().put("movies",movies);
         return "getMoving";
     }
     /*********end************/
 
 
     /************得到所有电影名******************/
-    public String getAllMovieName() {
+    public String getAllMovieName(){
 
-        Map<Integer, String> id_name = new HashMap<>();
-        try {
-            id_name = movieServie.getAllMovieName();
-        } catch (Exception e) {
+        Map<Integer,String> id_name=new HashMap<>();
+        try{
+            id_name=movieServie.getAllMovieName();
+        }catch (Exception e){
 
         }
 //      session.setAttribute("allsoft", allsoft);
-        if (id_name != null) {
-            System.out.println("成功取得" + id_name.size() + "条数据...");
-        } else {
+        if(id_name!=null){
+            System.out.println("成功取得"+id_name.size()+"条数据...");
+        }else{
             System.out.println("查询失败...");
         }
 //      System.out.println("softInfo"+allsoft);
-        JSONArray arr = new JSONArray();
+        JSONArray arr=new JSONArray();
         //判定最大的读取个数
         //读取数据
-        for (Map.Entry<Integer, String> entry : id_name.entrySet()) {
-            JSONObject ob = new JSONObject();
+        for(Map.Entry<Integer,String> entry:id_name.entrySet()){
+            JSONObject ob=new JSONObject();
             //将单独的数据装进json数据
-            System.out.println("key值：" + entry.getKey() + " value值：" + entry.getValue());
+            System.out.println("key值："+entry.getKey()+" value值："+entry.getValue());
             ob.put("id", entry.getKey());
             ob.put("moviename", entry.getValue());
             //装进数组
             arr.add(ob);
         }
-        JSONObject ob = new JSONObject();
+        JSONObject ob=new JSONObject();
         //放置数据
         ob.put("data", arr);
         //放置所有的数据个数
-        String returndata = ob.toString();
-        System.out.println("成功转换" + returndata.length() + "大小的数据...");
+        String returndata=ob.toString();
+        System.out.println("成功转换"+returndata.length()+"大小的数据...");
         System.out.println(arr);
         System.out.println(returndata);
         //转换编码
         ServletActionContext.getResponse().setCharacterEncoding("UTF-8");
         PrintWriter out;
         try {
-            out = ServletActionContext.getResponse().getWriter();
+            out=ServletActionContext.getResponse().getWriter();
             out.write(returndata);
             out.flush();
             out.close();
@@ -365,17 +368,17 @@ public class MovieAction extends ActionSupport {
     }
 
     public void deleteMovies() throws IOException {
-        String flag = "";
-        try {
-            if (movieServie.deleteMovies(ids)) {
+        String flag ="";
+        try{
+            if(movieServie.deleteMovies(ids)){
                 flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
                 System.out.println("成功");
-            } else {
-                flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+            }else{
+                flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
             }
 
-        } catch (Exception e) {
-            flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
+        }catch (Exception e){
+            flag =JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
         PrintWriter writer = ServletActionContext.getResponse().getWriter();

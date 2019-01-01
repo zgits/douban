@@ -140,6 +140,11 @@ public class ManagerUserServiceImpl implements ManagerUserService{
     }
 
     @Override
+    public User getUser(int id) {
+        User user=managerUserDao.getUserById(id);
+        return user;
+    }
+    @Override
     public User getUserByIdToPersonInfo(Integer id) {
         return managerUserDao.getUserByIdToPerson(id);
     }

@@ -4,6 +4,7 @@ import com.ssh.model.Label;
 import com.ssh.model.Labelmapping;
 import com.ssh.model.Movie;
 import com.ssh.model.PageBean;
+import com.ssh.model.Trailer;
 
 import java.util.List;
 import java.util.Map;
@@ -118,6 +119,11 @@ public interface MovieServie {
      */
     public List<Integer> getCommentScore(int id);
 
+
+    /**
+     * 根据电影id获取对应预告片id
+     */
+    public List<Trailer> getTrailerBymId(int movieid);
     /**
      * 获取某电影标签
      */

@@ -212,7 +212,14 @@
         <div class="carousel-inner">
             <div class="item active">
             <c:forEach items="${trailers}" var="trailer" begin="0" end="0">
-                <img src="${trailer.images[0].path}"  alt="First slide">
+                <c:choose>
+                    <c:when test="${trailer.images[0]!=null}">
+                <img style="width: 40% ;height: 100%" src="${basepath}/image/${trailer.images[0].imageName}"  alt="First slide">
+                    </c:when>
+                    <c:otherwise>
+                        <img style="width: 40% ;height: 100%" src="${basepath}/image/noimage.png"  alt="First slide">
+                    </c:otherwise>
+                </c:choose>
                 <div class="carousel-caption">
                     <h1>
                         <a href="trailergetTrailer?id=${trailer.id}">
@@ -224,7 +231,14 @@
             </div>
             <c:forEach items="${trailers}" var="trailer" begin="1" end="2">
             <div class="item">
-                <img src="${trailer.images[0].path}"  alt="Second slide">
+                <c:choose>
+                    <c:when test="${trailer.images[0]!=null}">
+                <img style="width: 20% ;height: 30%"  src="${basepath}/image/${trailer.images[0].imageName}"  alt="Second slide">
+                    </c:when>
+                    <c:otherwise>
+                        <img style="width: 20% ;height: 30%"  src="${basepath}/image/noimage.png"  alt="Second slide">
+                    </c:otherwise>
+                </c:choose>
                 <div class="carousel-caption">
                     <h1>
                         <a href="trailergetTrailer?id=${trailer.id}">
@@ -263,7 +277,14 @@
                 <li style="margin-left: 30px;">
                     <!--此处的图片应为对应预告片的图片-->
                     <div class="box">
-                        <img src="${trailer.images[0].path}" class="img-rounded" style="width: 150px;height: 130px">
+                        <c:choose>
+                            <c:when test="${trailer.images[0]!=null}">
+                        <img src="${basepath}/image/${trailer.images[0].imageName}" class="img-rounded" style="width: 150px;height: 130px">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+                            </c:otherwise>
+                        </c:choose>
                         <div class="box-content">
                             <ul class="icon">
                                 <li><a href="trailergetTrailer?id=1"><span class="glyphicon glyphicon-play" ></span></a></li>
@@ -293,10 +314,17 @@
                 <li style="margin-left: 30px;">
                     <!--此处的图片应为对应预告片的图片-->
                     <div class="box">
-                        <img src="${trailer.images[0].path}" class="img-rounded" style="width: 150px;height: 130px">
+                        <c:choose>
+                            <c:when test="${trailer.images[0]!=null}">
+                                <img src="${basepath}/image/${trailer.images[0].imageName}" class="img-rounded" style="width: 150px;height: 130px">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+                            </c:otherwise>
+                        </c:choose>
                         <div class="box-content">
                             <ul class="icon">
-                                <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play" ></span></a></li>
+                                <li><a href="trailergetTrailer?id=${trailer.id}"><span class="glyphicon glyphicon-play" ></span></a></li>
                             </ul>
                         </div>
                     </div>
@@ -331,10 +359,17 @@
                 <li style="margin-left: 30px;">
                     <!--此处的图片应为对应预告片的图片-->
                     <div class="box">
-                        <img src="${trailer.images[0].path}" class="img-rounded" style="width: 150px;height: 130px">
+                        <c:choose>
+                            <c:when test="${trailer.images[0]!=null}">
+                                <img src="${basepath}/image/${trailer.images[0].imageName}" class="img-rounded" style="width: 150px;height: 130px">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+                            </c:otherwise>
+                        </c:choose>
                         <div class="box-content">
                             <ul class="icon">
-                                <li><a href="trailermovie.jsp"><span class="glyphicon glyphicon-play" ></span></a></li>
+                                <li><a href="trailergetTrailer?id=${trailer.id}"><span class="glyphicon glyphicon-play" ></span></a></li>
                             </ul>
                         </div>
                     </div>
