@@ -41,4 +41,18 @@ public interface LabelMappingDao {
     public List<Labelmapping> getLabelMappingByLabelId(Integer labelId);
 
 
+    /**
+     * 得到所有
+     * @return
+     */
+    public List<Labelmapping> getAllLabels();
+
+
+    /**
+     * 得到不同电影的
+     * @return
+     */
+    public List<Labelmapping> getMovieLabelmapping();
+
+
 }

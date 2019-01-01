@@ -147,7 +147,7 @@
                 <li class="active"><a href="movie_getMovieByScore">排行榜</a></li>
                 <li><a href="getAllTrailer">预告片</a></li>
                 <!--<li><a href="#">影评</a></li>-->
-                <li><a href="sort.html">分类</a></li>
+                <li><a href="sort.jsp">分类</a></li>
             </ul>
         </div>
         <div class="col-md-7">
@@ -253,7 +253,7 @@
 <div style="height: 120px">
 
 </div>
-<div style="font:12px Tahoma;color: white;text-align:center;">
+<div class="footer navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

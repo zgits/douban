@@ -18,7 +18,7 @@ import java.util.*;
  * Created by 幻夜~星辰 on 2018/11/28.
  */
 @Service("MovieServie")
-public class MovieServieImpl implements MovieServie{
+public class MovieServieImpl implements MovieServie {
 
     @Autowired
     private MovieDao movieDao;
@@ -43,15 +43,15 @@ public class MovieServieImpl implements MovieServie{
 
     @Override
     public boolean insertMovie(Movie movie) {
-        Integer id=movieDao.insertMovie(movie);
-        if(id!=0){
-            for (Labelmapping labelmapping:movie.getLabelmappings()){
+        Integer id = movieDao.insertMovie(movie);
+        if (id != 0) {
+            for (Labelmapping labelmapping : movie.getLabelmappings()) {
                 labelmapping.setMovieId(id);
                 labelmapping.setLabelName(labelService.getLabelNameById(labelmapping.getLabelId()));
             }
             labelMappingService.insertLabelMapping(movie.getLabelmappings());
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -65,18 +65,18 @@ public class MovieServieImpl implements MovieServie{
     @Override
     public boolean updateMovie(Movie movie) {
 
-        boolean flag1=movieDao.updateMovie(movie);
+        boolean flag1 = movieDao.updateMovie(movie);
 
-        Integer movieId=movie.getId();
+        Integer movieId = movie.getId();
 
-        for (Labelmapping labelmapping:movie.getLabelmappings()){
+        for (Labelmapping labelmapping : movie.getLabelmappings()) {
             labelmapping.setMovieId(movieId);
             labelmapping.setLabelName(labelService.getLabelNameById(labelmapping.getLabelId()));
         }
-        boolean flag2=labelMappingService.updateLabelMapping(movie.getLabelmappings());
-        if(flag1&&flag2){
+        boolean flag2 = labelMappingService.updateLabelMapping(movie.getLabelmappings());
+        if (flag1 && flag2) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -94,14 +94,14 @@ public class MovieServieImpl implements MovieServie{
         pageBean.setTotalCount(totalCount);
         // 封装页数
         int totalPage;
-        if(totalCount%pageSize == 0){
-            totalPage = totalCount/pageSize;
-        }else{
-            totalPage = totalCount/pageSize+1;
+        if (totalCount % pageSize == 0) {
+            totalPage = totalCount / pageSize;
+        } else {
+            totalPage = totalCount / pageSize + 1;
         }
         pageBean.setTotalPage(totalPage);
         // 封装当前页记录
-        int begin= (currPage - 1)*pageSize;
+        int begin = (currPage - 1) * pageSize;
         List<Movie> list = movieDao.selectMovie();
 //        for (Movie movie:list){
 //            movie.setImages(imageService.getMovieImages(movie.getId()));
@@ -115,15 +115,15 @@ public class MovieServieImpl implements MovieServie{
 
     @Override
     public Movie selctMovieById(Integer id) {
-        Movie movie=movieDao.selectMovieById(id);
+        Movie movie = movieDao.selectMovieById(id);
         movie.setImages(imageService.getMovieImages(movie.getId()));
         movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-        movie.setMovieComments(movie_commentService.findComment(movie.getId(),1).getLists());
+        movie.setMovieComments(movie_commentService.findComment(movie.getId(), 1).getLists());
         return movie;
     }
 
     @Override
-    public PageBean<Movie> selectMovieByName(String moviename,Integer currPage) {
+    public PageBean<Movie> selectMovieByName(String moviename, Integer currPage) {
         PageBean<Movie> pageBean = new PageBean<Movie>();
         // 封装当前页数
         pageBean.setCurrPage(currPage);
@@ -135,20 +135,20 @@ public class MovieServieImpl implements MovieServie{
         pageBean.setTotalCount(totalCount);
         // 封装页数
         int totalPage;
-        if(totalCount%pageSize == 0){
-            totalPage = totalCount/pageSize;
-        }else{
-            totalPage = totalCount/pageSize+1;
+        if (totalCount % pageSize == 0) {
+            totalPage = totalCount / pageSize;
+        } else {
+            totalPage = totalCount / pageSize + 1;
         }
         pageBean.setTotalPage(totalPage);
         // 封装当前页记录
-        int begin= (currPage - 1)*pageSize;
-        List<Movie> list = movieDao.selectMovieByName(moviename,begin, pageSize);
+        int begin = (currPage - 1) * pageSize;
+        List<Movie> list = movieDao.selectMovieByName(moviename, begin, pageSize);
 
-        for (Movie movie:list){
+        for (Movie movie : list) {
             movie.setImages(imageService.getMovieImages(movie.getId()));
             movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
-            movie.setMovieComments(movie_commentService.findComment(movie.getId(),1).getLists());
+            movie.setMovieComments(movie_commentService.findComment(movie.getId(), 1).getLists());
 
         }
         pageBean.setLists(list);
@@ -157,11 +157,12 @@ public class MovieServieImpl implements MovieServie{
 
     /**
      * 得到全部电影信息，用于上传用,就不加其他信息了，主要是用于获取电影名和id
+     *
      * @return
      */
     @Override
     public List<Movie> selectAllMovies() {
-        List<Movie> movies=movieDao.selectAllMovie();
+        List<Movie> movies = movieDao.selectAllMovie();
 //        for (Movie movie:movies){
 //            movie.setImages(imageService.getMovieImages(movie.getId()));
 //            movie.setTrailers(trailerService.getMovieTrailers(movie.getId()));
@@ -173,8 +174,8 @@ public class MovieServieImpl implements MovieServie{
 
     @Override
     public List<Movie> selectMoving() {
-        List<Movie> movies=movieDao.selectMoving();
-        for(Movie movie:movies){
+        List<Movie> movies = movieDao.selectMoving();
+        for (Movie movie : movies) {
             movie.setImages(imageService.getMovieImages(movie.getId()));
         }
         return movies;
@@ -184,7 +185,7 @@ public class MovieServieImpl implements MovieServie{
     public Movie ToUpdateselctMovieById(Integer id) {
 
         System.out.println("service查询");
-        return  movieDao.selectMovieById(id);
+        return movieDao.selectMovieById(id);
     }
 
     @Override
@@ -194,11 +195,11 @@ public class MovieServieImpl implements MovieServie{
 
     @Override
     public Map<Integer, String> getAllMovieName() {
-        Map<Integer, String> id_name=new HashMap<>();
-        List<Object[]> list=movieDao.getAllMovieName();
-        for (Object[] object:list){
-            for(int i=0;i<object.length;i+=2){
-                id_name.put((Integer) object[i],(String)object[i+1]);
+        Map<Integer, String> id_name = new HashMap<>();
+        List<Object[]> list = movieDao.getAllMovieName();
+        for (Object[] object : list) {
+            for (int i = 0; i < object.length; i += 2) {
+                id_name.put((Integer) object[i], (String) object[i + 1]);
             }
         }
         return id_name;
@@ -208,14 +209,15 @@ public class MovieServieImpl implements MovieServie{
     public boolean deleteMovies(Integer[] ids) {
         return movieDao.deleteMovies(ids);
     }
-     @Override
-    public List<Integer> getCommentScore(int id){
+
+    @Override
+    public List<Integer> getCommentScore(int id) {
         return movieDao.getCommentScore(id);
     }
 
 
-    public List<Labelmapping> getLabels(int movieId){
-        return(movieDao.getLabels(movieId));
+    public List<Labelmapping> getLabels(int movieId) {
+        return (movieDao.getLabels(movieId));
     }
 
     @Override
@@ -229,43 +231,97 @@ public class MovieServieImpl implements MovieServie{
         /**
          *对传递的映射进行处理
          */
-        List<Label> level1=labelService.getAllLabels_1();//等级为1的分类
+        List<Label> level1 = labelService.getAllLabels_1();//等级为1的分类
 
 
-        List<Label> labelResult=new ArrayList<>();
-        Label lastlabel=labels.get(labels.size()-1);
+        List<Label> labelResult = new ArrayList<>();
 
-        for(int i=labels.size()-2;i>=0;i--){
-            if(labels.get(i).getId()!=lastlabel.getId()
-                    &&labels.get(i).getId()!=lastlabel.getParentId()
-                    &&lastlabel.getParentId()!=labels.get(i).getParentId()){
+        List<Movie> movies = new ArrayList<>();
+
+        try {
+            while (true) {
+                if (labelResult.size() < level1.size()) {
+                    Label lastlabel = labels.get(labels.size() - 1);
+                    System.out.println("添加的下标");
+                    System.out.println(labels.size() - 1);
+                    labelResult.add(lastlabel);
+                    System.out.println("添加的分类" + lastlabel);
+                    labels.removeAll(getLabelsTo(lastlabel, labels));
+                    System.out.println("删除后的list");
+                    for(Label label:labels){
+                        System.out.println(label);
+                    }
+                } else {
+                    break;
+                }
+            }
+
+
+            for (Label label : labelResult) {
+                System.out.println("处理后的分类" + label);
 
             }
-        }
 
+            List<Integer> resultids = new ArrayList<>();
+            for (int z = 0; z < labelResult.size(); z++) {
+                if(labelResult.get(z).getLevel()!=1){
+                    resultids.add(labelResult.get(z).getId());
+                }
 
-        for(Label label:labelResult){
-            System.out.println("处理后分类"+label);
-
-        }
-
-        List<Movie> movies=new ArrayList<>();
-        for(Label label:labelResult){
-            List<Labelmapping> labelmappings1=labelMappingService.getLabelMappingByLabelId(label.getId());
-            for(Labelmapping labelmapping1:labelmappings1){
-                System.out.println("根据labelId查询出来的labelmapping"+labelmapping1);
-                movies.add(movieDao.selectMovieById(labelmapping1.getMovieId()));
             }
+            System.out.println("查询分类的id");
+            for(Integer id:resultids){
+                System.out.println(id);
+            }
+
+            List<Labelmapping> labelmappings1 = labelMappingService.getAllLabels();
+
+            List<Labelmapping> labelmappingList = labelMappingService.getMovieLabelmapping();
+
+            for (int i = 0; i < labelmappingList.size(); i++) {
+                Integer movieId = labelmappingList.get(i).getMovieId();
+                List<Integer> labelids = new ArrayList<>();
+                for (int j = 0; j < labelmappings1.size(); j++) {
+                    if (labelmappings1.get(j).getMovieId() == movieId) {
+                        labelids.add(labelmappings1.get(j).getLabelId());
+                    }
+                }
+                System.out.println("电影" + movieId + "的分类集");
+                for (Integer id : labelids) {
+                    System.out.println(id);
+                }
+                System.out.println("电影的id" + movieId);
+                if (labelids.containsAll(resultids)) {
+                    movies.add(selctMovieById(movieId));
+                }
+                labelids.clear();
+
+            }
+            System.out.println("结果集");
+            for (Movie movie : movies) {
+                System.out.println(movie);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            return movies;
         }
-        return movies;
+
 
     }
 
-    private List<Label> getLabelsTo(Integer id,List<Label> labels){
-        List<Label> labels1=new ArrayList<>();
-        for(Label label:labels){
-            if(label.getId()==id||label.getParentId()==id){
-                labels1.add(label);
+    private List<Label> getLabelsTo(Label label, List<Label> labels) {
+        List<Label> labels1 = new ArrayList<>();
+        for (Label label1 : labels) {
+            if (label.getLevel() == 1) {
+                if (label.getId() == label1.getId() || label.getId() == label1.getParentId()) {
+                    labels1.add(label1);
+                }
+            } else if (label.getLevel() == 2) {
+                if (label.getId() == label1.getId() || label.getParentId() == label1.getId() || label.getParentId() == label1.getParentId()) {
+                    labels1.add(label1);
+                }
             }
         }
         return labels1;

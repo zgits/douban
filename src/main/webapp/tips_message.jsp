@@ -263,7 +263,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 <!--底部版权信息-->
-<div class="navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
+<div class="footer navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

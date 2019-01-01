@@ -68,4 +68,18 @@ public class LabelMappingDaoImpl implements LabelMappingDao{
         query.setInteger("labelId",labelId);
         return query.list();
     }
+
+    @Override
+    public List<Labelmapping> getAllLabels() {
+        String hql="from Labelmapping";
+        Query query=sessionFactory.getCurrentSession().createQuery(hql);
+        return query.list();
+    }
+
+    @Override
+    public List<Labelmapping> getMovieLabelmapping() {
+        String hql="from Labelmapping group by movieId";
+        Query query=sessionFactory.getCurrentSession().createQuery(hql);
+        return query.list();
+    }
 }

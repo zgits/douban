@@ -36,4 +36,16 @@ public class LabelMappingServiceImpl implements LabelMappingService{
     public List<Labelmapping> getLabelMappingByLabelId(Integer labelId) {
         return labelMappingDao.getLabelMappingByLabelId(labelId);
     }
+
+    @Override
+    public List<Labelmapping> getAllLabels() {
+        return labelMappingDao.getAllLabels();
+    }
+
+    @Override
+    public List<Labelmapping> getMovieLabelmapping() {
+        return labelMappingDao.getMovieLabelmapping();
+    }
+
+
 }

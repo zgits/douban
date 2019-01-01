@@ -447,6 +447,7 @@
                 }else{
                     toastr.error("修改失败");
                 }
+                setTimeout("window.location.reload()",3000);
             }
         })
         
@@ -544,7 +545,12 @@
                     console.log(data);
                     var json=JSON.parse(data);
                     $("#usernametoshow").text("名称:"+json.username);
-                    $("#phone").text("手机号:"+json.phone);
+                    if(json.phone!=undefined){
+                        $("#phone").text("手机号:"+json.phone);
+                    }else{
+                        $("#phone").text("手机号:");
+                    }
+
                     console.log(json.person_profile);
                     if(json.person_profile==null){
                         $("#intr").text("个人介绍:这个家伙很懒，什么都没有留下");
@@ -592,7 +598,7 @@
 
 <!--版权栏-->
 <!--底部版权信息-->
-<div class="navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
+<div class="footer navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

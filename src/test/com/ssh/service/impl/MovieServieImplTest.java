@@ -63,6 +63,16 @@ public class MovieServieImplTest extends BaseTest{
 
     @Test
     public void deleteMovie() throws Exception {
+        List<Integer> list=new ArrayList<>();
+        for(int i=0;i<10;i++){
+            list.add(i);
+        }
+        List<Integer> list1=new ArrayList<>();
+        for(int i=5;i<10;i++){
+            list1.add(i);
+        }
+        System.out.println(list.containsAll(list1));
+
     }
 
 //    @Test

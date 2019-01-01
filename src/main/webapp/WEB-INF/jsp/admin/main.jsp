@@ -4350,7 +4350,7 @@
                     showCaption: false,//显示文件简介
                     showUpload: true,//显示上传按钮
                     enctype: 'multipart/form-data',
-                    maxFileSize: 9999999,
+                    maxFileSize: 99999999,
                     previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
                     uploadAsync: true,//默认异步上传
                     allowedFileExtensions: ['mp4','avi','rmvb'],

@@ -340,7 +340,7 @@
 <!--展示分类内容标签-->
 <div class="container">
     <div class="col-md-8" style="margin-top: 20px">
-        <ul class="list-inline">
+        <ul class="list-inline" id="showlabelmovie">
             <li style="width: 142px;height: 200px">
                 <img src="/image/duye.png" class="img-responsive" style="width: 132px;height: 150px;">
                 <div class="caption">
@@ -401,40 +401,10 @@
     </div>
 </div>
 <!--分页-->
-<div class="container">
-    <div class="inner clearfix">
-        <section id="main-content">
-
-            <div class="text-center">
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                    <li>
-                        <!--异步传输页数，返回数据得到结果-->
-                        <form class="col-sm-3" role="form">
-                            <div class="input-group">
-                                <input type="text" class="form-control">
-                                <span onclick="test()" class="input-group-addon">go</span>
-                            </div>
-                        </form>
-                    </li>
-                    <li><a style="border: none">共6页</a></li>
-                </ul>
-            </div>
-
-        </section>
-
-    </div>
-</div>
 
 <!--底部版权栏-->
-<div style="font:12px Tahoma;color: white;text-align:center;">
-    <div style="background-color: #0f0f0f">
+<div class="footer navbar-fixed-bottom" style="font:12px Tahoma;color: white;text-align:center;">
+    <div  style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;
         xxx小组 ALL RIGHT RESERVED<br/>
@@ -475,7 +445,7 @@
                     var parentId=level1[i].parentId;
                     appendthml+='<ul id="'+level1[i].id+'" class="list-inline">'+
                                 '<li>'+
-                                '<button onclick="getResult('+level1[i].id+')" class="btn btn-primary btn-md active" style="border: none">'+level1[i].name+'</button>'+
+                                '<button onclick="getResult('+id+','+level+',\''+name+'\','+parentId+')" class="btn btn-primary btn-md active" style="border: none">'+level1[i].name+'</button>'+
                                 '</li>';
                     for(var j=0;j<level2.length;j++){
                         if(level2[j].parentId==level1[i].id){
@@ -489,40 +459,67 @@
                         }
                     }
                     appendthml+='</ul>';
+                    getResult(2,1,'全部地区',1);
                 }
                 $("#sort").append(appendthml);
 
             }
         })
     })
+
+
     
-    
-    function getResult(id) {
+    function getResult(id,level,name,parentId) {
 
 
         console.log(id);
+        console.log(tags);
+        var obj={
+            "id":id,
+            "level":level,
+            "name":name,
+            "parentId":parentId
+        }
+        tags.push(obj);
+        $.ajax({
+            dataType: "json",
+            url:"movie_getMoviesByLabel",
+            data:{
+                "labels":JSON.stringify(tags)
+            },
+            type:"post",
+            traditional : true,
+            success:function (data) {
+                $("#showlabelmovie").empty();
+                var appendhtml="";
+                console.log(data);
+                var json=data;
+                if(json.length==0){
+                    appendhtml+='暂无该电影';
+                }
+                for(var i=0;i<json.length;i++){
+                    appendhtml+='<li style="width: 142px;height: 200px">';
 
-//        var tagstemp=tags;
-//        console.log(tagstemp);
-//        var obj={
-//            "id":id,
-//            "level":level,
-//            "name":name,
-//            "parentId":parentId
-//        }
-//        tagstemp.push(obj);
-//        $.ajax({
-//            dataType: "json",
-//            url:"movie_getMoviesByLabel",
-//            data:{
-//                "labels":JSON.stringify(tagstemp)
-//            },
-//            type:"post",
-//            traditional : true,
-//            success:function (data) {
-//                console.log(data);
-//            }
-//        })
+                    if(json[i].images.length>0){
+                        console.log(json[i].images[0].imageName);
+                        appendhtml+='<img src="/image/'+json[i].images[0].imageName+'"';
+                    }else{
+                        appendhtml+='<img src="/image/noimage.png"';
+                    }
+                    appendhtml+='class="img-responsive" style="width: 132px;height: 150px;">'+
+                                '<div class="caption">'+
+                                '<h6><a href=movie_getMovieById?id='+json[i].id+'>'+json[i].moviename+'</a>&nbsp;&nbsp;评分&nbsp;&nbsp;';
+                    if(json[i].filmscore!=undefined){
+                        appendhtml+=json[i].filmscore;
+                    }else{
+                        appendhtml+='暂无评分';
+                    }
+                    appendhtml+='</h6></div>'+
+                                '</li>';
+                }
+                $("#showlabelmovie").append(appendhtml);
+            }
+        })
 
     }
 
