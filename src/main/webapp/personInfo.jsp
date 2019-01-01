@@ -75,37 +75,23 @@
 <!--个人信息页面-->
 <body>
 <!---导航栏-->
+<!--logo,导航栏个人信息栏，---->
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
-                                                         style="width:55px;height:55px;margin-top: -15px"></a>
+                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="毒液">
-                </div>
-                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                <!--<input type="submit" value="图片">-->
-            </form>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="getMoving">电影</a></li>
+                <li ><a href="getAllTrailer">预告片</a></li>
+            </ul>
+
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
                 <ul class="nav navbar-nav" id="navuser">
-                    <li><a href="login.jsp"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
-                    <li><a href="login.jsp" class="a globalLoginBtn"><span
-                            class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
-                    <li><a href="register.jsp">注册</a></li>
-                    <li>
-                        <a href="tips_message.jsp">
-                            <span class="badge pull-right">3</span>消息
-                        </a>
-                    </li>
-                    <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"
-                                                                                        class="img-circle img-responsive"
-                                                                                        style="width: 40px;height: 40px;margin-top: -10px"></a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -116,6 +102,7 @@
     $(document).ready(function () {
         $("#navuser").empty();
         var appendhtml="";
+        appendhtml+='<li><a href="bgmain"><span class="glyphicon glyphicon-cog"></span>管理入口</a></li>';
         var id=$.cookie("id");
         if($.cookie("id")!=0){
             if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
@@ -151,6 +138,7 @@
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
+
         $("#navuser").append(appendhtml);
 
 

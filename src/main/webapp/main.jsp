@@ -53,7 +53,7 @@
 </head>
 <body>
 
-<!--logo,导航栏，搜索栏，个人信息栏，---慕课---->
+<!--logo,导航栏个人信息栏，---->
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
@@ -62,17 +62,10 @@
         </div>
         <div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">电影</a></li>
-                <li><a href="#">音乐</a></li>
-                <li><a href="#">视频</a></li>
+                <li class="active"><a href="getMoving">电影</a></li>
+                <li ><a href="getAllTrailer">预告片</a></li>
             </ul>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="毒液">
-                </div>
-                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                <!--<input type="submit" value="图片">-->
-            </form>
+
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
                 <ul class="nav navbar-nav" id="navuser">
@@ -87,6 +80,7 @@
     $(document).ready(function () {
         $("#navuser").empty();
         var appendhtml="";
+        appendhtml+='<li><a href="bgmain"><span class="glyphicon glyphicon-cog"></span>管理入口</a></li>';
         var id=$.cookie("id");
         if($.cookie("id")!=0){
             if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
@@ -122,6 +116,7 @@
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
+
         $("#navuser").append(appendhtml);
 
 

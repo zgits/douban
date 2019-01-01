@@ -110,7 +110,7 @@ public class LabelDaoImpl implements LabelDao{
 
     @Override
     public List<Object[]> getLabelName(){
-        String hql="select id,name from Label where id=1 or id=2";
+        String hql="select id,name from Label where level=1 or level=0";
         Query query=this.sessionFactory.getCurrentSession().createQuery(hql);
         return (query.list());
     }

@@ -36,17 +36,19 @@
             padding: 0;
             font-size: 12px;
         }
+
         html, body {
             height: 100%;
             width: 100%;
         }
+
         #alert {
             z-index: 2;
-            border: 1px solid rgba(0,0,0,.2);
+            border: 1px solid rgba(0, 0, 0, .2);
             width: 598px;
             height: auto;
             border-radius: 6px;
-            box-shadow: 0 5px 15px rgba(0,0,0,.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
             background: #fff;
             z-index: 1000;
             position: absolute;
@@ -55,11 +57,13 @@
             margin-left: -299px;
             display: none;
         }
+
         .model-head {
             padding: 15px;
             color: #73879C;
             border-bottom: 1px solid #e5e5e5;
         }
+
         .close {
             padding: 0;
             cursor: pointer;
@@ -72,10 +76,12 @@
             opacity: 0.4;
             margin-top: 5px;
         }
+
         #close:hover {
             cursor: pointer;
             color: #000;
         }
+
         #mask {
             position: absolute;
             top: 0;
@@ -87,10 +93,12 @@
             display: none;
             z-index: 1;
         }
+
         .model-content {
             position: relative;
             padding: 15px;
         }
+
         .model-foot {
             padding: 15px;
             text-align: right;
@@ -101,54 +109,57 @@
 <!--需要加一个已读的，2018-11-26-->
 <body>
 <!--导航栏-->
+<!--logo,导航栏个人信息栏，---->
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
+                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="毒液">
-                </div>
-                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                <!--<input type="submit" value="图片">-->
-            </form>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="getMoving">电影</a></li>
+                <li><a href="getAllTrailer">预告片</a></li>
+            </ul>
+
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
                 <ul class="nav navbar-nav" id="navuser">
+
                 </ul>
             </div>
         </div>
     </div>
 </nav>
+
 <script>
     $(document).ready(function () {
         $("#navuser").empty();
-        var appendhtml="";
-        var id=$.cookie("id");
-        if($.cookie("id")!=0){
-            if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
-                appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
-                appendhtml+='<li>'+
-                    '<a href=getMessage?id='+id+'>'+
-                    '<span class="badge pull-right"><div id="count"/></span>消息'+
-                    '</a>'+
+        var appendhtml = "";
+        appendhtml += '<li><a href="bgmain"><span class="glyphicon glyphicon-cog"></span>管理入口</a></li>';
+        var id = $.cookie("id");
+        if ($.cookie("id") != 0) {
+            if ($.cookie("id") != -1 && $.cookie("id") != undefined) {
+                appendhtml += '<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+                appendhtml += '<li>' +
+                    '<a href=getMessage?id=' + id + '>' +
+                    '<span class="badge pull-right"><div id="count"/></span>消息' +
+                    '</a>' +
                     '</li>';
-                appendhtml+='<li>'+
-                    '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
-                    'class="img-circle img-responsive"'+
-                    'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                appendhtml += '<li>' +
+                    '<a style="width: 40px;height: 40px" href=userMessage?id=' + id + '><img src="/image/test.jpg"' +
+                    'class="img-circle img-responsive"' +
+                    'style="width: 40px;height: 40px;margin-top: -10px"></a>' +
                     '</li>';
                 $.ajax({
-                    type:"get",
-                    url:"getCountMessage",
+                    type: "get",
+                    url: "getCountMessage",
                     async: true,
-                    data:{
-                        id:id
+                    data: {
+                        id: id
                     },
-                    success:function (flag) {
-                        if (flag!=null){
+                    success: function (flag) {
+                        if (flag != null) {
                             $("#count").append(flag);
                         }
 
@@ -156,19 +167,20 @@
 
                 })
             }
-            else{
-                appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+            else {
+                appendhtml += '<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>' +
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
+
         $("#navuser").append(appendhtml);
 
 
     })
 
     function login_out() {
-        $.cookie("id",-1);
-        $.cookie("token",-1);
+        $.cookie("id", -1);
+        $.cookie("token", -1);
     }
 </script>
 <div class="container">
@@ -196,17 +208,18 @@
         <!--注意里面的id，checkbox每个需要不同-->
 
         <ul class="list-group" id="owners">
-            <c:forEach items="${pagebeans.lists}" var="pagebean" >
-            <li class="list-group-item">
-                <div class="checkbox checkbox-success">
-                    <input id="${pagebean.userId}" class="styled" type="checkbox" name="message" value="${pagebean.id}">
-                    <label for="${pagebean.userId}">
-                       来自${pagebean.sender}的信息:${pagebean.message}
-                        <br>
-                        <span style="color: rgb(91, 81, 191); font-size: 14px;">${pagebean.time}</span>
-                    </label>
-                </div>
-            </li>
+            <c:forEach items="${pagebeans.lists}" var="pagebean">
+                <li class="list-group-item">
+                    <div class="checkbox checkbox-success">
+                        <input id="${pagebean.userId}" class="styled" type="checkbox" name="message"
+                               value="${pagebean.id}">
+                        <label for="${pagebean.userId}">
+                            来自${pagebean.sender}的信息:${pagebean.message}
+                            <br>
+                            <span style="color: rgb(91, 81, 191); font-size: 14px;">${pagebean.time}</span>
+                        </label>
+                    </div>
+                </li>
             </c:forEach>
         </ul>
 
@@ -220,10 +233,12 @@
                     <ul class="pagination">
                         <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=1">&laquo;</a></li>
                         <c:forEach var="count" begin="1" end="${pagebeans.totalPage}">
-                        <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=${count}">${count}</a></li>
+                            <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=${count}">${count}</a>
+                            </li>
                         </c:forEach>
 
-                        <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=${pagebeans.totalPage}">&raquo;</a></li>
+                        <li><a href="getMessage?id=${pagebeans.lists[0].userId}&&currpage=${pagebeans.totalPage}">&raquo;</a>
+                        </li>
 
                         <li><a style="border: none">共${pagebeans.totalPage}页</a></li>
                     </ul>
@@ -282,77 +297,76 @@
         "hideMethod": "fadeOut" //消失时的动画方式
     };
     toastr.options = messageOpts;
-$("#selectAll").click(function () {
-$("#owners input:checkbox").each(function () {
-$(this).prop('checked', true);//
+    $("#selectAll").click(function () {
+        $("#owners input:checkbox").each(function () {
+            $(this).prop('checked', true);//
 
-});
-});
+        });
+    });
 
-$("#unSelect").click(function () {
-$("#owners input:checkbox").removeAttr("checked");
-});
+    $("#unSelect").click(function () {
+        $("#owners input:checkbox").removeAttr("checked");
+    });
 
-$("#reverse").click(function () {
-$("#owners input:checkbox").each(function () {
-this.checked = !this.checked;
-});
-});
-function update() {
-    list=document.getElementsByName("message");
-     var check_val=[];
-    for(i in list){
-        if(list[i].checked){
-            check_val.push(list[i].value);
-        }
-    }
-    $.ajax({
-        type: "get",
-        url: "${basepath}/updateMessage",//后台更新的地址
-        async: true,
-        traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
-        data: {
-            ids: check_val
-         }
-        }
-    )
-    setTimeout("window.location.reload()",2000);
-}
-
-function deleteMessage(){
-
-    $("#delcfmModel").modal();
-}
-function opreatedelete(){
-    list=document.getElementsByName("message");
-    var check_val=[];
-    for(i in list){
-        if(list[i].checked){
-            check_val.push(list[i].value);
-        }
-    }
-    $.ajax({
-            type: "post",
-            url: "${basepath}/deleteMessage",//后台删除的地址
-            async: true,
-            traditional : true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
-            data: {
-                ids: check_val
-            },
-            success:function (flag) {
-            if(flag==1){
-                toastr.success('删除成功');
-            }else{
-                toastr.error("删除失败");
+    $("#reverse").click(function () {
+        $("#owners input:checkbox").each(function () {
+            this.checked = !this.checked;
+        });
+    });
+    function update() {
+        list = document.getElementsByName("message");
+        var check_val = [];
+        for (i in list) {
+            if (list[i].checked) {
+                check_val.push(list[i].value);
             }
-            setTimeout("window.location.reload()",1000);
         }
+        $.ajax({
+                type: "get",
+                url: "${basepath}/updateMessage",//后台更新的地址
+                async: true,
+                traditional: true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                data: {
+                    ids: check_val
+                }
+            }
+        )
+        setTimeout("window.location.reload()", 2000);
+    }
+
+    function deleteMessage() {
+
+        $("#delcfmModel").modal();
+    }
+    function opreatedelete() {
+        list = document.getElementsByName("message");
+        var check_val = [];
+        for (i in list) {
+            if (list[i].checked) {
+                check_val.push(list[i].value);
+            }
         }
-    )
+        $.ajax({
+                type: "post",
+                url: "${basepath}/deleteMessage",//后台删除的地址
+                async: true,
+                traditional: true,//需要加入这句代码才能正确的将数组正确的传到后台，要不然传的是Null
+                data: {
+                    ids: check_val
+                },
+                success: function (flag) {
+                    if (flag == 1) {
+                        toastr.success('删除成功');
+                    } else {
+                        toastr.error("删除失败");
+                    }
+                    setTimeout("window.location.reload()", 1000);
+                }
+            }
+        )
 
-    //window.location.href="getMessage?id=1"
-}
-
+        //window.location.href="getMessage?id=1"
+    }
 
 
 </script>

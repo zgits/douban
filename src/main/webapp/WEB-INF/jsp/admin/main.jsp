@@ -53,6 +53,8 @@
 
     <script src="/static_resources/Admin/js/json.js"></script>
 
+    <script src="/static_resources/cookie/jquery.cookie.min.js"></script>
+
 
     <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
 
@@ -126,8 +128,23 @@
             <%--<li><a href="javascript:;"><span>也打酱油</span></a></li>--%>
             <%--</ul>--%>
         </li>
+        <li class="nav-mini" id="li_six">
+            <a href="javascript:loginout();"><i class="my-icon nav-icon icon_4"></i><span>注销</span></a>
+
+        </li>
     </ul>
 </div>
+<script>
+    function loginout(){
+        $.ajax({
+            type:"post",
+            url:"login_loginOutToAdmin",
+        })
+        window.location.href='getMoving';
+        $.cookie("id",-1);
+        $.cookie("token",-1);
+    }
+</script>
 <!--侧边导航栏结束-->
 <!--右侧展示内容-->
 <div class="container col-lg-10" style="background-color: white;">
@@ -3609,7 +3626,7 @@
 
                                 toastr.error('删除失败');
                             }
-                            setTimeout("window.location.reload()", 3000);
+                            $('#reportTable').bootstrapTable('refresh');
 
                         }
                     })
@@ -3871,7 +3888,7 @@
                             toastr.error('修改失败');
                         }
                         $('#addUserModal').modal('hide');
-                        setTimeout("window.location.reload()", 3000);
+                        $('#reportTable').bootstrapTable('refresh');
 
                     }
                 })
@@ -3947,7 +3964,7 @@
                             toastr.error('添加失败');
                         }
                         $('#add_movie_modal').modal('hide');
-                        setTimeout("window.location.reload()", 3000);
+                        $('#reportTable').bootstrapTable('refresh');
 
                     }
                 })
@@ -4125,7 +4142,7 @@
 
                             toastr.error('删除失败');
                         }
-                        setTimeout("window.location.reload()", 3000);
+                        $('#reportTable').bootstrapTable('refresh');
 
                     }
                 })
@@ -4435,7 +4452,7 @@
 
                                 toastr.error('删除失败');
                             }
-                            setTimeout("window.location.reload()", 3000);
+                            $('#trailerTable').bootstrapTable('refresh');
 
                         }
                     })
@@ -4485,7 +4502,7 @@
 
                             toastr.error('删除失败');
                         }
-                        setTimeout("window.location.reload()", 3000);
+                        $('#trailerTable').bootstrapTable('refresh');
 
                     }
                 })
@@ -4764,7 +4781,7 @@
 
                             toastr.error('删除失败');
                         }
-                        setTimeout("window.location.reload()", 3000);
+                        $('#imageTable').bootstrapTable('refresh');
 
                     }
                 })
@@ -4836,7 +4853,7 @@
 
                                 toastr.error('删除失败');
                             }
-                            setTimeout("window.location.reload()", 3000);
+                            $('#imageTable').bootstrapTable('refresh');
 
                         }
                     })
@@ -5088,7 +5105,7 @@
 
                                 toastr.error('删除失败');
                             }
-                            setTimeout("window.location.reload()", 3000);
+                            $('#userTable').bootstrapTable('refresh');
 
                         }
                     })
@@ -5136,7 +5153,7 @@
 
                                 toastr.error('解禁失败');
                             }
-                            setTimeout("window.location.reload()", 3000);
+                            $('#userTable').bootstrapTable('refresh');
 
                         }
                     })
@@ -5204,7 +5221,7 @@
 
                                 toastr.error('禁言失败');
                             }
-                            setTimeout("window.location.reload()", 3000);
+                            $('#userTable').bootstrapTable('refresh');
 
                         }
                     })
@@ -5280,7 +5297,7 @@
 
                                 toastr.error('删除失败');
                             }
-                            setTimeout("window.location.reload()", 3000);
+                            $('#userTable').bootstrapTable('refresh');
 
                         }
                     })
@@ -5441,7 +5458,7 @@
 
                             toastr.error('删除失败');
                         }
-                        setTimeout("window.location.reload()", 3000);
+                        $('#labelTable').bootstrapTable('refresh');
 
                     }
                 })
@@ -5489,9 +5506,6 @@
                         <label for="parentname" class="col-sm-3 control-label">所属分类</label>
                         <div class="col-sm-9">
                             <select id="parentname" class="form-control">
-                                <option>sdfasd</option>
-                                <option>sdfasd</option>
-                                <option>sd士大夫d</option>
                             </select>
 
                         </div>
@@ -5558,7 +5572,7 @@
 
                             toastr.error('添加失败');
                         }
-                        setTimeout("window.location.reload()", 3000);
+                        $('#labelTable').bootstrapTable('refresh');
 
                     }
                 })
@@ -5598,9 +5612,6 @@
                         <label for="parentname" class="col-sm-3 control-label">所属分类</label>
                         <div class="col-sm-9">
                             <select id="parentnames" class="form-control">
-                                <option>sdfasd</option>
-                                <option>sdfasd</option>
-                                <option>sd士大夫d</option>
                             </select>
 
                         </div>
@@ -5659,12 +5670,12 @@
                 data: {"id": id},
                 type: "post",
                 beforeSend: function () {
-                    // $("#tip").html("<span style='color:blue'>正在处理...</span>");
+                    $("#loading").show();
                     return true;
                 },
                 success: function (data) {
                     if (data != 2) {
-
+                        $("#loading").hide();
                         // 解析json数据
                         var data = data;
                         console.log(data);
@@ -5733,7 +5744,7 @@
 
                     toastr.error('修改失败');
                 }
-                setTimeout("window.location.reload()", 3000);
+                $('#labelTable').bootstrapTable('refresh');
 
             }
         })
@@ -5783,7 +5794,7 @@
 
                             toastr.error('删除失败');
                         }
-                        setTimeout("window.location.reload()", 3000);
+                        $('#labelTable').bootstrapTable('refresh');
 
                     }
                 })

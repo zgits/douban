@@ -72,6 +72,7 @@ public class MessageAction {
         ActionContext.getContext().put("pagebeans",pageBean);
         return "success";
     }
+
     public String getCountMessages() throws IOException{
         String flag="";
         int status=1;
@@ -92,7 +93,9 @@ public class MessageAction {
         writer.flush();
 
         writer.close();
-        return "success";
+
+        return null;
+
     }
 
 

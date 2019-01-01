@@ -29,40 +29,33 @@
     <link rel="icon" href="image/logo.PNG" type="image/x-icon"/>
 
 
+    <style>
+        .blue
+        {
+            color:blue;
+        }
+    </style>
 </head>
 <body>
 
 <!--导航栏-->
+<!--logo,导航栏个人信息栏，---->
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
+                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="毒液">
-                </div>
-                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                <!--<input type="submit" value="图片">-->
-            </form>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="getMoving">电影</a></li>
+                <li ><a href="getAllTrailer">预告片</a></li>
+            </ul>
+
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
                 <ul class="nav navbar-nav" id="navuser">
-                    <li><a href="login.jsp"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
-                    <li><a href="login.jsp" class="a globalLoginBtn"><span
-                            class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
-                    <li><a href="register.jsp">注册</a></li>
-                    <li>
-                        <a href="tips_message.jsp">
-                            <span class="badge pull-right">3</span>消息
-                        </a>
-                    </li>
-                    <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg"
-                                                                                       class="img-circle img-responsive"
-                                                                                       style="width: 40px;height: 40px;margin-top: -10px"></a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -73,6 +66,7 @@
     $(document).ready(function () {
         $("#navuser").empty();
         var appendhtml="";
+        appendhtml+='<li><a href="bgmain"><span class="glyphicon glyphicon-cog"></span>管理入口</a></li>';
         var id=$.cookie("id");
         if($.cookie("id")!=0){
             if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
@@ -129,72 +123,7 @@
             <li>
                 <button class="btn btn-primary btn-md active" style="border: none">全部类型</button>
             </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">剧情</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">喜剧</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">动作</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">爱情</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">科幻</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">动画</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">悬疑</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">惊悚</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">恐怖</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">犯罪</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">同性</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">音乐</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">歌舞</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">传记</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">历史</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">战争</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">西部</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">奇幻</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">冒险</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">灾难</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">武侠</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">情色</button>
-            </li>
+
         </ul>
         <ul class="list-inline">
             <li>
@@ -213,54 +142,6 @@
                 <button class="btn btn-default btn-md" style="border: none">台湾</button>
             </li>
             <li>
-                <button class="btn btn-default btn-md" style="border: none">日本</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">韩国</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">英国</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">法国</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">德国</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">意大利</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">西班牙</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">印度</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">泰国</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">俄罗斯</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">伊朗</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">加拿大</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">澳大利亚</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">爱尔兰</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">瑞典</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">巴西</button>
-            </li>
-            <li>
                 <button class="btn btn-default btn-md" style="border: none">丹麦</button>
             </li>
         </ul>
@@ -273,18 +154,6 @@
             </li>
             <li>
                 <button class="btn btn-default btn-md" style="border: none">2017</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">2010年代</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">2000年代</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">90年代</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">80年代</button>
             </li>
             <li>
                 <button class="btn btn-default btn-md" style="border: none">70年代</button>
@@ -300,33 +169,7 @@
             <li>
                 <button class="btn btn-primary btn-md active" style="border: none">全部特色</button>
             </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">经典</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">青春</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">文艺</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">搞笑</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">励志</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">魔幻</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">感人</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">女性</button>
-            </li>
-            <li>
-                <button class="btn btn-default btn-md" style="border: none">黑帮</button>
-            </li>
+
         </ul>
     </div>
 </div>
@@ -443,8 +286,8 @@
                     var level=level1[i].level;
                     var name=level1[i].name;
                     var parentId=level1[i].parentId;
-                    appendthml+='<ul id="'+level1[i].id+'" class="list-inline">'+
-                                '<li>'+
+                    appendthml+='<ul class="list-inline">'+
+                                '<li class="'+level1[i].id+'" id="'+level1[i].id+'">'+
                                 '<button onclick="getResult('+id+','+level+',\''+name+'\','+parentId+')" class="btn btn-primary btn-md active" style="border: none">'+level1[i].name+'</button>'+
                                 '</li>';
                     for(var j=0;j<level2.length;j++){
@@ -453,7 +296,7 @@
                             var level=level2[j].level;
                             var name=level2[j].name;
                             var parentId=level2[j].parentId;
-                            appendthml+='<li>'+
+                            appendthml+='<li class="'+level2[j].id+'" id="'+id+'">'+
                                         '<button onclick="getResult('+id+','+level+',\''+name+'\','+parentId+')" class="btn btn-default btn-md" style="border: none">'+level2[j].name+'</button>'+
                                         '</li>';
                         }
@@ -468,12 +311,18 @@
     })
 
 
+
+
+
     
     function getResult(id,level,name,parentId) {
 
 
-        console.log(id);
-        console.log(tags);
+        $("#"+id).children().removeClass("btn-default");
+        $("#"+id).children().addClass("btn-primary active");
+        $("#"+id).siblings().children().removeClass("btn-primary active");
+        $("#"+id).siblings().children().addClass("btn-default");
+
         var obj={
             "id":id,
             "level":level,

@@ -230,4 +230,9 @@ public class loginAction extends ActionSupport  {
 //    public UserLogin getModel() {
 //        return user1;
 //    }
+
+    public void loginOutToAdmin(){
+        ServletActionContext.getRequest().getSession().removeAttribute("adminname");
+        System.out.println("管理员退出");
+    }
 }

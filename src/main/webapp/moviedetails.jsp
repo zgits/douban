@@ -5,10 +5,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 
 %>
-<c:set var="basepath" value="<%=basePath%>" />
+<c:set var="basepath" value="<%=basePath%>"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +44,11 @@
             margin-left: -25px;
             z-index: 9999;
         }
+
         #loading {
             margin-top: 10px;
         }
+
         .demo {
             padding: 2em 0;
         }
@@ -173,34 +175,23 @@
 </head>
 <body>
 <!--导航栏-->
+<!--logo,导航栏个人信息栏，---->
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG" style="width:55px;height:55px;margin-top: -15px"></a>
+            <a class="navbar-brand" href="getMoving"><img class="img-circle" src="image/logo.PNG"
+                                                          style="width:55px;height:55px;margin-top: -15px"></a>
         </div>
         <div>
-            <form class="navbar-form navbar-left" role="search">
-                <div class="form-group">
-                    <input class="form-control" type="text" placeholder="毒液">
-                </div>
-                <button type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                <!--<input type="submit" value="图片">-->
-            </form>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="getMoving">电影</a></li>
+                <li><a href="getAllTrailer">预告片</a></li>
+            </ul>
+
             <!--<a href="" class="btn btn-primary btn-sm navbar-btn navbar-right">联系我们</a>-->
             <div class="profile navbar-right">
                 <ul class="nav navbar-nav" id="navuser">
-                    <li><a href="login.jsp"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>
-                    <li><a href="login.jsp" class="a globalLoginBtn"><span
-                            class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>
-                    <li><a href="register.jsp">注册</a></li>
-                    <li>
-                        <a href="tips_message.jsp">
-                            <span class="badge pull-right">3</span>消息
-                        </a>
-                    </li>
-                    <li>
-                        <a style="width: 40px;height: 40px" href="personInfo.jsp"><img src="/image/test.jpg" class="img-circle img-responsive" style="width: 40px;height: 40px;margin-top: -10px"></a>
-                    </li>
+
                 </ul>
             </div>
         </div>
@@ -210,30 +201,31 @@
 <script>
     $(document).ready(function () {
         $("#navuser").empty();
-        var appendhtml="";
-        var id=$.cookie("id");
-        if($.cookie("id")!=0){
-            if($.cookie("id")!=-1&&$.cookie("id")!=undefined){
-                appendhtml+='<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
-                appendhtml+='<li>'+
-                    '<a href=getMessage?id='+id+'>'+
-                    '<span class="badge pull-right"><div id="count"/></span>消息'+
-                    '</a>'+
+        var appendhtml = "";
+        appendhtml += '<li><a href="bgmain"><span class="glyphicon glyphicon-cog"></span>管理入口</a></li>';
+        var id = $.cookie("id");
+        if ($.cookie("id") != 0) {
+            if ($.cookie("id") != -1 && $.cookie("id") != undefined) {
+                appendhtml += '<li><a href="login.jsp" onclick="login_out()"><span class="glyphicon glyphicon-log-out"></span>退出</a></li>';
+                appendhtml += '<li>' +
+                    '<a href=getMessage?id=' + id + '>' +
+                    '<span class="badge pull-right"><div id="count"/></span>消息' +
+                    '</a>' +
                     '</li>';
-                appendhtml+='<li>'+
-                    '<a style="width: 40px;height: 40px" href=userMessage?id='+id+'><img src="/image/test.jpg"'+
-                    'class="img-circle img-responsive"'+
-                    'style="width: 40px;height: 40px;margin-top: -10px"></a>'+
+                appendhtml += '<li>' +
+                    '<a style="width: 40px;height: 40px" href=userMessage?id=' + id + '><img src="/image/test.jpg"' +
+                    'class="img-circle img-responsive"' +
+                    'style="width: 40px;height: 40px;margin-top: -10px"></a>' +
                     '</li>';
                 $.ajax({
-                    type:"get",
-                    url:"getCountMessage",
+                    type: "get",
+                    url: "getCountMessage",
                     async: true,
-                    data:{
-                        id:id
+                    data: {
+                        id: id
                     },
-                    success:function (flag) {
-                        if (flag!=null){
+                    success: function (flag) {
+                        if (flag != null) {
                             $("#count").append(flag);
                         }
 
@@ -241,8 +233,8 @@
 
                 })
             }
-            else{
-                appendhtml+='<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>'+
+            else {
+                appendhtml += '<li><a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>&nbsp;登录</a></li>' +
                     '<li><a href="register.jsp">注册</a></li>';
             }
         }
@@ -253,8 +245,8 @@
     })
 
     function login_out() {
-        $.cookie("id",-1);
-        $.cookie("token",-1);
+        $.cookie("id", -1);
+        $.cookie("token", -1);
     }
 </script>
 <!--电影详情介绍-->
@@ -265,9 +257,9 @@
         <!--电影海报页-->
         <div class="col-xs-2">
             <c:choose>
-             <c:when test="${oneMovie.images[0]!=null}">
-            <img src="${basepath}/image/${oneMovie.images[0].imageName}" style="width: 140px;height: 150px">
-             </c:when>
+                <c:when test="${oneMovie.images[0]!=null}">
+                    <img src="${basepath}/image/${oneMovie.images[0].imageName}" style="width: 140px;height: 150px">
+                </c:when>
                 <c:otherwise>
                     <img src="${basepath}/image/noimage.png" style="width: 140px;height: 150px">
                 </c:otherwise>
@@ -283,38 +275,38 @@
                     </li>
                     <c:choose>
                         <c:when test="${fn:length(fn:split(oneMovie.actor,'/' ))<=5}">
-                        <li class="list-group-item" style="border: none">
-                        主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor">
-                            ${actor}/
-                    </c:forEach>
-                        <a data-toggle="collapse"
-                           href="#collapse"></a>
-                        </c:when>
-                        <c:otherwise>
                             <li class="list-group-item" style="border: none">
-                            主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="0" end="4">
+                            主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor">
                             ${actor}/
                         </c:forEach>
                             <a data-toggle="collapse"
-                               href="#collapse">更多</a>
-                            <div id="collapse" class="panel-collapse collapse">
-                               <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="5" >
-                                    ${actor}/
-                               </c:forEach>
-                            </div>
+                               href="#collapse"></a>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="list-group-item" style="border: none">
+                                主演: <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="0" end="4">
+                                ${actor}/
+                            </c:forEach>
+                                <a data-toggle="collapse"
+                                   href="#collapse">更多</a>
+                                <div id="collapse" class="panel-collapse collapse">
+                                    <c:forEach items="${fn:split(oneMovie.actor,'/' )}" var="actor" begin="5">
+                                        ${actor}/
+                                    </c:forEach>
+                                </div>
                             </li>
-                    </c:otherwise>
+                        </c:otherwise>
                     </c:choose>
 
                     <c:choose>
-                    <c:when test="${labels!=null}">
-                    <li class="list-group-item" style="border: none">
-                        类型:
-                        <c:forEach items="${labels}" var="label">
-                        ${label.labelName}/
-                    </c:forEach>
-                    </li>
-                    </c:when>
+                        <c:when test="${labels!=null&& not empty labels}">
+                            <li class="list-group-item" style="border: none">
+                                类型:
+                                <c:forEach items="${labels}" var="label">
+                                    ${label.labelName}/
+                                </c:forEach>
+                            </li>
+                        </c:when>
                         <c:otherwise>
                             <li class="list-group-item" style="border: none">
                                 类型: 全部分类
@@ -330,7 +322,8 @@
                         语言: ${oneMovie.language}
                     </li>
                     <li class="list-group-item" style="border: none">
-                        上映日期: <fmt:formatDate value="${oneMovie.release_time}" pattern="yyyy-MM-dd"/>(${oneMovie.release_region})
+                        上映日期: <fmt:formatDate value="${oneMovie.release_time}"
+                                              pattern="yyyy-MM-dd"/>(${oneMovie.release_region})
                     </li>
                     <li class="list-group-item" style="border: none">
                         片长:${oneMovie.length}分钟
@@ -357,8 +350,8 @@
                         </div>
                         <c:choose>
                             <c:when test="${Counts>0}">
-                        ${Counts}人评价
-                        </c:when>
+                                ${Counts}人评价
+                            </c:when>
                             <c:otherwise>
                                 暂无评价
                             </c:otherwise>
@@ -384,145 +377,145 @@
             </div>
             <c:choose>
                 <c:when test="${Counts>0}">
-            <div class="row">
-                <ul class="list-group">
-                    <li class="list-group-item" style="border: none">
-                        <div class="row">
-                            <div class="col-md-2">
-                                5星
-                            </div>
-                            <div class="col-md-4" style="margin-left: -20px;height: 20px">
-                                <div class="progress">
-                                    <c:set var="num" value="${0}"/>
-                                    <c:set var="count" value="${0}"/>
-                                    <c:forEach items="${scores}" var="score">
-                                        <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${8<score&&score<=10}">
-                                            <c:set var="num" value="${num+1}"/>
-                                        </c:if>
-                                    </c:forEach>
-                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
-                                    <div class="progress-bar" style="width:${result*100}%;">
+                    <div class="row">
+                        <ul class="list-group">
+                            <li class="list-group-item" style="border: none">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        5星
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                ${result*100}%
-                            </div>
-
-                        </div>
-
-                    </li>
-                    <li class="list-group-item" style="border: none">
-                        <div class="row">
-                            <div class="col-md-2">
-                                4星
-                            </div>
-                            <div class="col-md-4" style="margin-left: -20px;height: 20px">
-                                <div class="progress">
-                                    <c:set var="num" value="${0}"/>
-                                    <c:set var="count" value="${0}"/>
-                                    <c:forEach items="${scores}" var="score">
-                                        <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${6<score&&score<=8}">
-                                            <c:set var="num" value="${num+1}"/>
-                                        </c:if>
-                                    </c:forEach>
-                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
-                                    <div class="progress-bar" style="width: ${result*100}%;">
+                                    <div class="col-md-4" style="margin-left: -20px;height: 20px">
+                                        <div class="progress">
+                                            <c:set var="num" value="${0}"/>
+                                            <c:set var="count" value="${0}"/>
+                                            <c:forEach items="${scores}" var="score">
+                                                <c:set var="count" value="${count+1}"/>
+                                                <c:if test="${8<score&&score<=10}">
+                                                    <c:set var="num" value="${num+1}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
+                                            <div class="progress-bar" style="width:${result*100}%;">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                ${result*100}%
-                            </div>
-
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="border: none">
-                        <div class="row">
-                            <div class="col-md-2">
-                                3星
-                            </div>
-                            <div class="col-md-4" style="margin-left: -20px;height: 20px">
-                                <div class="progress">
-                                    <c:set var="num" value="${0}"/>
-                                    <c:set var="count" value="${0}"/>
-                                    <c:forEach items="${scores}" var="score">
-                                        <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${4<score&&score<=6}">
-                                            <c:set var="num" value="${num+1}"/>
-                                        </c:if>
-                                    </c:forEach>
-                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0" />
-
-                                    <div class="progress-bar" style="width: ${result*100}%;">
+                                    <div class="col-md-2">
+                                            ${result*100}%
                                     </div>
+
                                 </div>
-                            </div>
-                            <div class="col-md-2">
-                                ${result*100}%
-                            </div>
 
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="border: none">
-                        <div class="row">
-                            <div class="col-md-2">
-                                2星
-                            </div>
-                            <div class="col-md-4" style="margin-left: -20px;height: 20px">
-                                <div class="progress">
-                                    <c:set var="num" value="${0}"/>
-                                    <c:set var="count" value="${0}"/>
-                                    <c:forEach items="${scores}" var="score">
-                                        <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${2<score&&score<=4}">
-                                            <c:set var="num" value="${num+1}"/>
-                                        </c:if>
-                                    </c:forEach>
-                                    <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
-
-                                    <div class="progress-bar" style="width: ${result*100}%;">
+                            </li>
+                            <li class="list-group-item" style="border: none">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        4星
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                ${result*100}%
-                            </div>
-
-                        </div>
-                    </li>
-                    <li class="list-group-item" style="border: none">
-                        <div class="row">
-                            <div class="col-md-2">
-                                1星
-                            </div>
-                            <div class="col-md-4" style="margin-left: -20px;height: 20px">
-                                <div class="progress">
-                                    <c:set var="num" value="${0}"/>
-                                    <c:set var="count" value="${0}"/>
-                                    <c:forEach items="${scores}" var="score">
-                                        <c:set var="count" value="${count+1}"/>
-                                        <c:if test="${0<score&&score<=2}">
-                                            <c:set var="num" value="${num+1}"/>
-                                        </c:if>
-                                    </c:forEach>
-                                    <fmt:formatNumber value="${num/count}" var="result" maxFractionDigits="2" />
-
-                                    <div class="progress-bar" style="width: ${result*100}%;">
+                                    <div class="col-md-4" style="margin-left: -20px;height: 20px">
+                                        <div class="progress">
+                                            <c:set var="num" value="${0}"/>
+                                            <c:set var="count" value="${0}"/>
+                                            <c:forEach items="${scores}" var="score">
+                                                <c:set var="count" value="${count+1}"/>
+                                                <c:if test="${6<score&&score<=8}">
+                                                    <c:set var="num" value="${num+1}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
+                                            <div class="progress-bar" style="width: ${result*100}%;">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                ${result*100}%
-                            </div>
+                                    <div class="col-md-2">
+                                            ${result*100}%
+                                    </div>
 
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            </c:when>
+                                </div>
+                            </li>
+                            <li class="list-group-item" style="border: none">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        3星
+                                    </div>
+                                    <div class="col-md-4" style="margin-left: -20px;height: 20px">
+                                        <div class="progress">
+                                            <c:set var="num" value="${0}"/>
+                                            <c:set var="count" value="${0}"/>
+                                            <c:forEach items="${scores}" var="score">
+                                                <c:set var="count" value="${count+1}"/>
+                                                <c:if test="${4<score&&score<=6}">
+                                                    <c:set var="num" value="${num+1}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
+
+                                            <div class="progress-bar" style="width: ${result*100}%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                            ${result*100}%
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li class="list-group-item" style="border: none">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        2星
+                                    </div>
+                                    <div class="col-md-4" style="margin-left: -20px;height: 20px">
+                                        <div class="progress">
+                                            <c:set var="num" value="${0}"/>
+                                            <c:set var="count" value="${0}"/>
+                                            <c:forEach items="${scores}" var="score">
+                                                <c:set var="count" value="${count+1}"/>
+                                                <c:if test="${2<score&&score<=4}">
+                                                    <c:set var="num" value="${num+1}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <fmt:formatNumber value="${num/count}" var="result" pattern="#.0"/>
+
+                                            <div class="progress-bar" style="width: ${result*100}%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                            ${result*100}%
+                                    </div>
+
+                                </div>
+                            </li>
+                            <li class="list-group-item" style="border: none">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        1星
+                                    </div>
+                                    <div class="col-md-4" style="margin-left: -20px;height: 20px">
+                                        <div class="progress">
+                                            <c:set var="num" value="${0}"/>
+                                            <c:set var="count" value="${0}"/>
+                                            <c:forEach items="${scores}" var="score">
+                                                <c:set var="count" value="${count+1}"/>
+                                                <c:if test="${0<score&&score<=2}">
+                                                    <c:set var="num" value="${num+1}"/>
+                                                </c:if>
+                                            </c:forEach>
+                                            <fmt:formatNumber value="${num/count}" var="result" maxFractionDigits="2"/>
+
+                                            <div class="progress-bar" style="width: ${result*100}%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                            ${result*100}%
+                                    </div>
+
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </c:when>
             </c:choose>
 
         </div>
@@ -532,20 +525,21 @@
     <!--评分项-->
     <div class="row">
         <div id="div_input_score" hidden>
-            <input id="input-21e" name="score" value="0" type="number" class="rating globalLoginBtn" min=0 max=5 step=1 data-size="xs">
+            <input id="input-21e" name="score" value="0" type="number" class="rating globalLoginBtn" min=0 max=5 step=1
+                   data-size="xs">
         </div>
         <script>
-            if($.cookie("id")>0){
+            if ($.cookie("id") > 0) {
                 jQuery(document).ready(function () {
                     $.ajax({
-                        url:"moviecomment_alreadyRated",
-                        type:"post",
-                        data:{
-                            "userId":$.cookie("id"),
+                        url: "moviecomment_alreadyRated",
+                        type: "post",
+                        data: {
+                            "userId": $.cookie("id"),
                             "movieId":${oneMovie.id}
                         },
-                        success:function (data) {
-                            if(data==1){
+                        success: function (data) {
+                            if (data == 1) {
                                 $("#div_input_score").show();
                                 $(".rating-kv").rating();
                             }
@@ -564,7 +558,7 @@
                 ${oneMovie.moviename}电影剧情简介
             </h4>
             <div>
-               ${oneMovie.plot_introduction }
+                ${oneMovie.plot_introduction }
             </div>
         </div>
 
@@ -580,33 +574,37 @@
         <ul class="list-inline">
             <c:choose>
                 <c:when test="${Trailers!=null}">
-            <c:forEach items="${Trailers}" var="trailer" begin="0" end="2" varStatus="status">
-            <li>
-                <div class="box">
-                    <c:choose>
-                        <c:when test="${trailer.images[status.index]!=null}">
-                    <img src="${basepath}/image/${trailer.images[status.index].imageName}" class="img-rounded" style="width: 150px;height: 130px">
-                        </c:when>
-                        <c:otherwise>
-                            <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+                    <c:forEach items="${Trailers}" var="trailer" begin="0" end="2" varStatus="status">
+                        <li>
+                            <div class="box">
+                                <c:choose>
+                                    <c:when test="${trailer.images[status.index]!=null}">
+                                        <img src="${basepath}/image/${trailer.images[status.index].imageName}"
+                                             class="img-rounded" style="width: 150px;height: 130px">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${basepath}/image/noimage.png" class="img-rounded"
+                                             style="width: 150px;height: 130px">
 
-                        </c:otherwise>
-                    </c:choose>
-                        <%--<img src="${basepath}/image/duye.png" class="img-rounded" style="width: 150px;height: 130px">--%>
-                    <div class="box-content">
-                        <ul class="icon">
-                            <li><a href="trailergetTrailer?id=${trailer.id}"><span class="glyphicon glyphicon-play"></span></a></li>
-                        </ul>
-                    </div>
+                                    </c:otherwise>
+                                </c:choose>
+                                    <%--<img src="${basepath}/image/duye.png" class="img-rounded" style="width: 150px;height: 130px">--%>
+                                <div class="box-content">
+                                    <ul class="icon">
+                                        <li><a href="trailergetTrailer?id=${trailer.id}"><span
+                                                class="glyphicon glyphicon-play"></span></a></li>
+                                    </ul>
+                                </div>
 
-                </div>
-            </li>
-            </c:forEach>
+                            </div>
+                        </li>
+                    </c:forEach>
                 </c:when>
                 <c:otherwise>
                     <li>
                         <div class="box">
-                            <img src="${basepath}/image/noimage.png" class="img-rounded" style="width: 150px;height: 130px">
+                            <img src="${basepath}/image/noimage.png" class="img-rounded"
+                                 style="width: 150px;height: 130px">
                             <div class="box-content">
                             </div>
                         </div>
@@ -632,7 +630,8 @@
                                 <div class="row">
                                     <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
                                     <span>${moviecomments.username}</span>
-                                    &nbsp;&nbsp;<fmt:formatDate value="${moviecomments.time}" pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
+                                    &nbsp;&nbsp;<fmt:formatDate value="${moviecomments.time}"
+                                                                pattern="yyyy-MM-dd HH:mm:ss"></fmt:formatDate>
 
 
                                     <c:if test="${not empty moviecomments.score}">
@@ -646,10 +645,10 @@
                                             window.onload = showStar${moviecomments.id}(${moviecomments.score});
 
                                             //n表示后台获取的星数
-                                            function showStar${moviecomments.id}(n) {
+                                            function showStar ${moviecomments.id}(n) {
                                                 var con_wid = document.getElementById("${moviecomments.id}").offsetWidth;
                                                 var del_star = document.getElementById("del_staruser${status.count}");
-                                                console.log(con_wid+del_star);
+                                                console.log(con_wid + del_star);
 
                                                 //透明星星移动的像素
                                                 var del_move = (n * con_wid) / 10;
@@ -686,19 +685,24 @@
                                         <div class="row">
                                             <div class="form-horizontal">
                                                 <div class="form-group col-md-8">
-                                                    <input id="tor${moviecomments.id}" class="form-control" type="text" placeholder="@${moviecomments.username}:">
+                                                    <input id="tor${moviecomments.id}" class="form-control" type="text"
+                                                           placeholder="@${moviecomments.username}:">
                                                 </div>
 
-                                                <input onclick="replyComment(tor${moviecomments.id},'${moviecomments.id}','${moviecomments.userId}',${cookie['id'].value},1)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                <input onclick="replyComment(tor${moviecomments.id},'${moviecomments.id}','${moviecomments.userId}',${cookie['id'].value},1)"
+                                                       class="col-md-offset-2 btn btn-success" type="submit" value="回复">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <ul class="list-group">
-                                                <c:forEach items="${moviecomments.movieReplycomments}" var="reply" varStatus="status">
+                                                <c:forEach items="${moviecomments.movieReplycomments}" var="reply"
+                                                           varStatus="status">
                                                     <li class="list-group-item">
-                                                        <img class="img-circle" src="image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <img class="img-circle" src="image/test.jpg"
+                                                             style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <span>${reply.username}</span>
-                                                        &nbsp;&nbsp;<fmt:formatDate value="${reply.time}" pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
+                                                        &nbsp;&nbsp;<fmt:formatDate value="${reply.time}"
+                                                                                    pattern="yyyy-MM-dd:HH:mm:ss"></fmt:formatDate>
 
                                                         <br>
                                                         <div class="row">
@@ -706,7 +710,8 @@
 
                                                             <c:choose>
                                                                 <c:when test="${reply.userId eq cookie['id'].value || cookie['id'].value==0}">
-                                                                    <a class="btn btn-sm col-md-offset-10" onclick="deletecomment2(${reply.id})">删除</a>
+                                                                    <a class="btn btn-sm col-md-offset-10"
+                                                                       onclick="deletecomment2(${reply.id})">删除</a>
 
                                                                 </c:when>
                                                                 <c:otherwise>
@@ -714,16 +719,22 @@
                                                                 </c:otherwise>
                                                             </c:choose>
 
-                                                            <a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"
+                                                            <a class="btn btn-sm" data-toggle="collapse"
+                                                               data-parent="#accordion"
                                                                href="#div${moviecomments.id}${status.count}">回复</a>
                                                         </div>
-                                                        <div id="div${moviecomments.id}${status.count}" class="panel-collapse collapse">
+                                                        <div id="div${moviecomments.id}${status.count}"
+                                                             class="panel-collapse collapse">
                                                             <div class="panel-body">
                                                                 <div class="form-group col-md-8">
-                                                                    <input id="s${reply.id}" class="form-control" type="text" placeholder="@${reply.username}:">
+                                                                    <input id="s${reply.id}" class="form-control"
+                                                                           type="text"
+                                                                           placeholder="@${reply.username}:">
 
                                                                 </div>
-                                                                <input onclick="replyComment2(s${reply.id},${moviecomments.id},${reply.id},${reply.userId},${cookie['id'].value},2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">
+                                                                <input onclick="replyComment2(s${reply.id},${moviecomments.id},${reply.id},${reply.userId},${cookie['id'].value},2)"
+                                                                       class="col-md-offset-2 btn btn-success"
+                                                                       type="submit" value="回复">
                                                             </div>
 
                                                         </div>
@@ -789,7 +800,7 @@
 
         <div id="loading" style="display: block">
             <div class="loading show">
-                <img src='/image/loading1.gif' />
+                <img src='/image/loading1.gif'/>
             </div>
         </div>
         <script>
@@ -803,7 +814,7 @@
                 $('#replyid').val(replyid);//给会话中的隐藏属性URL赋值
                 $('#delcfmModel1').modal();
             }
-            window.onload=function(){
+            window.onload = function () {
                 $("#loading").hide();
             }
             var messageOpts = {
@@ -821,83 +832,83 @@
                 "hideMethod": "fadeOut" //消失时的动画方式
             };
             toastr.options = messageOpts;
-            function replyComment(contentId,commentId,to_userId,userId,type) {
-                var content=$(contentId).val();
-                var commentId=commentId;
-                var to_userId=to_userId;
-                var userId=userId;
+            function replyComment(contentId, commentId, to_userId, userId, type) {
+                var content = $(contentId).val();
+                var commentId = commentId;
+                var to_userId = to_userId;
+                var userId = userId;
                 $(contentId).val("");
-                if(content==""){
+                if (content == "") {
                     toastr.warning("输入不能为空");
                     return;
                 }
                 $.ajax({
-                    type:"post",
-                    url:"${basepath}/rmoviereplycommentinsertReplyComment",
-                    data:{
-                        "movie_replycomment.content":content,
-                        "movie_replycomment.comment_id":commentId,
-                        "movie_replycomment.to_userId":to_userId,
-                        "movie_replycomment.userId":userId,
-                        "movie_replycomment.reply_type":type,
-                        "token":$.cookie("token")
+                    type: "post",
+                    url: "${basepath}/rmoviereplycommentinsertReplyComment",
+                    data: {
+                        "movie_replycomment.content": content,
+                        "movie_replycomment.comment_id": commentId,
+                        "movie_replycomment.to_userId": to_userId,
+                        "movie_replycomment.userId": userId,
+                        "movie_replycomment.reply_type": type,
+                        "token": $.cookie("token")
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
                     },
-                    success:function (data) {
+                    success: function (data) {
                         $("#loading").hide();
-                        if(data==1){
+                        if (data == 1) {
                             toastr.success('回复成功');
-                        }else if(data==2){
+                        } else if (data == 2) {
                             toastr.error("回复失败");
-                        }else if(data==3){
+                        } else if (data == 3) {
                             toastr.warning("请先登录");
-                            setTimeout("window.location='login.jsp'",2000);
+                            setTimeout("window.location='login.jsp'", 2000);
                         }
-                        setTimeout("window.location.reload()",3000);
+                        setTimeout("window.location.reload()", 3000);
                     }
                 })
             }
 
-            function replyComment2(contentId,commentId,to_id,to_userId,userId,type) {
-                var content=$(contentId).val();
-                var commentId=commentId;
-                var to_userId=to_userId;
-                var userId=userId;
-                var to_id=to_id;
+            function replyComment2(contentId, commentId, to_id, to_userId, userId, type) {
+                var content = $(contentId).val();
+                var commentId = commentId;
+                var to_userId = to_userId;
+                var userId = userId;
+                var to_id = to_id;
                 $(contentId).val("");
 
-                if(content==""){
+                if (content == "") {
                     toastr.warning("输入不能为空");
                     return;
                 }
                 $.ajax({
-                    type:"post",
-                    url:"${basepath}/rmoviereplycommentinsertReplyComment",
-                    data:{
-                        "movie_replycomment.content":content,
-                        "movie_replycomment.comment_id":commentId,
-                        "movie_replycomment.to_userId":to_userId,
-                        "movie_replycomment.userId":userId,
-                        "movie_replycomment.reply_type":type,
-                        "movie_replycomment.reply_id":to_id,
-                        "token":$.cookie("token")
+                    type: "post",
+                    url: "${basepath}/rmoviereplycommentinsertReplyComment",
+                    data: {
+                        "movie_replycomment.content": content,
+                        "movie_replycomment.comment_id": commentId,
+                        "movie_replycomment.to_userId": to_userId,
+                        "movie_replycomment.userId": userId,
+                        "movie_replycomment.reply_type": type,
+                        "movie_replycomment.reply_id": to_id,
+                        "token": $.cookie("token")
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
                     },
-                    success:function (data) {
+                    success: function (data) {
                         $("#loading").hide();
-                        if(data==1){
+                        if (data == 1) {
                             toastr.success('回复成功');
-                        }else if(data==2){
+                        } else if (data == 2) {
                             toastr.error("回复失败");
-                        }else if(data==3){
+                        } else if (data == 3) {
                             toastr.warning("请先登录");
-                            setTimeout("window.location='login.jsp'",2000);
+                            setTimeout("window.location='login.jsp'", 2000);
                         }
-                        setTimeout("window.location.reload()",3000);
+                        setTimeout("window.location.reload()", 3000);
                     }
                 })
             }
@@ -905,22 +916,22 @@
             function deletemoviecomment() {
                 var id = $.trim($("#commentId").val());
                 $.ajax({
-                    url:"${basepath}/moviecomment_delete",
-                    type:"post",
-                    data:{
-                        "id":id
+                    url: "${basepath}/moviecomment_delete",
+                    type: "post",
+                    data: {
+                        "id": id
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
                     },
-                    success:function (data) {
+                    success: function (data) {
                         $("#loading").hide();
-                        if(data==1){
+                        if (data == 1) {
                             toastr.success('删除成功');
-                        }else{
+                        } else {
                             toastr.error("删除失败");
                         }
-                        setTimeout("window.location.reload()",3000);
+                        setTimeout("window.location.reload()", 3000);
                     }
                 })
             }
@@ -928,22 +939,22 @@
             function deletereply() {
                 var id = $.trim($("#replyid").val());
                 $.ajax({
-                    url:"${basepath}/rmoviereplycommentdeleteReplyComment",
-                    type:"post",
-                    data:{
-                        "id":id
+                    url: "${basepath}/rmoviereplycommentdeleteReplyComment",
+                    type: "post",
+                    data: {
+                        "id": id
                     },
                     beforeSend: function (XMLHttpRequest) {
                         $("#loading").show(); //在后台返回success之前显示loading图标
                     },
-                    success:function (data) {
+                    success: function (data) {
                         $("#loading").hide();
-                        if(data==1){
+                        if (data == 1) {
                             toastr.success('删除成功');
-                        }else{
+                        } else {
                             toastr.error("删除失败");
                         }
-                        setTimeout("window.location.reload()",3000);
+                        setTimeout("window.location.reload()", 3000);
                     }
                 })
             }
@@ -971,8 +982,8 @@
     </div>
 
     <script>
-        jQuery(document).ready(function (){
-            if($.cookie("id")==0){
+        jQuery(document).ready(function () {
+            if ($.cookie("id") == 0) {
                 $("#showcommenttoadmin").empty();
             }
         })
@@ -993,29 +1004,29 @@
         toastr.options = messageOpts;
         function moviecomment() {
 
-            var filmscore=null;
-            var userId=document.getElementById("userId").value;
-            var movieId=document.getElementById("movieId").value;
-            var content=document.getElementById("content").value;
+            var filmscore = null;
+            var userId = document.getElementById("userId").value;
+            var movieId = document.getElementById("movieId").value;
+            var content = document.getElementById("content").value;
             var data;
-             if(!$("#div_input_score").is(":hidden")){
-                 filmscore=$("#input-21e").val();
-                 filmscore=filmscore*2;
-             }
-             if(filmscore==null){
-                 if (content == "") {
-                     toastr.warning("评论不能为空");
-                     return;
-                 }
-                 data={
-                     "movie_comment.userId":userId,
-                     "movie_comment.movieId":movieId,
-                     "movie_comment.content":content,
-                     "token":$.cookie("token"),
-                 }
-             }
+            if (!$("#div_input_score").is(":hidden")) {
+                filmscore = $("#input-21e").val();
+                filmscore = filmscore * 2;
+            }
+            if (filmscore == null) {
+                if (content == "") {
+                    toastr.warning("评论不能为空");
+                    return;
+                }
+                data = {
+                    "movie_comment.userId": userId,
+                    "movie_comment.movieId": movieId,
+                    "movie_comment.content": content,
+                    "token": $.cookie("token"),
+                }
+            }
 
-            if(filmscore!=null) {
+            if (filmscore != null) {
                 data = {
                     "movie_comment.userId": userId,
                     "movie_comment.movieId": movieId,
@@ -1032,28 +1043,27 @@
                     return;
                 }
             }
-                $.ajax({
-                    type:"post",
-                    url:"${basepath}/moviecomment_insertComment",
-                    data:data,
-                    beforeSend: function (XMLHttpRequest) {
-                        $("#loading").show(); //在后台返回success之前显示loading图标
-                    },
-                    success:function (data) {
-                        $("#loading").hide();
-                        if(data==1){
-                            toastr.success('评论成功');
-                        }else if(data==2){
-                            toastr.error("评论失败");
-                        }else if(data==3){
-                            toastr.warning("请先登录");
-                            setTimeout("window.location='login.jsp'",2000);
-                        }
-                        $("#content").val("");
-                        setTimeout("window.location.reload()",3000);
+            $.ajax({
+                type: "post",
+                url: "${basepath}/moviecomment_insertComment",
+                data: data,
+                beforeSend: function (XMLHttpRequest) {
+                    $("#loading").show(); //在后台返回success之前显示loading图标
+                },
+                success: function (data) {
+                    $("#loading").hide();
+                    if (data == 1) {
+                        toastr.success('评论成功');
+                    } else if (data == 2) {
+                        toastr.error("评论失败");
+                    } else if (data == 3) {
+                        toastr.warning("请先登录");
+                        setTimeout("window.location='login.jsp'", 2000);
                     }
-                })
-
+                    $("#content").val("");
+                    setTimeout("window.location.reload()", 3000);
+                }
+            })
 
 
         }
@@ -1070,26 +1080,26 @@
     <script>
 
 
-        var totalpagenow=0;
+        var totalpagenow = 0;
 
-        $(document).ready(function(){
-            var id=${oneMovie.id};
+        $(document).ready(function () {
+            var id =${oneMovie.id};
             $("#main-content").empty();
 
             $.ajax({
-                type:'post',
-                url:'${basepath}/getMovieCommentsBypage',
-                data:{
-                    "currPage":1,
-                    "movieId":id
+                type: 'post',
+                url: '${basepath}/getMovieCommentsBypage',
+                data: {
+                    "currPage": 1,
+                    "movieId": id
                 },
-                success:function (data) {
-                    var obj=JSON.parse(data);
-                    var appendpage="";
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    var appendpage = "";
                     console.log(obj);
-                    var totalPage=obj.totalPage;
-                    var currPage=obj.currPage;
-                    totalpagenow=obj.totalPage;
+                    var totalPage = obj.totalPage;
+                    var currPage = obj.currPage;
+                    totalpagenow = obj.totalPage;
                     console.log(totalPage);
                     console.log(currPage);
                     console.log(obj.totalCount);
@@ -1098,42 +1108,42 @@
                     $("#countcomments").text(obj.totalCount);
 
 
-                    if(totalPage>0){
-                        appendpage+='<div class="text-center">'+
-                            '<ul class="pagination">'+
-                            '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>'+
+                    if (totalPage > 0) {
+                        appendpage += '<div class="text-center">' +
+                            '<ul class="pagination">' +
+                            '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>' +
                             '<li id="front" value="1" onclick="topage(front)"><a style="cursor: pointer">上一页</a></li>';
-                        if(totalPage<=5){
-                            for(var i=1;i<=totalPage;i++){
-                                if(i==1){
-                                    appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
-                                }else{
-                                    appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                        if (totalPage <= 5) {
+                            for (var i = 1; i <= totalPage; i++) {
+                                if (i == 1) {
+                                    appendpage += '<li id="page' + i + '" class="active" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
+                                } else {
+                                    appendpage += '<li id="page' + i + '" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
 
                                 }
                             }
-                        }else{
-                            for(var i=1;i<=5;i++){
-                                if(i==1){
-                                    appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
-                                }else{
-                                    appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                        } else {
+                            for (var i = 1; i <= 5; i++) {
+                                if (i == 1) {
+                                    appendpage += '<li id="page' + i + '" class="active" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
+                                } else {
+                                    appendpage += '<li id="page' + i + '" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
 
                                 }
                             }
                         }
-                        appendpage+='<li id="next" value="2" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>'+
-                            '<li id="last" value="'+obj.totalPage+'"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>'+
-                            '<li>'+
-                            '<div class="col-sm-3" role="form">'+
-                            '<div class="input-group">'+
-                            '<input id="page" type="text" class="form-control">'+
-                            '<span onclick="topage(page)" class="input-group-addon">go</span>'+
-                            '</div>'+
-                            '</div>'+
-                            '</li>'+
-                            '<li><a style="border: none">共'+obj.totalPage+'页</a></li>'+
-                            '</ul>'+
+                        appendpage += '<li id="next" value="2" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>' +
+                            '<li id="last" value="' + obj.totalPage + '"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>' +
+                            '<li>' +
+                            '<div class="col-sm-3" role="form">' +
+                            '<div class="input-group">' +
+                            '<input id="page" type="text" class="form-control">' +
+                            '<span onclick="topage(page)" class="input-group-addon">go</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li><a style="border: none">共' + obj.totalPage + '页</a></li>' +
+                            '</ul>' +
                             '</div>';
                         $("#main-content").append(appendpage);
                     }
@@ -1161,194 +1171,193 @@
         }
 
         function topage(id) {
-            var page=$(id).val();
-            if(page>totalpagenow){
-                page=totalpagenow;
+            var page = $(id).val();
+            if (page > totalpagenow) {
+                page = totalpagenow;
             }
             $.ajax({
-                type:'post',
-                url:'${basepath}/getMovieCommentsBypage',
-                data:{
-                    "currPage":page,
+                type: 'post',
+                url: '${basepath}/getMovieCommentsBypage',
+                data: {
+                    "currPage": page,
                     "movieId":${oneMovie.id}
                 },
-                success:function (data) {
-                    var obj=JSON.parse(data);
+                success: function (data) {
+                    var obj = JSON.parse(data);
 
                     console.log(obj);
 
-                    var totalPage=obj.totalPage;
+                    var totalPage = obj.totalPage;
 
-                    totalpagenow=obj.totalPage;
+                    totalpagenow = obj.totalPage;
 
 
-                    var currPage=obj.currPage;
+                    var currPage = obj.currPage;
 
 
                     $("#showcomment").empty();
 
                     $("#main-content").empty();
 
-                    var comments=obj.lists;
+                    var comments = obj.lists;
 
 
-                    var appendhtml="";//要添加的显示内容
+                    var appendhtml = "";//要添加的显示内容
 
-                    var appendpage="";//分页的更改
-
-
-                    appendhtml+='<ul class="list-group" style="width: 800px">';
-
-                    for(var i=0;i<comments.length;i++){
-                        appendhtml+=' <li class="list-group-item" style="border: none">'+
-                            '<div class="row">'+
-                            '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
-                            '<span>'+comments[i].username+'</span>'+
-                            '&nbsp;&nbsp;'+changeDateFormat(comments[i].time);
-                            if(typeof(comments[i].score)!="undefined"){
-                            appendhtml+='<div id='+comments[i].id+' class="star-vote">'+
-                                        '<span id=add_staruser'+i+' class="add-star"></span>'+
-                                        '<span id=del_staruser'+i+' class="del-star"></span>'+
-                                        '</div>';
+                    var appendpage = "";//分页的更改
 
 
+                    appendhtml += '<ul class="list-group" style="width: 800px">';
 
-                            }
-                        appendhtml+='</div>'+
-                                    '<br>'+
-                                    '<div class="row">'+
-                                    '&nbsp;&nbsp;'+
-                                    comments[i].content+
-                                    '</div>';
-                        if(comments[i].userId==$.cookie("id") || ${cookie['id'].value}==0) {
-                            appendhtml+='<div class="row col-md-offset-10">'+
-                                '<a class="btn btn-sm" onclick="deletecomment('+comments[i].id+')">删除</a>'+
-                                '<a data-toggle="collapse" data-parent="#accordion"'+
-                                'href="#r'+comments[i].id+'" class="btn btn-sm">回复</a>'+
+                    for (var i = 0; i < comments.length; i++) {
+                        appendhtml += ' <li class="list-group-item" style="border: none">' +
+                            '<div class="row">' +
+                            '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;' +
+                            '<span>' + comments[i].username + '</span>' +
+                            '&nbsp;&nbsp;' + changeDateFormat(comments[i].time);
+                        if (typeof(comments[i].score) != "undefined") {
+                            appendhtml += '<div id=' + comments[i].id + ' class="star-vote">' +
+                                '<span id=add_staruser' + i + ' class="add-star"></span>' +
+                                '<span id=del_staruser' + i + ' class="del-star"></span>' +
+                                '</div>';
+
+
+                        }
+                        appendhtml += '</div>' +
+                            '<br>' +
+                            '<div class="row">' +
+                            '&nbsp;&nbsp;' +
+                            comments[i].content +
+                            '</div>';
+                        if (comments[i].userId == $.cookie("id") || ${cookie['id'].value} == 0) {
+                            appendhtml += '<div class="row col-md-offset-10">' +
+                                '<a class="btn btn-sm" onclick="deletecomment(' + comments[i].id + ')">删除</a>' +
+                                '<a data-toggle="collapse" data-parent="#accordion"' +
+                                'href="#r' + comments[i].id + '" class="btn btn-sm">回复</a>' +
                                 '</div>';
                         }
                         else {
-                            appendhtml+='<div class="row col-md-offset-10">'+
+                            appendhtml += '<div class="row col-md-offset-10">' +
 
-                                '<a class="btn btn-sm">举报</a>'+
-                                '<a data-toggle="collapse" data-parent="#accordion"'+
-                                'href="#r'+comments[i].id+'" class="btn btn-sm">回复</a>'+
+                                '<a class="btn btn-sm">举报</a>' +
+                                '<a data-toggle="collapse" data-parent="#accordion"' +
+                                'href="#r' + comments[i].id + '" class="btn btn-sm">回复</a>' +
                                 '</div>';
                         }
-                        appendhtml+='<div id="r'+comments[i].id+'" class="panel-collapse collapse">'+
-                            '<div class="panel-body">'+
-                            '<div class="row">'+
-                            '<div class="form-horizontal">'+
-                            '<div class="form-group col-md-8">'+
-                            '<input id="tor'+comments[i].id+'" class="form-control" type="text" placeholder="@'+comments[i].username+':">'+
-                            '</div>'+
-                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment(tor'+comments[i].id+','+comments[i].id+','+comments[i].userId+','+$.cookie("id")+',1)" value="回复">'+
-                            '</div>'+
-                            '</div>'+
-                            '<div class="row">'+
+                        appendhtml += '<div id="r' + comments[i].id + '" class="panel-collapse collapse">' +
+                            '<div class="panel-body">' +
+                            '<div class="row">' +
+                            '<div class="form-horizontal">' +
+                            '<div class="form-group col-md-8">' +
+                            '<input id="tor' + comments[i].id + '" class="form-control" type="text" placeholder="@' + comments[i].username + ':">' +
+                            '</div>' +
+                            '<input type="submit" class="col-md-offset-2 btn btn-success" onclick="replyComment(tor' + comments[i].id + ',' + comments[i].id + ',' + comments[i].userId + ',' + $.cookie("id") + ',1)" value="回复">' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="row">' +
                             '<ul class="list-group">';
 
-                        var replycomments=comments[i].movieReplycomments;
+                        var replycomments = comments[i].movieReplycomments;
                         console.log(replycomments);
 
-                        for(var j=0;j<replycomments.length;j++){
-                            appendhtml+= '<li class="list-group-item">'+
-                                        '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;'+
-                                        '<span>'+replycomments[j].username+'</span>'+
-                                        '&nbsp;&nbsp;'+changeDateFormat(replycomments[j].time)+
-                                        '<br>'+
-                                        '<div class="row">'+
-                                        '<span class="col-md-offset-1">回复@'+replycomments[j].to_userIdusername+':'+replycomments[j].content+'</span>';
-                            if(replycomments[j].userId==$.cookie("id") || ${cookie['id'].value}==0){
-                                appendhtml+='<div class="row col-md-offset-10">'+
-                                    '<a class="btn btn-sm" onclick="deletecomment2('+replycomments[j].id+')">删除</a>'+
-                                    '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
-                                    'href="#div'+comments[i].id+j+'">回复</a>'+
+                        for (var j = 0; j < replycomments.length; j++) {
+                            appendhtml += '<li class="list-group-item">' +
+                                '<img class="img-circle" src="${basepath}/image/test.jpg" style="width:60px;height:60px;">&nbsp;&nbsp;&nbsp;&nbsp;' +
+                                '<span>' + replycomments[j].username + '</span>' +
+                                '&nbsp;&nbsp;' + changeDateFormat(replycomments[j].time) +
+                                '<br>' +
+                                '<div class="row">' +
+                                '<span class="col-md-offset-1">回复@' + replycomments[j].to_userIdusername + ':' + replycomments[j].content + '</span>';
+                            if (replycomments[j].userId == $.cookie("id") || ${cookie['id'].value} == 0) {
+                                appendhtml += '<div class="row col-md-offset-10">' +
+                                    '<a class="btn btn-sm" onclick="deletecomment2(' + replycomments[j].id + ')">删除</a>' +
+                                    '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"' +
+                                    'href="#div' + comments[i].id + j + '">回复</a>' +
                                     '</div>';
-                            }else{
-                                appendhtml+='<div class="row col-md-offset-10">'+
-                                    '<a class="btn btn-sm">举报</a>'+
-                                    '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"'+
-                                    'href="#div'+comments[i].id+j+'">回复</a>'+
+                            } else {
+                                appendhtml += '<div class="row col-md-offset-10">' +
+                                    '<a class="btn btn-sm">举报</a>' +
+                                    '<a class="btn btn-sm" data-toggle="collapse" data-parent="#accordion"' +
+                                    'href="#div' + comments[i].id + j + '">回复</a>' +
                                     '</div>';
                             }
-                            appendhtml+='</div>'+
-                                '<div id="div'+comments[i].id+j+'" class="panel-collapse collapse">'+
-                                '<div class="panel-body">'+
-                                '<div class="form-group col-md-8">'+
-                                '<input id="s'+replycomments[j].id+'" class="form-control" type="text" placeholder="@'+replycomments[j].username+':">'+
-                                '</div>'+
-                                '<input onclick="replyComment2(s'+replycomments[j].id+','+comments[i].id+','+replycomments[j].id+','+replycomments[j].userId+','+$.cookie("id")+',2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">'+
-                                '</div>'+
-                                '</div>'+
+                            appendhtml += '</div>' +
+                                '<div id="div' + comments[i].id + j + '" class="panel-collapse collapse">' +
+                                '<div class="panel-body">' +
+                                '<div class="form-group col-md-8">' +
+                                '<input id="s' + replycomments[j].id + '" class="form-control" type="text" placeholder="@' + replycomments[j].username + ':">' +
+                                '</div>' +
+                                '<input onclick="replyComment2(s' + replycomments[j].id + ',' + comments[i].id + ',' + replycomments[j].id + ',' + replycomments[j].userId + ',' + $.cookie("id") + ',2)" class="col-md-offset-2 btn btn-success" type="submit" value="回复">' +
+                                '</div>' +
+                                '</div>' +
                                 '</li>';
 
                         }
 
-                        appendhtml+='</ul></div> </div> </div> </li> <hr>';
+                        appendhtml += '</ul></div> </div> </div> </li> <hr>';
 
 
                     }
 
-                    if(totalPage>0){
-                        var front=currPage-1;
-                        if(front<=0){
-                            front=1;
+                    if (totalPage > 0) {
+                        var front = currPage - 1;
+                        if (front <= 0) {
+                            front = 1;
                         }
-                        var next=currPage+1;
-                        if(next>totalPage){
-                            next=totalPage;
+                        var next = currPage + 1;
+                        if (next > totalPage) {
+                            next = totalPage;
                         }
-                        appendpage+='<div class="text-center">'+
-                            '<ul class="pagination">'+
-                            '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>'+
-                            '<li id="front" value="'+front+'" onclick="topage(front)"><a style="cursor: pointer">上一页</a></li>';
+                        appendpage += '<div class="text-center">' +
+                            '<ul class="pagination">' +
+                            '<li id="first" value="1" onclick="topage(first)"><a style="cursor: pointer">&laquo;</a></li>' +
+                            '<li id="front" value="' + front + '" onclick="topage(front)"><a style="cursor: pointer">上一页</a></li>';
 
-                        if(totalPage<=5){
-                            for(var i=1;i<=totalPage;i++){
-                                if(i==currPage){
-                                    appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
-                                }else{
-                                    appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                        if (totalPage <= 5) {
+                            for (var i = 1; i <= totalPage; i++) {
+                                if (i == currPage) {
+                                    appendpage += '<li id="page' + i + '" class="active" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
+                                } else {
+                                    appendpage += '<li id="page' + i + '" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
 
                                 }
                             }
                         }
-                        else{
-                            if(totalPage-currPage>=5){
-                                for(var i=currPage;i<=currPage+4;i++){
-                                    if(i==currPage){
-                                        appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
-                                    }else{
-                                        appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                        else {
+                            if (totalPage - currPage >= 5) {
+                                for (var i = currPage; i <= currPage + 4; i++) {
+                                    if (i == currPage) {
+                                        appendpage += '<li id="page' + i + '" class="active" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
+                                    } else {
+                                        appendpage += '<li id="page' + i + '" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
 
                                     }
                                 }
                             }
-                            else{
-                                for(var i=totalPage-4;i<=totalPage;i++){
-                                    if(i==currPage){
-                                        appendpage+= '<li id="page'+i+'" class="active" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
-                                    }else{
-                                        appendpage+= '<li id="page'+i+'" value="'+i+'" onclick="topage(page'+i+')"><a style="cursor: pointer">'+i+'</a></li>';
+                            else {
+                                for (var i = totalPage - 4; i <= totalPage; i++) {
+                                    if (i == currPage) {
+                                        appendpage += '<li id="page' + i + '" class="active" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
+                                    } else {
+                                        appendpage += '<li id="page' + i + '" value="' + i + '" onclick="topage(page' + i + ')"><a style="cursor: pointer">' + i + '</a></li>';
 
                                     }
                                 }
                             }
 
                         }
-                        appendpage+='<li id="next" value="'+next+'" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>'+
-                            '<li id="last" value="'+totalPage+'"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>'+
-                            '<li>'+
-                            '<div class="col-sm-3" role="form">'+
-                            '<div class="input-group">'+
-                            '<input id="page" type="text" class="form-control">'+
-                            '<span onclick="topage(page)" class="input-group-addon" style="cursor: pointer">go</span>'+
-                            '</div>'+
-                            '</div>'+
-                            '</li>'+
-                            '<li><a style="border: none">共'+totalPage+'页</a></li>'+
-                            '</ul>'+
+                        appendpage += '<li id="next" value="' + next + '" onclick="topage(next)"><a style="cursor: pointer">下一页</a></li>' +
+                            '<li id="last" value="' + totalPage + '"><a onclick="topage(last)" style="cursor: pointer">&raquo;</a></li>' +
+                            '<li>' +
+                            '<div class="col-sm-3" role="form">' +
+                            '<div class="input-group">' +
+                            '<input id="page" type="text" class="form-control">' +
+                            '<span onclick="topage(page)" class="input-group-addon" style="cursor: pointer">go</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</li>' +
+                            '<li><a style="border: none">共' + totalPage + '页</a></li>' +
+                            '</ul>' +
                             '</div>';
 
 
@@ -1360,9 +1369,9 @@
                     $("#countcomments").empty();
                     $("#countcomments").text(obj.totalCount);
 
-                    for(var i=0;i<comments.length;i++){
-                        if(typeof(comments[i].score)!="undefined"){
-                            showStar(comments[i].id,"del_staruser"+i,comments[i].score);
+                    for (var i = 0; i < comments.length; i++) {
+                        if (typeof(comments[i].score) != "undefined") {
+                            showStar(comments[i].id, "del_staruser" + i, comments[i].score);
                         }
 
                     }
@@ -1373,7 +1382,7 @@
 
 
         //n表示后台获取的星数
-        function showStar(divid,del_star_id,n) {
+        function showStar(divid, del_star_id, n) {
             console.log(divid);
             console.log(del_star_id);
 
@@ -1393,7 +1402,7 @@
 </div>
 <!--底部版权信息-->
 <!--底部版权信息-->
-<div  style="font:12px Tahoma;color: white;text-align:center;">
+<div style="font:12px Tahoma;color: white;text-align:center;">
     <div style="background-color: #0f0f0f">
         <hr/>
         Copyright &copy; &nbsp;&nbsp;2018-2019&nbsp;

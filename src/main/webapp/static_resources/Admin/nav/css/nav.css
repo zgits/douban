@@ -21,6 +21,7 @@ a{text-decoration:none;}
 .icon_1::after{content: "\e62b";}
 .icon_2::after{content: "\e61a";}
 .icon_3::after{content: "\e61d";}
+.icon_4::after{content: "\e60b";}
 /*---------------------*/
 .nav-more{float:right;margin-right: 20px;font-size: 12px;transition: transform .3s;}
 /* 此处为导航右侧箭头 如果自定义iconfont 也需要替换*/

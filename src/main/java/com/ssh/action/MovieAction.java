@@ -297,8 +297,13 @@ public class MovieAction extends ActionSupport {
 
     //主页面显示正在热映影片
     public String getMoving(){
-        List<Movie> movies=movieServie.selectMoving();
-        ActionContext.getContext().put("movies",movies);
+        try {
+            List<Movie> movies=movieServie.selectMoving();
+            ActionContext.getContext().put("movies",movies);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         return "getMoving";
     }
     /*********end************/
