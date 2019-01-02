@@ -54,4 +54,11 @@ public interface ImageDao {
      * @return
      */
     public boolean deleteImages(Integer[] ids);
+
+    /**
+     * 根据id得到图片
+     * @param id
+     * @return
+     */
+    public Image getImageById(Integer id);
 }

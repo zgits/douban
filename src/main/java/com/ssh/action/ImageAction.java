@@ -95,6 +95,15 @@ public class ImageAction extends ActionSupport{
     public void deleteImage() throws IOException {
         String flag = "";
         try {
+            Image image=imageService.getImageById(id);
+
+            File file = new File(image.getPath()+"\\"+image.getImageName());
+
+            if(file.delete()) {
+                System.out.println( file.getName() + " 已删除!");
+            }else {
+                System.out.println("删除文件失败.");
+            }
             if (imageService.deleteImage(id)) {
                 flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
                 System.out.println("成功");

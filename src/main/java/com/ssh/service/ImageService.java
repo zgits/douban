@@ -54,4 +54,11 @@ public interface ImageService {
      * @return
      */
     public boolean deleteImages(Integer[] ids);
+
+    /**
+     * 根据id获取
+     * @param id
+     * @return
+     */
+    public Image getImageById(Integer id);
 }

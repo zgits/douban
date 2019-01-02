@@ -136,13 +136,24 @@ public class TrailerAction extends ActionSupport {
     public void deleteTrailer() throws IOException {
         String flag = "";
         try {
+            Trailer trailer=trailerService.getMovieTrailer(id);
+
+            File file = new File(trailer.getPath()+"\\"+trailer.getFilename());
+
+            if(file.delete()) {
+                System.out.println( file.getName() + " 已删除!");
+            }else {
+                System.out.println("删除文件失败.");
+            }
             if (trailerService.deleteTrailer(id)) {
+
                 flag = JSON.toJSONString(1);//使用fastjson将数据转换成json格式
                 System.out.println("成功");
             } else {
                 flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
             }
         } catch (Exception e) {
+            e.printStackTrace();
             flag = JSON.toJSONString(2);//使用fastjson将数据转换成json格式
         }
 
